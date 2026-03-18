@@ -36,10 +36,10 @@
                 <div class="space-y-6">
                     <h4 class="text-xl font-bold text-bracongo">Bracongo SA</h4>
                     <ul class="space-y-3 text-gray-800 text-sm font-medium">
-                        <li><a href="#" class="hover:text-bracongo transition-colors">Notre historique</a></li>
-                        <li><a href="#" class="hover:text-bracongo transition-colors">Nos valeurs</a></li>
-                        <li><a href="#" class="hover:text-bracongo transition-colors">Nos engagements RSE</a></li>
-                        <li><a href="#" class="hover:text-bracongo transition-colors">Présence nationale</a></li>
+                        <li><a href="{{ route('histoire') }}" class="hover:text-bracongo transition-colors">Notre historique</a></li>
+                        <li><a href="{{ route('histoire') }}#valeurs" class="hover:text-bracongo transition-colors">Nos valeurs</a></li>
+                        <li><a href="{{ route('histoire') }}#rse" class="hover:text-bracongo transition-colors">Nos engagements RSE</a></li>
+                        <li><a href="{{ route('histoire') }}#presence" class="hover:text-bracongo transition-colors">Présence nationale</a></li>
                     </ul>
                 </div>
 

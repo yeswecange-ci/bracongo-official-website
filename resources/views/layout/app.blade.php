@@ -26,15 +26,15 @@
         }
     </script>
 </head>
-<body class="antialiased font-sans">
-    
-    @include('layout.navbar')
+<body class="font-sans antialiased overflow-x-hidden">
+    <div class="min-h-screen bg-white overflow-x-hidden">
+        @include('layout.navbar')
 
-    <main>
-        @yield('content')
-    </main>
+        <main>
+            @yield('content')
+        </main>
 
-    @include('layout.footer')
-
+        @include('layout.footer')
+    </div>
 </body>
 </html>

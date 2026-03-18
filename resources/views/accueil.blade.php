@@ -155,7 +155,7 @@
                         <img src="{{ asset('img/Group2.png') }}" alt="Logo Background" class="w-4/5 h-auto object-contain">
                     </div>
                     <div class="absolute -top-16 left-0 right-0 flex justify-center z-10 pointer-events-none">
-                        <img src="{{ asset('img/bièrre.png') }}" alt="Bière" class="h-72 w-auto object-contain transform group-hover:scale-110 transition-transform duration-500">
+                        <img src="{{ asset('img/marron.png') }}" alt="Bière" class="h-72 w-auto object-contain transform group-hover:scale-110 transition-transform duration-500">
                     </div>
                     <div class="relative z-20 text-center px-4">
                         <h3 class="text-white text-xl font-bold mb-6">Bières</h3>
@@ -173,7 +173,7 @@
                         <img src="{{ asset('img/Group2.png') }}" alt="Logo Background" class="w-4/5 h-auto object-contain">
                     </div>
                     <div class="absolute -top-16 left-0 right-0 flex justify-center z-10 pointer-events-none">
-                        <img src="{{ asset('img/influ.png') }}" alt="Boissons gazeuses" class="h-72 w-auto object-contain transform group-hover:scale-110 transition-transform duration-500">
+                        <img src="{{ asset('img/gazeux.png') }}" alt="Boissons gazeuses" class="h-72 w-auto object-contain transform group-hover:scale-110 transition-transform duration-500">
                     </div>
                     <div class="relative z-20 text-center px-4">
                         <h3 class="text-white text-xl font-bold mb-6">Boissons gazeuses</h3>
@@ -191,7 +191,7 @@
                         <img src="{{ asset('img/Group2.png') }}" alt="Logo Background" class="w-4/5 h-auto object-contain">
                     </div>
                     <div class="absolute -top-16 left-0 right-0 flex justify-center z-10 pointer-events-none">
-                        <img src="{{ asset('img/champ.png') }}" alt="Eaux" class="h-72 w-auto object-contain transform group-hover:scale-110 transition-transform duration-500">
+                        <img src="{{ asset('img/eau.png') }}" alt="Eaux" class="h-72 w-auto object-contain transform group-hover:scale-110 transition-transform duration-500">
                     </div>
                     <div class="relative z-20 text-center px-4">
                         <h3 class="text-white text-xl font-bold mb-6">Eaux</h3>
@@ -209,7 +209,7 @@
                         <img src="{{ asset('img/Group2.png') }}" alt="Logo Background" class="w-4/5 h-auto object-contain">
                     </div>
                     <div class="absolute -top-16 left-0 right-0 flex justify-center z-10 pointer-events-none">
-                        <img src="{{ asset('img/lumumba.png') }}" alt="Boisson énergisante" class="h-72 w-auto object-contain transform group-hover:scale-110 transition-transform duration-500">
+                        <img src="{{ asset('img/energie.png') }}" alt="Boisson énergisante" class="h-72 w-auto object-contain transform group-hover:scale-110 transition-transform duration-500">
                     </div>
                     <div class="relative z-20 text-center px-4">
                         <h3 class="text-white text-xl font-bold mb-6">Boisson énergisante</h3>
