@@ -47,11 +47,11 @@
                 Quelle est votre date de naissance ? Pour accéder au site vous devez être majeur.
             </p>
 
-            <form action="#" method="POST" class="space-y-8">
+            <form id="ageForm" class="space-y-8">
                 @csrf
                 <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
                     <div class="relative w-full md:w-32">
-                        <select name="day" class="w-full appearance-none bg-white border border-gray-200 rounded-md px-4 py-3 pr-8 text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-bracongo/50 transition-all cursor-pointer shadow-sm">
+                        <select id="day" name="day" required class="w-full appearance-none bg-white border border-gray-200 rounded-md px-4 py-3 pr-8 text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-bracongo/50 transition-all cursor-pointer shadow-sm">
                             <option value="">Jour</option>
                             @for ($i = 1; $i <= 31; $i++)
                                 <option value="{{ $i }}">{{ sprintf('%02d', $i) }}</option>
@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="relative w-full md:w-40">
-                        <select name="month" class="w-full appearance-none bg-white border border-gray-200 rounded-md px-4 py-3 pr-8 text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-bracongo/50 transition-all cursor-pointer shadow-sm">
+                        <select id="month" name="month" required class="w-full appearance-none bg-white border border-gray-200 rounded-md px-4 py-3 pr-8 text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-bracongo/50 transition-all cursor-pointer shadow-sm">
                             <option value="">Mois</option>
                             @php
                                 $months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
@@ -78,7 +78,7 @@
                     </div>
 
                     <div class="relative w-full md:w-32">
-                        <select name="year" class="w-full appearance-none bg-white border border-gray-200 rounded-md px-4 py-3 pr-8 text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-bracongo/50 transition-all cursor-pointer shadow-sm">
+                        <select id="year" name="year" required class="w-full appearance-none bg-white border border-gray-200 rounded-md px-4 py-3 pr-8 text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-bracongo/50 transition-all cursor-pointer shadow-sm">
                             <option value="">Année</option>
                             @for ($i = date('Y'); $i >= date('Y') - 100; $i--)
                                 <option value="{{ $i }}">{{ $i }}</option>
@@ -90,15 +90,50 @@
                     </div>
                 </div>
 
+                <div id="errorMessage" class="hidden text-bracongo font-bold text-sm mt-4">
+                    Nous sommes désolés vous n'êtes pas majeur
+                </div>
+
                 <div class="flex justify-center mt-10">
-                    <a href="{{ route('Accueil') }}" type="submit" class="group flex items-center gap-2 px-8 py-2 border border-bracongo rounded-full text-bracongo font-semibold hover:bg-bracongo hover:text-white transition-all duration-300">
+                    <button type="submit" class="group flex items-center gap-2 px-8 py-2 border border-bracongo rounded-full text-bracongo font-semibold hover:bg-bracongo hover:text-white transition-all duration-300">
                         Valider
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
-                    </a>
+                    </button>
                 </div>
             </form>
+
+            <script>
+                document.getElementById('ageForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const day = parseInt(document.getElementById('day').value);
+                    const month = parseInt(document.getElementById('month').value);
+                    const year = parseInt(document.getElementById('year').value);
+                    const errorMessage = document.getElementById('errorMessage');
+
+                    if (!day || !month || !year) {
+                        alert('Veuillez remplir tous les champs');
+                        return;
+                    }
+
+                    const today = new Date();
+                    const birthDate = new Date(year, month - 1, day);
+                    let age = today.getFullYear() - birthDate.getFullYear();
+                    const m = today.getMonth() - birthDate.getMonth();
+                    
+                    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                        age--;
+                    }
+
+                    if (age >= 18) {
+                        window.location.href = "{{ route('Accueil') }}";
+                    } else {
+                        errorMessage.classList.remove('hidden');
+                    }
+                });
+            </script>
 
             <div class="mt-12 text-[10px] md:text-xs text-gray-600 italic">
                 L'abus de l'alcool est dangereux pour la santé, à consommer avec modération.

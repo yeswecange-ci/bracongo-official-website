@@ -3,32 +3,100 @@
 @section('title', 'Accueil')
 
 @section('content')
-    <section class="relative w-full overflow-hidden">
-        <div class="w-full h-[900px]">
-            <img src="{{ asset('img/coverhome.jpg') }}" alt="Beaufort Hero" class="w-full h-full object-cover">
+    <section class="relative w-full overflow-hidden group">
+        <div id="hero-carousel" class="relative w-full h-[500px] md:h-[900px]">
+            <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-100">
+                <img src="{{ asset('img/coverhome.jpg') }}" alt="Beaufort Hero" class="w-full h-full object-cover">
+            </div>
+            <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0">
+                <img src="{{ asset('img/banniere.jpg') }}" alt="Tembo Hero" class="w-full h-full object-cover">
+            </div>
         </div>
 
         <div class="py-4 flex justify-center items-center gap-4">
-            <button class="w-6 h-6 rounded-full border border-bracongo flex items-center justify-center text-bracongo hover:bg-bracongo hover:text-white transition-all cursor-pointer">
+            <button id="prev-hero" class="w-6 h-6 rounded-full border border-bracongo flex items-center justify-center text-bracongo hover:bg-bracongo hover:text-white transition-all cursor-pointer">
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                 </svg>
             </button>
 
-            <div class="flex items-center gap-2">
-                <span class="w-6 h-1 bg-bracongo rounded-full"></span>
-                <span class="w-6 h-1 bg-gray-300 rounded-full"></span>
-                <span class="w-6 h-1 bg-gray-300 rounded-full"></span>
-                <span class="w-6 h-1 bg-gray-300 rounded-full"></span>
-                <span class="w-6 h-1 bg-gray-300 rounded-full"></span>
+            <div class="flex items-center gap-2" id="carousel-indicators">
+                <span class="indicator w-6 h-1 bg-bracongo rounded-full cursor-pointer transition-all"></span>
+                <span class="indicator w-6 h-1 bg-gray-300 rounded-full cursor-pointer transition-all"></span>
             </div>
 
-            <button class="w-6 h-6 rounded-full border border-bracongo flex items-center justify-center text-bracongo hover:bg-bracongo hover:text-white transition-all cursor-pointer">
+            <button id="next-hero" class="w-6 h-6 rounded-full border border-bracongo flex items-center justify-center text-bracongo hover:bg-bracongo hover:text-white transition-all cursor-pointer">
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
             </button>
         </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const items = document.querySelectorAll('.carousel-item');
+                const indicators = document.querySelectorAll('.indicator');
+                const prevBtn = document.getElementById('prev-hero');
+                const nextBtn = document.getElementById('next-hero');
+                let currentIndex = 0;
+                let interval;
+
+                function showSlide(index) {
+                    items.forEach((item, i) => {
+                        item.classList.remove('opacity-100');
+                        item.classList.add('opacity-0');
+                        indicators[i].classList.remove('bg-bracongo');
+                        indicators[i].classList.add('bg-gray-300');
+                    });
+
+                    items[index].classList.remove('opacity-0');
+                    items[index].classList.add('opacity-100');
+                    indicators[index].classList.remove('bg-gray-300');
+                    indicators[index].classList.add('bg-bracongo');
+                    currentIndex = index;
+                }
+
+                function nextSlide() {
+                    let next = (currentIndex + 1) % items.length;
+                    showSlide(next);
+                }
+
+                function prevSlide() {
+                    let prev = (currentIndex - 1 + items.length) % items.length;
+                    showSlide(prev);
+                }
+
+                function startAutoPlay() {
+                    interval = setInterval(nextSlide, 5000);
+                }
+
+                function stopAutoPlay() {
+                    clearInterval(interval);
+                }
+
+                nextBtn.addEventListener('click', () => {
+                    nextSlide();
+                    stopAutoPlay();
+                    startAutoPlay();
+                });
+
+                prevBtn.addEventListener('click', () => {
+                    prevSlide();
+                    stopAutoPlay();
+                    startAutoPlay();
+                });
+
+                indicators.forEach((indicator, i) => {
+                    indicator.addEventListener('click', () => {
+                        showSlide(i);
+                        stopAutoPlay();
+                        startAutoPlay();
+                    });
+                });
+
+                startAutoPlay();
+            });
+        </script>
     </section>
 
     <div class="container mx-auto px-4 py-16">

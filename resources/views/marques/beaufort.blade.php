@@ -139,59 +139,125 @@
                 </div>
 
                 <div class="lg:w-2/3 w-full">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                        <div class="flex flex-col items-center">
-                            <div class="h-[300px] mb-8 flex items-center justify-center">
-                                <img src="{{ asset('img/marron.png') }}" alt="Castel Beer" class="h-full object-contain hover:scale-105 transition-transform duration-300">
+                    <div id="beer-carousel" class="relative overflow-hidden mb-12">
+                        <div id="beer-slider" class="flex transition-transform duration-500 ease-in-out">
+                            <!-- Page 1 -->
+                            <div class="beer-slide min-w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <div class="flex flex-col items-center">
+                                    <div class="h-[300px] mb-8 flex items-center justify-center">
+                                        <img src="{{ asset('img/marron.png') }}" alt="Castel Beer" class="h-full object-contain hover:scale-105 transition-transform duration-300">
+                                    </div>
+                                    <a href="#" class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
+                                        <span class="text-sm">Castel Beer</span>
+                                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                    </a>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div class="h-[300px] mb-8 flex items-center justify-center">
+                                        <img src="{{ asset('img/dopel.png') }}" alt="Doppel Munich" class="h-full object-contain hover:scale-105 transition-transform duration-300">
+                                    </div>
+                                    <a href="#" class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
+                                        <span class="text-sm">Doppel Munich</span>
+                                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                    </a>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div class="h-[300px] mb-8 flex items-center justify-center">
+                                        <img src="{{ asset('img/blonde.png') }}" alt="Nkoyi Blonde" class="h-full object-contain hover:scale-105 transition-transform duration-300">
+                                    </div>
+                                    <a href="#" class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
+                                        <span class="text-sm">Nkoyi Blonde</span>
+                                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                    </a>
+                                </div>
                             </div>
-                            <a href="#" class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
-                                <span class="text-sm">Castel Beer</span>
-                                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-
-                        <div class="flex flex-col items-center">
-                            <div class="h-[300px] mb-8 flex items-center justify-center">
-                                <img src="{{ asset('img/dopel.png') }}" alt="Doppel Munich" class="h-full object-contain hover:scale-105 transition-transform duration-300">
+                            <!-- Page 2 -->
+                            <div class="beer-slide min-w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <div class="flex flex-col items-center">
+                                    <div class="h-[300px] mb-8 flex items-center justify-center">
+                                        <img src="{{ asset('img/black.png') }}" alt="Nkoyi Black" class="h-full object-contain hover:scale-105 transition-transform duration-300">
+                                    </div>
+                                    <a href="#" class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
+                                        <span class="text-sm">Nkoyi Black</span>
+                                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                    </a>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div class="h-[300px] mb-8 flex items-center justify-center">
+                                        <img src="{{ asset('img/33b.png') }}" alt="33 Export" class="h-full object-contain hover:scale-105 transition-transform duration-300">
+                                    </div>
+                                    <a href="#" class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
+                                        <span class="text-sm">33 Export</span>
+                                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                    </a>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div class="h-[300px] mb-8 flex items-center justify-center">
+                                        <img src="{{ asset('img/tembo.png') }}" alt="TEMBO" class="h-full object-contain hover:scale-105 transition-transform duration-300">
+                                    </div>
+                                    <a href="#" class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
+                                        <span class="text-sm">TEMBO</span>
+                                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                    </a>
+                                </div>
                             </div>
-                            <a href="#" class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
-                                <span class="text-sm">Doppel Munich</span>
-                                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-
-                        <div class="flex flex-col items-center">
-                            <div class="h-[300px] mb-8 flex items-center justify-center">
-                                <img src="{{ asset('img/blonde.png') }}" alt="Nkoyi Blonde" class="h-full object-contain hover:scale-105 transition-transform duration-300">
-                            </div>
-                            <a href="#" class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
-                                <span class="text-sm">Nkoyi Blonde</span>
-                                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </a>
                         </div>
                     </div>
 
                     <div class="flex items-center justify-center lg:justify-start gap-6">
-                        <button class="w-10 h-10 border border-bracongo rounded-full flex items-center justify-center text-bracongo hover:bg-bracongo hover:text-white transition-all">
+                        <button id="prev-beer" class="w-10 h-10 border border-bracongo rounded-full flex items-center justify-center text-bracongo hover:bg-bracongo hover:text-white transition-all">
                             <svg class="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </button>
-                        <div class="flex gap-2">
-                            <span class="w-10 h-1.5 bg-bracongo rounded-full"></span>
-                            <span class="w-10 h-1.5 bg-gray-200 rounded-full"></span>
-                            <span class="w-10 h-1.5 bg-gray-200 rounded-full"></span>
-                            <span class="w-10 h-1.5 bg-gray-200 rounded-full"></span>
+                        <div class="flex gap-2" id="beer-indicators">
+                            <span class="beer-indicator w-10 h-1.5 bg-bracongo rounded-full cursor-pointer transition-all"></span>
+                            <span class="beer-indicator w-10 h-1.5 bg-gray-200 rounded-full cursor-pointer transition-all hover:bg-gray-300"></span>
                         </div>
-                        <button class="w-10 h-10 border border-bracongo rounded-full flex items-center justify-center text-bracongo hover:bg-bracongo hover:text-white transition-all">
+                        <button id="next-beer" class="w-10 h-10 border border-bracongo rounded-full flex items-center justify-center text-bracongo hover:bg-bracongo hover:text-white transition-all">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </button>
                     </div>
                 </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const slider = document.getElementById('beer-slider');
+                        const slides = document.querySelectorAll('.beer-slide');
+                        const indicators = document.querySelectorAll('.beer-indicator');
+                        const prevBtn = document.getElementById('prev-beer');
+                        const nextBtn = document.getElementById('next-beer');
+                        let currentIndex = 0;
+
+                        function updateCarousel(index) {
+                            slider.style.transform = `translateX(-${index * 100}%)`;
+                            indicators.forEach((ind, i) => {
+                                if (i === index) {
+                                    ind.classList.remove('bg-gray-200');
+                                    ind.classList.add('bg-bracongo');
+                                } else {
+                                    ind.classList.remove('bg-bracongo');
+                                    ind.classList.add('bg-gray-200');
+                                }
+                            });
+                            currentIndex = index;
+                        }
+
+                        nextBtn.addEventListener('click', () => {
+                            let next = (currentIndex + 1) % slides.length;
+                            updateCarousel(next);
+                        });
+
+                        prevBtn.addEventListener('click', () => {
+                            let prev = (currentIndex - 1 + slides.length) % slides.length;
+                            updateCarousel(prev);
+                        });
+
+                        indicators.forEach((indicator, i) => {
+                            indicator.addEventListener('click', () => {
+                                updateCarousel(i);
+                            });
+                        });
+                    });
+                </script>
             </div>
         </div>
     </section>
