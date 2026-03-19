@@ -70,7 +70,7 @@
             </div>
 
             <div class="pt-8 border-t border-gray-200 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4 text-gray-600 text-xs font-medium">
-                <p>&copy; Copyright 1996 - {{ date('Y') }} | BRACONGO S.A. | All Rights Reserved | Designed by <span class="text-bracongo font-bold">YESWECAN GE</span></p>
+                <p>&copy; Copyright 1996 - {{ date('Y') }} | BRACONGO S.A. | All Rights Reserved | Designed by <span class="text-bracongo font-bold">YESWECANGE</span></p>
             </div>
         </div>
     </footer>
