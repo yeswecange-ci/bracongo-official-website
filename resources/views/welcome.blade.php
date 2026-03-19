@@ -76,102 +76,49 @@
                 BIENVENUE SUR LE SITE BRACONGO SA
             </h1>
 
-            <p class="text-sm md:text-base text-gray-800 font-medium mb-10 max-w-xl mx-auto">
-                Quelle est votre date de naissance ? Pour accéder au site vous devez être majeur.
+            <p class="text-sm md:text-lg text-gray-800 font-medium mb-10 max-w-xl mx-auto leading-relaxed">
+                Ce site web contient des informations sur nos boissons alcoolisées. <br class="hidden md:block">
+                En cliquant sur l'un des boutons ci-dessous, vous confirmez être majeur dans votre pays de résidence.
             </p>
 
-            <form id="ageForm" class="space-y-8">
-                @csrf
-                <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
-                    <div class="relative w-full md:w-32">
-                        <select id="day" name="day" required class="w-full appearance-none bg-white border border-gray-200 rounded-md px-4 py-3 pr-8 text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-bracongo/50 transition-all cursor-pointer shadow-sm">
-                            <option value="">Jour</option>
-                            @for ($i = 1; $i <= 31; $i++)
-                                <option value="{{ $i }}">{{ sprintf('%02d', $i) }}</option>
-                            @endfor
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-bracongo">
-                            <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
-                        </div>
-                    </div>
-
-                    <div class="relative w-full md:w-40">
-                        <select id="month" name="month" required class="w-full appearance-none bg-white border border-gray-200 rounded-md px-4 py-3 pr-8 text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-bracongo/50 transition-all cursor-pointer shadow-sm">
-                            <option value="">Mois</option>
-                            @php
-                                $months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
-                            @endphp
-                            @foreach ($months as $key => $month)
-                                <option value="{{ $key + 1 }}">{{ $month }}</option>
-                            @endforeach
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-bracongo">
-                            <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
-                        </div>
-                    </div>
-
-                    <div class="relative w-full md:w-32">
-                        <select id="year" name="year" required class="w-full appearance-none bg-white border border-gray-200 rounded-md px-4 py-3 pr-8 text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-bracongo/50 transition-all cursor-pointer shadow-sm">
-                            <option value="">Année</option>
-                            @for ($i = date('Y'); $i >= date('Y') - 100; $i--)
-                                <option value="{{ $i }}">{{ $i }}</option>
-                            @endfor
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-bracongo">
-                            <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
-                        </div>
-                    </div>
+            <div class="space-y-6">
+                <div id="errorMessage" class="hidden text-bracongo font-bold text-sm mb-4 animate-bounce">
+                    Nous sommes désolés, vous n'avez pas l'âge requis pour accéder à ce site.
                 </div>
 
-                <div id="errorMessage" class="hidden text-bracongo font-bold text-sm mt-4">
-                    Nous sommes désolés vous n'êtes pas majeur
-                </div>
-
-                <div class="flex justify-center mt-10">
-                    <button type="submit" class="group flex items-center gap-2 px-8 py-2 border border-bracongo rounded-full text-bracongo font-semibold hover:bg-bracongo hover:text-white transition-all duration-300">
-                        Valider
-                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button id="btn-over-18" class="w-full sm:w-auto px-10 py-4 bg-bracongo text-white rounded-full font-bold text-lg hover:bg-white hover:text-bracongo border-2 border-bracongo transition-all duration-300 shadow-lg hover:shadow-bracongo/20">
+                        J'ai plus de 18 ans
+                    </button>
+                    <button id="btn-under-18" class="w-full sm:w-auto px-10 py-4 bg-white text-gray-500 rounded-full font-bold text-lg hover:bg-gray-100 border-2 border-gray-200 transition-all duration-300">
+                        J'ai moins de 18 ans
                     </button>
                 </div>
-            </form>
+            </div>
 
             <script>
-                document.getElementById('ageForm').addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    const day = parseInt(document.getElementById('day').value);
-                    const month = parseInt(document.getElementById('month').value);
-                    const year = parseInt(document.getElementById('year').value);
+                document.addEventListener('DOMContentLoaded', function() {
+                    const btnOver18 = document.getElementById('btn-over-18');
+                    const btnUnder18 = document.getElementById('btn-under-18');
                     const errorMessage = document.getElementById('errorMessage');
+                    const loader = document.getElementById('loader');
 
-                    if (!day || !month || !year) {
-                        alert('Veuillez remplir tous les champs');
-                        return;
-                    }
-
-                    const today = new Date();
-                    const birthDate = new Date(year, month - 1, day);
-                    let age = today.getFullYear() - birthDate.getFullYear();
-                    const m = today.getMonth() - birthDate.getMonth();
-                    
-                    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                        age--;
-                    }
-
-                    if (age >= 18) {
+                    btnOver18.addEventListener('click', function() {
+                        // Masquer l'erreur si elle était affichée
+                        errorMessage.classList.add('hidden');
+                        
                         // Afficher le loader
-                        const loader = document.getElementById('loader');
                         loader.classList.add('active');
                         
-                        // Rediriger après un court délai pour laisser l'animation commencer
+                        // Rediriger après un très court délai
                         setTimeout(() => {
                             window.location.href = "{{ route('Accueil') }}";
-                        }, 800);
-                    } else {
+                        }, 10);
+                    });
+
+                    btnUnder18.addEventListener('click', function() {
                         errorMessage.classList.remove('hidden');
-                    }
+                    });
                 });
             </script>
 
