@@ -300,6 +300,12 @@
                         <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Icon" class="h-6 w-auto">
                         <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Rejoignez nous</h2>
                     </div>
+
+                    <div class="lg:hidden mb-10">
+                        <div class="rounded-[2rem] overflow-hidden shadow-2xl">
+                            <img src="{{ asset('img/rejoignez.png') }}" alt="Rejoignez Bracongo" class="w-full h-auto object-cover">
+                        </div>
+                    </div>
                     
                     <p class="text-gray-700 text-base leading-relaxed mb-10 max-w-xl">
                         Employer et former les bonnes personnes pour le poste est la clé de notre succès. Notre aspiration est d'offrir le meilleur à nos clients et consommateurs et d'offrir des produits de qualité à des prix abordables. Si vous appréciez l'action, la qualité et l'intégrité, notre entreprise est l'endroit idéal pour vous
@@ -313,7 +319,7 @@
                     </a>
                 </div>
 
-                <div class="w-full lg:w-1/2">
+                <div class="hidden lg:block w-full lg:w-1/2">
                     <div class="rounded-[2rem] overflow-hidden shadow-2xl">
                         <img src="{{ asset('img/rejoignez.png') }}" alt="Rejoignez Bracongo" class="w-full h-auto object-cover">
                     </div>

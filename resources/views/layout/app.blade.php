@@ -25,8 +25,36 @@
             }
         }
     </script>
+    <style>
+        .loader-wrapper {
+            position: fixed;
+            inset: 0;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
+        }
+        .loader-logo {
+            width: 120px;
+            height: auto;
+            animation: pulse-bracongo 2s infinite ease-in-out;
+        }
+        @keyframes pulse-bracongo {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+        body.loading {
+            overflow: hidden;
+        }
+    </style>
 </head>
-<body class="font-sans antialiased overflow-x-hidden">
+<body class="font-sans antialiased overflow-x-hidden loading">
+    <div id="loader" class="loader-wrapper">
+        <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Loading" class="loader-logo">
+    </div>
+
     <div class="min-h-screen bg-white overflow-x-hidden">
         @include('layout.navbar')
 
@@ -36,5 +64,22 @@
 
         @include('layout.footer')
     </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            document.querySelectorAll('img').forEach(img => {
+                if (!img.getAttribute('loading')) {
+                    img.setAttribute('loading', 'lazy');
+                }
+            });
+
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+                document.body.classList.remove('loading');
+            }, 500);
+        });
+    </script>
 </body>
 </html>
