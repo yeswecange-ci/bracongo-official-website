@@ -247,7 +247,6 @@
                 <a href="#" class="block text-gray-800 font-bold">FAQ</a>
             </div>
 
-            <!-- Search (Mobile) -->
             <div class="pt-6">
                 <div class="relative group">
                     <input type="text" placeholder="Rechercher un produit..." 

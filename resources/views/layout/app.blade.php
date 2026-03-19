@@ -78,7 +78,7 @@
                 loader.style.opacity = '0';
                 loader.style.visibility = 'hidden';
                 document.body.classList.remove('loading');
-            }, 500);
+            }, 150);
         });
     </script>
 </body>
