@@ -36,12 +36,16 @@
             justify-content: center;
             z-index: 9999;
             transition: opacity 0.5s ease-out, visibility 0.5s;
-            opacity: 0;
-            visibility: hidden;
-        }
-        .loader-wrapper.active {
             opacity: 1;
             visibility: visible;
+        }
+        .loader-wrapper.hidden-loader {
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+        .loader-wrapper.active {
+            opacity: 1 !important;
+            visibility: visible !important;
         }
         .loader-logo {
             width: 120px;
@@ -52,9 +56,12 @@
             0%, 100% { transform: scale(1); opacity: 0.8; }
             50% { transform: scale(1.1); opacity: 1; }
         }
+        body.loading {
+            overflow: hidden;
+        }
     </style>
 </head>
-<body class="antialiased font-sans">
+<body class="antialiased font-sans loading">
     <!-- Preloader -->
     <div id="loader" class="loader-wrapper">
         <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Loading" class="loader-logo">
@@ -103,17 +110,22 @@
                     const errorMessage = document.getElementById('errorMessage');
                     const loader = document.getElementById('loader');
 
+                    window.addEventListener('load', function() {
+                        setTimeout(() => {
+                            loader.classList.add('hidden-loader');
+                            document.body.classList.remove('loading');
+                        }, 100);
+                    });
+
                     btnOver18.addEventListener('click', function() {
-                        // Masquer l'erreur si elle était affichée
                         errorMessage.classList.add('hidden');
                         
-                        // Afficher le loader
+                        loader.classList.remove('hidden-loader');
                         loader.classList.add('active');
                         
-                        // Rediriger après un très court délai
                         setTimeout(() => {
                             window.location.href = "{{ route('Accueil') }}";
-                        }, 10);
+                        }, 150);
                     });
 
                     btnUnder18.addEventListener('click', function() {
