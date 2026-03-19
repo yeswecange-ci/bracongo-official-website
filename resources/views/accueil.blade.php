@@ -217,73 +217,107 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-20 pt-16">
-                <div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-10">
-                    <div class="absolute top-10 left-0 right-0 flex justify-center opacity-40 pointer-events-none">
-                        <img src="{{ asset('img/Group2.png') }}" alt="Logo Background" class="w-4/5 h-auto object-contain">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-32 pt-32 max-w-7xl mx-auto px-4">
+                <!-- Bières -->
+                <div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-12 transition-all duration-500 hover:shadow-2xl">
+                    <div class="absolute top-10 left-0 right-0 flex justify-center opacity-60 pointer-events-none group-hover:opacity-100 transition-opacity duration-500">
+                        <img src="{{ asset('img/Group2.png') }}" alt="Buffalo Logo" class="w-4/5 h-auto object-contain brightness-100 hue-rotate-[340deg] saturate-[500%] contrast-[150%]">
                     </div>
-                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-10 pointer-events-none">
-                        <img src="{{ asset('img/marron.png') }}" alt="Bière" class="h-72 w-auto object-contain transform group-hover:scale-110 transition-transform duration-500">
+
+                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
+                        <img src="{{ asset('img/b1.png') }}" alt="tembo" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:-translate-x-20 group-hover:-rotate-12 transition-all duration-500 ease-out">
                     </div>
+                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
+                        <img src="{{ asset('img/b2.png') }}" alt="Gaz" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:translate-x-20 group-hover:rotate-12 transition-all duration-500 ease-out">
+                    </div>
+
+                    <div class="absolute -top-20 left-0 right-0 flex justify-center z-10 pointer-events-none transition-transform duration-500 group-hover:-translate-y-4 group-hover:scale-105">
+                        <img src="{{ asset('img/tembo.png') }}" alt="Top" class="h-80 w-auto object-contain drop-shadow-2xl">
+                    </div>
+                    
                     <div class="relative z-20 text-center px-4">
-                        <h3 class="text-white text-xl font-bold mb-6">Bières</h3>
-                        <a href="#" class="inline-flex items-center gap-2 px-8 py-2 border border-white rounded-full text-white text-xs font-bold hover:bg-white hover:text-black transition-all">
+                        <h3 class="text-white text-2xl font-bold mb-8">Bières</h3>
+                        <a href="#" class="inline-flex items-center gap-3 px-10 py-3 border border-white rounded-full text-white text-sm font-bold hover:bg-white hover:text-black transition-all duration-300">
                             Voir plus
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                             </svg>
                         </a>
                     </div>
                 </div>
 
-                <div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-10">
-                    <div class="absolute top-10 left-0 right-0 flex justify-center opacity-40 pointer-events-none">
-                        <img src="{{ asset('img/Group2.png') }}" alt="Logo Background" class="w-4/5 h-auto object-contain">
+                <div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-12 transition-all duration-500 hover:shadow-2xl">
+                    <div class="absolute top-10 left-0 right-0 flex justify-center opacity-60 pointer-events-none group-hover:opacity-100 transition-opacity duration-500">
+                        <img src="{{ asset('img/Group2.png') }}" alt="Buffalo Logo" class="w-4/5 h-auto object-contain brightness-100 hue-rotate-[340deg] saturate-[500%] contrast-[150%]">
                     </div>
-                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-10 pointer-events-none">
-                        <img src="{{ asset('img/gazeux.png') }}" alt="Boissons gazeuses" class="h-72 w-auto object-contain transform group-hover:scale-110 transition-transform duration-500">
+
+                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
+                        <img src="{{ asset('img/gaz2.png') }}" alt="Gaz" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:-translate-x-20 group-hover:-rotate-12 transition-all duration-500 ease-out">
                     </div>
+                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
+                        <img src="{{ asset('img/gaz3.png') }}" alt="Gaz" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:translate-x-20 group-hover:rotate-12 transition-all duration-500 ease-out">
+                    </div>
+
+                    <div class="absolute -top-20 left-0 right-0 flex justify-center z-10 pointer-events-none transition-transform duration-500 group-hover:-translate-y-4 group-hover:scale-105">
+                        <img src="{{ asset('img/gazeux.png') }}" alt="Top" class="h-80 w-auto object-contain drop-shadow-2xl">
+                    </div>
+                    
                     <div class="relative z-20 text-center px-4">
-                        <h3 class="text-white text-xl font-bold mb-6">Boissons gazeuses</h3>
-                        <a href="#" class="inline-flex items-center gap-2 px-8 py-2 border border-white rounded-full text-white text-xs font-bold hover:bg-white hover:text-black transition-all">
+                        <h3 class="text-white text-2xl font-bold mb-8">Boissons gazeuses</h3>
+                        <a href="#" class="inline-flex items-center gap-3 px-10 py-3 border border-white rounded-full text-white text-sm font-bold hover:bg-white hover:text-black transition-all duration-300">
                             Voir plus
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                             </svg>
                         </a>
                     </div>
                 </div>
 
-                <div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-10">
-                    <div class="absolute top-10 left-0 right-0 flex justify-center opacity-40 pointer-events-none">
-                        <img src="{{ asset('img/Group2.png') }}" alt="Logo Background" class="w-4/5 h-auto object-contain">
+                <div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-12 transition-all duration-500 hover:shadow-2xl">
+                    <div class="absolute top-10 left-0 right-0 flex justify-center opacity-60 pointer-events-none group-hover:opacity-100 transition-opacity duration-500">
+                        <img src="{{ asset('img/Group2.png') }}" alt="Buffalo Logo" class="w-4/5 h-auto object-contain brightness-100 hue-rotate-[340deg] saturate-[500%] contrast-[150%]">
                     </div>
-                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-10 pointer-events-none">
-                        <img src="{{ asset('img/eau.png') }}" alt="Eaux" class="h-72 w-auto object-contain transform group-hover:scale-110 transition-transform duration-500">
+
+                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
+                        <img src="{{ asset('img/eau.png') }}" alt="Gaz" class="h-64 w-[300px] object-contain opacity-0 group-hover:opacity-100 group-hover:-translate-x-20 group-hover:-rotate-12 transition-all duration-500 ease-out">
                     </div>
+
+                    <div class="absolute -top-20 left-0 right-0 flex justify-center z-10 pointer-events-none transition-transform duration-500 group-hover:-translate-y-4 group-hover:scale-105">
+                        <img src="{{ asset('img/eau.png') }}" alt="Top" class="h-80 w-auto object-contain drop-shadow-2xl">
+                    </div>
+                    
                     <div class="relative z-20 text-center px-4">
-                        <h3 class="text-white text-xl font-bold mb-6">Eaux</h3>
-                        <a href="#" class="inline-flex items-center gap-2 px-8 py-2 border border-white rounded-full text-white text-xs font-bold hover:bg-white hover:text-black transition-all">
+                        <h3 class="text-white text-2xl font-bold mb-8">Eaux</h3>
+                        <a href="#" class="inline-flex items-center gap-3 px-10 py-3 border border-white rounded-full text-white text-sm font-bold hover:bg-white hover:text-black transition-all duration-300">
                             Voir plus
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                             </svg>
                         </a>
                     </div>
                 </div>
 
-                <div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-10">
-                    <div class="absolute top-10 left-0 right-0 flex justify-center opacity-40 pointer-events-none">
-                        <img src="{{ asset('img/Group2.png') }}" alt="Logo Background" class="w-4/5 h-auto object-contain">
+                <div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-12 transition-all duration-500 hover:shadow-2xl">
+                    <div class="absolute top-10 left-0 right-0 flex justify-center opacity-60 pointer-events-none group-hover:opacity-100 transition-opacity duration-500">
+                        <img src="{{ asset('img/Group2.png') }}" alt="Buffalo Logo" class="w-4/5 h-auto object-contain brightness-100 hue-rotate-[340deg] saturate-[500%] contrast-[150%]">
                     </div>
-                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-10 pointer-events-none">
-                        <img src="{{ asset('img/energie.png') }}" alt="Boisson énergisante" class="h-72 w-auto object-contain transform group-hover:scale-110 transition-transform duration-500">
+
+                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
+                        <img src="{{ asset('img/ener3.png') }}" alt="Gaz" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:-translate-x-20 group-hover:-rotate-12 transition-all duration-500 ease-out">
                     </div>
+                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
+                        <img src="{{ asset('img/ener2.png') }}" alt="Gaz" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:translate-x-20 group-hover:rotate-12 transition-all duration-500 ease-out">
+                    </div>
+
+                    <div class="absolute -top-20 left-0 right-0 flex justify-center z-10 pointer-events-none transition-transform duration-500 group-hover:-translate-y-4 group-hover:scale-105">
+                        <img src="{{ asset('img/energie.png') }}" alt="Top" class="h-80 w-auto object-contain drop-shadow-2xl">
+                    </div>
+                    
                     <div class="relative z-20 text-center px-4">
-                        <h3 class="text-white text-xl font-bold mb-6">Boisson énergisante</h3>
-                        <a href="#" class="inline-flex items-center gap-2 px-8 py-2 border border-white rounded-full text-white text-xs font-bold hover:bg-white hover:text-black transition-all">
+                        <h3 class="text-white text-2xl font-bold mb-8">Boisson énergisante</h3>
+                        <a href="#" class="inline-flex items-center gap-3 px-10 py-3 border border-white rounded-full text-white text-sm font-bold hover:bg-white hover:text-black transition-all duration-300">
                             Voir plus
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                             </svg>
                         </a>

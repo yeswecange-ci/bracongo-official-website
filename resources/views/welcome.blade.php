@@ -25,8 +25,41 @@
             }
         }
     </script>
+
+    <style>
+        .loader-wrapper {
+            position: fixed;
+            inset: 0;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-wrapper.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .loader-logo {
+            width: 120px;
+            height: auto;
+            animation: pulse-bracongo 2s infinite ease-in-out;
+        }
+        @keyframes pulse-bracongo {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+    </style>
 </head>
 <body class="antialiased font-sans">
+    <!-- Preloader -->
+    <div id="loader" class="loader-wrapper">
+        <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Loading" class="loader-logo">
+    </div>
+
     <div class="fixed inset-0 z-0">
         <img src="{{ asset('img/fete.png') }}" alt="Background" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-black/20"></div>
@@ -128,7 +161,14 @@
                     }
 
                     if (age >= 18) {
-                        window.location.href = "{{ route('Accueil') }}";
+                        // Afficher le loader
+                        const loader = document.getElementById('loader');
+                        loader.classList.add('active');
+                        
+                        // Rediriger après un court délai pour laisser l'animation commencer
+                        setTimeout(() => {
+                            window.location.href = "{{ route('Accueil') }}";
+                        }, 800);
                     } else {
                         errorMessage.classList.remove('hidden');
                     }
