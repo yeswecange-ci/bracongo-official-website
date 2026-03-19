@@ -85,6 +85,13 @@
                     <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-8 w-auto">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Nos engagements RSE</h2>
                 </div>
+
+                <div class="lg:hidden">
+                    <div class="rounded-[2rem] overflow-hidden shadow-xl h-[350px]">
+                        <img src="{{ asset('img/Frame 33.png') }}" alt="Engagements RSE" class="w-full h-full object-cover">
+                    </div>
+                </div>
+
                 <p class="text-gray-700 leading-relaxed font-medium">
                     Lorem ipsum dolor sit amet consectetur. Ultricies nulla at tincidunt orci et. Adipiscing risus dictum ullamcorper massa sit mattis suspendisse orci netus. Ultricies facilisis in amet nibh nisl. In iaculis pellentesque non egestas volutpat volutpat consectetur. Placerat faucibus ultrices sem cras molestie purus netus.
                 </p>
@@ -97,8 +104,11 @@
                     </a>
                 </div>
             </div>
-            <div class="rounded-[2rem] overflow-hidden shadow-xl h-[350px] md:h-[450px]">
-                <img src="{{ asset('img/Frame 33.png') }}" alt="Engagements RSE" class="w-full h-full object-cover">
+
+            <div class="hidden lg:block">
+                <div class="rounded-[2rem] overflow-hidden shadow-xl h-[450px]">
+                    <img src="{{ asset('img/Frame 33.png') }}" alt="Engagements RSE" class="w-full h-full object-cover">
+                </div>
             </div>
         </div>
 

@@ -112,19 +112,43 @@
         </button>
     </div>
 
-    <div id="desktop-search-bar" class="hidden absolute inset-0 bg-white z-[60] flex items-center px-6 md:px-12">
-        <div class="container mx-auto flex items-center gap-4">
-            <div class="relative flex-grow">
-                <input type="text" id="desktop-search-input" placeholder="Rechercher un produit, une actualité..." class="w-full pl-12 pr-4 py-4 text-lg border-none focus:ring-0 text-gray-800 placeholder-gray-400">
-                <svg class="w-6 h-6 text-gray-400 absolute left-2 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
+    <!-- Desktop Search Overlay (Improved) -->
+    <div id="desktop-search-bar" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] transition-all duration-300 opacity-0">
+        <div class="absolute inset-x-0 top-0 bg-white shadow-2xl transform -translate-y-full transition-transform duration-300 ease-out py-8 md:py-12" id="search-content">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="flex items-center justify-between gap-8 mb-8">
+                    <div class="relative flex-grow">
+                        <input type="text" id="desktop-search-input" placeholder="Rechercher un produit, une actualité..." 
+                            class="w-full text-2xl md:text-4xl font-bold border-none focus:ring-0 text-gray-900 placeholder-gray-300 bg-transparent py-2">
+                        <div class="absolute bottom-0 left-0 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full bg-bracongo w-0 transition-all duration-500 ease-out" id="search-underline"></div>
+                        </div>
+                    </div>
+                    <button id="close-search-button" class="p-3 rounded-full hover:bg-gray-100 text-gray-400 hover:text-bracongo transition-all duration-300 flex-shrink-0">
+                        <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 animate-fade-in-up">
+                    <div>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Suggestions</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="#" class="px-4 py-2 bg-gray-50 hover:bg-bracongo hover:text-white rounded-full text-sm font-medium text-gray-600 transition-all">Beaufort Lager</a>
+                            <a href="#" class="px-4 py-2 bg-gray-50 hover:bg-bracongo hover:text-white rounded-full text-sm font-medium text-gray-600 transition-all">Actualités</a>
+                            <a href="#" class="px-4 py-2 bg-gray-50 hover:bg-bracongo hover:text-white rounded-full text-sm font-medium text-gray-600 transition-all">Nkoyi</a>
+                            <a href="#" class="px-4 py-2 bg-gray-50 hover:bg-bracongo hover:text-white rounded-full text-sm font-medium text-gray-600 transition-all">RSE</a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Besoin d'aide ?</h4>
+                        <p class="text-sm text-gray-500 leading-relaxed">
+                            Trouvez rapidement nos produits, nos points de vente ou nos dernières offres d'emploi.
+                        </p>
+                    </div>
+                </div>
             </div>
-            <button id="close-search-button" class="text-gray-400 hover:text-bracongo transition-colors p-2">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
         </div>
     </div>
 
@@ -223,12 +247,19 @@
                 <a href="#" class="block text-gray-800 font-bold">FAQ</a>
             </div>
 
+            <!-- Search (Mobile) -->
             <div class="pt-6">
-                <div class="relative">
-                    <input type="text" placeholder="Rechercher..." class="w-full pl-10 pr-4 py-3 rounded-full bg-gray-50 border border-gray-100 focus:outline-none focus:border-bracongo focus:ring-1 focus:ring-bracongo">
-                    <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="relative group">
+                    <input type="text" placeholder="Rechercher un produit..." 
+                        class="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border border-gray-100 focus:outline-none focus:border-bracongo focus:ring-1 focus:ring-bracongo transition-all text-gray-900 font-medium">
+                    <svg class="w-6 h-6 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 group-focus-within:text-bracongo transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
+                </div>
+                <div class="mt-4 flex flex-wrap gap-2">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest w-full mb-1">Populaire</span>
+                    <a href="#" class="text-xs px-3 py-1 bg-gray-50 rounded-full text-gray-500">Beaufort</a>
+                    <a href="#" class="text-xs px-3 py-1 bg-gray-50 rounded-full text-gray-500">Nkoyi</a>
                 </div>
             </div>
         </div>
@@ -242,28 +273,57 @@
             const closeIcon = document.getElementById('close-icon');
             const mobileDropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
 
+            // Desktop Search Toggle
             const desktopSearchButton = document.getElementById('desktop-search-button');
             const desktopSearchBar = document.getElementById('desktop-search-bar');
+            const searchContent = document.getElementById('search-content');
+            const searchUnderline = document.getElementById('search-underline');
             const closeSearchButton = document.getElementById('close-search-button');
             const desktopSearchInput = document.getElementById('desktop-search-input');
 
             if (desktopSearchButton && desktopSearchBar) {
                 desktopSearchButton.addEventListener('click', function() {
                     desktopSearchBar.classList.remove('hidden');
-                    desktopSearchInput.focus();
-                    document.body.style.overflow = 'hidden'; // Optional: lock scroll
+                    // Force reflow for transitions
+                    desktopSearchBar.offsetHeight;
+                    
+                    desktopSearchBar.classList.add('opacity-100');
+                    searchContent.classList.remove('-translate-y-full');
+                    searchContent.classList.add('translate-y-0');
+                    
+                    setTimeout(() => {
+                        desktopSearchInput.focus();
+                        searchUnderline.classList.remove('w-0');
+                        searchUnderline.classList.add('w-full');
+                    }, 300);
+                    
+                    document.body.style.overflow = 'hidden';
                 });
 
-                closeSearchButton.addEventListener('click', function() {
-                    desktopSearchBar.classList.add('hidden');
-                    document.body.style.overflow = '';
+                const closeSearch = () => {
+                    desktopSearchBar.classList.remove('opacity-100');
+                    searchContent.classList.remove('translate-y-0');
+                    searchContent.classList.add('-translate-y-full');
+                    searchUnderline.classList.remove('w-full');
+                    searchUnderline.classList.add('w-0');
+                    
+                    setTimeout(() => {
+                        desktopSearchBar.classList.add('hidden');
+                        document.body.style.overflow = '';
+                    }, 300);
+                };
+
+                closeSearchButton.addEventListener('click', closeSearch);
+
+                // Close on backdrop click
+                desktopSearchBar.addEventListener('click', function(e) {
+                    if (e.target === desktopSearchBar) closeSearch();
                 });
 
                 // Close on Escape key
                 document.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape' && !desktopSearchBar.classList.contains('hidden')) {
-                        desktopSearchBar.classList.add('hidden');
-                        document.body.style.overflow = '';
+                        closeSearch();
                     }
                 });
             }
