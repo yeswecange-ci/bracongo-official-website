@@ -13,9 +13,10 @@
 
 	<link rel="shortcut icon" type="image/png" href="{{ asset('admin/images/favicon.png') }}">
 	<link href="{{ asset('admin/vendor/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet">
-	<link class="main-css" href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
 
 	@stack('styles')
+
+	<link class="main-css" href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
 
 	<style>
 		:root {
@@ -87,9 +88,9 @@
 
 	<script src="{{ asset('admin/vendor/global/global.min.js') }}"></script>
 	<script src="{{ asset('admin/vendor/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
+	@stack('scripts-vendor')
 	<script src="{{ asset('admin/js/custom.min.js') }}"></script>
 	<script src="{{ asset('admin/js/ic-sidenav-init.js') }}"></script>
-
 	@stack('scripts')
 </body>
 

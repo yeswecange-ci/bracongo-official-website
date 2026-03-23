@@ -18,14 +18,14 @@
 @include('admin.layouts.partials.header')
 @endsection
 
-@section('header-left')
+@push('header-left')
 <div class="input-group search-area">
 	<input type="text" class="form-control" placeholder="Rechercher…">
 	<span class="input-group-text">
 		<a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a>
 	</span>
 </div>
-@endsection
+@endpush
 
 @section('content')
 <div class="page-head">
@@ -242,12 +242,11 @@
 </div>
 @endsection
 
-@push('scripts')
+@push('scripts-vendor')
 <script src="{{ asset('admin/vendor/swiper/js/swiper-bundle.min.js') }}"></script>
-<script src="{{ asset('admin/vendor/apexchart/apexchart.js') }}"></script>
-<script src="{{ asset('admin/vendor/chart-js/chart.bundle.min.js') }}"></script>
-<script src="{{ asset('admin/vendor/peity/jquery.peity.min.js') }}"></script>
-<script src="{{ asset('admin/js/dashboard/dashboard-2.js') }}"></script>
+@endpush
+
+@push('scripts')
 <script>
 	const mockCmsStats = { pages: 7, images: 128, ctas: 19 };
 	document.getElementById("kpiPages").textContent = mockCmsStats.pages;

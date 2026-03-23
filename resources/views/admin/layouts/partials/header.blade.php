@@ -5,12 +5,13 @@
 				<div class="header-left">
 					<ul class="navbar-nav header-left">
 						<li class="nav-item d-flex align-items-center">
-							@yield('header-left')
+							{{-- @yield ne fonctionne pas ici (partial inclus via @section) ; @stack/@push oui --}}
+							@stack('header-left')
 						</li>
 					</ul>
 				</div>
 				<ul class="navbar-nav header-right">
-					@yield('header-actions')
+					@stack('header-actions')
 					<li class="nav-item dropdown header-profile">
 						<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
 							<img src="{{ asset('admin/images/user.jpg') }}" width="20" alt>

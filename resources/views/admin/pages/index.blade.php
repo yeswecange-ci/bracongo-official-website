@@ -31,14 +31,14 @@
 @include('admin.layouts.partials.header')
 @endsection
 
-@section('header-left')
+@push('header-left')
 <div class="input-group search-area">
 	<input type="text" class="form-control" placeholder="Rechercher une page…">
 	<span class="input-group-text">
 		<a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a>
 	</span>
 </div>
-@endsection
+@endpush
 
 @section('sidebar')
 @include('admin.layouts.partials.sidebar', ['currentPage' => 'pages'])

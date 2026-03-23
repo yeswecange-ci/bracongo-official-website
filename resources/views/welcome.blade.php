@@ -68,7 +68,7 @@
     </div>
 
     <div class="fixed inset-0 z-0">
-        <img src="{{ asset('img/fete.png') }}" alt="Background" class="w-full h-full object-cover">
+        <img src="{{ asset($welcome->fond_image ?? 'img/fete.png') }}" alt="Background" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-black/20"></div>
     </div>
 
@@ -80,25 +80,24 @@
             </div>
 
             <h1 class="text-2xl md:text-4xl font-extrabold text-bracongo mb-4 tracking-tight">
-                BIENVENUE SUR LE SITE BRACONGO SA
+                {{ $welcome->titre ?? 'BIENVENUE SUR LE SITE BRACONGO SA' }}
             </h1>
 
             <p class="text-sm md:text-lg text-gray-800 font-medium mb-10 max-w-xl mx-auto leading-relaxed">
-                Ce site web contient des informations sur nos boissons alcoolisées. <br class="hidden md:block">
-                En cliquant sur l'un des boutons ci-dessous, vous confirmez être majeur dans votre pays de résidence.
+                {!! nl2br(e($welcome->texte_avertissement ?? '')) !!}
             </p>
 
             <div class="space-y-6">
                 <div id="errorMessage" class="hidden text-bracongo font-bold text-sm mb-4 animate-bounce">
-                    Nous sommes désolés, vous n'avez pas l'âge requis pour accéder à ce site.
+                    {{ $welcome->message_refus ?? "Nous sommes désolés, vous n'avez pas l'âge requis pour accéder à ce site." }}
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <button id="btn-over-18" class="w-full sm:w-auto px-10 py-4 bg-bracongo text-white rounded-full font-bold text-lg hover:bg-white hover:text-bracongo border-2 border-bracongo transition-all duration-300 shadow-lg hover:shadow-bracongo/20">
-                        J'ai plus de 18 ans
+                        {{ $welcome->btn_majeur_texte ?? "J'ai plus de 18 ans" }}
                     </button>
                     <button id="btn-under-18" class="w-full sm:w-auto px-10 py-4 bg-white text-gray-500 rounded-full font-bold text-lg hover:bg-gray-100 border-2 border-gray-200 transition-all duration-300">
-                        J'ai moins de 18 ans
+                        {{ $welcome->btn_mineur_texte ?? "J'ai moins de 18 ans" }}
                     </button>
                 </div>
             </div>

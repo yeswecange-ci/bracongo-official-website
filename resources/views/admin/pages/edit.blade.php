@@ -7,18 +7,18 @@
 @include('admin.layouts.partials.header')
 @endsection
 
-@section('header-left')
+@push('header-left')
 <h4 class="mb-0">Édition de page</h4>
-@endsection
+@endpush
 
-@section('header-actions')
+@push('header-actions')
 <li class="nav-item">
 	<a class="btn btn-outline-secondary btn-sm" href="{{ route('admin.pages.index') }}">Retour</a>
 </li>
 <li class="nav-item ms-2">
 	<button class="btn btn-primary btn-sm" type="button" id="btnSaveTop">Enregistrer</button>
 </li>
-@endsection
+@endpush
 
 @section('sidebar')
 @include('admin.layouts.partials.sidebar', ['currentPage' => 'page-edit'])
