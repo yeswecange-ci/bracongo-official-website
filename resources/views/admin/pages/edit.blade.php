@@ -16,13 +16,14 @@
 	<a class="btn btn-outline-secondary btn-sm" href="{{ route('admin.pages.index') }}">Retour</a>
 </li>
 <li class="nav-item ms-2">
-	<button class="btn btn-primary btn-sm" type="button" id="btnSaveTop">Enregistrer</button>
+	<button class="btn btn-primary btn-sm" type="submit" form="pageForm">Enregistrer</button>
 </li>
 @endpush
 
 @section('sidebar')
-@include('admin.layouts.partials.sidebar', ['currentPage' => 'page-edit'])
+@include('admin.layouts.partials.sidebar')
 @endsection
+
 
 @section('content')
 <div class="row page-titles">
@@ -34,115 +35,128 @@
 </div>
 
 <div class="row">
-	<div class="col-xl-8">
-		<div class="card">
-			<div class="card-header">
-				<h4 class="card-title mb-0">Contenu</h4>
-			</div>
-			<div class="card-body">
+	<div class="col-xl-12">
+		<div class="row">
+			<div class="col-xl-8">
 				<form id="pageForm" autocomplete="off">
 					@csrf
-					<div class="row">
-						<div class="col-md-6 mb-3">
-							<label class="form-label">Nom de la page</label>
-							<input type="text" class="form-control" id="title" placeholder="Ex: Accueil">
-						</div>
-						<div class="col-md-6 mb-3">
-							<label class="form-label">Slug</label>
-							<input type="text" class="form-control" id="slug" placeholder="Ex: home">
-						</div>
-						<div class="col-12 mb-3">
-							<label class="form-label">Meta title (SEO)</label>
-							<input type="text" class="form-control" id="metaTitle" placeholder="Titre SEO…">
-						</div>
-						<div class="col-12 mb-3">
-							<label class="form-label">Meta description (SEO)</label>
-							<textarea class="form-control" id="metaDescription" rows="3"
-								placeholder="Description SEO…"></textarea>
+
+					{{-- Contenu principal --}}
+					<div class="card h-auto">
+						<div class="card-body">
+							<div class="mb-3">
+								<label class="form-label required">Nom de la page</label>
+								<input type="text" class="form-control" id="title" name="title" placeholder="Ex: Accueil">
+							</div>
+							<div class="mb-3">
+								<label class="form-label required">Slug</label>
+								<input type="text" class="form-control" id="slug" name="slug" placeholder="Ex: home">
+							</div>
+							<div class="mb-3">
+								<label class="form-label">Meta title (SEO)</label>
+								<input type="text" class="form-control" id="metaTitle" name="meta_title" placeholder="Titre SEO…">
+							</div>
+							<div class="mb-3">
+								<label class="form-label">Meta description (SEO)</label>
+								<textarea class="form-control" id="metaDescription" name="meta_description" rows="3" placeholder="Description SEO…"></textarea>
+							</div>
 						</div>
 					</div>
 
-					<hr>
-
-					<div class="row">
-						<div class="col-12">
-							<h5 class="mb-2">Hero</h5>
+					{{-- Hero --}}
+					<div class="card h-auto">
+						<div class="card-header d-block py-3">
+							<h4 class="card-title--medium mb-0">Hero</h4>
 						</div>
-						<div class="col-md-6 mb-3">
-							<label class="form-label">Titre hero</label>
-							<input type="text" class="form-control" id="heroTitle" placeholder="Titre…">
-						</div>
-						<div class="col-md-6 mb-3">
-							<label class="form-label">Image hero (URL ou chemin)</label>
-							<input type="text" class="form-control" id="heroImage" placeholder="images/…">
-						</div>
-						<div class="col-12 mb-3">
-							<label class="form-label">Texte hero</label>
-							<textarea class="form-control" id="heroText" rows="4" placeholder="Texte…"></textarea>
-						</div>
-					</div>
-
-					<hr>
-
-					<div class="row">
-						<div class="col-12">
-							<h5 class="mb-2">CTA</h5>
-						</div>
-						<div class="col-md-6 mb-3">
-							<label class="form-label">Label bouton</label>
-							<input type="text" class="form-control" id="ctaLabel" placeholder="Ex: Contactez-nous">
-						</div>
-						<div class="col-md-6 mb-3">
-							<label class="form-label">Lien</label>
-							<input type="text" class="form-control" id="ctaHref" placeholder="Ex: /contact">
+						<div class="card-body">
+							<div class="mb-3">
+								<label class="form-label required">Titre hero</label>
+								<input type="text" class="form-control" id="heroTitle" name="hero_title" placeholder="Titre…">
+							</div>
+							<div class="mb-3">
+								<label class="form-label">Texte hero</label>
+								<textarea class="form-control" id="heroText" name="hero_text" rows="5" placeholder="Texte du hero…"></textarea>
+							</div>
+							<div class="mb-3">
+								<label class="form-label">Image hero (URL ou chemin)</label>
+								<input type="text" class="form-control" id="heroImage" name="hero_image" placeholder="img/banner.jpg">
+							</div>
 						</div>
 					</div>
 
-					<hr>
-
-					<div class="d-flex flex-wrap gap-2">
-						<button type="button" class="btn btn-primary" id="btnSave">Enregistrer</button>
-						<button type="button" class="btn btn-outline-secondary" id="btnPreview">Prévisualiser</button>
+					{{-- CTA --}}
+					<div class="card h-auto">
+						<div class="card-header d-block py-3">
+							<h4 class="card-title--medium mb-0">CTA</h4>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-6 mb-3">
+									<label class="form-label">Label bouton</label>
+									<input type="text" class="form-control" id="ctaLabel" name="cta_label" placeholder="Ex: Contactez-nous">
+								</div>
+								<div class="col-md-6 mb-3">
+									<label class="form-label">Lien</label>
+									<input type="text" class="form-control" id="ctaHref" name="cta_href" placeholder="Ex: /contact">
+								</div>
+							</div>
+						</div>
 					</div>
 				</form>
 			</div>
-		</div>
-	</div>
 
-	<div class="col-xl-4">
-		<div class="card">
-			<div class="card-header">
-				<h4 class="card-title mb-0">Statut</h4>
-			</div>
-			<div class="card-body">
-				<div class="mb-3">
-					<label class="form-label">Statut</label>
-					<select class="default-select form-control wide" id="status">
-						<option value="published">Publié</option>
-						<option value="draft">Brouillon</option>
-					</select>
-				</div>
-				<div class="mb-3">
-					<label class="form-label">Dernière sauvegarde</label>
-					<div class="text-muted" id="lastSaved">—</div>
-				</div>
-				<div class="alert alert-info mb-0">
-					<strong>Dynamique bientôt :</strong> ces champs seront stockés en BD et serviront à générer le site comme un CMS.
-				</div>
-			</div>
-		</div>
+			<div class="col-xl-4">
+				<div class="right-sidebar-sticky">
+					{{-- Thumbnail / Aperçu image hero --}}
+					<div class="card h-auto">
+						<div class="card-header py-3">
+							<h4 class="card-title--medium mb-0">Aperçu image hero</h4>
+						</div>
+						<div class="card-body">
+							<div class="avatar-upload d-flex align-items-center">
+								<div class="position-relative w-100">
+									<div class="avatar-preview">
+										<div id="imagePreview" style="background-image: url('{{ asset('img/LOGO BRACONGO copie 1.png') }}'); background-size: contain; background-repeat: no-repeat; background-position: center; background-color: #f0f0f0; min-height: 120px;"></div>
+									</div>
+									<small class="text-muted d-block mt-2">L'aperçu se met à jour depuis le champ Image hero.</small>
+								</div>
+							</div>
+						</div>
+					</div>
 
-		<div class="card">
-			<div class="card-header">
-				<h4 class="card-title mb-0">Aperçu rapide</h4>
-			</div>
-			<div class="card-body">
-				<div class="p-3 border rounded">
-					<h6 class="mb-1" id="previewTitle">—</h6>
-					<p class="mb-2 text-muted" id="previewHeroText">—</p>
-					<div class="d-flex flex-wrap gap-2">
-						<a class="btn btn-sm btn-primary disabled" href="javascript:void(0)" id="previewCta">CTA</a>
-						<span class="badge light badge-secondary" id="previewSlug">—</span>
+					{{-- Statut --}}
+					<div class="card h-auto">
+						<div class="card-header py-3">
+							<h4 class="card-title--medium mb-0">Statut</h4>
+						</div>
+						<div class="card-body">
+							<label class="form-label">Statut</label>
+							<select class="form-control default-select h-auto wide" id="status" name="status">
+								<option value="published">Publié</option>
+								<option value="draft">Brouillon</option>
+							</select>
+							<div class="mt-3">
+								<label class="form-label">Dernière sauvegarde</label>
+								<div class="text-muted" id="lastSaved">—</div>
+							</div>
+						</div>
+					</div>
+
+					{{-- Actions --}}
+					<div class="card h-auto">
+						<div class="card-header py-3">
+							<h4 class="card-title--medium mb-0">Actions</h4>
+						</div>
+						<div class="card-body">
+							<div class="d-grid gap-2">
+								<button type="submit" form="pageForm" class="btn btn-primary" id="btnSave">
+									<i class="fa fa-save me-2"></i>Enregistrer
+								</button>
+								<a href="{{ route('admin.pages.index') }}" class="btn btn-outline-secondary">
+									<i class="fa fa-times me-2"></i>Annuler
+								</a>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -153,6 +167,7 @@
 
 @push('scripts')
 <script>
+(function() {
 	function qs(name) {
 		const url = new URL(window.location.href);
 		return url.searchParams.get(name);
@@ -164,7 +179,7 @@
 			metaTitle: "BRACONGO — Accueil",
 			metaDescription: "C'est Frais, C'est Bon, C'est TOP!",
 			heroTitle: "C'est Frais, C'est Bon, C'est TOP!",
-			heroImage: "images/banner/1.jpg",
+			heroImage: "img/coverhome.jpg",
 			heroText: "Contenu hero à rendre dynamique (texte, image, CTA, sections…).",
 			ctaLabel: "Contactez-nous", ctaHref: "/contact", status: "published"
 		}
@@ -185,30 +200,44 @@
 		}
 	}
 
-	function refreshPreview() {
-		document.getElementById("previewTitle").textContent = document.getElementById("heroTitle").value || "—";
-		document.getElementById("previewHeroText").textContent = document.getElementById("heroText").value || "—";
-		document.getElementById("previewSlug").textContent = document.getElementById("slug").value || "—";
-		document.getElementById("previewCta").textContent = document.getElementById("ctaLabel").value || "CTA";
-	}
-
 	["title", "slug", "metaTitle", "metaDescription", "heroTitle", "heroImage", "heroText", "ctaLabel", "ctaHref"].forEach(id => {
 		setValue(id, initial[id]);
 	});
 	setValue("status", initial.status);
-	refreshPreview();
 
-	document.getElementById("pageForm").addEventListener("input", refreshPreview);
+	// Mise à jour de l'aperçu image quand heroImage change
+	const heroImageEl = document.getElementById("heroImage");
+	if (heroImageEl) {
+		heroImageEl.addEventListener("input", function() {
+			updateImagePreview(this.value);
+		});
+	}
+
+	function updateImagePreview(url) {
+		const preview = document.getElementById("imagePreview");
+		if (!preview) return;
+		if (url && url.trim()) {
+			const base = "{{ url('/') }}";
+			const fullUrl = url.startsWith("http") ? url : (url.startsWith("/") ? base + url : base + "/" + url.replace(/^\//, ""));
+			preview.style.backgroundImage = "url('" + fullUrl + "')";
+			preview.style.backgroundSize = "cover";
+		} else {
+			preview.style.backgroundImage = "url('{{ asset('img/LOGO BRACONGO copie 1.png') }}')";
+			preview.style.backgroundSize = "contain";
+		}
+	}
+
+	// Initial preview
+	updateImagePreview(initial.heroImage);
 
 	function save() {
 		document.getElementById("lastSaved").textContent = new Date().toLocaleString("fr-FR");
 	}
 
-	document.getElementById("btnSave").addEventListener("click", save);
-	document.getElementById("btnSaveTop").addEventListener("click", save);
-	document.getElementById("btnPreview").addEventListener("click", () => {
-		refreshPreview();
-		window.scrollTo({ top: 0, behavior: "smooth" });
+	document.getElementById("pageForm").addEventListener("submit", function(e) {
+		e.preventDefault();
+		save();
 	});
+})();
 </script>
 @endpush

@@ -2,12 +2,10 @@
 
 @section('title', 'Dashboard CMS')
 @section('body-class', 'bracongo-no-sidebar')
-@section('footer-text', 'Back-office CMS (prototype)')
+@section('footer-text', 'Back-office CMS Bracongo')
 
 @push('styles')
 <link href="{{ asset('admin/vendor/swiper/css/swiper-bundle.min.css') }}" rel="stylesheet">
-<link href="{{ asset('admin/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
-<link href="{{ asset('admin/vendor/jqvmap/css/jqvmap.min.css') }}" rel="stylesheet">
 <style>
 	.row.page-titles { margin-bottom: 12px; }
 	.page-head { margin-bottom: 18px; }
@@ -22,7 +20,7 @@
 <div class="input-group search-area">
 	<input type="text" class="form-control" placeholder="Rechercher…">
 	<span class="input-group-text">
-		<a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a>
+		<a href="javascript:void(0)"><i class="flaticon-search-interface-symbol"></i></a>
 	</span>
 </div>
 @endpush
@@ -32,16 +30,18 @@
 	<div class="row">
 		<div class="col-sm-6 mb-sm-4 mb-3">
 			<h3 class="mb-0">Bienvenue, {{ Auth::user()->name ?? 'Admin' }}</h3>
-			<p class="mb-0">Voici l'état de votre back-office CMS</p>
+			<p class="mb-0">Vue d'ensemble de votre back-office CMS</p>
 		</div>
 	</div>
 </div>
 
+{{-- Carrousel Hero Slides --}}
 <div class="row">
 	<div class="col-12">
 		<div class="card">
-			<div class="card-header border-0 pb-0">
-				<h4 class="mb-0">Carrousel — Bannières des pages</h4>
+			<div class="card-header border-0 pb-0 d-flex justify-content-between align-items-center">
+				<h4 class="mb-0">Bannières — Hero Slides</h4>
+				<a href="{{ route('admin.hero-slides.index') }}" class="btn btn-sm btn-outline-primary">Gérer</a>
 			</div>
 			<div class="card-body">
 				<div class="swiper bracongo-banner-swiper">
@@ -49,9 +49,9 @@
 						<div class="swiper-slide">
 							<div class="bracongo-banner-slide">
 								<div>
-									<h3 class="mb-1">Espace réservé</h3>
+									<h3 class="mb-1">{{ $statsSlides }} slide{{ $statsSlides > 1 ? 's' : '' }} actif{{ $statsSlides > 1 ? 's' : '' }}</h3>
 									<p class="mb-0 opacity-75">
-										Ici on affichera toutes les bannières (hero/banner) des pages, récupérées depuis la BD.
+										Images du carrousel d'accueil administrables via Hero Slides.
 									</p>
 								</div>
 							</div>
@@ -59,27 +59,22 @@
 						<div class="swiper-slide">
 							<div class="bracongo-banner-slide bracongo-banner-slide--alt">
 								<div>
-									<h3 class="mb-1">Dynamique bientôt</h3>
-									<p class="mb-0 opacity-75">
-										Images, CTA et textes seront administrables via le back-office.
-									</p>
+									<h3 class="mb-1">100% dynamique</h3>
+									<p class="mb-0 opacity-75">Données issues de la base.</p>
 								</div>
 							</div>
 						</div>
 						<div class="swiper-slide">
 							<div class="bracongo-banner-slide bracongo-banner-slide--dark">
 								<div>
-									<h3 class="mb-1">100% responsive</h3>
-									<p class="mb-0 opacity-75">
-										Le carrousel s'adapte (desktop/tablette/mobile).
-									</p>
+									<h3 class="mb-1">Responsive</h3>
+									<p class="mb-0 opacity-75">Adapté mobile & desktop.</p>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="swiper-pagination"></div>
 				</div>
-
 				<style>
 					.bracongo-banner-swiper { width: 100%; }
 					.bracongo-banner-slide {
@@ -106,134 +101,167 @@
 	</div>
 </div>
 
+{{-- Stats KPI --}}
 <div class="row">
-	<div class="col-xl-3 col-sm-6">
+	<div class="col-xl-2 col-md-4 col-sm-6">
 		<div class="card">
 			<div class="card-header border-0 pb-0">
-				<h6 class="mb-0">Pages</h6>
-				<div class="dropdown ms-auto c-pointer">
-					<a class="btn-link" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="fa fa-ellipsis-v text-muted"></i>
-					</a>
-					<div class="dropdown-menu dropdown-menu-end">
-						<a class="dropdown-item" href="{{ route('admin.pages.index') }}">Voir la liste</a>
-						<a class="dropdown-item" href="{{ route('admin.pages.create') }}">Créer / éditer</a>
-					</div>
-				</div>
+				<h6 class="mb-0">Messages</h6>
 			</div>
 			<div class="card-body">
-				<h2 class="mb-0" id="kpiPages">—</h2>
-				<small class="text-muted">Contenus CMS</small>
+				<h2 class="mb-0">{{ $statsMessages }}</h2>
+				<small class="text-muted">Reçus</small>
+			</div>
+			<div class="card-footer border-0 pt-0">
+				<a href="{{ route('admin.messages.index') }}" class="text-primary small">Voir</a>
 			</div>
 		</div>
 	</div>
-	<div class="col-xl-3 col-sm-6">
+	<div class="col-xl-2 col-md-4 col-sm-6">
 		<div class="card">
 			<div class="card-header border-0 pb-0">
-				<h6 class="mb-0">Images</h6>
-				<div class="dropdown ms-auto c-pointer">
-					<a class="btn-link" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="fa fa-ellipsis-v text-muted"></i>
-					</a>
-					<div class="dropdown-menu dropdown-menu-end">
-						<a class="dropdown-item" href="javascript:void(0)">Bibliothèque</a>
-					</div>
-				</div>
+				<h6 class="mb-0">Non lus</h6>
 			</div>
 			<div class="card-body">
-				<h2 class="mb-0" id="kpiImages">—</h2>
-				<small class="text-muted">Bannières, hero, logos, etc.</small>
+				<h2 class="mb-0 {{ $statsNonLus > 0 ? 'text-danger' : '' }}">{{ $statsNonLus }}</h2>
+				<small class="text-muted">À traiter</small>
+			</div>
+			<div class="card-footer border-0 pt-0">
+				<a href="{{ route('admin.messages.index') }}" class="text-primary small">Voir</a>
 			</div>
 		</div>
 	</div>
-	<div class="col-xl-3 col-sm-6">
+	<div class="col-xl-2 col-md-4 col-sm-6">
 		<div class="card">
 			<div class="card-header border-0 pb-0">
-				<h6 class="mb-0">CTA</h6>
-				<div class="dropdown ms-auto c-pointer">
-					<a class="btn-link" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="fa fa-ellipsis-v text-muted"></i>
-					</a>
-					<div class="dropdown-menu dropdown-menu-end">
-						<a class="dropdown-item" href="{{ route('admin.pages.create') }}">Éditer une page</a>
-					</div>
-				</div>
+				<h6 class="mb-0">Offres</h6>
 			</div>
 			<div class="card-body">
-				<h2 class="mb-0" id="kpiCtas">—</h2>
-				<small class="text-muted">Boutons / liens stratégiques</small>
+				<h2 class="mb-0">{{ $statsOffres }}</h2>
+				<small class="text-muted">Actives</small>
+			</div>
+			<div class="card-footer border-0 pt-0">
+				<a href="{{ route('admin.offres-emploi.index') }}" class="text-primary small">Voir</a>
 			</div>
 		</div>
 	</div>
-	<div class="col-xl-3 col-sm-6">
+	<div class="col-xl-2 col-md-4 col-sm-6">
 		<div class="card">
 			<div class="card-header border-0 pb-0">
-				<h6 class="mb-0">Statut</h6>
-				<div class="dropdown ms-auto c-pointer">
-					<a class="btn-link" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="fa fa-ellipsis-v text-muted"></i>
-					</a>
-					<div class="dropdown-menu dropdown-menu-end">
-						<a class="dropdown-item" href="javascript:void(0)">Paramètres</a>
-					</div>
-				</div>
+				<h6 class="mb-0">Slides</h6>
 			</div>
 			<div class="card-body">
-				<h2 class="mb-0">Responsive</h2>
-				<small class="text-muted">Priorité absolue</small>
+				<h2 class="mb-0">{{ $statsSlides }}</h2>
+				<small class="text-muted">Hero</small>
+			</div>
+			<div class="card-footer border-0 pt-0">
+				<a href="{{ route('admin.hero-slides.index') }}" class="text-primary small">Voir</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-2 col-md-4 col-sm-6">
+		<div class="card">
+			<div class="card-header border-0 pb-0">
+				<h6 class="mb-0">Valeurs</h6>
+			</div>
+			<div class="card-body">
+				<h2 class="mb-0">{{ $statsValeurs }}</h2>
+				<small class="text-muted">PREMIERS</small>
+			</div>
+			<div class="card-footer border-0 pt-0">
+				<a href="{{ route('admin.valeurs.index') }}" class="text-primary small">Voir</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-2 col-md-4 col-sm-6">
+		<div class="card">
+			<div class="card-header border-0 pb-0">
+				<h6 class="mb-0">Galerie</h6>
+			</div>
+			<div class="card-body">
+				<h2 class="mb-0">{{ $statsGalerie }}</h2>
+				<small class="text-muted">Footer</small>
+			</div>
+			<div class="card-footer border-0 pt-0">
+				<a href="{{ route('admin.footer-gallery.index') }}" class="text-primary small">Voir</a>
 			</div>
 		</div>
 	</div>
 </div>
 
 <div class="row">
+	{{-- Derniers messages --}}
 	<div class="col-xl-8">
 		<div class="card">
-			<div class="card-header">
-				<h4 class="mb-0">Pilotage CMS (aperçu)</h4>
+			<div class="card-header d-flex justify-content-between align-items-center">
+				<h4 class="mb-0">Derniers messages</h4>
+				<a href="{{ route('admin.messages.index') }}" class="btn btn-sm btn-outline-primary">Voir tout</a>
 			</div>
-			<div class="card-body">
-				<div class="row g-3">
-					<div class="col-md-6">
-						<div class="p-3 border rounded">
-							<h6 class="mb-1">Objectif</h6>
-							<p class="mb-0 text-muted">
-								Tout rendre dynamique : textes, images, sections, CTA… via back-office.
-							</p>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="p-3 border rounded">
-							<h6 class="mb-1">Réflexe</h6>
-							<p class="mb-0 text-muted">
-								Les composants HTML doivent venir de WorldNic (sauf force majeure).
-							</p>
-						</div>
-					</div>
-					<div class="col-12">
-						<div class="d-flex flex-wrap gap-2">
-							<a href="{{ route('admin.pages.index') }}" class="btn btn-primary">Gérer les pages</a>
-							<a href="{{ route('admin.pages.create') }}" class="btn btn-outline-primary">Éditer une page</a>
-						</div>
-					</div>
+			<div class="card-body p-0">
+				@if($derniersMessages->isEmpty())
+				<div class="p-4 text-center text-muted">
+					Aucun message pour le moment.
 				</div>
+				@else
+				<div class="table-responsive">
+					<table class="table table-hover mb-0">
+						<thead>
+							<tr>
+								<th>Expéditeur</th>
+								<th>Sujet</th>
+								<th>Date</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($derniersMessages as $msg)
+							<tr class="{{ !$msg->lu ? 'table-warning' : '' }}">
+								<td>
+									<strong>{{ $msg->name }}</strong>
+									<br><small class="text-muted">{{ $msg->email }}</small>
+								</td>
+								<td>{{ Str::limit($msg->subject ?? '—', 30) }}</td>
+								<td>{{ $msg->created_at->format('d/m/Y H:i') }}</td>
+								<td>
+									<a href="{{ route('admin.messages.show', $msg) }}" class="btn btn-xs btn-light">Ouvrir</a>
+								</td>
+							</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+				@endif
 			</div>
 		</div>
 	</div>
+
+	{{-- Actions rapides --}}
 	<div class="col-xl-4">
 		<div class="card">
-			<div class="card-header border-0 pb-0">
+			<div class="card-header">
 				<h4 class="mb-0">Actions rapides</h4>
 			</div>
 			<div class="card-body">
-				<ul class="list-group">
-					<li class="list-group-item d-flex justify-content-between align-items-center">
-						Créer une page
-						<a class="btn btn-sm btn-primary" href="{{ route('admin.pages.create') }}">Ouvrir</a>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item d-flex justify-content-between align-items-center px-0">
+						<span>Page Welcome</span>
+						<a class="btn btn-sm btn-primary" href="{{ route('admin.pages.welcome.edit') }}">Ouvrir</a>
 					</li>
-					<li class="list-group-item d-flex justify-content-between align-items-center">
-						Liste des pages
-						<a class="btn btn-sm btn-outline-primary" href="{{ route('admin.pages.index') }}">Voir</a>
+					<li class="list-group-item d-flex justify-content-between align-items-center px-0">
+						<span>Page Accueil</span>
+						<a class="btn btn-sm btn-outline-primary" href="{{ route('admin.pages.accueil.edit') }}">Ouvrir</a>
+					</li>
+					<li class="list-group-item d-flex justify-content-between align-items-center px-0">
+						<span>Offres d'emploi</span>
+						<a class="btn btn-sm btn-outline-primary" href="{{ route('admin.offres-emploi.index') }}">Voir</a>
+					</li>
+					<li class="list-group-item d-flex justify-content-between align-items-center px-0">
+						<span>Messages</span>
+						<a class="btn btn-sm btn-outline-primary" href="{{ route('admin.messages.index') }}">Voir</a>
+					</li>
+					<li class="list-group-item d-flex justify-content-between align-items-center px-0">
+						<span>Paramètres</span>
+						<a class="btn btn-sm btn-outline-secondary" href="{{ route('admin.parametres.edit') }}">Ouvrir</a>
 					</li>
 				</ul>
 			</div>
@@ -248,11 +276,6 @@
 
 @push('scripts')
 <script>
-	const mockCmsStats = { pages: 7, images: 128, ctas: 19 };
-	document.getElementById("kpiPages").textContent = mockCmsStats.pages;
-	document.getElementById("kpiImages").textContent = mockCmsStats.images;
-	document.getElementById("kpiCtas").textContent = mockCmsStats.ctas;
-
 	if (typeof Swiper !== "undefined") {
 		new Swiper(".bracongo-banner-swiper", {
 			loop: true,
