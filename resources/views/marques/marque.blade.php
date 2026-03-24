@@ -44,11 +44,12 @@
                         </div>
                         <div class="relative z-20 text-center px-4">
                             @php
+                                $catBoisson = $marque->boissons->first()?->categorie ?? 'bieres';
                                 $lienVoirPlus = ($marque->lien && $marque->lien !== '#')
                                     ? $marque->lien
-                                    : ($marque->categorie === 'bieres'
+                                    : ($catBoisson === 'bieres'
                                         ? route('bieres')
-                                        : route('marque.categorie', $marque->categorie));
+                                        : route('marque.categorie', $catBoisson));
                             @endphp
                             <h3 class="text-white text-xl font-bold mb-6">{{ $marque->nom }}</h3>
                             <a href="{{ $lienVoirPlus }}" class="inline-flex items-center gap-2 px-8 py-2 border border-white rounded-full text-white text-xs font-bold hover:bg-white hover:text-black transition-all">

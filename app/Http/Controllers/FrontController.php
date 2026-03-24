@@ -79,7 +79,19 @@ class FrontController extends Controller
     public function marques()
     {
         $categories = Marque::categories();
-        $marques = Marque::actives()->get()->groupBy('categorie');
+        $ordre = ['bieres', 'gazeuses', 'eaux', 'energisantes'];
+        $marques = collect();
+        foreach ($ordre as $cat) {
+            $items = Marque::actives()
+                ->whereHas('boissons', fn ($q) => $q->where('categorie', $cat))
+                ->with(['boissons' => fn ($q) => $q->where('categorie', $cat)->orderBy('ordre')])
+                ->orderBy('ordre')
+                ->get();
+            if ($items->isNotEmpty()) {
+                $marques[$cat] = $items;
+            }
+        }
+
         return view('marques.marque', compact('marques', 'categories'));
     }
 
@@ -89,14 +101,24 @@ class FrontController extends Controller
         if (!array_key_exists($categorie, $categories)) {
             abort(404);
         }
-        $marqueGroupe = Marque::actives()->byCategorie($categorie)->with('boissons')->get();
+        $marqueGroupe = Marque::actives()
+            ->whereHas('boissons', fn ($q) => $q->where('categorie', $categorie))
+            ->with(['boissons' => fn ($q) => $q->where('categorie', $categorie)->orderBy('ordre')])
+            ->orderBy('ordre')
+            ->get();
+
         return view('marques.categorie', compact('marqueGroupe', 'categories', 'categorie'));
     }
 
     public function bieres()
     {
-        $marquesBieres = Marque::actives()->byCategorie('bieres')->with(['boissons' => fn($q) => $q->where('is_active', true)->orderBy('ordre')])->get();
-        $toutesBoissons = Boisson::actives()->whereHas('marque', fn($q) => $q->where('categorie', 'bieres'))->with('marque')->get();
+        $marquesBieres = Marque::actives()
+            ->whereHas('boissons', fn ($q) => $q->where('categorie', 'bieres'))
+            ->with(['boissons' => fn ($q) => $q->where('is_active', true)->where('categorie', 'bieres')->orderBy('ordre')])
+            ->orderBy('ordre')
+            ->get();
+        $toutesBoissons = Boisson::actives()->where('categorie', 'bieres')->with('marque')->get();
+
         return view('marques.bieres', compact('marquesBieres', 'toutesBoissons'));
     }
 
@@ -105,10 +127,11 @@ class FrontController extends Controller
         $boisson = Boisson::where('slug', 'beaufort-lager')->with('marque')->first();
         if (!$boisson) abort(404);
         $autresBoissons = Boisson::actives()
-            ->whereHas('marque', fn($q) => $q->where('categorie', 'bieres'))
+            ->where('categorie', 'bieres')
             ->where('slug', '!=', 'beaufort-lager')
             ->with('marque')
             ->get();
+
         return view('marques.beaufort', compact('boisson', 'autresBoissons'));
     }
 
@@ -117,9 +140,10 @@ class FrontController extends Controller
         $boisson = Boisson::where('slug', $slug)->where('is_active', true)->with('marque')->firstOrFail();
         $autresBoissons = Boisson::actives()
             ->where('id', '!=', $boisson->id)
-            ->whereHas('marque', fn($q) => $q->where('categorie', $boisson->marque->categorie))
+            ->where('categorie', $boisson->categorie)
             ->with('marque')
             ->get();
+
         return view('marques.boisson', compact('boisson', 'autresBoissons'));
     }
 

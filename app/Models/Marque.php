@@ -11,7 +11,7 @@ class Marque extends Model
 
     protected $fillable = [
         'nom', 'slug', 'description', 'image', 'image_banner',
-        'categorie', 'lien', 'ordre', 'is_active',
+        'lien', 'ordre', 'is_active',
     ];
 
     protected $casts = ['is_active' => 'boolean'];
@@ -24,11 +24,6 @@ class Marque extends Model
     public function scopeActives($query)
     {
         return $query->where('is_active', true)->orderBy('ordre');
-    }
-
-    public function scopeByCategorie($query, string $categorie)
-    {
-        return $query->where('categorie', $categorie);
     }
 
     public static function categories(): array

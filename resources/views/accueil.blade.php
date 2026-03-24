@@ -170,7 +170,11 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-32 pt-32 max-w-7xl mx-auto px-4">
                 @foreach($ordreCategoriesAccueil as $cat)
                 @php
-                    $marquesCat = \App\Models\Marque::actives()->byCategorie($cat)->orderBy('ordre')->take(3)->get();
+                    $marquesCat = \App\Models\Marque::actives()
+                        ->whereHas('boissons', fn ($q) => $q->where('categorie', $cat))
+                        ->orderBy('ordre')
+                        ->take(3)
+                        ->get();
                     $m1 = $marquesCat->get(0);
                     $m2 = $marquesCat->get(1);
                     $m3 = $marquesCat->get(2);

@@ -179,21 +179,21 @@ class BracongoSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         $marquesBieres = [
-            ['nom' => 'Beaufort', 'slug' => 'beaufort', 'categorie' => 'bieres', 'image' => 'img/beaufort.png', 'image_banner' => 'img/beauban.jpg', 'lien' => '/Nos-marques-bieres', 'ordre' => 1],
-            ['nom' => 'Castel Beer', 'slug' => 'castel-beer', 'categorie' => 'bieres', 'image' => 'img/castel.png', 'image_banner' => null, 'lien' => '/Nos-marques-bieres', 'ordre' => 2],
-            ['nom' => 'Doppel Munich', 'slug' => 'doppel-munich', 'categorie' => 'bieres', 'image' => 'img/dopel.png', 'image_banner' => null, 'lien' => '/Nos-marques-bieres', 'ordre' => 3],
-            ['nom' => 'Nkoyi', 'slug' => 'nkoyi', 'categorie' => 'bieres', 'image' => 'img/blonde.png', 'image_banner' => null, 'lien' => '/Nos-marques-bieres', 'ordre' => 4],
-            ['nom' => '33 Export', 'slug' => '33-export', 'categorie' => 'bieres', 'image' => 'img/33b.png', 'image_banner' => null, 'lien' => '/Nos-marques-bieres', 'ordre' => 5],
-            ['nom' => 'TEMBO', 'slug' => 'tembo', 'categorie' => 'bieres', 'image' => 'img/tembo.png', 'image_banner' => null, 'lien' => '/Nos-marques-bieres', 'ordre' => 6],
+            ['nom' => 'Beaufort', 'slug' => 'beaufort', 'image' => 'img/beaufort.png', 'image_banner' => 'img/beauban.jpg', 'lien' => '/Nos-marques-bieres', 'ordre' => 1],
+            ['nom' => 'Castel Beer', 'slug' => 'castel-beer', 'image' => 'img/castel.png', 'image_banner' => null, 'lien' => '/Nos-marques-bieres', 'ordre' => 2],
+            ['nom' => 'Doppel Munich', 'slug' => 'doppel-munich', 'image' => 'img/dopel.png', 'image_banner' => null, 'lien' => '/Nos-marques-bieres', 'ordre' => 3],
+            ['nom' => 'Nkoyi', 'slug' => 'nkoyi', 'image' => 'img/blonde.png', 'image_banner' => null, 'lien' => '/Nos-marques-bieres', 'ordre' => 4],
+            ['nom' => '33 Export', 'slug' => '33-export', 'image' => 'img/33b.png', 'image_banner' => null, 'lien' => '/Nos-marques-bieres', 'ordre' => 5],
+            ['nom' => 'TEMBO', 'slug' => 'tembo', 'image' => 'img/tembo.png', 'image_banner' => null, 'lien' => '/Nos-marques-bieres', 'ordre' => 6],
         ];
         foreach ($marquesBieres as $m) {
             Marque::create(array_merge($m, ['is_active' => true]));
         }
 
         $marquesAutres = [
-            ['nom' => 'Boissons gazeuses', 'slug' => 'boissons-gazeuses', 'categorie' => 'gazeuses', 'image' => 'img/gazeux.png', 'lien' => '#', 'ordre' => 1],
-            ['nom' => 'Eaux', 'slug' => 'eaux', 'categorie' => 'eaux', 'image' => 'img/eau.png', 'lien' => '#', 'ordre' => 2],
-            ['nom' => 'Boissons énergisantes', 'slug' => 'boissons-energisantes', 'categorie' => 'energisantes', 'image' => 'img/energie.png', 'lien' => '#', 'ordre' => 3],
+            ['nom' => 'Boissons gazeuses', 'slug' => 'boissons-gazeuses', 'image' => 'img/gazeux.png', 'lien' => '#', 'ordre' => 1],
+            ['nom' => 'Eaux', 'slug' => 'eaux', 'image' => 'img/eau.png', 'lien' => '#', 'ordre' => 2],
+            ['nom' => 'Boissons énergisantes', 'slug' => 'boissons-energisantes', 'image' => 'img/energie.png', 'lien' => '#', 'ordre' => 3],
         ];
         foreach ($marquesAutres as $m) {
             Marque::create(array_merge($m, ['image_banner' => null, 'is_active' => true]));
@@ -209,6 +209,7 @@ class BracongoSeeder extends Seeder
         $boissons = [
             [
                 'marque_id' => $beaufort->id,
+                'categorie' => 'bieres',
                 'nom' => 'Beaufort Lager',
                 'slug' => 'beaufort-lager',
                 'description' => "est une bière précieuse et distinguée qui célèbre et prône l'excellence. Depuis 1952, seuls les meilleurs ingrédients sont sélectionnés pour assurer une qualité exceptionnelle à cette bière blonde. Son processus de fabrication ne tolère que la perfection. Sa mousse fine et ses reflets dorés laissent présager une bière d'exception.",
@@ -228,12 +229,12 @@ class BracongoSeeder extends Seeder
                 'video_urls' => ['https://www.youtube.com/embed/3IS5fjkBA3g', 'https://www.youtube.com/embed/Tiv6UIey21M'],
                 'ordre' => 1,
             ],
-            ['marque_id' => $castel->id, 'nom' => 'Castel Beer', 'slug' => 'castel-beer', 'image' => 'img/marron.png', 'ordre' => 1],
-            ['marque_id' => $doppel->id, 'nom' => 'Doppel Munich', 'slug' => 'doppel-munich', 'image' => 'img/dopel.png', 'ordre' => 1],
-            ['marque_id' => $nkoyi->id, 'nom' => 'Nkoyi Blonde', 'slug' => 'nkoyi-blonde', 'image' => 'img/blonde.png', 'ordre' => 1],
-            ['marque_id' => $nkoyi->id, 'nom' => 'Nkoyi Black', 'slug' => 'nkoyi-black', 'image' => 'img/black.png', 'ordre' => 2],
-            ['marque_id' => $export33->id, 'nom' => '33 Export', 'slug' => '33-export', 'image' => 'img/33b.png', 'ordre' => 1],
-            ['marque_id' => $tembo->id, 'nom' => 'TEMBO', 'slug' => 'tembo', 'image' => 'img/tembo.png', 'ordre' => 1],
+            ['marque_id' => $castel->id, 'categorie' => 'bieres', 'nom' => 'Castel Beer', 'slug' => 'castel-beer', 'image' => 'img/marron.png', 'ordre' => 1],
+            ['marque_id' => $doppel->id, 'categorie' => 'bieres', 'nom' => 'Doppel Munich', 'slug' => 'doppel-munich', 'image' => 'img/dopel.png', 'ordre' => 1],
+            ['marque_id' => $nkoyi->id, 'categorie' => 'bieres', 'nom' => 'Nkoyi Blonde', 'slug' => 'nkoyi-blonde', 'image' => 'img/blonde.png', 'ordre' => 1],
+            ['marque_id' => $nkoyi->id, 'categorie' => 'bieres', 'nom' => 'Nkoyi Black', 'slug' => 'nkoyi-black', 'image' => 'img/black.png', 'ordre' => 2],
+            ['marque_id' => $export33->id, 'categorie' => 'bieres', 'nom' => '33 Export', 'slug' => '33-export', 'image' => 'img/33b.png', 'ordre' => 1],
+            ['marque_id' => $tembo->id, 'categorie' => 'bieres', 'nom' => 'TEMBO', 'slug' => 'tembo', 'image' => 'img/tembo.png', 'ordre' => 1],
         ];
         foreach ($boissons as $b) {
             Boisson::create(array_merge($b, ['is_active' => true]));

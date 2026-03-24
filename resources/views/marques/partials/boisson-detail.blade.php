@@ -1,5 +1,5 @@
 @php
-	$catMarque = $boisson->marque?->categorie ?? 'bieres';
+	$catMarque = $boisson->categorie ?? 'bieres';
 	$lienRetour = $catMarque === 'bieres'
 		? route('bieres')
 		: route('marque.categorie', $catMarque);

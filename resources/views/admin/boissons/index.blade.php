@@ -37,6 +37,7 @@
 						<th style="width:70px;">Image</th>
 						<th>Nom</th>
 						<th>Marque</th>
+						<th>Catégorie</th>
 						<th>Type</th>
 						<th class="text-center" style="width:80px;">Ordre</th>
 						<th class="text-center" style="width:100px;">Statut</th>
@@ -64,6 +65,7 @@
 							<span class="badge badge-light">{{ $boisson->marque->nom }}</span>
 							@endif
 						</td>
+						<td><span class="badge badge-light border">{{ \App\Models\Marque::categories()[$boisson->categorie] ?? $boisson->categorie }}</span></td>
 						<td class="small text-muted">{{ $boisson->type }}</td>
 						<td class="text-center"><span class="badge badge-light">{{ $boisson->ordre }}</span></td>
 						<td class="text-center">
@@ -87,7 +89,7 @@
 						</td>
 					</tr>
 					@empty
-					<tr><td colspan="7" class="text-center py-4 text-muted">Aucune boisson enregistrée.</td></tr>
+					<tr><td colspan="8" class="text-center py-4 text-muted">Aucune boisson enregistrée.</td></tr>
 					@endforelse
 				</tbody>
 			</table>

@@ -10,15 +10,6 @@
 		@error('slug')<div class="invalid-feedback">{{ $message }}</div>@enderror
 	</div>
 	<div class="col-md-6">
-		<label class="form-label fw-semibold">Catégorie <span class="text-danger">*</span></label>
-		<select class="form-select @error('categorie') is-invalid @enderror" name="categorie">
-			@foreach($categories as $key => $label)
-			<option value="{{ $key }}" {{ old('categorie', $marque->categorie ?? '') === $key ? 'selected' : '' }}>{{ $label }}</option>
-			@endforeach
-		</select>
-		@error('categorie')<div class="invalid-feedback">{{ $message }}</div>@enderror
-	</div>
-	<div class="col-md-6">
 		<label class="form-label fw-semibold">Lien <x-admin.readonly-info /> <small class="text-muted">(ex: /Nos-marques-bieres)</small></label>
 		<input type="text" class="form-control bg-light" name="lien" value="{{ old('lien', $marque->lien ?? '') }}" readonly>
 	</div>

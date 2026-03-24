@@ -6,11 +6,20 @@
 			<option value="">— Choisir une marque —</option>
 			@foreach($marques as $m)
 			<option value="{{ $m->id }}" {{ old('marque_id', $boisson->marque_id ?? '') == $m->id ? 'selected' : '' }}>
-				{{ $m->nom }} <small>({{ \App\Models\Marque::categories()[$m->categorie] ?? $m->categorie }})</small>
+				{{ $m->nom }}
 			</option>
 			@endforeach
 		</select>
 		@error('marque_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+	</div>
+	<div class="col-md-6">
+		<label class="form-label fw-semibold">Catégorie produit <span class="text-danger">*</span></label>
+		<select class="form-select @error('categorie') is-invalid @enderror" name="categorie">
+			@foreach(\App\Models\Marque::categories() as $key => $label)
+			<option value="{{ $key }}" {{ old('categorie', $boisson->categorie ?? 'bieres') === $key ? 'selected' : '' }}>{{ $label }}</option>
+			@endforeach
+		</select>
+		@error('categorie')<div class="invalid-feedback">{{ $message }}</div>@enderror
 	</div>
 	<div class="col-md-6">
 		<label class="form-label fw-semibold">Nom <span class="text-danger">*</span></label>

@@ -5,22 +5,40 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Marque;
 use App\Traits\HandlesImageUpload;
+use App\Models\Boisson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class MarqueController extends Controller
 {
     use HandlesImageUpload;
-    public function index()
+    public function index(Request $request)
     {
-        $marques = Marque::withCount('boissons')->orderBy('categorie')->orderBy('ordre')->get();
-        return view('admin.marques.index', compact('marques'));
+        $categories = Marque::categories();
+        $marques = Marque::withCount('boissons')->orderBy('ordre')->get();
+
+        $filter = $request->query('categorie_boisson');
+        if ($filter && !array_key_exists($filter, $categories)) {
+            $filter = null;
+        }
+        $boissonsQuery = Boisson::with('marque')->orderBy('marque_id')->orderBy('ordre');
+        if ($filter) {
+            $boissonsQuery->where('categorie', $filter);
+        }
+        $boissons = $boissonsQuery->get();
+        $totalBoissons = Boisson::count();
+
+        $countsByCategory = [];
+        foreach (array_keys($categories) as $key) {
+            $countsByCategory[$key] = Boisson::where('categorie', $key)->count();
+        }
+
+        return view('admin.marques.index', compact('marques', 'boissons', 'categories', 'countsByCategory', 'filter', 'totalBoissons'));
     }
 
     public function create()
     {
-        $categories = Marque::categories();
-        return view('admin.marques.create', compact('categories'));
+        return view('admin.marques.create');
     }
 
     public function store(Request $request)
@@ -31,7 +49,6 @@ class MarqueController extends Controller
             'description'  => 'nullable|string',
             'image'        => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
             'image_banner' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
-            'categorie'    => 'required|in:bieres,gazeuses,eaux,energisantes',
             'lien'         => 'nullable|string|max:255',
             'ordre'        => 'nullable|integer|min:0',
             'is_active'    => 'nullable|boolean',
@@ -55,8 +72,7 @@ class MarqueController extends Controller
 
     public function edit(Marque $marque)
     {
-        $categories = Marque::categories();
-        return view('admin.marques.edit', compact('marque', 'categories'));
+        return view('admin.marques.edit', compact('marque'));
     }
 
     public function update(Request $request, Marque $marque)
@@ -67,7 +83,6 @@ class MarqueController extends Controller
             'description'  => 'nullable|string',
             'image'        => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
             'image_banner' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
-            'categorie'    => 'required|in:bieres,gazeuses,eaux,energisantes',
             'lien'         => 'nullable|string|max:255',
             'ordre'        => 'nullable|integer|min:0',
             'is_active'    => 'nullable|boolean',

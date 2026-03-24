@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('boissons', function (Blueprint $table) {
             $table->id();
             $table->foreignId('marque_id')->constrained('marques')->cascadeOnDelete();
+            $table->string('categorie')->default('bieres'); // bieres, gazeuses, eaux, energisantes
             $table->string('nom');
             $table->string('slug')->unique();
             $table->text('description')->nullable();

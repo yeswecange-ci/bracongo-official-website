@@ -32,7 +32,7 @@
 			@php
 				$lienVoirPlus = ($marque->lien && $marque->lien !== '#')
 					? $marque->lien
-					: ($marque->categorie === 'bieres' ? route('bieres') : route('marque.categorie', $marque->categorie));
+					: ($categorie === 'bieres' ? route('bieres') : route('marque.categorie', $categorie));
 			@endphp
 			<div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-10">
 				<div class="absolute top-10 left-0 right-0 flex justify-center opacity-30 pointer-events-none">

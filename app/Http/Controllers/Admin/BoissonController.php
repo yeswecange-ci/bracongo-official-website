@@ -19,7 +19,7 @@ class BoissonController extends Controller
 
     public function create()
     {
-        $marques = Marque::orderBy('categorie')->orderBy('ordre')->get();
+        $marques = Marque::orderBy('nom')->get();
         return view('admin.boissons.create', compact('marques'));
     }
 
@@ -27,6 +27,7 @@ class BoissonController extends Controller
     {
         $data = $request->validate([
             'marque_id'      => 'required|exists:marques,id',
+            'categorie'      => 'required|in:bieres,gazeuses,eaux,energisantes',
             'nom'            => 'required|string|max:255',
             'slug'           => 'required|string|max:255|unique:boissons',
             'description'    => 'nullable|string',
@@ -64,7 +65,7 @@ class BoissonController extends Controller
 
     public function edit(Boisson $boisson)
     {
-        $marques = Marque::orderBy('categorie')->orderBy('ordre')->get();
+        $marques = Marque::orderBy('nom')->get();
         return view('admin.boissons.edit', compact('boisson', 'marques'));
     }
 
@@ -72,6 +73,7 @@ class BoissonController extends Controller
     {
         $data = $request->validate([
             'marque_id'      => 'required|exists:marques,id',
+            'categorie'      => 'required|in:bieres,gazeuses,eaux,energisantes',
             'nom'            => 'required|string|max:255',
             'slug'           => 'required|string|max:255|unique:boissons,slug,' . $boisson->id,
             'description'    => 'nullable|string',

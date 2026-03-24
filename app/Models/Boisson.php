@@ -10,7 +10,7 @@ class Boisson extends Model
     protected $table = 'boissons';
 
     protected $fillable = [
-        'marque_id', 'nom', 'slug', 'description',
+        'marque_id', 'categorie', 'nom', 'slug', 'description',
         'hero_image', 'image', 'logo',
         'annee_lancement', 'ingredients', 'type', 'taux_alcool',
         'conditionnement', 'slogan', 'ddm', 'type_bouteille',
@@ -32,5 +32,10 @@ class Boisson extends Model
     public function scopeActives($query)
     {
         return $query->where('is_active', true)->orderBy('ordre');
+    }
+
+    public function scopeByCategorie($query, string $categorie)
+    {
+        return $query->where('categorie', $categorie);
     }
 }
