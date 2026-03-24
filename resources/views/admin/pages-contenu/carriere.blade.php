@@ -30,13 +30,12 @@
 		<div class="card">
 			<div class="card-header"><h4 class="card-title">Contenu de la page</h4></div>
 			<div class="card-body">
-				<form action="{{ route('admin.pages.carriere.update') }}" method="POST">
+				<form action="{{ route('admin.pages.carriere.update') }}" method="POST" enctype="multipart/form-data">
 					@csrf
 					@method('PUT')
 					<div class="row g-3">
 						<div class="col-12">
-							<label class="form-label fw-semibold">Image hero <small class="text-muted">(ex: img/rejoins.png)</small></label>
-							<input type="text" class="form-control" name="hero_image" value="{{ old('hero_image', $page->hero_image) }}">
+							<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 						</div>
 						<div class="col-12">
 							<label class="form-label fw-semibold">Texte d'introduction <span class="text-danger">*</span></label>

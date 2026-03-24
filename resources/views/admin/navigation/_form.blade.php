@@ -5,8 +5,8 @@
 		@error('label')<div class="invalid-feedback">{{ $message }}</div>@enderror
 	</div>
 	<div class="col-12">
-		<label class="form-label fw-semibold">URL</label>
-		<input type="text" class="form-control" name="url" value="{{ old('url', $navigationItem->url ?? '#') }}" placeholder="/histoire, /Contact, #...">
+		<label class="form-label fw-semibold">URL <x-admin.readonly-info /></label>
+		<input type="text" class="form-control bg-light" name="url" value="{{ old('url', $navigationItem->url ?? '#') }}" placeholder="/histoire, /Contact, #..." readonly>
 	</div>
 	<div class="col-md-6">
 		<label class="form-label fw-semibold">Item parent <span class="text-muted small">(laisser vide si item principal)</span></label>

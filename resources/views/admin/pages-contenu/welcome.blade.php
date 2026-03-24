@@ -31,14 +31,12 @@
 		<div class="card">
 			<div class="card-header"><h4 class="card-title">Contenu de la page de garde</h4></div>
 			<div class="card-body">
-				<form action="{{ route('admin.pages.welcome.update') }}" method="POST">
+				<form action="{{ route('admin.pages.welcome.update') }}" method="POST" enctype="multipart/form-data">
 					@csrf
 					@method('PUT')
 					<div class="row g-4">
 						<div class="col-12">
-							<label class="form-label fw-semibold">Image de fond <small class="text-muted">(chemin: img/fete.png)</small></label>
-							<input type="text" class="form-control @error('fond_image') is-invalid @enderror" name="fond_image" value="{{ old('fond_image', $page->fond_image) }}">
-							@error('fond_image')<div class="invalid-feedback">{{ $message }}</div>@enderror
+							<x-admin.image-upload name="fond_image" label="Image de fond" :value="$page->fond_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 						</div>
 						<div class="col-12">
 							<label class="form-label fw-semibold">Titre principal <span class="text-danger">*</span></label>

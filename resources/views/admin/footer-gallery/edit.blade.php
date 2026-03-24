@@ -24,7 +24,7 @@
 		@include('admin.layouts.partials.alerts')
 		<div class="card">
 			<div class="card-body">
-				<form action="{{ route('admin.footer-gallery.update', $footerGallery) }}" method="POST">
+				<form action="{{ route('admin.footer-gallery.update', $footerGallery) }}" method="POST" enctype="multipart/form-data">
 					@csrf
 					@method('PUT')
 					@include('admin.footer-gallery._form')

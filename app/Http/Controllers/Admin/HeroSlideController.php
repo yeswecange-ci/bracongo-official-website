@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\HeroSlide;
+use App\Traits\HandlesImageUpload;
 use Illuminate\Http\Request;
 
 class HeroSlideController extends Controller
 {
+    use HandlesImageUpload;
     public function index()
     {
         $slides = HeroSlide::orderBy('ordre')->get();
@@ -22,12 +24,13 @@ class HeroSlideController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'image'     => 'required|string|max:255',
+            'image'     => 'required|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
             'alt'       => 'nullable|string|max:255',
             'ordre'     => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
         ]);
         $data['is_active'] = $request->boolean('is_active');
+        $data['image'] = $this->uploadImage($request->file('image'), 'uploads/hero-slides', 'slide');
 
         HeroSlide::create($data);
 
@@ -42,13 +45,19 @@ class HeroSlideController extends Controller
 
     public function update(Request $request, HeroSlide $heroSlide)
     {
-        $data = $request->validate([
-            'image'     => 'required|string|max:255',
+        $rules = [
             'alt'       => 'nullable|string|max:255',
             'ordre'     => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
-        ]);
+        ];
+        $rules['image'] = $request->hasFile('image') ? 'required|image|mimes:jpeg,jpg,png,gif,webp|max:2048' : 'nullable';
+        $data = $request->validate($rules);
         $data['is_active'] = $request->boolean('is_active');
+        if ($request->hasFile('image')) {
+            $data['image'] = $this->uploadImage($request->file('image'), 'uploads/hero-slides', 'slide');
+        } else {
+            unset($data['image']);
+        }
 
         $heroSlide->update($data);
 

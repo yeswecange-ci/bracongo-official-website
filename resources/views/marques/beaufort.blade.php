@@ -1,16 +1,17 @@
 @extends('layout.app')
 
-@section('title', 'Beaufort Lager')
+@section('title', $boisson->nom)
 
 @section('content')
     <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
-        <img src="{{ asset('img/beauban.jpg') }}" alt="Beaufort Lager" class="w-full h-full object-cover">
+        <img src="{{ asset($boisson->hero_image ?? $boisson->image ?? 'img/beauban.jpg') }}" alt="{{ $boisson->nom }}" class="w-full h-full object-cover">
     </div>
 
     <section class="flex flex-col md:flex-row min-h-screen">
         <div class="w-full md:w-1/3 bg-[#00382B] flex items-center justify-center p-12">
             <div class="h-[600px] md:h-[800px]">
-                <img src="{{ asset('img/beaufort.png') }}" alt="Beaufort Lager Bottle" class="h-full object-contain drop-shadow-2xl">
+                <img src="{{ asset($boisson->image ?? 'img/beaufort.png') }}" alt="{{ $boisson->nom }} Bouteille"
+                    class="h-full object-contain drop-shadow-2xl">
             </div>
         </div>
 
@@ -22,109 +23,124 @@
                 <span>Bières</span>
             </a>
 
+            @if($boisson->logo)
             <div class="mb-12">
-                <img src="{{ asset('img/logob.png') }}" alt="Beaufort Logo" class="h-40 w-auto">
+                <img src="{{ asset($boisson->logo) }}" alt="{{ $boisson->nom }} Logo" class="h-40 w-auto">
             </div>
+            @endif
 
             <div class="space-y-6 mb-16">
-                <h1 class="text-4xl md:text-5xl font-bold text-[#00382B]">Beaufort lager</h1>
+                <h1 class="text-4xl md:text-5xl font-bold text-[#00382B]">{{ $boisson->nom }}</h1>
+                @if($boisson->description)
                 <div class="space-y-4 text-gray-800 leading-relaxed text-lg font-medium">
-                    <p>est une bière précieuse et distinguée qui célèbre et prône l'excellence.</p>
-                    <p>Depuis 1952, seuls les meilleurs ingrédients sont sélectionnés pour assurer une qualité exceptionnelle à cette bière blonde.</p>
-                    <p>Son processus de fabrication ne tolère que la perfection. Sa mousse fine et ses reflets dorés laissent présager une bière d'exception. Son goût subtil et délicat, et sa légendaire finesse vous garantissent un goût unique à chaque gorgée.</p>
+                    <p>{{ $boisson->description }}</p>
                 </div>
+                @endif
             </div>
 
+            @if($boisson->annee_lancement || $boisson->ingredients || $boisson->type || $boisson->taux_alcool || $boisson->conditionnement || $boisson->slogan || $boisson->ddm || $boisson->type_bouteille || $boisson->positionnement || $boisson->coeur_cible)
             <div class="space-y-8">
                 <h2 class="text-2xl font-bold text-gray-900">Fiche technique</h2>
                 <div class="bg-[#F0F4F4] rounded-3xl p-8 md:p-12">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8">
+                        @if($boisson->annee_lancement)
                         <div>
                             <h4 class="text-gray-900 font-bold mb-1">Année de lancement</h4>
-                            <p class="text-gray-700">2013</p>
+                            <p class="text-gray-700">{{ $boisson->annee_lancement }}</p>
                         </div>
+                        @endif
+                        @if($boisson->ingredients)
                         <div>
                             <h4 class="text-gray-900 font-bold mb-1">Ingrédients</h4>
-                            <p class="text-gray-700">Eau, malt, maïs, houblon.</p>
+                            <p class="text-gray-700">{{ $boisson->ingredients }}</p>
                         </div>
+                        @endif
+                        @if($boisson->type)
                         <div>
                             <h4 class="text-gray-900 font-bold mb-1">Type</h4>
-                            <p class="text-gray-700">Bière blonde</p>
+                            <p class="text-gray-700">{{ $boisson->type }}</p>
                         </div>
-
+                        @endif
+                        @if($boisson->taux_alcool)
                         <div>
                             <h4 class="text-gray-900 font-bold mb-1">Taux d'alcool</h4>
-                            <p class="text-gray-700">5%</p>
+                            <p class="text-gray-700">{{ $boisson->taux_alcool }}</p>
                         </div>
+                        @endif
+                        @if($boisson->conditionnement)
                         <div>
                             <h4 class="text-gray-900 font-bold mb-1">Conditionnement</h4>
-                            <p class="text-gray-700">33 cl et 50 cl</p>
+                            <p class="text-gray-700">{{ $boisson->conditionnement }}</p>
                         </div>
+                        @endif
+                        @if($boisson->slogan)
                         <div>
                             <h4 class="text-gray-900 font-bold mb-1">Slogan</h4>
-                            <p class="text-gray-700 italic">Au cœur de la fraîcheur</p>
+                            <p class="text-gray-700 italic">{{ $boisson->slogan }}</p>
                         </div>
-
+                        @endif
+                        @if($boisson->ddm)
                         <div>
                             <h4 class="text-gray-900 font-bold mb-1">Date de Durabilité Minimale</h4>
-                            <p class="text-gray-700">12 mois</p>
+                            <p class="text-gray-700">{{ $boisson->ddm }}</p>
                         </div>
+                        @endif
+                        @if($boisson->type_bouteille)
                         <div>
                             <h4 class="text-gray-900 font-bold mb-1">Type de bouteille</h4>
-                            <p class="text-gray-700">ALE Verte et Bremer verte</p>
+                            <p class="text-gray-700">{{ $boisson->type_bouteille }}</p>
                         </div>
+                        @endif
+                        @if($boisson->positionnement)
                         <div>
                             <h4 class="text-gray-900 font-bold mb-1">Positionnement</h4>
-                            <p class="text-gray-700">Premium</p>
+                            <p class="text-gray-700">{{ $boisson->positionnement }}</p>
                         </div>
-
+                        @endif
+                        @if($boisson->coeur_cible)
                         <div class="sm:col-span-2">
-                            <h4 class="text-gray-900 font-bold mb-1">Coeur de Cible</h4>
-                            <p class="text-gray-700">25-35 ans (Amateurs de mode et de beauté)</p>
+                            <h4 class="text-gray-900 font-bold mb-1">Cœur de Cible</h4>
+                            <p class="text-gray-700">{{ $boisson->coeur_cible }}</p>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </section>
 
+    @if($boisson->video_urls && count($boisson->video_urls) > 0)
     <section class="bg-[#002B21] py-20">
         <div class="container mx-auto px-4 lg:px-12 max-w-7xl">
             <div class="flex items-center gap-3 mb-12">
                 <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-6 w-auto">
-                <h2 class="text-white text-2xl md:text-3xl font-bold">Au cœur de la fraîcheur</h2>
+                <h2 class="text-white text-2xl md:text-3xl font-bold">{{ $boisson->slogan ?? $boisson->nom }}</h2>
             </div>
-
             <div class="flex flex-col lg:flex-row gap-8">
-                <div class="lg:w-3/4 relative rounded-[2rem] overflow-hidden group">
-                    <iframe width="100%" height="450px" src="https://www.youtube.com/embed/3IS5fjkBA3g?si=ESfada5fR2vLAq2n&amp;start=4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <div class="lg:w-3/4 relative rounded-[2rem] overflow-hidden">
+                    <iframe width="100%" height="450px" src="{{ $boisson->video_urls[0] }}"
+                        title="{{ $boisson->nom }}" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
-
+                @if(count($boisson->video_urls) > 1)
                 <div class="lg:w-1/4 flex flex-col gap-6">
-<div class="relative rounded-[2rem] overflow-hidden group h-[180px] md:h-[220px]">
-                    <iframe width="450" height="250" src="https://www.youtube.com/embed/Tiv6UIey21M?si=fmXFYFwNcAED_hey" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            
-                        </div>
-                    </div>                    <div class="relative rounded-[2rem] overflow-hidden group h-[180px] md:h-[220px]">
-                    <iframe width="450" height="250" src="https://www.youtube.com/embed/Tiv6UIey21M?si=fmXFYFwNcAED_hey" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            
-                        </div>
+                    @foreach(array_slice($boisson->video_urls, 1, 2) as $url)
+                    <div class="relative rounded-[2rem] overflow-hidden h-[180px] md:h-[220px]">
+                        <iframe width="100%" height="100%" src="{{ $url }}" title="{{ $boisson->nom }}" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
-                    <div class="mt-auto">
-                        <a href="#" class="inline-flex items-center gap-2 px-8 py-3 border border-white rounded-full text-white text-sm font-bold hover:bg-white hover:text-black transition-all">
-                            <span>Plus de vidéo</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </a>
-                    </div>
+                    @endforeach
                 </div>
+                @endif
             </div>
         </div>
     </section>
+    @endif
 
+    @if($autresBoissons->isNotEmpty())
     <section class="py-24 bg-white overflow-hidden">
         <div class="container mx-auto px-4 lg:px-12 max-w-7xl">
             <div class="flex flex-col lg:flex-row gap-16 items-start">
@@ -133,132 +149,28 @@
                         <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-6 w-auto">
                         <h2 class="text-3xl font-bold text-gray-900">Autres bières</h2>
                     </div>
-                    <p class="text-gray-600 text-sm font-medium leading-relaxed mb-8">
-                        Lorem ipsum dolor sit amet consectetur. Nec augue tortor cursus vulputate ultricies mattis a. Bibendum gravida morbi urna at id dui vitae.
-                    </p>
                 </div>
-
                 <div class="lg:w-2/3 w-full">
-                    <div id="beer-carousel" class="relative overflow-hidden mb-12">
-                        <div id="beer-slider" class="flex transition-transform duration-500 ease-in-out">
-                            <!-- Page 1 -->
-                            <div class="beer-slide min-w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                                <div class="flex flex-col items-center">
-                                    <div class="h-[300px] mb-8 flex items-center justify-center">
-                                        <img src="{{ asset('img/marron.png') }}" alt="Castel Beer" class="h-full object-contain hover:scale-105 transition-transform duration-300">
-                                    </div>
-                                    <a href="#" class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
-                                        <span class="text-sm">Castel Beer</span>
-                                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                                    </a>
-                                </div>
-                                <div class="flex flex-col items-center">
-                                    <div class="h-[300px] mb-8 flex items-center justify-center">
-                                        <img src="{{ asset('img/dopel.png') }}" alt="Doppel Munich" class="h-full object-contain hover:scale-105 transition-transform duration-300">
-                                    </div>
-                                    <a href="#" class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
-                                        <span class="text-sm">Doppel Munich</span>
-                                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                                    </a>
-                                </div>
-                                <div class="flex flex-col items-center">
-                                    <div class="h-[300px] mb-8 flex items-center justify-center">
-                                        <img src="{{ asset('img/blonde.png') }}" alt="Nkoyi Blonde" class="h-full object-contain hover:scale-105 transition-transform duration-300">
-                                    </div>
-                                    <a href="#" class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
-                                        <span class="text-sm">Nkoyi Blonde</span>
-                                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                                    </a>
-                                </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        @foreach($autresBoissons->take(6) as $autre)
+                        <div class="flex flex-col items-center">
+                            <div class="h-[300px] mb-8 flex items-center justify-center">
+                                <img src="{{ asset($autre->image ?? 'img/beaufort.png') }}" alt="{{ $autre->nom }}"
+                                    class="h-full object-contain hover:scale-105 transition-transform duration-300">
                             </div>
-                            <!-- Page 2 -->
-                            <div class="beer-slide min-w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                                <div class="flex flex-col items-center">
-                                    <div class="h-[300px] mb-8 flex items-center justify-center">
-                                        <img src="{{ asset('img/black.png') }}" alt="Nkoyi Black" class="h-full object-contain hover:scale-105 transition-transform duration-300">
-                                    </div>
-                                    <a href="#" class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
-                                        <span class="text-sm">Nkoyi Black</span>
-                                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                                    </a>
-                                </div>
-                                <div class="flex flex-col items-center">
-                                    <div class="h-[300px] mb-8 flex items-center justify-center">
-                                        <img src="{{ asset('img/33b.png') }}" alt="33 Export" class="h-full object-contain hover:scale-105 transition-transform duration-300">
-                                    </div>
-                                    <a href="#" class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
-                                        <span class="text-sm">33 Export</span>
-                                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                                    </a>
-                                </div>
-                                <div class="flex flex-col items-center">
-                                    <div class="h-[300px] mb-8 flex items-center justify-center">
-                                        <img src="{{ asset('img/tembo.png') }}" alt="TEMBO" class="h-full object-contain hover:scale-105 transition-transform duration-300">
-                                    </div>
-                                    <a href="#" class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
-                                        <span class="text-sm">TEMBO</span>
-                                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                                    </a>
-                                </div>
-                            </div>
+                            <a href="{{ route('boisson.show', $autre->slug) }}"
+                                class="w-full py-3 px-6 border border-bracongo rounded-full text-bracongo font-bold flex items-center justify-between hover:bg-bracongo hover:text-white transition-all group">
+                                <span class="text-sm">{{ $autre->nom }}</span>
+                                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
                         </div>
-                    </div>
-
-                    <div class="flex items-center justify-center lg:justify-start gap-6">
-                        <button id="prev-beer" class="w-10 h-10 border border-bracongo rounded-full flex items-center justify-center text-bracongo hover:bg-bracongo hover:text-white transition-all">
-                            <svg class="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </button>
-                        <div class="flex gap-2" id="beer-indicators">
-                            <span class="beer-indicator w-10 h-1.5 bg-bracongo rounded-full cursor-pointer transition-all"></span>
-                            <span class="beer-indicator w-10 h-1.5 bg-gray-200 rounded-full cursor-pointer transition-all hover:bg-gray-300"></span>
-                        </div>
-                        <button id="next-beer" class="w-10 h-10 border border-bracongo rounded-full flex items-center justify-center text-bracongo hover:bg-bracongo hover:text-white transition-all">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </button>
+                        @endforeach
                     </div>
                 </div>
-
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const slider = document.getElementById('beer-slider');
-                        const slides = document.querySelectorAll('.beer-slide');
-                        const indicators = document.querySelectorAll('.beer-indicator');
-                        const prevBtn = document.getElementById('prev-beer');
-                        const nextBtn = document.getElementById('next-beer');
-                        let currentIndex = 0;
-
-                        function updateCarousel(index) {
-                            slider.style.transform = `translateX(-${index * 100}%)`;
-                            indicators.forEach((ind, i) => {
-                                if (i === index) {
-                                    ind.classList.remove('bg-gray-200');
-                                    ind.classList.add('bg-bracongo');
-                                } else {
-                                    ind.classList.remove('bg-bracongo');
-                                    ind.classList.add('bg-gray-200');
-                                }
-                            });
-                            currentIndex = index;
-                        }
-
-                        nextBtn.addEventListener('click', () => {
-                            let next = (currentIndex + 1) % slides.length;
-                            updateCarousel(next);
-                        });
-
-                        prevBtn.addEventListener('click', () => {
-                            let prev = (currentIndex - 1 + slides.length) % slides.length;
-                            updateCarousel(prev);
-                        });
-
-                        indicators.forEach((indicator, i) => {
-                            indicator.addEventListener('click', () => {
-                                updateCarousel(i);
-                            });
-                        });
-                    });
-                </script>
             </div>
         </div>
     </section>
+    @endif
 @endsection

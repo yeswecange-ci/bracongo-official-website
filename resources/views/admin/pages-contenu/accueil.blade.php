@@ -28,7 +28,7 @@
 @section('content')
 @include('admin.layouts.partials.alerts')
 
-<form action="{{ route('admin.pages.accueil.update') }}" method="POST">
+<form action="{{ route('admin.pages.accueil.update') }}" method="POST" enctype="multipart/form-data">
 	@csrf
 	@method('PUT')
 	<div class="row g-4">
@@ -45,8 +45,8 @@
 						<input type="text" class="form-control" name="actualites_titre" value="{{ old('actualites_titre', $page->actualites_titre) }}">
 					</div>
 					<div class="col-md-6">
-						<label class="form-label fw-semibold">Lien "Voir plus"</label>
-						<input type="text" class="form-control" name="actualites_voir_plus_lien" value="{{ old('actualites_voir_plus_lien', $page->actualites_voir_plus_lien) }}">
+						<label class="form-label fw-semibold">Lien "Voir plus" <x-admin.readonly-info /></label>
+						<input type="text" class="form-control bg-light" name="actualites_voir_plus_lien" value="{{ old('actualites_voir_plus_lien', $page->actualites_voir_plus_lien) }}" readonly>
 					</div>
 				</div>
 			</div>
@@ -70,16 +70,15 @@
 						<textarea class="form-control" name="qui_texte" rows="4">{{ old('qui_texte', $page->qui_texte) }}</textarea>
 					</div>
 					<div class="col-md-6">
-						<label class="form-label fw-semibold">Image de fond <small class="text-muted">(ex: img/brasserie.jpg)</small></label>
-						<input type="text" class="form-control" name="qui_image_fond" value="{{ old('qui_image_fond', $page->qui_image_fond) }}">
+						<x-admin.image-upload name="qui_image_fond" label="Image de fond" :value="$page->qui_image_fond ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 					</div>
 					<div class="col-md-3">
 						<label class="form-label fw-semibold">Texte CTA</label>
 						<input type="text" class="form-control" name="qui_cta_texte" value="{{ old('qui_cta_texte', $page->qui_cta_texte) }}">
 					</div>
 					<div class="col-md-3">
-						<label class="form-label fw-semibold">Lien CTA</label>
-						<input type="text" class="form-control" name="qui_cta_lien" value="{{ old('qui_cta_lien', $page->qui_cta_lien) }}">
+						<label class="form-label fw-semibold">Lien CTA <x-admin.readonly-info /></label>
+						<input type="text" class="form-control bg-light" name="qui_cta_lien" value="{{ old('qui_cta_lien', $page->qui_cta_lien) }}" readonly>
 					</div>
 				</div>
 			</div>
@@ -118,16 +117,15 @@
 						<input type="text" class="form-control" name="rejoignez_titre" value="{{ old('rejoignez_titre', $page->rejoignez_titre) }}">
 					</div>
 					<div class="col-md-4">
-						<label class="form-label fw-semibold">Image <small class="text-muted">(ex: img/rejoignez.png)</small></label>
-						<input type="text" class="form-control" name="rejoignez_image" value="{{ old('rejoignez_image', $page->rejoignez_image) }}">
+						<x-admin.image-upload name="rejoignez_image" label="Image" :value="$page->rejoignez_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 					</div>
 					<div class="col-md-2">
 						<label class="form-label fw-semibold">Texte CTA</label>
 						<input type="text" class="form-control" name="rejoignez_cta_texte" value="{{ old('rejoignez_cta_texte', $page->rejoignez_cta_texte) }}">
 					</div>
 					<div class="col-md-2">
-						<label class="form-label fw-semibold">Lien CTA</label>
-						<input type="text" class="form-control" name="rejoignez_cta_lien" value="{{ old('rejoignez_cta_lien', $page->rejoignez_cta_lien) }}">
+						<label class="form-label fw-semibold">Lien CTA <x-admin.readonly-info /></label>
+						<input type="text" class="form-control bg-light" name="rejoignez_cta_lien" value="{{ old('rejoignez_cta_lien', $page->rejoignez_cta_lien) }}" readonly>
 					</div>
 					<div class="col-12">
 						<label class="form-label fw-semibold">Texte</label>

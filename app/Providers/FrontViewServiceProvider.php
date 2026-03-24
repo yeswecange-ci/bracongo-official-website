@@ -14,7 +14,7 @@ class FrontViewServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        View::composer(['layout.navbar', 'layout.footer', 'accueil', 'histoire', 'contact', 'carriere', 'pro', 'marques.*', 'actualites'], function ($view) {
+        View::composer(['layout.navbar', 'layout.footer', 'accueil', 'histoire', 'contact', 'carriere', 'pro', 'marques.*', 'actualites', 'welcome'], function ($view) {
             try {
                 $navItems     = NavigationItem::with('enfants')->parents()->actifs()->get();
                 $footerConfig = FooterSettings::instance();

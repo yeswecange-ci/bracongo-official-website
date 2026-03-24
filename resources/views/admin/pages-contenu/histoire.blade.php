@@ -25,7 +25,7 @@
 @section('content')
 @include('admin.layouts.partials.alerts')
 
-<form action="{{ route('admin.pages.histoire.update') }}" method="POST">
+<form action="{{ route('admin.pages.histoire.update') }}" method="POST" enctype="multipart/form-data">
 	@csrf
 	@method('PUT')
 	<div class="row g-4">
@@ -38,8 +38,7 @@
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-md-6">
-						<label class="form-label fw-semibold">Image hero <small class="text-muted">(ex: img/bracongo.jpg)</small></label>
-						<input type="text" class="form-control" name="hero_image" value="{{ old('hero_image', $page->hero_image) }}">
+						<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 					</div>
 					<div class="col-md-6">
 						<label class="form-label fw-semibold">Titre de la page <span class="text-danger">*</span></label>
@@ -71,8 +70,7 @@
 						<textarea class="form-control" name="paragraphe_3" rows="4">{{ old('paragraphe_3', $page->paragraphe_3) }}</textarea>
 					</div>
 					<div class="col-12">
-						<label class="form-label fw-semibold">Image brasserie <small class="text-muted">(ex: img/Frame-115.png)</small></label>
-						<input type="text" class="form-control" name="image_brasserie" value="{{ old('image_brasserie', $page->image_brasserie) }}">
+						<x-admin.image-upload name="image_brasserie" label="Image brasserie" :value="$page->image_brasserie ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 					</div>
 				</div>
 			</div>
@@ -91,16 +89,15 @@
 						<textarea class="form-control" name="rse_texte" rows="4">{{ old('rse_texte', $page->rse_texte) }}</textarea>
 					</div>
 					<div class="col-md-4">
-						<label class="form-label fw-semibold">Image RSE</label>
-						<input type="text" class="form-control" name="rse_image" value="{{ old('rse_image', $page->rse_image) }}">
+						<x-admin.image-upload name="rse_image" label="Image RSE" :value="$page->rse_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 					</div>
 					<div class="col-md-4">
 						<label class="form-label fw-semibold">Texte du CTA</label>
 						<input type="text" class="form-control" name="rse_cta_texte" value="{{ old('rse_cta_texte', $page->rse_cta_texte) }}">
 					</div>
 					<div class="col-md-4">
-						<label class="form-label fw-semibold">Lien du CTA</label>
-						<input type="text" class="form-control" name="rse_cta_lien" value="{{ old('rse_cta_lien', $page->rse_cta_lien) }}">
+						<label class="form-label fw-semibold">Lien du CTA <x-admin.readonly-info /></label>
+						<input type="text" class="form-control bg-light" name="rse_cta_lien" value="{{ old('rse_cta_lien', $page->rse_cta_lien) }}" readonly>
 					</div>
 				</div>
 			</div>
@@ -115,8 +112,8 @@
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-12">
-						<label class="form-label fw-semibold">URL Google Maps (embed)</label>
-						<textarea class="form-control" name="maps_embed_url" rows="3">{{ old('maps_embed_url', $page->maps_embed_url) }}</textarea>
+						<label class="form-label fw-semibold">URL Google Maps (embed) <x-admin.readonly-info /></label>
+						<textarea class="form-control bg-light" name="maps_embed_url" rows="3" readonly>{{ old('maps_embed_url', $page->maps_embed_url) }}</textarea>
 						<small class="text-muted">Copiez l'URL depuis Google Maps → Partager → Intégrer une carte</small>
 					</div>
 					<div class="col-12">

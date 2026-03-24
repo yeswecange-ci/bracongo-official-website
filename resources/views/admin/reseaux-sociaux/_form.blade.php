@@ -11,8 +11,8 @@
 		@error('platform')<div class="invalid-feedback">{{ $message }}</div>@enderror
 	</div>
 	<div class="col-md-7">
-		<label class="form-label fw-semibold">URL <span class="text-danger">*</span></label>
-		<input type="text" class="form-control @error('url') is-invalid @enderror" name="url" value="{{ old('url', $reseauSocial->url ?? '') }}" placeholder="https://facebook.com/bracongo">
+		<label class="form-label fw-semibold">URL <x-admin.readonly-info /> <span class="text-danger">*</span></label>
+		<input type="text" class="form-control bg-light @error('url') is-invalid @enderror" name="url" value="{{ old('url', $reseauSocial->url ?? '') }}" placeholder="https://facebook.com/bracongo" readonly>
 		@error('url')<div class="invalid-feedback">{{ $message }}</div>@enderror
 	</div>
 	<div class="col-md-4">

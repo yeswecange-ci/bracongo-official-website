@@ -66,10 +66,10 @@
 							@endif
 						</td>
 						<td class="text-end">
-							<a href="{{ route('admin.offres-emploi.edit', $offre) }}" class="btn btn-xs btn-warning me-1">
+							<a href="{{ route('admin.offres-emploi.edit', ['offres_emploi' => $offre]) }}" class="btn btn-xs btn-warning me-1">
 								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
 							</a>
-							<form action="{{ route('admin.offres-emploi.destroy', $offre) }}" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cette offre ?')">
+							<form action="{{ route('admin.offres-emploi.destroy', ['offres_emploi' => $offre]) }}" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cette offre ?')">
 								@csrf
 								@method('DELETE')
 								<button type="submit" class="btn btn-xs btn-danger">

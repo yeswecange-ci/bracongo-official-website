@@ -25,7 +25,7 @@
 		<div class="card">
 			<div class="card-header"><h4 class="card-title">Informations de l'offre</h4></div>
 			<div class="card-body">
-				<form action="{{ route('admin.offres-emploi.update', $offreEmploi) }}" method="POST">
+				<form action="{{ route('admin.offres-emploi.update', ['offres_emploi' => $offreEmploi]) }}" method="POST" enctype="multipart/form-data">
 					@csrf
 					@method('PUT')
 					@include('admin.offres-emploi._form')

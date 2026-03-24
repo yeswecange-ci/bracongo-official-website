@@ -1,11 +1,6 @@
 <div class="row g-3">
 	<div class="col-12">
-		<label class="form-label fw-semibold">Chemin de l'image <span class="text-danger">*</span> <small class="text-muted">(ex: img/beau.png)</small></label>
-		<input type="text" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image', $footerGallery->image ?? '') }}">
-		@error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
-		@if(isset($footerGallery) && $footerGallery->image)
-		<img src="{{ asset($footerGallery->image) }}" style="margin-top:8px;height:60px;border-radius:6px;" alt="">
-		@endif
+		<x-admin.image-upload name="image" label="Image" :value="isset($footerGallery) ? $footerGallery->image : null" :required="true" help="PNG, JPG, GIF — max 2 Mo" />
 	</div>
 	<div class="col-md-8">
 		<label class="form-label fw-semibold">Texte alt</label>

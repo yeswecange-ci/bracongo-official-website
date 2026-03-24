@@ -22,10 +22,19 @@ class FooterGalleryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'image' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
             'alt'   => 'nullable|string|max:255',
             'ordre' => 'nullable|integer|min:0',
         ]);
+
+        $file = $request->file('image');
+        $dir = 'uploads/footer/gallery';
+        if (!is_dir(public_path($dir))) {
+            mkdir(public_path($dir), 0755, true);
+        }
+        $name = 'gallery_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path($dir), $name);
+        $data['image'] = $dir . '/' . $name;
 
         FooterGallery::create($data);
 
@@ -40,11 +49,28 @@ class FooterGalleryController extends Controller
 
     public function update(Request $request, FooterGallery $footerGallery)
     {
-        $data = $request->validate([
-            'image' => 'required|string|max:255',
+        $rules = [
             'alt'   => 'nullable|string|max:255',
             'ordre' => 'nullable|integer|min:0',
-        ]);
+        ];
+        $rules['image'] = $request->hasFile('image')
+            ? 'required|image|mimes:jpeg,jpg,png,gif,webp|max:2048'
+            : 'nullable';
+
+        $data = $request->validate($rules);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $dir = 'uploads/footer/gallery';
+            if (!is_dir(public_path($dir))) {
+                mkdir(public_path($dir), 0755, true);
+            }
+            $name = 'gallery_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path($dir), $name);
+            $data['image'] = $dir . '/' . $name;
+        } else {
+            unset($data['image']);
+        }
 
         $footerGallery->update($data);
 

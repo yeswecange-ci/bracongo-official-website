@@ -26,7 +26,7 @@
 		<div class="card">
 			<div class="card-header"><h4 class="card-title">Informations du slide</h4></div>
 			<div class="card-body">
-				<form action="{{ route('admin.hero-slides.store') }}" method="POST">
+				<form action="{{ route('admin.hero-slides.store') }}" method="POST" enctype="multipart/form-data">
 					@csrf
 					@include('admin.hero-slides._form')
 					<div class="d-flex gap-2 pt-3">

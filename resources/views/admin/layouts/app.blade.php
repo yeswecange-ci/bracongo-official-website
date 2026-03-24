@@ -55,6 +55,36 @@
 		.nav-header .brand-logo .logo-abbr rect:first-child {
 			fill: #E30613;
 		}
+
+		.readonly-info-icon {
+			position: relative;
+			display: inline-flex;
+			align-items: center;
+			cursor: help;
+			color: #0dcaf0;
+		}
+		.readonly-info-icon .readonly-tooltip {
+			position: absolute;
+			bottom: 100%;
+			left: 50%;
+			transform: translateX(-50%) translateY(-4px);
+			background: #212529;
+			color: #fff;
+			padding: 6px 10px;
+			border-radius: 6px;
+			font-size: 12px;
+			white-space: nowrap;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.15s, visibility 0.15s;
+			pointer-events: none;
+			z-index: 1050;
+		}
+		.readonly-info-icon:hover .readonly-tooltip,
+		.readonly-info-icon:focus .readonly-tooltip {
+			opacity: 1;
+			visibility: visible;
+		}
 	</style>
 </head>
 
@@ -85,6 +115,8 @@
 
 		@include('admin.layouts.partials.footer')
 	</div>
+
+	@include('admin.layouts.partials.modal-image-preview')
 
 	<script src="{{ asset('admin/vendor/global/global.min.js') }}"></script>
 	<script src="{{ asset('admin/vendor/bootstrap-select/js/bootstrap-select.min.js') }}"></script>

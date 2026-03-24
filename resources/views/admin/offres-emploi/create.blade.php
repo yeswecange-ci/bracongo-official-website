@@ -25,7 +25,7 @@
 		<div class="card">
 			<div class="card-header"><h4 class="card-title">Informations de l'offre</h4></div>
 			<div class="card-body">
-				<form action="{{ route('admin.offres-emploi.store') }}" method="POST">
+				<form action="{{ route('admin.offres-emploi.store') }}" method="POST" enctype="multipart/form-data">
 					@csrf
 					@include('admin.offres-emploi._form')
 					<div class="d-flex gap-2 pt-3">

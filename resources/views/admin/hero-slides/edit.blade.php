@@ -26,7 +26,7 @@
 		<div class="card">
 			<div class="card-header"><h4 class="card-title">Informations du slide</h4></div>
 			<div class="card-body">
-				<form action="{{ route('admin.hero-slides.update', $heroSlide) }}" method="POST">
+				<form action="{{ route('admin.hero-slides.update', $heroSlide) }}" method="POST" enctype="multipart/form-data">
 					@csrf
 					@method('PUT')
 					@include('admin.hero-slides._form')

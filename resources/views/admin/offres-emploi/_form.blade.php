@@ -10,15 +10,11 @@
 		@error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
 	</div>
 	<div class="col-md-6">
-		<label class="form-label fw-semibold">Image <small class="text-muted">(ex: img/secu.jpg)</small></label>
-		<input type="text" class="form-control" name="image" value="{{ old('image', $offreEmploi->image ?? '') }}">
-		@if(isset($offreEmploi) && $offreEmploi->image)
-		<img src="{{ asset($offreEmploi->image) }}" style="margin-top:8px;height:60px;border-radius:6px;object-fit:cover;" alt="">
-		@endif
+		<x-admin.image-upload name="image" label="Image" :value="isset($offreEmploi) ? $offreEmploi->image : null" help="PNG, JPG, GIF — max 2 Mo" />
 	</div>
 	<div class="col-md-6">
-		<label class="form-label fw-semibold">Lien "Plus de détails"</label>
-		<input type="text" class="form-control" name="lien" value="{{ old('lien', $offreEmploi->lien ?? '#') }}">
+		<label class="form-label fw-semibold">Lien "Plus de détails" <x-admin.readonly-info /></label>
+		<input type="text" class="form-control bg-light" name="lien" value="{{ old('lien', $offreEmploi->lien ?? '#') }}" readonly>
 	</div>
 	<div class="col-md-4">
 		<label class="form-label fw-semibold">Ordre</label>

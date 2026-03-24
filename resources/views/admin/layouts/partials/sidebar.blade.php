@@ -98,7 +98,41 @@
 				</a>
 			</li>
 
-			<li class="menu-title mt-2">Site Global</li>
+			<li class="menu-title mt-2">Catalogue</li>
+
+		{{-- Marques & Boissons --}}
+		<li class="{{ request()->routeIs('admin.marques.*') || request()->routeIs('admin.boissons.*') ? 'mm-active' : '' }}">
+			<a class="has-arrow" href="javascript:void(0);" aria-expanded="{{ request()->routeIs('admin.marques.*') || request()->routeIs('admin.boissons.*') ? 'true' : 'false' }}">
+				<i class="flaticon-approved"></i>
+				<span class="nav-text">Marques & Boissons</span>
+			</a>
+			<ul aria-expanded="{{ request()->routeIs('admin.marques.*') || request()->routeIs('admin.boissons.*') ? 'true' : 'false' }}">
+				<li class="{{ request()->routeIs('admin.marques.*') ? 'mm-active' : '' }}">
+					<a href="{{ route('admin.marques.index') }}">Marques</a>
+				</li>
+				<li class="{{ request()->routeIs('admin.boissons.*') ? 'mm-active' : '' }}">
+					<a href="{{ route('admin.boissons.index') }}">Boissons</a>
+				</li>
+			</ul>
+		</li>
+
+		{{-- News --}}
+		<li class="{{ request()->routeIs('admin.news.*') ? 'mm-active' : '' }}">
+			<a href="{{ route('admin.news.index') }}" class="ai-icon" aria-expanded="false">
+				<i class="flaticon-blog"></i>
+				<span class="nav-text">News & Actualités</span>
+			</a>
+		</li>
+
+		{{-- Produits (goodies - backend only) --}}
+		<li class="{{ request()->routeIs('admin.produits.*') ? 'mm-active' : '' }}">
+			<a href="{{ route('admin.produits.index') }}" class="ai-icon" aria-expanded="false">
+				<i class="flaticon-store"></i>
+				<span class="nav-text">Produits <small class="text-muted">(backend)</small></span>
+			</a>
+		</li>
+
+		<li class="menu-title mt-2">Site Global</li>
 
 			{{-- Navigation --}}
 			<li class="{{ request()->routeIs('admin.navigation.*') ? 'mm-active' : '' }}">

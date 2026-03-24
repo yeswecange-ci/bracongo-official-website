@@ -32,19 +32,12 @@
 				</h4>
 			</div>
 			<div class="card-body">
-				<form action="{{ route('admin.parametres.update') }}" method="POST">
+				<form action="{{ route('admin.parametres.update') }}" method="POST" enctype="multipart/form-data">
 					@csrf
 					@method('PUT')
 					<div class="row g-4">
 						<div class="col-12">
-							<label class="form-label fw-semibold">Logo <span class="text-muted small">(chemin relatif ex: img/LOGO BRACONGO copie 1.png)</span></label>
-							<input type="text" class="form-control @error('logo') is-invalid @enderror" name="logo" value="{{ old('logo', $parametres->logo) }}">
-							@if($parametres->logo)
-								<div class="mt-2">
-									<img src="{{ asset($parametres->logo) }}" alt="Logo" style="height:60px;object-fit:contain;border:1px solid #eee;border-radius:8px;padding:4px;">
-								</div>
-							@endif
-							@error('logo')<div class="invalid-feedback">{{ $message }}</div>@enderror
+							<x-admin.image-upload name="logo" label="Logo" :value="$parametres->logo ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 						</div>
 						<div class="col-md-6">
 							<label class="form-label fw-semibold">Couleur principale</label>

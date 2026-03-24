@@ -22,6 +22,10 @@ use App\Http\Controllers\Admin\NavigationItemController;
 use App\Http\Controllers\Admin\FooterController;
 use App\Http\Controllers\Admin\FooterGalleryController;
 use App\Http\Controllers\Admin\ReseauSocialController;
+use App\Http\Controllers\Admin\MarqueController;
+use App\Http\Controllers\Admin\BoissonController;
+use App\Http\Controllers\Admin\ProduitController;
+use App\Http\Controllers\Admin\NewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,10 +36,12 @@ Route::get('/', [FrontController::class, 'welcome']);
 Route::get('/Accueil', [FrontController::class, 'accueil'])->name('Accueil');
 Route::get('/histoire', [FrontController::class, 'histoire'])->name('histoire');
 Route::get('/Notre-Histoire', [FrontController::class, 'histoire'])->name('Histoire');
-Route::get('/Nos-marques', function () { return view('marques.marque'); })->name('marque');
-Route::get('/Nos-marques-bieres', function () { return view('marques.bieres'); })->name('bieres');
-Route::get('/Nos-marques-bieres-beaufort', function () { return view('marques.beaufort'); })->name('bieres.beaufort');
-Route::get('/Actualités-et-evenements', function () { return view('actualites'); })->name('actualites');
+Route::get('/Nos-marques', [FrontController::class, 'marques'])->name('marque');
+Route::get('/Nos-marques/{categorie}', [FrontController::class, 'marqueCategorie'])->name('marque.categorie');
+Route::get('/Nos-marques-bieres', [FrontController::class, 'bieres'])->name('bieres');
+Route::get('/Boisson/{slug}', [FrontController::class, 'boisson'])->name('boisson.show');
+Route::get('/Nos-marques-bieres-beaufort', [FrontController::class, 'boissonBeaufort'])->name('bieres.beaufort');
+Route::get('/Actualites-et-evenements', [FrontController::class, 'actualites'])->name('actualites');
 Route::get('/Carriere', [FrontController::class, 'carriere'])->name('carriere');
 Route::get('/Contact', [FrontController::class, 'contact'])->name('contact');
 Route::post('/Contact', [FrontController::class, 'contactStore'])->name('contact.store');
@@ -106,4 +112,14 @@ Route::prefix('back-office')->name('admin.')->group(function () {
     Route::resource('footer-gallery', FooterGalleryController::class)->names('footer-gallery');
 
     Route::resource('reseaux-sociaux', ReseauSocialController::class)->names('reseaux-sociaux');
+
+    // ── Marques & Boissons ─────────────────────────────────────────────
+    Route::resource('marques', MarqueController::class)->names('marques');
+    Route::resource('boissons', BoissonController::class)->names('boissons');
+
+    // ── Produits (backend only) ────────────────────────────────────────
+    Route::resource('produits', ProduitController::class)->names('produits');
+
+    // ── News ───────────────────────────────────────────────────────────
+    Route::resource('news', NewsController::class)->names('news');
 });

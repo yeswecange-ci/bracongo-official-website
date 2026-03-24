@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\OffreEmploi;
+use App\Traits\HandlesImageUpload;
 use Illuminate\Http\Request;
 
 class OffreEmploiController extends Controller
 {
+    use HandlesImageUpload;
     public function index()
     {
         $offres = OffreEmploi::orderBy('ordre')->get();
@@ -24,12 +26,17 @@ class OffreEmploiController extends Controller
         $data = $request->validate([
             'titre'       => 'required|string|max:255',
             'description' => 'required|string',
-            'image'       => 'nullable|string|max:255',
+            'image'       => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
             'lien'        => 'nullable|string|max:255',
             'is_active'   => 'nullable|boolean',
             'ordre'       => 'nullable|integer|min:0',
         ]);
         $data['is_active'] = $request->boolean('is_active');
+        if ($request->hasFile('image')) {
+            $data['image'] = $this->uploadImage($request->file('image'), 'uploads/offres-emploi', 'offre');
+        } else {
+            unset($data['image']);
+        }
 
         OffreEmploi::create($data);
 
@@ -47,12 +54,17 @@ class OffreEmploiController extends Controller
         $data = $request->validate([
             'titre'       => 'required|string|max:255',
             'description' => 'required|string',
-            'image'       => 'nullable|string|max:255',
+            'image'       => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
             'lien'        => 'nullable|string|max:255',
             'is_active'   => 'nullable|boolean',
             'ordre'       => 'nullable|integer|min:0',
         ]);
         $data['is_active'] = $request->boolean('is_active');
+        if ($request->hasFile('image')) {
+            $data['image'] = $this->uploadImage($request->file('image'), 'uploads/offres-emploi', 'offre');
+        } else {
+            unset($data['image']);
+        }
 
         $offreEmploi->update($data);
 

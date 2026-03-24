@@ -1,14 +1,7 @@
 <div class="row g-3">
 	<div class="col-12">
-		<label class="form-label fw-semibold">Chemin de l'image <span class="text-danger">*</span> <small class="text-muted">(ex: img/coverhome.jpg)</small></label>
-		<input type="text" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image', $heroSlide->image ?? '') }}">
-		@error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
+		<x-admin.image-upload name="image" label="Image" :value="isset($heroSlide) ? $heroSlide->image : null" :required="true" help="PNG, JPG, GIF — max 2 Mo" />
 	</div>
-	@if(isset($heroSlide) && $heroSlide->image)
-	<div class="col-12">
-		<img src="{{ asset($heroSlide->image) }}" alt="Aperçu" style="max-height:120px;border-radius:8px;object-fit:cover;width:100%;">
-	</div>
-	@endif
 	<div class="col-12">
 		<label class="form-label fw-semibold">Texte alternatif (alt)</label>
 		<input type="text" class="form-control" name="alt" value="{{ old('alt', $heroSlide->alt ?? '') }}">

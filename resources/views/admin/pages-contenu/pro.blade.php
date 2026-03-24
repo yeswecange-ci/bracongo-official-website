@@ -24,7 +24,7 @@
 @section('content')
 @include('admin.layouts.partials.alerts')
 
-<form action="{{ route('admin.pages.pro.update') }}" method="POST">
+<form action="{{ route('admin.pages.pro.update') }}" method="POST" enctype="multipart/form-data">
 	@csrf
 	@method('PUT')
 	<div class="row g-4">
@@ -36,12 +36,10 @@
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-md-6">
-						<label class="form-label fw-semibold">Image hero <small class="text-muted">(ex: img/brcpro.png)</small></label>
-						<input type="text" class="form-control" name="hero_image" value="{{ old('hero_image', $page->hero_image) }}">
+						<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 					</div>
 					<div class="col-md-6">
-						<label class="form-label fw-semibold">Image mockup app <small class="text-muted">(ex: img/tel.png)</small></label>
-						<input type="text" class="form-control" name="app_image" value="{{ old('app_image', $page->app_image) }}">
+						<x-admin.image-upload name="app_image" label="Image mockup app" :value="$page->app_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 					</div>
 					<div class="col-12">
 						<label class="form-label fw-semibold">Description principale</label>
@@ -105,12 +103,12 @@
 						<input type="text" class="form-control" name="cta_texte" value="{{ old('cta_texte', $page->cta_texte) }}">
 					</div>
 					<div class="col-md-4">
-						<label class="form-label fw-semibold">Lien de téléchargement</label>
-						<input type="text" class="form-control" name="cta_lien" value="{{ old('cta_lien', $page->cta_lien) }}">
+						<label class="form-label fw-semibold">Lien de téléchargement <x-admin.readonly-info /></label>
+						<input type="text" class="form-control bg-light" name="cta_lien" value="{{ old('cta_lien', $page->cta_lien) }}" readonly>
 					</div>
 					<div class="col-md-4">
-						<label class="form-label fw-semibold">Lien PDF de présentation</label>
-						<input type="text" class="form-control" name="pdf_lien" value="{{ old('pdf_lien', $page->pdf_lien) }}">
+						<label class="form-label fw-semibold">Lien PDF de présentation <x-admin.readonly-info /></label>
+						<input type="text" class="form-control bg-light" name="pdf_lien" value="{{ old('pdf_lien', $page->pdf_lien) }}" readonly>
 					</div>
 				</div>
 			</div>

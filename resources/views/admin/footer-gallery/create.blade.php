@@ -24,7 +24,7 @@
 		@include('admin.layouts.partials.alerts')
 		<div class="card">
 			<div class="card-body">
-				<form action="{{ route('admin.footer-gallery.store') }}" method="POST">
+				<form action="{{ route('admin.footer-gallery.store') }}" method="POST" enctype="multipart/form-data">
 					@csrf
 					@include('admin.footer-gallery._form')
 					<div class="d-flex gap-2 pt-3">

@@ -25,7 +25,7 @@
 @section('content')
 @include('admin.layouts.partials.alerts')
 
-<form action="{{ route('admin.pages.contact.update') }}" method="POST">
+<form action="{{ route('admin.pages.contact.update') }}" method="POST" enctype="multipart/form-data">
 	@csrf
 	@method('PUT')
 	<div class="row g-4">
@@ -34,8 +34,7 @@
 				<div class="card-header"><h4 class="card-title">Informations de contact</h4></div>
 				<div class="card-body row g-3">
 					<div class="col-12">
-						<label class="form-label fw-semibold">Image hero <small class="text-muted">(ex: img/bracongo.jpg)</small></label>
-						<input type="text" class="form-control" name="hero_image" value="{{ old('hero_image', $page->hero_image) }}">
+						<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 					</div>
 					<div class="col-12">
 						<label class="form-label fw-semibold">Dénomination sociale <span class="text-danger">*</span></label>
@@ -73,8 +72,8 @@
 						<input type="text" class="form-control" name="tel_cle_chateaux" value="{{ old('tel_cle_chateaux', $page->tel_cle_chateaux) }}">
 					</div>
 					<div class="col-12">
-						<label class="form-label fw-semibold">Lien "Devenir client"</label>
-						<input type="text" class="form-control" name="devenir_client_lien" value="{{ old('devenir_client_lien', $page->devenir_client_lien) }}">
+						<label class="form-label fw-semibold">Lien "Devenir client" <x-admin.readonly-info /></label>
+						<input type="text" class="form-control bg-light" name="devenir_client_lien" value="{{ old('devenir_client_lien', $page->devenir_client_lien) }}" readonly>
 					</div>
 					<div class="col-12 pt-2">
 						<button type="submit" class="btn btn-primary">
