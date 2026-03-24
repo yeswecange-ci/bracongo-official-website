@@ -8,7 +8,7 @@ class PageCarriere extends Model
 {
     protected $table = 'page_carriere';
 
-    protected $fillable = ['hero_image', 'texte_intro'];
+    protected $fillable = ['hero_image', 'hero_titre', 'texte_intro', 'offres_titre'];
 
     public static function instance(): self
     {

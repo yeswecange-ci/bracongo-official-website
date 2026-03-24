@@ -100,6 +100,10 @@
 						<label class="form-label fw-semibold">Description</label>
 						<textarea class="form-control" name="marques_description" rows="2">{{ old('marques_description', $page->marques_description) }}</textarea>
 					</div>
+					<div class="col-md-4">
+						<label class="form-label fw-semibold">Texte bouton sur les cartes par catégorie</label>
+						<input type="text" class="form-control" name="marques_cartes_cta_texte" value="{{ old('marques_cartes_cta_texte', $page->marques_cartes_cta_texte ?? 'Voir plus') }}" maxlength="100">
+					</div>
 				</div>
 			</div>
 		</div>

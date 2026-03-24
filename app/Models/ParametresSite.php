@@ -10,6 +10,7 @@ class ParametresSite extends Model
 
     protected $fillable = [
         'logo', 'favicon', 'couleur_principale', 'search_suggestions',
+        'actualites_hero_titre', 'actualites_filtre_tout_label',
     ];
 
     public static function instance(): self

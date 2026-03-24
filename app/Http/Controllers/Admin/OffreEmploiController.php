@@ -18,7 +18,7 @@ class OffreEmploiController extends Controller
 
     public function create()
     {
-        return view('admin.offres-emploi.create');
+        return view('admin.offres-emploi.create', ['offres_emploi' => new OffreEmploi]);
     }
 
     public function store(Request $request)
@@ -44,12 +44,12 @@ class OffreEmploiController extends Controller
             ->with('success', "Offre d'emploi ajoutée.");
     }
 
-    public function edit(OffreEmploi $offreEmploi)
+    public function edit(OffreEmploi $offres_emploi)
     {
-        return view('admin.offres-emploi.edit', compact('offreEmploi'));
+        return view('admin.offres-emploi.edit', compact('offres_emploi'));
     }
 
-    public function update(Request $request, OffreEmploi $offreEmploi)
+    public function update(Request $request, OffreEmploi $offres_emploi)
     {
         $data = $request->validate([
             'titre'       => 'required|string|max:255',
@@ -66,15 +66,15 @@ class OffreEmploiController extends Controller
             unset($data['image']);
         }
 
-        $offreEmploi->update($data);
+        $offres_emploi->update($data);
 
         return redirect()->route('admin.offres-emploi.index')
             ->with('success', "Offre d'emploi mise à jour.");
     }
 
-    public function destroy(OffreEmploi $offreEmploi)
+    public function destroy(OffreEmploi $offres_emploi)
     {
-        $offreEmploi->delete();
+        $offres_emploi->delete();
         return redirect()->route('admin.offres-emploi.index')
             ->with('success', "Offre d'emploi supprimée.");
     }

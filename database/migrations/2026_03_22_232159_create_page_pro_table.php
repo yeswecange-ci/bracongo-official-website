@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('page_pro', function (Blueprint $table) {
             $table->id();
             $table->string('hero_image')->default('img/brcpro.png');
+            $table->string('hero_titre')->default('Bracongo Pro');
             $table->text('description')->nullable();
             $table->string('pourquoi_titre')->default('Pourquoi choisir Bracongo Pro?');
             $table->text('pourquoi_intro')->nullable();

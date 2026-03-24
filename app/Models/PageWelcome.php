@@ -11,6 +11,7 @@ class PageWelcome extends Model
     protected $fillable = [
         'fond_image', 'titre', 'texte_avertissement',
         'btn_majeur_texte', 'btn_mineur_texte', 'message_refus',
+        'mention_legale',
     ];
 
     public static function instance(): self

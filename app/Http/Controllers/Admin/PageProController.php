@@ -20,6 +20,7 @@ class PageProController extends Controller
     {
         $data = $request->validate([
             'hero_image'            => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'hero_titre'            => 'nullable|string|max:255',
             'description'           => 'nullable|string',
             'pourquoi_titre'        => 'nullable|string|max:255',
             'pourquoi_intro'        => 'nullable|string',

@@ -43,17 +43,20 @@
                                 class="h-72 w-auto object-contain transform group-hover:scale-110 transition-transform duration-500">
                         </div>
                         <div class="relative z-20 text-center px-4">
+                            @php
+                                $lienVoirPlus = ($marque->lien && $marque->lien !== '#')
+                                    ? $marque->lien
+                                    : ($marque->categorie === 'bieres'
+                                        ? route('bieres')
+                                        : route('marque.categorie', $marque->categorie));
+                            @endphp
                             <h3 class="text-white text-xl font-bold mb-6">{{ $marque->nom }}</h3>
-                            @if($marque->lien && $marque->lien !== '#')
-                            <a href="{{ $marque->lien }}" class="inline-flex items-center gap-2 px-8 py-2 border border-white rounded-full text-white text-xs font-bold hover:bg-white hover:text-black transition-all">
+                            <a href="{{ $lienVoirPlus }}" class="inline-flex items-center gap-2 px-8 py-2 border border-white rounded-full text-white text-xs font-bold hover:bg-white hover:text-black transition-all">
                                 Voir plus
                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                 </svg>
                             </a>
-                            @else
-                            <span class="inline-flex items-center gap-2 px-8 py-2 border border-white/40 rounded-full text-white/50 text-xs">Bientôt disponible</span>
-                            @endif
                         </div>
                     </div>
                     @endforeach

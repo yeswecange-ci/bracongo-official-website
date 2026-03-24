@@ -19,6 +19,7 @@ return new class extends Migration
             // Section "Nos marques"
             $table->string('marques_titre')->default('Nos marques');
             $table->text('marques_description')->nullable();
+            $table->string('marques_cartes_cta_texte')->default('Voir plus');
             // Section "Rejoignez nous"
             $table->string('rejoignez_titre')->default('Rejoignez nous');
             $table->text('rejoignez_texte')->nullable();

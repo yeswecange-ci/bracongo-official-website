@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title', 'Nos Contacts')
+@section('title', $contact->hero_titre ?? 'Nos Contacts')
 
 @section('content')
     <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
@@ -8,7 +8,7 @@
         <div class="absolute inset-0 bg-black/50"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-center uppercase tracking-widest">
-               Nos Contacts
+               {{ $contact->hero_titre ?? 'Nos Contacts' }}
             </h1>
         </div>
     </div>
@@ -100,7 +100,7 @@
                 <div class="space-y-12">
                     <div class="flex items-center gap-3">
                         <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-8 w-auto">
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Nous contacter</h2>
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">{{ $contact->form_titre ?? 'Nous contacter' }}</h2>
                     </div>
 
                     <form action="{{ route('contact.store') }}" method="POST" class="space-y-6">

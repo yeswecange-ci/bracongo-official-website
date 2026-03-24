@@ -85,54 +85,37 @@
             <h1 class="text-3xl font-bold text-gray-900 uppercase tracking-widest">{{ $accueil->actualites_titre ?? 'Dernières actualités' }}</h1>
         </div>
         
-        {{-- Les actualités restent statiques (hors scope pour l'instant) --}}
+        @php $typesNewsAccueil = \App\Models\News::types(); @endphp
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-[#F8F8F8] rounded-[2rem] overflow-hidden flex flex-col h-full shadow-sm">
-                <div class="h-64 overflow-hidden">
-                    <img src="{{ asset('img/lumumba.png') }}" alt="Rencontre avec Lumumba" class="w-full h-full object-cover">
+            @forelse($dernieresNews as $item)
+            @php
+                $href = $item->lien_externe ?: route('actualites');
+            @endphp
+            <a href="{{ $href }}" @if($item->lien_externe) target="_blank" rel="noopener" @endif class="bg-[#F8F8F8] rounded-[2rem] overflow-hidden flex flex-col h-full shadow-sm hover:shadow-md transition-shadow text-left">
+                <div class="h-64 overflow-hidden bg-gray-100">
+                    @if($item->image)
+                    <img src="{{ asset($item->image) }}" alt="{{ $item->titre }}" class="w-full h-full object-cover">
+                    @else
+                    <div class="w-full h-full flex items-center justify-center text-gray-300">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke-width="1.5"/></svg>
+                    </div>
+                    @endif
                 </div>
                 <div class="p-6 flex flex-col flex-grow justify-between">
-                    <h3 class="text-gray-900 font-bold text-sm">Rencontre avec Lumumba</h3>
+                    @if(isset($typesNewsAccueil[$item->type]))
+                    <span class="text-xs font-bold text-bracongo uppercase tracking-wider mb-1">{{ $typesNewsAccueil[$item->type] }}</span>
+                    @endif
+                    <h3 class="text-gray-900 font-bold text-sm line-clamp-3">{{ $item->titre }}</h3>
                     <div class="flex justify-end mt-4">
-                        <div class="text-bracongo">
+                        <span class="text-bracongo">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </div>
+                        </span>
                     </div>
                 </div>
-            </div>
-            <div class="bg-[#F8F8F8] rounded-[2rem] overflow-hidden flex flex-col h-full shadow-sm">
-                <div class="h-64 overflow-hidden">
-                    <img src="{{ asset('img/influ.png') }}" alt="Rencontre des influenceurs" class="w-full h-full object-cover">
-                </div>
-                <div class="p-6 flex flex-col flex-grow justify-between">
-                    <h3 class="text-gray-900 font-bold text-sm">Rencontre des influenceurs</h3>
-                    <div class="flex justify-end mt-4">
-                        <div class="text-bracongo"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-[#F8F8F8] rounded-[2rem] overflow-hidden flex flex-col h-full shadow-sm">
-                <div class="h-64 overflow-hidden">
-                    <img src="{{ asset('img/champ.png') }}" alt="Rencontre des influenceurs" class="w-full h-full object-cover">
-                </div>
-                <div class="p-6 flex flex-col flex-grow justify-between">
-                    <h3 class="text-gray-900 font-bold text-sm">Rencontre des influenceurs</h3>
-                    <div class="flex justify-end mt-4">
-                        <div class="text-bracongo"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-[#F8F8F8] rounded-[2rem] overflow-hidden flex flex-col h-full shadow-sm">
-                <div class="h-64 overflow-hidden">
-                    <img src="{{ asset('img/bièrre.png') }}" alt="Rencontre des influenceurs" class="w-full h-full object-cover">
-                </div>
-                <div class="p-6 flex flex-col flex-grow justify-between">
-                    <h3 class="text-gray-900 font-bold text-sm">Rencontre des influenceurs</h3>
-                    <div class="flex justify-end mt-4">
-                        <div class="text-bracongo"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
-                    </div>
-                </div>
-            </div>
+            </a>
+            @empty
+            <div class="col-span-full text-center text-gray-500 py-8 text-sm">Aucune actualité à afficher pour le moment.</div>
+            @endforelse
         </div>
 
         <div class="flex justify-center mt-12">
@@ -180,88 +163,45 @@
                 </p>
             </div>
 
-            {{-- Grille marques — contenu statique (hors scope) --}}
+            @php
+                $categoriesMarques = \App\Models\Marque::categories();
+                $ordreCategoriesAccueil = ['bieres', 'gazeuses', 'eaux', 'energisantes'];
+            @endphp
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-32 pt-32 max-w-7xl mx-auto px-4">
+                @foreach($ordreCategoriesAccueil as $cat)
+                @php
+                    $marquesCat = \App\Models\Marque::actives()->byCategorie($cat)->orderBy('ordre')->take(3)->get();
+                    $m1 = $marquesCat->get(0);
+                    $m2 = $marquesCat->get(1);
+                    $m3 = $marquesCat->get(2);
+                    $lienCat = $cat === 'bieres' ? route('bieres') : route('marque.categorie', $cat);
+                @endphp
+                @continue(!$m1)
                 <div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-12 transition-all duration-500 hover:shadow-2xl">
                     <div class="absolute top-10 left-0 right-0 flex justify-center opacity-60 pointer-events-none group-hover:opacity-100 transition-opacity duration-500">
-                        <img src="{{ asset('img/Group2.png') }}" alt="Buffalo Logo" class="w-4/5 h-auto object-contain brightness-100 hue-rotate-[340deg] saturate-[500%] contrast-[150%]">
+                        <img src="{{ asset('img/Group2.png') }}" alt="" class="w-4/5 h-auto object-contain brightness-100 hue-rotate-[340deg] saturate-[500%] contrast-[150%]">
                     </div>
+                    @if($m2)
                     <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
-                        <img src="{{ asset('img/b1.png') }}" alt="tembo" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:-translate-x-20 group-hover:-rotate-12 transition-all duration-500 ease-out">
+                        <img src="{{ asset($m2->image ?? 'img/marron.png') }}" alt="" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:-translate-x-20 group-hover:-rotate-12 transition-all duration-500 ease-out">
                     </div>
+                    @endif
+                    @if($m3)
                     <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
-                        <img src="{{ asset('img/b2.png') }}" alt="Gaz" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:translate-x-20 group-hover:rotate-12 transition-all duration-500 ease-out">
+                        <img src="{{ asset($m3->image ?? 'img/marron.png') }}" alt="" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:translate-x-20 group-hover:rotate-12 transition-all duration-500 ease-out">
                     </div>
+                    @endif
                     <div class="absolute -top-20 left-0 right-0 flex justify-center z-10 pointer-events-none transition-transform duration-500 group-hover:-translate-y-4 group-hover:scale-105">
-                        <img src="{{ asset('img/tembo.png') }}" alt="Top" class="h-80 w-auto object-contain drop-shadow-2xl">
+                        <img src="{{ asset($m1->image ?? 'img/marron.png') }}" alt="{{ $m1->nom }}" class="h-80 w-auto object-contain drop-shadow-2xl">
                     </div>
                     <div class="relative z-20 text-center px-4">
-                        <h3 class="text-white text-2xl font-bold mb-8">Bières</h3>
-                        <a href="{{ route('bieres') }}" class="inline-flex items-center gap-3 px-10 py-3 border border-white rounded-full text-white text-sm font-bold hover:bg-white hover:text-black transition-all duration-300">
-                            Voir plus <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        <h3 class="text-white text-2xl font-bold mb-8">{{ $categoriesMarques[$cat] ?? $cat }}</h3>
+                        <a href="{{ $lienCat }}" class="inline-flex items-center gap-3 px-10 py-3 border border-white rounded-full text-white text-sm font-bold hover:bg-white hover:text-black transition-all duration-300">
+                            {{ $accueil->marques_cartes_cta_texte ?? 'Voir plus' }} <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </a>
                     </div>
                 </div>
-
-                <div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-12 transition-all duration-500 hover:shadow-2xl">
-                    <div class="absolute top-10 left-0 right-0 flex justify-center opacity-60 pointer-events-none group-hover:opacity-100 transition-opacity duration-500">
-                        <img src="{{ asset('img/Group2.png') }}" alt="Buffalo Logo" class="w-4/5 h-auto object-contain brightness-100 hue-rotate-[340deg] saturate-[500%] contrast-[150%]">
-                    </div>
-                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
-                        <img src="{{ asset('img/gaz2.png') }}" alt="Gaz" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:-translate-x-20 group-hover:-rotate-12 transition-all duration-500 ease-out">
-                    </div>
-                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
-                        <img src="{{ asset('img/gaz3.png') }}" alt="Gaz" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:translate-x-20 group-hover:rotate-12 transition-all duration-500 ease-out">
-                    </div>
-                    <div class="absolute -top-20 left-0 right-0 flex justify-center z-10 pointer-events-none transition-transform duration-500 group-hover:-translate-y-4 group-hover:scale-105">
-                        <img src="{{ asset('img/gazeux.png') }}" alt="Top" class="h-80 w-auto object-contain drop-shadow-2xl">
-                    </div>
-                    <div class="relative z-20 text-center px-4">
-                        <h3 class="text-white text-2xl font-bold mb-8">Boissons gazeuses</h3>
-                        <a href="#" class="inline-flex items-center gap-3 px-10 py-3 border border-white rounded-full text-white text-sm font-bold hover:bg-white hover:text-black transition-all duration-300">
-                            Voir plus <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-12 transition-all duration-500 hover:shadow-2xl">
-                    <div class="absolute top-10 left-0 right-0 flex justify-center opacity-60 pointer-events-none group-hover:opacity-100 transition-opacity duration-500">
-                        <img src="{{ asset('img/Group2.png') }}" alt="Buffalo Logo" class="w-4/5 h-auto object-contain brightness-100 hue-rotate-[340deg] saturate-[500%] contrast-[150%]">
-                    </div>
-                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
-                        <img src="{{ asset('img/eau.png') }}" alt="Gaz" class="h-64 w-[300px] object-contain opacity-0 group-hover:opacity-100 group-hover:-translate-x-20 group-hover:-rotate-12 transition-all duration-500 ease-out">
-                    </div>
-                    <div class="absolute -top-20 left-0 right-0 flex justify-center z-10 pointer-events-none transition-transform duration-500 group-hover:-translate-y-4 group-hover:scale-105">
-                        <img src="{{ asset('img/eau.png') }}" alt="Top" class="h-80 w-auto object-contain drop-shadow-2xl">
-                    </div>
-                    <div class="relative z-20 text-center px-4">
-                        <h3 class="text-white text-2xl font-bold mb-8">Eaux</h3>
-                        <a href="#" class="inline-flex items-center gap-3 px-10 py-3 border border-white rounded-full text-white text-sm font-bold hover:bg-white hover:text-black transition-all duration-300">
-                            Voir plus <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-12 transition-all duration-500 hover:shadow-2xl">
-                    <div class="absolute top-10 left-0 right-0 flex justify-center opacity-60 pointer-events-none group-hover:opacity-100 transition-opacity duration-500">
-                        <img src="{{ asset('img/Group2.png') }}" alt="Buffalo Logo" class="w-4/5 h-auto object-contain brightness-100 hue-rotate-[340deg] saturate-[500%] contrast-[150%]">
-                    </div>
-                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
-                        <img src="{{ asset('img/ener3.png') }}" alt="Gaz" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:-translate-x-20 group-hover:-rotate-12 transition-all duration-500 ease-out">
-                    </div>
-                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
-                        <img src="{{ asset('img/ener2.png') }}" alt="Gaz" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:translate-x-20 group-hover:rotate-12 transition-all duration-500 ease-out">
-                    </div>
-                    <div class="absolute -top-20 left-0 right-0 flex justify-center z-10 pointer-events-none transition-transform duration-500 group-hover:-translate-y-4 group-hover:scale-105">
-                        <img src="{{ asset('img/energie.png') }}" alt="Top" class="h-80 w-auto object-contain drop-shadow-2xl">
-                    </div>
-                    <div class="relative z-20 text-center px-4">
-                        <h3 class="text-white text-2xl font-bold mb-8">Boisson énergisante</h3>
-                        <a href="#" class="inline-flex items-center gap-3 px-10 py-3 border border-white rounded-full text-white text-sm font-bold hover:bg-white hover:text-black transition-all duration-300">
-                            Voir plus <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </a>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title', 'Actualités & Événements')
+@section('title', optional($parametres ?? null)->actualites_hero_titre ?? 'Actualités & Événements')
 
 @section('content')
     <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
@@ -8,7 +8,7 @@
         <div class="absolute inset-0 bg-black/60"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-center uppercase tracking-[0.2em]">
-                Actualités & Événements
+                {{ optional($parametres ?? null)->actualites_hero_titre ?? 'Actualités & Événements' }}
             </h1>
         </div>
     </div>
@@ -18,7 +18,7 @@
             <div class="flex flex-wrap items-center justify-center gap-3">
                 <a href="{{ route('actualites') }}"
                     class="px-6 py-2 rounded-full text-sm font-semibold transition-all {{ !$type ? 'bg-bracongo text-white' : 'border border-gray-300 text-gray-700 hover:border-bracongo hover:text-bracongo' }}">
-                    Tout voir
+                    {{ optional($parametres ?? null)->actualites_filtre_tout_label ?? 'Tout voir' }}
                 </a>
                 @foreach($types as $key => $label)
                 <a href="{{ route('actualites', ['type' => $key]) }}"

@@ -36,6 +36,16 @@
 					<div class="col-12">
 						<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 					</div>
+					<div class="col-md-6">
+						<label class="form-label fw-semibold">Titre de la bannière <span class="text-danger">*</span></label>
+						<input type="text" class="form-control @error('hero_titre') is-invalid @enderror" name="hero_titre" value="{{ old('hero_titre', $page->hero_titre ?? 'Nos Contacts') }}">
+						@error('hero_titre')<div class="invalid-feedback">{{ $message }}</div>@enderror
+					</div>
+					<div class="col-md-6">
+						<label class="form-label fw-semibold">Titre au-dessus du formulaire <span class="text-danger">*</span></label>
+						<input type="text" class="form-control @error('form_titre') is-invalid @enderror" name="form_titre" value="{{ old('form_titre', $page->form_titre ?? 'Nous contacter') }}">
+						@error('form_titre')<div class="invalid-feedback">{{ $message }}</div>@enderror
+					</div>
 					<div class="col-12">
 						<label class="form-label fw-semibold">Dénomination sociale <span class="text-danger">*</span></label>
 						<textarea class="form-control @error('denomination') is-invalid @enderror" name="denomination" rows="2">{{ old('denomination', $page->denomination) }}</textarea>

@@ -8,7 +8,7 @@
         <div class="absolute inset-0 bg-black/50"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-center uppercase tracking-[0.2em]">
-                Rejoignez-nous
+                {{ $carriere->hero_titre ?? 'Rejoignez-nous' }}
             </h1>
         </div>
     </div>
@@ -25,7 +25,7 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex items-center justify-center gap-3 mb-16">
                 <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-8 w-auto">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Nos offres d'emploi</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">{{ $carriere->offres_titre ?? "Nos offres d'emploi" }}</h2>
             </div>
 
             @if($offres->isNotEmpty())

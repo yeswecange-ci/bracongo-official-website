@@ -20,6 +20,8 @@ class PageContactController extends Controller
     {
         $data = $request->validate([
             'hero_image'          => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'hero_titre'          => 'required|string|max:255',
+            'form_titre'          => 'required|string|max:255',
             'denomination'        => 'required|string',
             'adresse'             => 'required|string',
             'bp'                  => 'nullable|string|max:100',

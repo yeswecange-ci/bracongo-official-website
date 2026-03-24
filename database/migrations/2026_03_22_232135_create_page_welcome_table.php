@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('btn_majeur_texte')->default('J\'ai plus de 18 ans');
             $table->string('btn_mineur_texte')->default('J\'ai moins de 18 ans');
             $table->string('message_refus')->default('Nous sommes désolés, vous n\'avez pas l\'âge requis pour accéder à ce site.');
+            $table->string('mention_legale', 500)->default("L'abus de l'alcool est dangereux pour la santé, à consommer avec modération.");
             $table->timestamps();
         });
     }

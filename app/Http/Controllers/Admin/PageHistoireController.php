@@ -27,11 +27,15 @@ class PageHistoireController extends Controller
             'paragraphe_2'    => 'nullable|string',
             'paragraphe_3'    => 'nullable|string',
             'image_brasserie' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'valeurs_titre'   => 'nullable|string|max:255',
+            'rse_titre'       => 'nullable|string|max:255',
             'rse_texte'       => 'nullable|string',
             'rse_image'       => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
             'rse_cta_texte'   => 'nullable|string|max:255',
             'rse_cta_lien'    => 'nullable|string|max:255',
+            'presence_titre'     => 'nullable|string|max:255',
             'maps_embed_url'  => 'nullable|string',
+            'carte_panel_titre' => 'nullable|string|max:255',
             'presence_note'   => 'nullable|string|max:255',
         ]);
         foreach (['hero_image', 'image_brasserie', 'rse_image'] as $key) {

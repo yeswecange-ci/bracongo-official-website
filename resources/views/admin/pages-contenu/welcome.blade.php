@@ -63,6 +63,12 @@
 							<input type="text" class="form-control @error('message_refus') is-invalid @enderror" name="message_refus" value="{{ old('message_refus', $page->message_refus) }}">
 							@error('message_refus')<div class="invalid-feedback">{{ $message }}</div>@enderror
 						</div>
+						<div class="col-12">
+							<label class="form-label fw-semibold">Mention légale (bas de page) <span class="text-danger">*</span></label>
+							<textarea class="form-control @error('mention_legale') is-invalid @enderror" name="mention_legale" rows="2" maxlength="500">{{ old('mention_legale', $page->mention_legale) }}</textarea>
+							<small class="text-muted">Texte type « abus d'alcool », affiché sous les boutons.</small>
+							@error('mention_legale')<div class="invalid-feedback">{{ $message }}</div>@enderror
+						</div>
 						<div class="col-12 pt-2">
 							<button type="submit" class="btn btn-primary">
 								<svg class="me-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
@@ -85,6 +91,7 @@
 						<span class="btn btn-sm" style="background:#E30613;color:#fff;border-radius:999px;">{{ $page->btn_majeur_texte }}</span>
 						<span class="btn btn-sm btn-outline-secondary" style="border-radius:999px;">{{ $page->btn_mineur_texte }}</span>
 					</div>
+					<p class="small text-muted fst-italic mt-3 mb-0">{{ Str::limit($page->mention_legale ?? '', 120) }}</p>
 				</div>
 			</div>
 		</div>

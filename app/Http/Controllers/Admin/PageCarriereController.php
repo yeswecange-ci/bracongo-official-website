@@ -20,7 +20,9 @@ class PageCarriereController extends Controller
     {
         $data = $request->validate([
             'hero_image'  => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'hero_titre'  => 'required|string|max:255',
             'texte_intro' => 'required|string',
+            'offres_titre' => 'required|string|max:255',
         ]);
         if ($request->hasFile('hero_image')) {
             $data['hero_image'] = $this->uploadImage($request->file('hero_image'), 'uploads/pages', 'carriere');

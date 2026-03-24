@@ -3,7 +3,7 @@
 
 @push('header-left')
 <div class="me-auto">
-	<h4 class="card-title">Modifier — {{ Str::limit($offreEmploi->titre, 40) }}</h4>
+	<h4 class="card-title">Modifier — {{ Str::limit($offres_emploi->titre, 40) }}</h4>
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><a href="{{ route('admin.offres-emploi.index') }}">Offres</a></li>
 		<li class="breadcrumb-item active">Modifier</li>
@@ -25,7 +25,7 @@
 		<div class="card">
 			<div class="card-header"><h4 class="card-title">Informations de l'offre</h4></div>
 			<div class="card-body">
-				<form action="{{ route('admin.offres-emploi.update', ['offres_emploi' => $offreEmploi]) }}" method="POST" enctype="multipart/form-data">
+				<form action="{{ route('admin.offres-emploi.update', ['offres_emploi' => $offres_emploi]) }}" method="POST" enctype="multipart/form-data">
 					@csrf
 					@method('PUT')
 					@include('admin.offres-emploi._form')

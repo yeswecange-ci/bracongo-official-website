@@ -9,9 +9,9 @@ class PageContact extends Model
     protected $table = 'page_contact';
 
     protected $fillable = [
-        'hero_image', 'denomination', 'adresse', 'bp', 'email',
+        'hero_image', 'hero_titre', 'denomination', 'adresse', 'bp', 'email',
         'tel_consommateurs', 'tel_fetes', 'tel_fournisseurs', 'tel_cle_chateaux',
-        'devenir_client_lien',
+        'devenir_client_lien', 'form_titre',
     ];
 
     public static function instance(): self

@@ -38,9 +38,19 @@
 							<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 						</div>
 						<div class="col-12">
+							<label class="form-label fw-semibold">Titre hero <span class="text-danger">*</span></label>
+							<input type="text" class="form-control @error('hero_titre') is-invalid @enderror" name="hero_titre" value="{{ old('hero_titre', $page->hero_titre ?? 'Rejoignez-nous') }}">
+							@error('hero_titre')<div class="invalid-feedback">{{ $message }}</div>@enderror
+						</div>
+						<div class="col-12">
 							<label class="form-label fw-semibold">Texte d'introduction <span class="text-danger">*</span></label>
 							<textarea class="form-control @error('texte_intro') is-invalid @enderror" name="texte_intro" rows="5">{{ old('texte_intro', $page->texte_intro) }}</textarea>
 							@error('texte_intro')<div class="invalid-feedback">{{ $message }}</div>@enderror
+						</div>
+						<div class="col-12">
+							<label class="form-label fw-semibold">Titre section offres <span class="text-danger">*</span></label>
+							<input type="text" class="form-control @error('offres_titre') is-invalid @enderror" name="offres_titre" value="{{ old('offres_titre', $page->offres_titre ?? "Nos offres d'emploi") }}">
+							@error('offres_titre')<div class="invalid-feedback">{{ $message }}</div>@enderror
 						</div>
 						<div class="col-12 pt-2">
 							<button type="submit" class="btn btn-primary">
@@ -72,7 +82,7 @@
 							{{ $offre->is_active ? 'Active' : 'Inactive' }}
 						</span>
 					</div>
-					<a href="{{ route('admin.offres-emploi.edit', $offre) }}" class="btn btn-xs btn-warning">
+					<a href="{{ route('admin.offres-emploi.edit', ['offres_emploi' => $offre]) }}" class="btn btn-xs btn-warning">
 						<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
 					</a>
 				</div>

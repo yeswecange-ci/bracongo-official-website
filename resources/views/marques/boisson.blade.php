@@ -3,5 +3,5 @@
 @section('title', $boisson->nom)
 
 @section('content')
-    @include('marques.beaufort')
+@include('marques.partials.boisson-detail')
 @endsection

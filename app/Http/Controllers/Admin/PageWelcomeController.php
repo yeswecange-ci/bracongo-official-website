@@ -25,6 +25,7 @@ class PageWelcomeController extends Controller
             'btn_majeur_texte'    => 'required|string|max:100',
             'btn_mineur_texte'    => 'required|string|max:100',
             'message_refus'       => 'required|string|max:255',
+            'mention_legale'      => 'required|string|max:500',
         ]);
         if ($request->hasFile('fond_image')) {
             $data['fond_image'] = $this->uploadImage($request->file('fond_image'), 'uploads/pages', 'welcome');

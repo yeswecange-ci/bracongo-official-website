@@ -23,6 +23,8 @@ class ParametresSiteController extends Controller
             'favicon'            => 'nullable|string|max:255',
             'couleur_principale' => 'nullable|string|max:20',
             'search_suggestions' => 'nullable|string',
+            'actualites_hero_titre'         => 'nullable|string|max:255',
+            'actualites_filtre_tout_label'  => 'nullable|string|max:100',
         ]);
         if ($request->hasFile('logo')) {
             $data['logo'] = $this->uploadImage($request->file('logo'), 'uploads/parametres', 'logo');

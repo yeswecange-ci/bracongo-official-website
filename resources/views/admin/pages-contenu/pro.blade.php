@@ -35,6 +35,10 @@
 					<h4 class="card-title mb-0">Bannière & Description</h4>
 				</div>
 				<div class="card-body row g-3">
+					<div class="col-12 col-md-6">
+						<label class="form-label fw-semibold">Titre sur la bannière</label>
+						<input type="text" class="form-control" name="hero_titre" value="{{ old('hero_titre', $page->hero_titre ?? 'Bracongo Pro') }}">
+					</div>
 					<div class="col-md-6">
 						<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 					</div>

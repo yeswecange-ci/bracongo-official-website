@@ -6,9 +6,9 @@
 
     <title>Bracongo - Bienvenue</title>
 
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -133,8 +133,8 @@
                 });
             </script>
 
-            <div class="mt-12 text-[10px] md:text-xs text-gray-600 italic">
-                L'abus de l'alcool est dangereux pour la santé, à consommer avec modération.
+            <div class="mt-12 text-[10px] md:text-xs text-gray-600 italic text-center">
+                {{ $welcome->mention_legale ?? "L'abus de l'alcool est dangereux pour la santé, à consommer avec modération." }}
             </div>
         </div>
     </div>

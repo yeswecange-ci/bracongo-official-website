@@ -38,7 +38,7 @@
         <div id="valeurs" class="text-center mb-24">
             <div class="flex items-center justify-center gap-3 mb-12">
                 <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-8 w-auto">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Nos valeurs</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">{{ $histoire->valeurs_titre ?? 'Nos valeurs' }}</h2>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
@@ -55,7 +55,7 @@
             <div class="space-y-8">
                 <div class="flex items-center gap-3">
                     <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-8 w-auto">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Nos engagements RSE</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">{{ $histoire->rse_titre ?? 'Nos engagements RSE' }}</h2>
                 </div>
 
                 <div class="lg:hidden">
@@ -87,7 +87,7 @@
         <div id="presence" class="py-24">
             <div class="flex items-center justify-center gap-3 mb-12 text-center">
                 <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-8 w-auto">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 uppercase tracking-widest">Notre présence nationale</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 uppercase tracking-widest">{{ $histoire->presence_titre ?? 'Notre présence nationale' }}</h2>
             </div>
 
             <div class="relative bg-white rounded-xl overflow-hidden shadow-2xl border border-gray-200">
@@ -96,7 +96,7 @@
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                         </svg>
-                        <h3 class="font-medium text-lg">Centres de distribution Bracongo</h3>
+                        <h3 class="font-medium text-lg">{{ $histoire->carte_panel_titre ?? 'Centres de distribution Bracongo' }}</h3>
                     </div>
                 </div>
 

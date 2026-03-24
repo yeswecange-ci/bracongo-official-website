@@ -26,6 +26,7 @@ class PageAccueilController extends Controller
             'qui_cta_lien'               => 'nullable|string|max:255',
             'marques_titre'              => 'nullable|string|max:255',
             'marques_description'        => 'nullable|string',
+            'marques_cartes_cta_texte'   => 'nullable|string|max:100',
             'rejoignez_titre'            => 'nullable|string|max:255',
             'rejoignez_texte'            => 'nullable|string',
             'rejoignez_image'            => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',

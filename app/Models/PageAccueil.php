@@ -10,7 +10,7 @@ class PageAccueil extends Model
 
     protected $fillable = [
         'qui_titre', 'qui_texte', 'qui_image_fond', 'qui_cta_texte', 'qui_cta_lien',
-        'marques_titre', 'marques_description',
+        'marques_titre', 'marques_description', 'marques_cartes_cta_texte',
         'rejoignez_titre', 'rejoignez_texte', 'rejoignez_image', 'rejoignez_cta_texte', 'rejoignez_cta_lien',
         'actualites_titre', 'actualites_voir_plus_lien',
     ];

@@ -72,6 +72,10 @@
 					<div class="col-12">
 						<x-admin.image-upload name="image_brasserie" label="Image brasserie" :value="$page->image_brasserie ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 					</div>
+					<div class="col-md-6">
+						<label class="form-label fw-semibold">Titre section « Valeurs »</label>
+						<input type="text" class="form-control" name="valeurs_titre" value="{{ old('valeurs_titre', $page->valeurs_titre ?? 'Nos valeurs') }}">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -84,6 +88,10 @@
 					<h4 class="card-title mb-0">Section RSE</h4>
 				</div>
 				<div class="card-body row g-3">
+					<div class="col-md-6">
+						<label class="form-label fw-semibold">Titre section RSE</label>
+						<input type="text" class="form-control" name="rse_titre" value="{{ old('rse_titre', $page->rse_titre ?? 'Nos engagements RSE') }}">
+					</div>
 					<div class="col-12">
 						<label class="form-label fw-semibold">Texte RSE</label>
 						<textarea class="form-control" name="rse_texte" rows="4">{{ old('rse_texte', $page->rse_texte) }}</textarea>
@@ -111,6 +119,14 @@
 					<h4 class="card-title mb-0">Présence nationale</h4>
 				</div>
 				<div class="card-body row g-3">
+					<div class="col-md-6">
+						<label class="form-label fw-semibold">Titre section carte (grand titre)</label>
+						<input type="text" class="form-control" name="presence_titre" value="{{ old('presence_titre', $page->presence_titre ?? 'Notre présence nationale') }}">
+					</div>
+					<div class="col-md-6">
+						<label class="form-label fw-semibold">Titre bandeau au-dessus de la carte</label>
+						<input type="text" class="form-control" name="carte_panel_titre" value="{{ old('carte_panel_titre', $page->carte_panel_titre ?? 'Centres de distribution Bracongo') }}">
+					</div>
 					<div class="col-12">
 						<label class="form-label fw-semibold">URL Google Maps (embed) <x-admin.readonly-info /></label>
 						<textarea class="form-control bg-light" name="maps_embed_url" rows="3" readonly>{{ old('maps_embed_url', $page->maps_embed_url) }}</textarea>

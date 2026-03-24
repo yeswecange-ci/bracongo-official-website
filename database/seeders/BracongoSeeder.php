@@ -42,6 +42,7 @@ class BracongoSeeder extends Seeder
             'btn_majeur_texte' => "J'ai plus de 18 ans",
             'btn_mineur_texte' => "J'ai moins de 18 ans",
             'message_refus' => "Nous sommes désolés, vous n'avez pas l'âge requis pour accéder à ce site.",
+            'mention_legale' => "L'abus de l'alcool est dangereux pour la santé, à consommer avec modération.",
         ]);
 
         // Page Accueil

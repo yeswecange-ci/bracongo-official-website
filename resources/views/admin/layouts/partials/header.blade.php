@@ -10,8 +10,12 @@
 						</li>
 					</ul>
 				</div>
-				<ul class="navbar-nav header-right">
-					@stack('header-actions')
+				<ul class="navbar-nav header-right align-items-center">
+					<li class="nav-item d-flex align-items-center me-2">
+						<div class="d-flex align-items-center gap-2">
+							@stack('header-actions')
+						</div>
+					</li>
 					<li class="nav-item dropdown header-profile">
 						<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
 							<img src="{{ asset('admin/images/user.jpg') }}" width="20" alt>
