@@ -1,20 +1,26 @@
 @extends('layout.app')
 
-@section('title', 'Nos Contacts')
+@section('title', $contact->hero_titre ?? 'Nos Contacts')
 
 @section('content')
     <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
-        <img src="{{ asset('img/bracongo.jpg') }}" alt="Nos Contacts Banner" class="w-full h-full object-cover">
+        <img src="{{ asset($contact->hero_image ?? 'img/bracongo.jpg') }}" alt="Nos Contacts Banner" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-black/50"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-center uppercase tracking-widest">
-               Nos Contacts
+               {{ $contact->hero_titre ?? 'Nos Contacts' }}
             </h1>
         </div>
     </div>
 
     <section class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 md:px-8">
+            @if(session('success'))
+            <div class="mb-8 bg-green-50 border border-green-200 rounded-2xl p-4 text-green-800 font-medium text-center">
+                {{ session('success') }}
+            </div>
+            @endif
+
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
                 
                 <div class="space-y-8">
@@ -25,8 +31,7 @@
                                 <h3 class="text-2xl font-bold text-gray-900">Dénomination sociale</h3>
                             </div>
                             <p class="text-gray-700 font-medium leading-relaxed">
-                                Les Boissons Rafraîchissantes du Congo,<br>
-                                BRACONGO SA
+                                {!! nl2br(e($contact->denomination ?? '')) !!}
                             </p>
                         </div>
 
@@ -36,10 +41,10 @@
                                 <h3 class="text-2xl font-bold text-gray-900">Adresse :</h3>
                             </div>
                             <p class="text-gray-700 font-medium leading-relaxed">
-                                Avenue des Brasseries, numéro 7666, Quartier Kingabwa,<br>
-                                Commune de Limete, dans la province de Kinshasa, en<br>
-                                République Démocratique du Congo.<br>
-                                <span class="font-bold">BP: 7.600 KINSHASA 1</span>
+                                {!! nl2br(e($contact->adresse ?? '')) !!}
+                                @if($contact->bp ?? null)
+                                <br><span class="font-bold">{{ $contact->bp }}</span>
+                                @endif
                             </p>
                         </div>
 
@@ -49,17 +54,19 @@
                                 <h3 class="text-2xl font-bold text-gray-900">Contact :</h3>
                             </div>
                             <div class="space-y-4">
-                                <p class="text-gray-700 font-medium">Email: <a href="mailto:bracongo.contact@castel-afrique.com" class="hover:text-bracongo transition-colors">bracongo.contact@castel-afrique.com</a></p>
+                                <p class="text-gray-700 font-medium">Email: <a href="mailto:{{ $contact->email }}" class="hover:text-bracongo transition-colors">{{ $contact->email }}</a></p>
                                 
+                                @if($contact->tel_consommateurs ?? null)
                                 <div class="space-y-2">
                                     <h4 class="text-xl font-bold text-gray-900">Réponse aux consommateurs :</h4>
-                                    <p class="text-lg font-bold text-gray-900">0815586874</p>
+                                    <p class="text-lg font-bold text-gray-900">{{ $contact->tel_consommateurs }}</p>
                                 </div>
+                                @endif
 
                                 <div class="space-y-1">
-                                    <p class="text-gray-900 font-bold text-lg">Service fêtes : <span class="font-bold">082 850 00 56</span></p>
-                                    <p class="text-gray-900 font-bold text-lg">Fournisseurs : <span class="font-bold">082 850 04 60</span></p>
-                                    <p class="text-gray-900 font-bold text-lg">Clé des Châteaux : <span class="font-bold">082 850 00 40</span></p>
+                                    @if($contact->tel_fetes ?? null)<p class="text-gray-900 font-bold text-lg">Service fêtes : <span class="font-bold">{{ $contact->tel_fetes }}</span></p>@endif
+                                    @if($contact->tel_fournisseurs ?? null)<p class="text-gray-900 font-bold text-lg">Fournisseurs : <span class="font-bold">{{ $contact->tel_fournisseurs }}</span></p>@endif
+                                    @if($contact->tel_cle_chateaux ?? null)<p class="text-gray-900 font-bold text-lg">Clé des Châteaux : <span class="font-bold">{{ $contact->tel_cle_chateaux }}</span></p>@endif
                                 </div>
                             </div>
                         </div>
@@ -82,7 +89,7 @@
                         </div>
                     </div>
 
-                    <a href="#" class="flex items-center justify-between w-full px-8 py-4 bg-bracongo text-white rounded-full font-bold hover:opacity-90 transition-opacity shadow-lg group">
+                    <a href="{{ $contact->devenir_client_lien ?? '#' }}" class="flex items-center justify-between w-full px-8 py-4 bg-bracongo text-white rounded-full font-bold hover:opacity-90 transition-opacity shadow-lg group">
                         <span>Devenir client Bracongo</span>
                         <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -93,19 +100,18 @@
                 <div class="space-y-12">
                     <div class="flex items-center gap-3">
                         <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-8 w-auto">
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Nous contacter</h2>
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">{{ $contact->form_titre ?? 'Nous contacter' }}</h2>
                     </div>
 
-                    <form action="#" method="POST" class="space-y-6">
+                    <form action="{{ route('contact.store') }}" method="POST" class="space-y-6">
                         @csrf
                         <div class="space-y-4">
-                            <input type="text" name="name" placeholder="Nom et prénoms" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors">
-                            <input type="email" name="email" placeholder="Email" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors">
-                            <input type="tel" name="phone" placeholder="Téléphone" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors">
-                            <input type="text" name="subject" placeholder="Objet de la demande" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors">
+                            <input type="text" name="name" placeholder="Nom et prénoms" required value="{{ old('name') }}" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors @error('name') border-red-400 @enderror">
+                            <input type="email" name="email" placeholder="Email" required value="{{ old('email') }}" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors @error('email') border-red-400 @enderror">
+                            <input type="tel" name="phone" placeholder="Téléphone" value="{{ old('phone') }}" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors">
+                            <input type="text" name="subject" placeholder="Objet de la demande" value="{{ old('subject') }}" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors">
                             <div class="relative">
-                                <textarea name="message" placeholder="Message" rows="8" class="w-full px-8 py-6 rounded-[2rem] border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors resize-none"></textarea>
-                                <div class="absolute bottom-4 right-8 text-gray-300 text-xs font-medium">0 / 180</div>
+                                <textarea name="message" placeholder="Message" rows="8" required class="w-full px-8 py-6 rounded-[2rem] border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors resize-none @error('message') border-red-400 @enderror">{{ old('message') }}</textarea>
                             </div>
                         </div>
 

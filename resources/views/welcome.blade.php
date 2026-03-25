@@ -6,9 +6,9 @@
 
     <title>Bracongo - Bienvenue</title>
 
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -68,7 +68,7 @@
     </div>
 
     <div class="fixed inset-0 z-0">
-        <img src="{{ asset('img/fete.png') }}" alt="Background" class="w-full h-full object-cover">
+        <img src="{{ asset($welcome->fond_image ?? 'img/fete.png') }}" alt="Background" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-black/20"></div>
     </div>
 
@@ -80,25 +80,24 @@
             </div>
 
             <h1 class="text-2xl md:text-4xl font-extrabold text-bracongo mb-4 tracking-tight">
-                BIENVENUE SUR LE SITE BRACONGO SA
+                {{ $welcome->titre ?? 'BIENVENUE SUR LE SITE BRACONGO SA' }}
             </h1>
 
             <p class="text-sm md:text-lg text-gray-800 font-medium mb-10 max-w-xl mx-auto leading-relaxed">
-                Ce site web contient des informations sur nos boissons alcoolisées. <br class="hidden md:block">
-                En cliquant sur l'un des boutons ci-dessous, vous confirmez être majeur dans votre pays de résidence.
+                {!! nl2br(e($welcome->texte_avertissement ?? '')) !!}
             </p>
 
             <div class="space-y-6">
                 <div id="errorMessage" class="hidden text-bracongo font-bold text-sm mb-4 animate-bounce">
-                    Nous sommes désolés, vous n'avez pas l'âge requis pour accéder à ce site.
+                    {{ $welcome->message_refus ?? "Nous sommes désolés, vous n'avez pas l'âge requis pour accéder à ce site." }}
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <button id="btn-over-18" class="w-full sm:w-auto px-10 py-4 bg-bracongo text-white rounded-full font-bold text-lg hover:bg-white hover:text-bracongo border-2 border-bracongo transition-all duration-300 shadow-lg hover:shadow-bracongo/20">
-                        J'ai plus de 18 ans
+                        {{ $welcome->btn_majeur_texte ?? "J'ai plus de 18 ans" }}
                     </button>
                     <button id="btn-under-18" class="w-full sm:w-auto px-10 py-4 bg-white text-gray-500 rounded-full font-bold text-lg hover:bg-gray-100 border-2 border-gray-200 transition-all duration-300">
-                        J'ai moins de 18 ans
+                        {{ $welcome->btn_mineur_texte ?? "J'ai moins de 18 ans" }}
                     </button>
                 </div>
             </div>
@@ -134,8 +133,8 @@
                 });
             </script>
 
-            <div class="mt-12 text-[10px] md:text-xs text-gray-600 italic">
-                L'abus de l'alcool est dangereux pour la santé, à consommer avec modération.
+            <div class="mt-12 text-[10px] md:text-xs text-gray-600 italic text-center">
+                {{ $welcome->mention_legale ?? "L'abus de l'alcool est dangereux pour la santé, à consommer avec modération." }}
             </div>
         </div>
     </div>
