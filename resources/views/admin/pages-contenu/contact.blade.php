@@ -2,25 +2,23 @@
 @section('title', 'Page Contact')
 
 @push('header-left')
-<div class="me-auto">
-	<h4 class="card-title">Page Contact</h4>
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Contact</li>
-	</ol>
+<div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Contact</li>
+    </ol></nav>
+    <h6 class="a-topbar-page-title">Page Contact</h6>
 </div>
 @endpush
 @push('header-actions')
-<a href="{{ route('contact') }}" target="_blank" class="btn btn-sm btn-outline-primary me-2">Voir la page</a>
-<a href="{{ route('admin.messages.index') }}" class="btn btn-sm btn-primary">Voir les messages</a>
+<a href="{{ route('contact') }}" target="_blank" class="btn btn-sm btn-outline-primary me-2">
+    <i class="bi bi-box-arrow-up-right me-1"></i>Voir la page
+</a>
+<a href="{{ route('admin.messages.index') }}" class="btn btn-sm btn-primary">
+    <i class="bi bi-envelope me-1"></i>Voir les messages
+</a>
 @endpush
 
-@section('header')
-@include('admin.layouts.partials.header')
-@endsection
-@section('sidebar')
-@include('admin.layouts.partials.sidebar')
-@endsection
 
 @section('content')
 @include('admin.layouts.partials.alerts')
@@ -31,7 +29,7 @@
 	<div class="row g-4">
 		<div class="col-xl-8">
 			<div class="card">
-				<div class="card-header"><h4 class="card-title">Informations de contact</h4></div>
+				<div class="card-header"><h5 class="mb-0">Informations de contact</h5></div>
 				<div class="card-body row g-3">
 					<div class="col-12">
 						<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
@@ -87,8 +85,7 @@
 					</div>
 					<div class="col-12 pt-2">
 						<button type="submit" class="btn btn-primary">
-							<svg class="me-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
-							Enregistrer
+							<i class="bi bi-floppy me-1"></i>Enregistrer
 						</button>
 					</div>
 				</div>
@@ -96,19 +93,19 @@
 		</div>
 		<div class="col-xl-4">
 			<div class="card">
-				<div class="card-header"><h4 class="card-title">Récapitulatif</h4></div>
+				<div class="card-header"><h5 class="mb-0">Récapitulatif</h5></div>
 				<div class="card-body">
 					<ul class="list-group list-group-flush">
 						<li class="list-group-item d-flex gap-2 px-0">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E30613" stroke-width="2" class="flex-shrink-0 mt-1"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.93 3.5 2 2 0 0 1 3.77 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+							<i class="bi bi-telephone" style="color:#E30613;flex-shrink:0;margin-top:3px"></i>
 							<span class="small">{{ $page->tel_consommateurs }}</span>
 						</li>
 						<li class="list-group-item d-flex gap-2 px-0">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E30613" stroke-width="2" class="flex-shrink-0 mt-1"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+							<i class="bi bi-envelope" style="color:#E30613;flex-shrink:0;margin-top:3px"></i>
 							<span class="small">{{ $page->email }}</span>
 						</li>
 						<li class="list-group-item d-flex gap-2 px-0">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E30613" stroke-width="2" class="flex-shrink-0 mt-1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+							<i class="bi bi-geo-alt" style="color:#E30613;flex-shrink:0;margin-top:3px"></i>
 							<span class="small">{{ Str::limit($page->adresse, 80) }}</span>
 						</li>
 					</ul>

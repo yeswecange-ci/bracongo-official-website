@@ -2,25 +2,23 @@
 @section('title', 'Notre Histoire')
 
 @push('header-left')
-<div class="me-auto">
-	<h4 class="card-title">Notre Histoire</h4>
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Notre Histoire</li>
-	</ol>
+<div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Notre Histoire</li>
+    </ol></nav>
+    <h6 class="a-topbar-page-title">Notre Histoire</h6>
 </div>
 @endpush
 @push('header-actions')
-<a href="{{ route('histoire') }}" target="_blank" class="btn btn-sm btn-outline-primary me-2">Voir la page</a>
-<a href="{{ route('admin.valeurs.index') }}" class="btn btn-sm btn-primary">Gérer les Valeurs</a>
+<a href="{{ route('histoire') }}" target="_blank" class="btn btn-sm btn-outline-primary me-2">
+    <i class="bi bi-box-arrow-up-right me-1"></i>Voir la page
+</a>
+<a href="{{ route('admin.valeurs.index') }}" class="btn btn-sm btn-primary">
+    <i class="bi bi-star me-1"></i>Gérer les Valeurs
+</a>
 @endpush
 
-@section('header')
-@include('admin.layouts.partials.header')
-@endsection
-@section('sidebar')
-@include('admin.layouts.partials.sidebar')
-@endsection
 
 @section('content')
 @include('admin.layouts.partials.alerts')
@@ -33,8 +31,8 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
-					<span class="badge" style="background:#E30613;">1</span>
-					<h4 class="card-title mb-0">Bannière & Titre</h4>
+					<span class="a-step-badge">1</span>
+					<h5 class="mb-0">Bannière & Titre</h5>
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-md-6">
@@ -53,8 +51,8 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
-					<span class="badge" style="background:#E30613;">2</span>
-					<h4 class="card-title mb-0">Textes de l'histoire</h4>
+					<span class="a-step-badge">2</span>
+					<h5 class="mb-0">Textes de l'histoire</h5>
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-12">
@@ -84,8 +82,8 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
-					<span class="badge" style="background:#E30613;">3</span>
-					<h4 class="card-title mb-0">Section RSE</h4>
+					<span class="a-step-badge">3</span>
+					<h5 class="mb-0">Section RSE</h5>
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-md-6">
@@ -115,8 +113,8 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
-					<span class="badge" style="background:#E30613;">4</span>
-					<h4 class="card-title mb-0">Présence nationale</h4>
+					<span class="a-step-badge">4</span>
+					<h5 class="mb-0">Présence nationale</h5>
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-md-6">
@@ -145,8 +143,8 @@
 			<div class="card border-dashed">
 				<div class="card-header d-flex align-items-center justify-content-between">
 					<div class="d-flex align-items-center gap-2">
-						<span class="badge" style="background:#E30613;">5</span>
-						<h4 class="card-title mb-0">Valeurs PREMIERS ({{ $valeurs->count() }} valeurs)</h4>
+						<span class="a-step-badge">5</span>
+						<h5 class="mb-0">Valeurs PREMIERS ({{ $valeurs->count() }} valeurs)</h5>
 					</div>
 					<a href="{{ route('admin.valeurs.index') }}" class="btn btn-sm btn-primary">Gérer les valeurs</a>
 				</div>
@@ -164,10 +162,9 @@
 		</div>
 
 		<div class="col-12 pb-4">
-			<button type="submit" class="btn btn-primary btn-lg px-5">
-				<svg class="me-2" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
-				Enregistrer
-			</button>
+			<button type="submit" class="btn btn-primary">
+			<i class="bi bi-floppy me-1"></i>Enregistrer
+		</button>
 		</div>
 	</div>
 </form>

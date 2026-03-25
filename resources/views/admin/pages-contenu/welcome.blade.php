@@ -2,34 +2,27 @@
 @section('title', 'Page Welcome')
 
 @push('header-left')
-<div class="me-auto">
-	<h4 class="card-title">Page Welcome</h4>
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Page Welcome</li>
-	</ol>
+<div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Page Welcome</li>
+    </ol></nav>
+    <h6 class="a-topbar-page-title">Page Welcome</h6>
 </div>
 @endpush
 @push('header-actions')
 <a href="/" target="_blank" class="btn btn-sm btn-outline-primary">
-	<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-	Voir la page
+    <i class="bi bi-box-arrow-up-right me-1"></i>Voir la page
 </a>
 @endpush
 
-@section('header')
-@include('admin.layouts.partials.header')
-@endsection
-@section('sidebar')
-@include('admin.layouts.partials.sidebar')
-@endsection
 
 @section('content')
 <div class="row">
 	<div class="col-xl-8">
 		@include('admin.layouts.partials.alerts')
 		<div class="card">
-			<div class="card-header"><h4 class="card-title">Contenu de la page de garde</h4></div>
+			<div class="card-header"><h5 class="mb-0">Contenu de la page de garde</h5></div>
 			<div class="card-body">
 				<form action="{{ route('admin.pages.welcome.update') }}" method="POST" enctype="multipart/form-data">
 					@csrf
@@ -71,9 +64,8 @@
 						</div>
 						<div class="col-12 pt-2">
 							<button type="submit" class="btn btn-primary">
-								<svg class="me-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-								Enregistrer
-							</button>
+							<i class="bi bi-floppy me-1"></i>Enregistrer
+						</button>
 						</div>
 					</div>
 				</form>
@@ -82,7 +74,7 @@
 	</div>
 	<div class="col-xl-4">
 		<div class="card">
-			<div class="card-header"><h4 class="card-title">Aperçu</h4></div>
+			<div class="card-header"><h5 class="mb-0">Aperçu</h5></div>
 			<div class="card-body">
 				<div class="p-3 rounded text-center" style="background:rgba(227,6,19,.06);border:1px dashed #E30613;">
 					<p class="fw-bold mb-2" style="color:#E30613;">{{ $page->titre }}</p>

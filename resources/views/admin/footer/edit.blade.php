@@ -2,21 +2,15 @@
 @section('title', 'Footer')
 
 @push('header-left')
-<div class="me-auto">
-	<h4 class="card-title">Footer du site</h4>
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Footer</li>
-	</ol>
+<div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Footer</li>
+    </ol></nav>
+    <h6 class="a-topbar-page-title">Footer du site</h6>
 </div>
 @endpush
 
-@section('header')
-@include('admin.layouts.partials.header')
-@endsection
-@section('sidebar')
-@include('admin.layouts.partials.sidebar')
-@endsection
 
 @section('content')
 @include('admin.layouts.partials.alerts')
@@ -25,7 +19,7 @@
 	{{-- Formulaire principal --}}
 	<div class="col-xl-8">
 		<div class="card">
-			<div class="card-header"><h4 class="card-title">Informations du footer</h4></div>
+			<div class="card-header"><h5 class="mb-0">Informations du footer</h5></div>
 			<div class="card-body">
 				<form action="{{ route('admin.footer.update') }}" method="POST" enctype="multipart/form-data">
 					@csrf
@@ -63,12 +57,12 @@
 									@if($footer->certification_image)
 									<div id="certificationPreview" class="position-relative" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#modalPreviewCertification">
 										<img src="{{ asset($footer->certification_image) }}" alt="Certification" style="height:60px;max-width:120px;object-fit:contain;border:1px solid #dee2e6;border-radius:8px;padding:4px;background:#f8f9fa;">
-										<span class="badge badge-primary position-absolute top-0 end-0 translate-middle" style="font-size:10px;">Prévisualiser</span>
+										<span class="badge bg-primary position-absolute top-0 end-0 translate-middle" style="font-size:10px;">Prévisualiser</span>
 									</div>
 									@else
 									<div id="certificationPreview" class="d-none"></div>
 									<div id="certificationPlaceholder" class="bg-light border rounded d-flex align-items-center justify-content-center" style="width:80px;height:60px;">
-										<svg width="24" height="24" fill="none" stroke="#adb5bd" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+										<i class="bi bi-image" style="font-size:1.5rem;color:#adb5bd"></i>
 									</div>
 									@endif
 								</div>
@@ -83,9 +77,8 @@
 
 						<div class="col-12 pt-2">
 							<button type="submit" class="btn btn-primary">
-								<svg class="me-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
-								Enregistrer
-							</button>
+							<i class="bi bi-floppy me-1"></i>Enregistrer
+						</button>
 						</div>
 					</div>
 				</form>
@@ -100,13 +93,13 @@
 				<ul class="nav nav-tabs card-header-tabs nav-tabs-sm" role="tablist">
 					<li class="nav-item">
 						<a class="nav-link active" data-bs-toggle="tab" href="#tab-galerie" role="tab">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+							<i class="bi bi-images me-1"></i>
 							Galerie ({{ $gallery->count() }})
 						</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" data-bs-toggle="tab" href="#tab-reseaux" role="tab">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><circle cx="12" cy="12" r="10"/><path d="M16 8a5 5 0 0 1 0 8M12 12a4 4 0 0 0 0 8M8 16a9 9 0 0 1 0-8"/></svg>
+							<i class="bi bi-share me-1"></i>
 							Réseaux sociaux
 						</a>
 					</li>
@@ -141,10 +134,10 @@
 							@foreach($reseaux as $rs)
 							<div class="list-group-item d-flex align-items-center justify-content-between px-0 py-2 border-0">
 								<div class="d-flex align-items-center gap-2">
-									<span class="badge badge-primary light text-capitalize">{{ $rs->platform }}</span>
+									<span class="badge bg-secondary text-capitalize">{{ $rs->platform }}</span>
 									<code class="small text-muted" style="font-size:11px;">{{ Str::limit($rs->url, 30) }}</code>
 								</div>
-								<span class="badge {{ $rs->is_active ? 'badge-success' : 'badge-secondary' }} light">{{ $rs->is_active ? 'Actif' : 'Inactif' }}</span>
+								<span class="{{ $rs->is_active ? 'a-status a-status--active' : 'a-status a-status--inactive' }}">{{ $rs->is_active ? 'Actif' : 'Inactif' }}</span>
 							</div>
 							@endforeach
 						</div>

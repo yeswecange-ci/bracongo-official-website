@@ -31,20 +31,11 @@
 		<textarea class="form-control" name="description" rows="4">{{ old('description', $boisson->description ?? '') }}</textarea>
 	</div>
 
-	{{-- Images --}}
-	<div class="col-12"><hr class="my-1"><p class="fw-semibold text-muted mb-1 small text-uppercase">Images</p></div>
-	<div class="col-md-4">
-		<x-admin.image-upload name="hero_image" label="Image bannière hero" :value="isset($boisson) ? $boisson->hero_image : null" help="PNG, JPG, GIF — max 2 Mo" />
-	</div>
-	<div class="col-md-4">
-		<x-admin.image-upload name="image" label="Image produit/bouteille" :value="isset($boisson) ? $boisson->image : null" help="PNG, JPG, GIF — max 2 Mo" />
-	</div>
-	<div class="col-md-4">
-		<x-admin.image-upload name="logo" label="Logo" :value="isset($boisson) ? $boisson->logo : null" help="PNG, JPG, GIF — max 2 Mo" />
-	</div>
-
 	{{-- Fiche technique --}}
-	<div class="col-12"><hr class="my-1"><p class="fw-semibold text-muted mb-1 small text-uppercase">Fiche technique</p></div>
+	<div class="col-12">
+		<hr class="my-2">
+		<h6 class="fw-600 text-muted mb-3" style="font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Fiche technique</h6>
+	</div>
 	<div class="col-md-4">
 		<label class="form-label fw-semibold">Année de lancement</label>
 		<input type="number" class="form-control" name="annee_lancement" value="{{ old('annee_lancement', $boisson->annee_lancement ?? '') }}" placeholder="2013">
@@ -84,20 +75,11 @@
 
 	{{-- Vidéos --}}
 	<div class="col-12">
+		<hr class="my-2">
+		<h6 class="fw-600 text-muted mb-3" style="font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Vidéos</h6>
+	</div>
+	<div class="col-12">
 		<label class="form-label fw-semibold">URLs vidéos YouTube <small class="text-muted">(une URL embed par ligne)</small></label>
 		<textarea class="form-control" name="video_urls" rows="3" style="font-family:monospace;font-size:.82rem;" placeholder="https://www.youtube.com/embed/xxxxx">{{ old('video_urls', isset($boisson) && $boisson->video_urls ? implode("\n", $boisson->video_urls) : '') }}</textarea>
-	</div>
-
-	{{-- Ordre et statut --}}
-	<div class="col-md-4">
-		<label class="form-label fw-semibold">Ordre</label>
-		<input type="number" class="form-control" name="ordre" value="{{ old('ordre', $boisson->ordre ?? 0) }}" min="0">
-	</div>
-	<div class="col-md-4 d-flex align-items-end">
-		<div class="form-check form-switch mb-2">
-			<input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1"
-				{{ old('is_active', $boisson->is_active ?? true) ? 'checked' : '' }}>
-			<label class="form-check-label fw-semibold" for="is_active">Boisson active</label>
-		</div>
 	</div>
 </div>

@@ -1,5 +1,4 @@
-<div class="footer">
-	<div class="copyright">
-		<p>BRACONGO — @yield('footer-text', 'Back-office CMS')</p>
-	</div>
-</div>
+<footer class="a-footer">
+    <span>© {{ date('Y') }} <strong>BRACONGO</strong> — @yield('footer-text', 'Back-office CMS')</span>
+    <span>v1.0</span>
+</footer>

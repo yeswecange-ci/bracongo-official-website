@@ -2,128 +2,182 @@
 <html lang="fr">
 
 <head>
-	<title>BRACONGO — @yield('title', 'Admin')</title>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="author" content="BRACONGO">
-	<meta name="robots" content="noindex, nofollow">
-	<meta name="format-detection" content="telephone=no">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>BRACONGO — @yield('title', 'Admin')</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="BRACONGO">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-	<link rel="shortcut icon" type="image/png" href="{{ asset('admin/images/favicon.png') }}">
-	<link href="{{ asset('admin/vendor/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('admin/images/favicon.png') }}">
 
-	@stack('styles')
+    {{-- Google Fonts: Inter --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-	<link class="main-css" href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
+    {{-- Bootstrap Icons --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-	<style>
-		:root {
-			--primary: #E30613;
-			--primary-hover: #c70511;
-			--primary-light: rgba(227, 6, 19, 0.1);
-		}
+    {{-- Plugin CSS (select, etc.) --}}
+    <link href="{{ asset('admin/vendor/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet">
 
-		.content-body .container-fluid {
-			padding-top: 10px;
-		}
+    {{-- Template base CSS (Bootstrap 5 + plugin styles) --}}
+    <link class="main-css" href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
 
-		@media (max-width: 576px) {
-			.content-body .container-fluid {
-				padding-top: 6px;
-			}
-		}
+    {{-- New redesign — chargé en dernier pour override --}}
+    <link href="{{ asset('admin/css/admin-redesign.css') }}" rel="stylesheet">
 
-		body.bracongo-no-sidebar [data-sidebar-style] .content-body,
-		body.bracongo-no-sidebar .content-body {
-			margin-left: 0 !important;
-		}
-
-		body.bracongo-no-sidebar .content-body .container-fluid {
-			padding-left: 24px;
-			padding-right: 24px;
-		}
-
-		@media (max-width: 576px) {
-			body.bracongo-no-sidebar .content-body .container-fluid {
-				padding-left: 16px;
-				padding-right: 16px;
-			}
-		}
-
-		.nav-header .brand-logo .logo-abbr rect:first-child {
-			fill: #E30613;
-		}
-
-		.readonly-info-icon {
-			position: relative;
-			display: inline-flex;
-			align-items: center;
-			cursor: help;
-			color: #0dcaf0;
-		}
-		.readonly-info-icon .readonly-tooltip {
-			position: absolute;
-			bottom: 100%;
-			left: 50%;
-			transform: translateX(-50%) translateY(-4px);
-			background: #212529;
-			color: #fff;
-			padding: 6px 10px;
-			border-radius: 6px;
-			font-size: 12px;
-			white-space: nowrap;
-			opacity: 0;
-			visibility: hidden;
-			transition: opacity 0.15s, visibility 0.15s;
-			pointer-events: none;
-			z-index: 1050;
-		}
-		.readonly-info-icon:hover .readonly-tooltip,
-		.readonly-info-icon:focus .readonly-tooltip {
-			opacity: 1;
-			visibility: visible;
-		}
-	</style>
+    @stack('styles')
 </head>
 
-<body class="@yield('body-class')">
-	<div id="preloader">
-		<div class="loading-wave">
-			<div class="loading-bar"></div>
-			<div class="loading-bar"></div>
-			<div class="loading-bar"></div>
-			<div class="loading-bar"></div>
-		</div>
-	</div>
+<body>
 
-	<div id="main-wrapper" class="show">
-		@include('admin.layouts.partials.nav-header')
+    {{-- Preloader --}}
+    <div id="a-preloader">
+        <div class="a-preloader-inner">
+            <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo">
+            <div class="a-preloader-bar"></div>
+        </div>
+    </div>
 
-		@yield('header')
+    {{-- Overlay mobile --}}
+    <div class="a-overlay" id="aOverlay"></div>
 
-		@hasSection('sidebar')
-			@yield('sidebar')
-		@endif
+    <div class="a-layout" id="aLayout">
 
-		<div class="content-body">
-			<div class="container-fluid">
-				@yield('content')
-			</div>
-		</div>
+        {{-- ============================
+             SIDEBAR
+             ============================ --}}
+        <aside class="a-sidebar" id="aSidebar">
 
-		@include('admin.layouts.partials.footer')
-	</div>
+            {{-- Brand --}}
+            <a href="{{ route('admin.dashboard') }}" class="a-sidebar-brand">
+                <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo">
+                <span class="a-brand-name">BRA<em>CONGO</em></span>
+            </a>
 
-	@include('admin.layouts.partials.modal-image-preview')
+            {{-- Navigation --}}
+            <div class="a-sidebar-body">
+                @include('admin.layouts.partials.sidebar')
+            </div>
 
-	<script src="{{ asset('admin/vendor/global/global.min.js') }}"></script>
-	<script src="{{ asset('admin/vendor/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
-	@stack('scripts-vendor')
-	<script src="{{ asset('admin/js/custom.min.js') }}"></script>
-	<script src="{{ asset('admin/js/ic-sidenav-init.js') }}"></script>
-	@stack('scripts')
+        </aside>
+
+        {{-- ============================
+             MAIN
+             ============================ --}}
+        <div class="a-main" id="aMain">
+
+            {{-- Topbar --}}
+            @include('admin.layouts.partials.header')
+
+            {{-- Content --}}
+            <main class="a-content">
+                @yield('content')
+            </main>
+
+            {{-- Footer --}}
+            @include('admin.layouts.partials.footer')
+
+        </div>
+
+    </div>
+
+    @include('admin.layouts.partials.modal-image-preview')
+
+    {{-- Scripts --}}
+    <script src="{{ asset('admin/vendor/global/global.min.js') }}"></script>
+    <script src="{{ asset('admin/vendor/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
+    @stack('scripts-vendor')
+
+    {{-- Admin UI script --}}
+    <script>
+    (function () {
+
+        /* --- Preloader --- */
+        window.addEventListener('load', function () {
+            var el = document.getElementById('a-preloader');
+            if (!el) return;
+            el.classList.add('a-hidden');
+            setTimeout(function () { el.remove(); }, 400);
+        });
+
+        /* --- Refs --- */
+        var layout  = document.getElementById('aLayout');
+        var sidebar = document.getElementById('aSidebar');
+        var overlay = document.getElementById('aOverlay');
+
+        /* --- Restore collapsed state (desktop only) --- */
+        if (window.innerWidth > 991 && localStorage.getItem('sidebarCollapsed') === 'true') {
+            layout.classList.add('sidebar-collapsed');
+        }
+
+        /* --- Toggle sidebar --- */
+        document.querySelectorAll('.a-sidebar-toggle').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                if (window.innerWidth <= 991) {
+                    sidebar.classList.toggle('is-open');
+                    overlay.classList.toggle('show');
+                } else {
+                    layout.classList.toggle('sidebar-collapsed');
+                    localStorage.setItem(
+                        'sidebarCollapsed',
+                        layout.classList.contains('sidebar-collapsed') ? 'true' : 'false'
+                    );
+                }
+            });
+        });
+
+        /* --- Overlay click closes sidebar (mobile) --- */
+        overlay.addEventListener('click', function () {
+            sidebar.classList.remove('is-open');
+            overlay.classList.remove('show');
+        });
+
+        /* --- Submenu accordion --- */
+        document.querySelectorAll('.a-nav-link[data-sub]').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                var targetId = this.getAttribute('data-sub');
+                var menu = document.getElementById(targetId);
+                if (!menu) return;
+
+                var isOpen = (menu.style.display === 'block');
+
+                /* Close all other submenus */
+                document.querySelectorAll('.a-submenu').forEach(function (m) {
+                    if (m.id !== targetId) {
+                        m.style.display = 'none';
+                        var pl = document.querySelector('[data-sub="' + m.id + '"]');
+                        if (pl) pl.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                if (isOpen) {
+                    menu.style.display = 'none';
+                    this.setAttribute('aria-expanded', 'false');
+                } else {
+                    menu.style.display = 'block';
+                    this.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+
+        /* --- Open active submenu on load --- */
+        document.querySelectorAll('.a-submenu').forEach(function (menu) {
+            if (menu.querySelector('.a-nav-link.is-active')) {
+                menu.style.display = 'block';
+                var pl = document.querySelector('[data-sub="' + menu.id + '"]');
+                if (pl) pl.setAttribute('aria-expanded', 'true');
+            }
+        });
+
+    })();
+    </script>
+
+    @stack('scripts')
+
 </body>
-
 </html>

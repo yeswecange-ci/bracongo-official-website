@@ -1,39 +1,28 @@
 @extends('admin.layouts.app')
 
 @section('title', 'Éditer une page (CMS)')
-@section('footer-text', 'Édition de page (CMS)')
-
-@section('header')
-@include('admin.layouts.partials.header')
-@endsection
 
 @push('header-left')
-<h4 class="mb-0">Édition de page</h4>
+<div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.pages.index') }}">Pages</a></li>
+        <li class="breadcrumb-item active">Éditer</li>
+    </ol></nav>
+    <h6 class="a-topbar-page-title">Édition de page</h6>
+</div>
 @endpush
 
 @push('header-actions')
-<li class="nav-item">
-	<a class="btn btn-outline-secondary btn-sm" href="{{ route('admin.pages.index') }}">Retour</a>
-</li>
-<li class="nav-item ms-2">
-	<button class="btn btn-primary btn-sm" type="submit" form="pageForm">Enregistrer</button>
-</li>
+<a class="btn btn-outline-secondary btn-sm" href="{{ route('admin.pages.index') }}">
+    <i class="bi bi-arrow-left me-1"></i>Retour
+</a>
+<button class="btn btn-primary btn-sm ms-2" type="submit" form="pageForm">
+    <i class="bi bi-floppy me-1"></i>Enregistrer
+</button>
 @endpush
 
-@section('sidebar')
-@include('admin.layouts.partials.sidebar')
-@endsection
-
-
 @section('content')
-<div class="row page-titles">
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-		<li class="breadcrumb-item"><a href="{{ route('admin.pages.index') }}">Pages</a></li>
-		<li class="breadcrumb-item active"><a href="javascript:void(0)">Éditer</a></li>
-	</ol>
-</div>
-
 <div class="row">
 	<div class="col-xl-12">
 		<div class="row">
@@ -66,7 +55,7 @@
 					{{-- Hero --}}
 					<div class="card h-auto">
 						<div class="card-header d-block py-3">
-							<h4 class="card-title--medium mb-0">Hero</h4>
+							<h5 class="mb-0">Hero</h5>
 						</div>
 						<div class="card-body">
 							<div class="mb-3">
@@ -87,7 +76,7 @@
 					{{-- CTA --}}
 					<div class="card h-auto">
 						<div class="card-header d-block py-3">
-							<h4 class="card-title--medium mb-0">CTA</h4>
+							<h5 class="mb-0">CTA</h5>
 						</div>
 						<div class="card-body">
 							<div class="row">
@@ -110,7 +99,7 @@
 					{{-- Thumbnail / Aperçu image hero --}}
 					<div class="card h-auto">
 						<div class="card-header py-3">
-							<h4 class="card-title--medium mb-0">Aperçu image hero</h4>
+							<h5 class="mb-0">Aperçu image hero</h5>
 						</div>
 						<div class="card-body">
 							<div class="avatar-upload d-flex align-items-center">
@@ -127,11 +116,11 @@
 					{{-- Statut --}}
 					<div class="card h-auto">
 						<div class="card-header py-3">
-							<h4 class="card-title--medium mb-0">Statut</h4>
+							<h5 class="mb-0">Statut</h5>
 						</div>
 						<div class="card-body">
 							<label class="form-label">Statut</label>
-							<select class="form-control default-select h-auto wide" id="status" name="status">
+							<select class="form-select" id="status" name="status">
 								<option value="published">Publié</option>
 								<option value="draft">Brouillon</option>
 							</select>
@@ -145,15 +134,15 @@
 					{{-- Actions --}}
 					<div class="card h-auto">
 						<div class="card-header py-3">
-							<h4 class="card-title--medium mb-0">Actions</h4>
+							<h5 class="mb-0">Actions</h5>
 						</div>
 						<div class="card-body">
 							<div class="d-grid gap-2">
 								<button type="submit" form="pageForm" class="btn btn-primary" id="btnSave">
-									<i class="fa fa-save me-2"></i>Enregistrer
+									<i class="bi bi-floppy me-1"></i>Enregistrer
 								</button>
 								<a href="{{ route('admin.pages.index') }}" class="btn btn-outline-secondary">
-									<i class="fa fa-times me-2"></i>Annuler
+									<i class="bi bi-x me-1"></i>Annuler
 								</a>
 							</div>
 						</div>

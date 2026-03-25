@@ -2,24 +2,20 @@
 @section('title', 'Bracongo Pro')
 
 @push('header-left')
-<div class="me-auto">
-	<h4 class="card-title">Bracongo Pro</h4>
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Bracongo Pro</li>
-	</ol>
+<div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Bracongo Pro</li>
+    </ol></nav>
+    <h6 class="a-topbar-page-title">Bracongo Pro</h6>
 </div>
 @endpush
 @push('header-actions')
-<a href="{{ route('pro') }}" target="_blank" class="btn btn-sm btn-outline-primary">Voir la page</a>
+<a href="{{ route('pro') }}" target="_blank" class="btn btn-sm btn-outline-primary">
+    <i class="bi bi-box-arrow-up-right me-1"></i>Voir la page
+</a>
 @endpush
 
-@section('header')
-@include('admin.layouts.partials.header')
-@endsection
-@section('sidebar')
-@include('admin.layouts.partials.sidebar')
-@endsection
 
 @section('content')
 @include('admin.layouts.partials.alerts')
@@ -31,8 +27,8 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
-					<span class="badge" style="background:#E30613;">1</span>
-					<h4 class="card-title mb-0">Bannière & Description</h4>
+					<span class="a-step-badge">1</span>
+					<h5 class="mb-0">Bannière & Description</h5>
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-12 col-md-6">
@@ -56,8 +52,8 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
-					<span class="badge" style="background:#E30613;">2</span>
-					<h4 class="card-title mb-0">Section "Pourquoi choisir Bracongo Pro ?"</h4>
+					<span class="a-step-badge">2</span>
+					<h5 class="mb-0">Section "Pourquoi choisir Bracongo Pro ?"</h5>
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-md-4">
@@ -79,8 +75,8 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
-					<span class="badge" style="background:#E30613;">3</span>
-					<h4 class="card-title mb-0">Section "Fonctionnalités clés"</h4>
+					<span class="a-step-badge">3</span>
+					<h5 class="mb-0">Section "Fonctionnalités clés"</h5>
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-12">
@@ -98,8 +94,8 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
-					<span class="badge" style="background:#E30613;">4</span>
-					<h4 class="card-title mb-0">CTA Téléchargement</h4>
+					<span class="a-step-badge">4</span>
+					<h5 class="mb-0">CTA Téléchargement</h5>
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-md-4">
@@ -119,10 +115,9 @@
 		</div>
 
 		<div class="col-12 pb-4">
-			<button type="submit" class="btn btn-primary btn-lg px-5">
-				<svg class="me-2" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
-				Enregistrer
-			</button>
+			<button type="submit" class="btn btn-primary">
+			<i class="bi bi-floppy me-1"></i>Enregistrer
+		</button>
 		</div>
 	</div>
 </form>

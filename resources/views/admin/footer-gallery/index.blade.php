@@ -2,63 +2,78 @@
 @section('title', 'Galerie Footer')
 
 @push('header-left')
-<div class="me-auto">
-	<h4 class="card-title">Galerie du footer</h4>
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{ route('admin.footer.edit') }}">Footer</a></li>
-		<li class="breadcrumb-item active">Galerie</li>
-	</ol>
+<div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.footer.edit') }}">Footer</a></li>
+        <li class="breadcrumb-item active">Galerie</li>
+    </ol></nav>
+    <h6 class="a-topbar-page-title">Galerie du footer</h6>
 </div>
 @endpush
+
 @push('header-actions')
-<a href="{{ route('admin.footer-gallery.create') }}" class="btn btn-primary">
-	<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-	Ajouter une image
+<a href="{{ route('admin.footer-gallery.create') }}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>Ajouter une image
 </a>
 @endpush
 
-@section('header')
-@include('admin.layouts.partials.header')
-@endsection
-@section('sidebar')
-@include('admin.layouts.partials.sidebar')
-@endsection
 
 @section('content')
 @include('admin.layouts.partials.alerts')
 
 <div class="card">
-	<div class="card-body">
-		<div class="row g-3">
-			@forelse($images as $img)
-			<div class="col-sm-4 col-md-3 col-xl-2">
-				<div class="card h-100" style="border:1px solid #eee;">
-					<img src="{{ asset($img->image) }}" alt="{{ $img->alt }}" style="height:100px;object-fit:cover;border-radius:8px 8px 0 0;width:100%;">
-					<div class="card-body p-2 text-center">
-						<div class="small text-muted mb-1">Ordre: <strong>{{ $img->ordre }}</strong></div>
-						<div class="d-flex gap-1 justify-content-center">
-							<a href="{{ route('admin.footer-gallery.edit', $img) }}" class="btn btn-xs btn-warning">
-								<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-							</a>
-							<form action="{{ route('admin.footer-gallery.destroy', $img) }}" method="POST" onsubmit="return confirm('Supprimer ?')">
-								@csrf
-								@method('DELETE')
-								<button type="submit" class="btn btn-xs btn-danger">
-									<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
-								</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			@empty
-			<div class="col-12 text-center py-5 text-muted">
-				<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-				<p class="mt-2">Aucune image dans la galerie.</p>
-				<a href="{{ route('admin.footer-gallery.create') }}" class="btn btn-sm btn-primary">Ajouter une image</a>
-			</div>
-			@endforelse
-		</div>
-	</div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th style="width:90px;">Image</th>
+                        <th>Alt</th>
+                        <th class="text-center" style="width:80px;">Ordre</th>
+                        <th class="text-end" style="width:120px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($images as $img)
+                    <tr>
+                        <td>
+                            @if($img->image)
+                                <img src="{{ asset($img->image) }}" alt="{{ $img->alt }}" class="a-thumb a-thumb--contain">
+                            @else
+                                <div class="a-thumb-empty"><i class="bi bi-image"></i></div>
+                            @endif
+                        </td>
+                        <td class="text-muted small">{{ $img->alt ?: '—' }}</td>
+                        <td class="text-center"><span class="a-count-badge">{{ $img->ordre }}</span></td>
+                        <td class="text-end">
+                            <div class="d-flex gap-1 justify-content-end">
+                                <a href="{{ route('admin.footer-gallery.edit', $img) }}" class="a-action-btn a-action-btn--edit" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <form action="{{ route('admin.footer-gallery.destroy', $img) }}" method="POST" style="display:contents" onsubmit="return confirm('Supprimer ?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="a-action-btn a-action-btn--danger" title="Supprimer">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr><td colspan="4">
+                        <div class="a-empty-state">
+                            <i class="bi bi-inbox"></i>
+                            <p>Aucune image dans la galerie.</p>
+                            <a href="{{ route('admin.footer-gallery.create') }}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-plus-lg me-1"></i>Créer le premier
+                            </a>
+                        </div>
+                    </td></tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 @endsection

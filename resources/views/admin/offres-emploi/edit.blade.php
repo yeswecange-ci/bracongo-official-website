@@ -2,40 +2,80 @@
 @section('title', "Modifier l'Offre")
 
 @push('header-left')
-<div class="me-auto">
-	<h4 class="card-title">Modifier — {{ Str::limit($offres_emploi->titre, 40) }}</h4>
-	<ol class="breadcrumb">
+<div>
+	<nav aria-label="breadcrumb"><ol class="breadcrumb mb-0">
 		<li class="breadcrumb-item"><a href="{{ route('admin.offres-emploi.index') }}">Offres</a></li>
 		<li class="breadcrumb-item active">Modifier</li>
-	</ol>
+	</ol></nav>
+	<h6 class="a-topbar-page-title">Modifier — {{ Str::limit($offres_emploi->titre, 40) }}</h6>
 </div>
 @endpush
 
-@section('header')
-@include('admin.layouts.partials.header')
-@endsection
-@section('sidebar')
-@include('admin.layouts.partials.sidebar')
-@endsection
-
 @section('content')
-<div class="row justify-content-center">
-	<div class="col-xl-8">
-		@include('admin.layouts.partials.alerts')
-		<div class="card">
-			<div class="card-header"><h4 class="card-title">Informations de l'offre</h4></div>
-			<div class="card-body">
-				<form action="{{ route('admin.offres-emploi.update', ['offres_emploi' => $offres_emploi]) }}" method="POST" enctype="multipart/form-data">
-					@csrf
-					@method('PUT')
+@include('admin.layouts.partials.alerts')
+<form action="{{ route('admin.offres-emploi.update', ['offres_emploi' => $offres_emploi]) }}" method="POST" enctype="multipart/form-data">
+	@csrf
+	@method('PUT')
+
+	<div class="row g-4 align-items-start">
+
+		{{-- Colonne principale --}}
+		<div class="col-xl-8">
+			<div class="card">
+				<div class="card-header"><h5>Informations de l'offre</h5></div>
+				<div class="card-body">
 					@include('admin.offres-emploi._form')
-					<div class="d-flex gap-2 pt-3">
-						<button type="submit" class="btn btn-primary">Enregistrer</button>
-						<a href="{{ route('admin.offres-emploi.index') }}" class="btn btn-outline-secondary">Annuler</a>
-					</div>
-				</form>
+				</div>
 			</div>
 		</div>
+
+		{{-- Sidebar métadonnées --}}
+		<div class="col-xl-4 a-form-sidebar">
+
+			{{-- Card Image --}}
+			<div class="card">
+				<div class="card-header"><h5>Image</h5></div>
+				<div class="card-body">
+					<x-admin.image-upload name="image" label="Image" :value="$offres_emploi->image" help="PNG, JPG, GIF — max 2 Mo" />
+				</div>
+			</div>
+
+			{{-- Card Paramètres --}}
+			<div class="card mt-4">
+				<div class="card-header"><h5>Paramètres</h5></div>
+				<div class="card-body">
+					<div class="mb-3">
+						<label class="form-label fw-semibold">Lien "Plus de détails" <x-admin.readonly-info /></label>
+						<div class="a-readonly-wrap">
+							<i class="bi bi-lock a-lock-icon"></i>
+							<input type="text" class="form-control" name="lien" value="{{ old('lien', $offres_emploi->lien ?? '#') }}" readonly>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label class="form-label fw-semibold">Ordre</label>
+						<input type="number" class="form-control" name="ordre" value="{{ old('ordre', $offres_emploi->ordre) }}" min="0">
+					</div>
+					<div class="form-check form-switch">
+						<input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1"
+							{{ old('is_active', $offres_emploi->is_active) ? 'checked' : '' }}>
+						<label class="form-check-label fw-semibold" for="is_active">Offre active</label>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
 	</div>
-</div>
+
+	{{-- Sticky save bar --}}
+	<div class="a-save-bar">
+		<a href="{{ route('admin.offres-emploi.index') }}" class="btn btn-outline-secondary">
+			<i class="bi bi-x me-1"></i>Annuler
+		</a>
+		<button type="submit" class="btn btn-primary">
+			<i class="bi bi-check2 me-1"></i>Enregistrer
+		</button>
+	</div>
+
+</form>
 @endsection
