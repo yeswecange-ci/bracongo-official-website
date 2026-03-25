@@ -1,144 +1,95 @@
 @extends('layout.app')
 
-@section('title', 'Notre Histoire')
+@section('title', optional($parametres ?? null)->actualites_hero_titre ?? 'Actualités & Événements')
 
 @section('content')
-<div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
-        <img src="{{ asset('img/event.jpg') }}" alt="Nos Marques Banner" class="w-full h-full object-cover">
-        
-        <div class="absolute inset-0 bg-black/50"></div>
-
+    <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
+        <img src="{{ asset('img/bracongo.jpg') }}" alt="Actualités" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black/60"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
-            <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-center">
-                Nos actualités et évènements 
+            <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-center uppercase tracking-[0.2em]">
+                {{ optional($parametres ?? null)->actualites_hero_titre ?? 'Actualités & Événements' }}
             </h1>
         </div>
     </div>
-    <section class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
-            <div class="flex flex-wrap justify-center gap-4 mb-16">
-                <a href="#" class="px-8 py-2 bg-bracongo text-white rounded-full text-sm font-bold transition-all shadow-md">Actualités</a>
-                <a href="#" class="px-8 py-2 border border-gray-200 text-gray-400 rounded-full text-sm font-bold hover:border-bracongo hover:text-bracongo transition-all">Activations</a>
-                <a href="#" class="px-8 py-2 border border-gray-200 text-gray-400 rounded-full text-sm font-bold hover:border-bracongo hover:text-bracongo transition-all">Sponsoring</a>
-                <a href="#" class="px-8 py-2 border border-gray-200 text-gray-400 rounded-full text-sm font-bold hover:border-bracongo hover:text-bracongo transition-all">Communiqués</a>
-                <a href="#" class="px-8 py-2 border border-gray-200 text-gray-400 rounded-full text-sm font-bold hover:border-bracongo hover:text-bracongo transition-all">Médiathèque</a>
+
+    <section class="py-10 bg-white border-b border-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                <a href="{{ route('actualites') }}"
+                    class="px-6 py-2 rounded-full text-sm font-semibold transition-all {{ !$type ? 'bg-bracongo text-white' : 'border border-gray-300 text-gray-700 hover:border-bracongo hover:text-bracongo' }}">
+                    {{ optional($parametres ?? null)->actualites_filtre_tout_label ?? 'Tout voir' }}
+                </a>
+                @foreach($types as $key => $label)
+                <a href="{{ route('actualites', ['type' => $key]) }}"
+                    class="px-6 py-2 rounded-full text-sm font-semibold transition-all {{ $type === $key ? 'bg-bracongo text-white' : 'border border-gray-300 text-gray-700 hover:border-bracongo hover:text-bracongo' }}">
+                    {{ $label }}
+                </a>
+                @endforeach
             </div>
+        </div>
+    </section>
 
-            <div class="flex items-center justify-center gap-3 mb-16">
-                <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-8 w-auto">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Actualités</h2>
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 lg:px-12 max-w-7xl">
+            @if($news->isNotEmpty())
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                @foreach($news as $item)
+                <article class="flex flex-col bg-white rounded-[1.5rem] overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    @if($item->image)
+                    <div class="h-52 overflow-hidden">
+                        <img src="{{ asset($item->image) }}" alt="{{ $item->titre }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                    </div>
+                    @else
+                    <div class="h-52 bg-gray-100 flex items-center justify-center">
+                        <svg class="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="1.5"/>
+                            <circle cx="8.5" cy="8.5" r="1.5" stroke-width="1.5"/>
+                            <polyline points="21 15 16 10 5 21" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    @endif
+                    <div class="flex flex-col flex-1 p-6 gap-4">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs font-bold text-bracongo uppercase tracking-widest">{{ $types[$item->type] ?? $item->type }}</span>
+                            @if($item->date_publication)
+                            <span class="text-xs text-gray-400">{{ $item->date_publication->format('d/m/Y') }}</span>
+                            @endif
+                        </div>
+                        <h2 class="text-xl font-bold text-gray-900 leading-snug">{{ $item->titre }}</h2>
+                        @if($item->extrait)
+                        <p class="text-gray-600 text-sm leading-relaxed flex-1">{{ Str::limit($item->extrait, 150) }}</p>
+                        @endif
+                        @if($item->lieu || $item->date_evenement)
+                        <div class="flex items-center gap-2 text-sm text-gray-500">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            {{ $item->lieu }}
+                            @if($item->date_evenement)
+                             · {{ $item->date_evenement->format('d/m/Y') }}
+                            @endif
+                        </div>
+                        @endif
+                        @if($item->lien_externe)
+                        <a href="{{ $item->lien_externe }}" target="_blank" rel="noopener"
+                            class="inline-flex items-center gap-2 text-bracongo font-bold text-sm hover:underline mt-auto">
+                            En savoir plus
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                        @endif
+                    </div>
+                </article>
+                @endforeach
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-                <div class="bg-[#F8F8F8] rounded-[2rem] overflow-hidden group hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                    <div class="h-64 overflow-hidden">
-                        <img src="{{ asset('img/lumumba.png') }}" alt="Rencontre avec Lumumba" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <div class="p-8 flex items-center justify-between mt-auto">
-                        <h3 class="text-gray-900 font-bold text-sm">Rencontre avec Lumumba</h3>
-                        <svg class="w-6 h-6 text-bracongo transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="bg-[#F8F8F8] rounded-[2rem] overflow-hidden group hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                    <div class="h-64 overflow-hidden">
-                        <img src="{{ asset('img/influ.png') }}" alt="Rencontre des influenceurs" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <div class="p-8 flex items-center justify-between mt-auto">
-                        <h3 class="text-gray-900 font-bold text-sm">Rencontre des influenceurs</h3>
-                        <svg class="w-6 h-6 text-bracongo transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="bg-[#F8F8F8] rounded-[2rem] overflow-hidden group hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                    <div class="h-64 overflow-hidden">
-                        <img src="{{ asset('img/champ.png') }}" alt="Rencontre des influenceurs" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <div class="p-8 flex items-center justify-between mt-auto">
-                        <h3 class="text-gray-900 font-bold text-sm">Rencontre des influenceurs</h3>
-                        <svg class="w-6 h-6 text-bracongo transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="bg-[#F8F8F8] rounded-[2rem] overflow-hidden group hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                    <div class="h-64 overflow-hidden">
-                        <img src="{{ asset('img/bièrre.png') }}" alt="Rencontre des influenceurs" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <div class="p-8 flex items-center justify-between mt-auto">
-                        <h3 class="text-gray-900 font-bold text-sm">Rencontre des influenceurs</h3>
-                        <svg class="w-6 h-6 text-bracongo transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="bg-[#F8F8F8] rounded-[2rem] overflow-hidden group hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                    <div class="h-64 overflow-hidden">
-                        <img src="{{ asset('img/lumumba.png') }}" alt="Rencontre avec Lumumba" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <div class="p-8 flex items-center justify-between mt-auto">
-                        <h3 class="text-gray-900 font-bold text-sm">Rencontre avec Lumumba</h3>
-                        <svg class="w-6 h-6 text-bracongo transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="bg-[#F8F8F8] rounded-[2rem] overflow-hidden group hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                    <div class="h-64 overflow-hidden">
-                        <img src="{{ asset('img/influ.png') }}" alt="Rencontre des influenceurs" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <div class="p-8 flex items-center justify-between mt-auto">
-                        <h3 class="text-gray-900 font-bold text-sm">Rencontre des influenceurs</h3>
-                        <svg class="w-6 h-6 text-bracongo transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="bg-[#F8F8F8] rounded-[2rem] overflow-hidden group hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                    <div class="h-64 overflow-hidden">
-                        <img src="{{ asset('img/champ.png') }}" alt="Rencontre des influenceurs" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <div class="p-8 flex items-center justify-between mt-auto">
-                        <h3 class="text-gray-900 font-bold text-sm">Rencontre des influenceurs</h3>
-                        <svg class="w-6 h-6 text-bracongo transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="bg-[#F8F8F8] rounded-[2rem] overflow-hidden group hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                    <div class="h-64 overflow-hidden">
-                        <img src="{{ asset('img/bièrre.png') }}" alt="Rencontre des influenceurs" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <div class="p-8 flex items-center justify-between mt-auto">
-                        <h3 class="text-gray-900 font-bold text-sm">Rencontre des influenceurs</h3>
-                        <svg class="w-6 h-6 text-bracongo transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </div>
-                </div>
+            @else
+            <div class="text-center py-20 text-gray-400">
+                <svg class="w-16 h-16 mx-auto mb-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                </svg>
+                <p class="text-lg font-medium">Aucune actualité disponible pour le moment.</p>
             </div>
-
-            <div class="flex items-center justify-center gap-4 mt-12">
-                <span class="text-bracongo font-bold text-sm cursor-pointer">1</span>
-                <span class="text-gray-400 font-bold text-sm cursor-pointer hover:text-bracongo transition-colors">2</span>
-                <span class="text-gray-400 font-bold text-sm cursor-pointer hover:text-bracongo transition-colors">3</span>
-                <span class="text-gray-400 font-bold text-sm cursor-pointer hover:text-bracongo transition-colors">4</span>
-                <span class="text-gray-400 font-bold text-sm cursor-pointer hover:text-bracongo transition-colors">5</span>
-                <div class="flex items-center text-bracongo">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
-                    </svg>
-                </div>
-            </div>
+            @endif
         </div>
     </section>
 @endsection
