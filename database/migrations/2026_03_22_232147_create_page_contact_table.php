@@ -12,8 +12,8 @@ return new class extends Migration
             $table->id();
             $table->string('hero_image')->default('img/bracongo.jpg');
             $table->string('hero_titre')->default('Nos Contacts');
-            $table->text('denomination')->default('Les Boissons Rafraîchissantes du Congo, BRACONGO SA');
-            $table->text('adresse')->default('Avenue des Brasseries, numéro 7666, Quartier Kingabwa, Commune de Limete, dans la province de Kinshasa, en République Démocratique du Congo.');
+            $table->string('denomination', 500)->default('Les Boissons Rafraîchissantes du Congo, BRACONGO SA');
+            $table->string('adresse', 500)->default('Avenue des Brasseries, numéro 7666, Quartier Kingabwa, Commune de Limete, dans la province de Kinshasa, en République Démocratique du Congo.');
             $table->string('bp')->default('BP: 7.600 KINSHASA 1');
             $table->string('email')->default('bracongo.contact@castel-afrique.com');
             $table->string('tel_consommateurs')->default('0815586874');

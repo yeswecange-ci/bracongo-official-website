@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('footer_settings', function (Blueprint $table) {
             $table->id();
-            $table->text('mission_texte')->default('« Assurer une qualité et une disponibilité constantes de nos produits au meilleur prix avec un réseau de distribution complet, rapide et performant »');
-            $table->text('adresse')->default('Les Boissons Rafraîchissantes du Congo, BRACONGO SA Avenue des Brasseries, N° 7666, Kingabwa, Limete, Kinshasa, RDC');
+            $table->string('mission_texte', 500)->default('« Assurer une qualité et une disponibilité constantes de nos produits au meilleur prix avec un réseau de distribution complet, rapide et performant »');
+            $table->string('adresse', 500)->default('Les Boissons Rafraîchissantes du Congo, BRACONGO SA Avenue des Brasseries, N° 7666, Kingabwa, Limete, Kinshasa, RDC');
             $table->string('telephone')->default('+243 815 586 874');
             $table->string('email')->default('bracongo.contact@castel-afrique.com');
             $table->string('certification_image')->default('img/image 12.png');

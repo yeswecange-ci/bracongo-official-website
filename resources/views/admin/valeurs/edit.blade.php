@@ -2,32 +2,26 @@
 @section('title', 'Modifier la Valeur')
 
 @push('header-left')
-<div class="me-auto">
-	<h4 class="card-title">Modifier — <span style="color:#E30613;">{{ $valeur->lettre }}</span> · {{ $valeur->description }}</h4>
-	<ol class="breadcrumb">
+<div>
+	<nav aria-label="breadcrumb"><ol class="breadcrumb mb-0">
 		<li class="breadcrumb-item"><a href="{{ route('admin.valeurs.index') }}">Valeurs</a></li>
 		<li class="breadcrumb-item active">Modifier</li>
-	</ol>
+	</ol></nav>
+	<h6 class="a-topbar-page-title">Modifier — <span style="color:#E30613;">{{ $valeur->lettre }}</span> · {{ $valeur->description }}</h6>
 </div>
 @endpush
 
-@section('header')
-@include('admin.layouts.partials.header')
-@endsection
-@section('sidebar')
-@include('admin.layouts.partials.sidebar')
-@endsection
-
 @section('content')
-<div class="row justify-content-center">
-	<div class="col-xl-6">
-		@include('admin.layouts.partials.alerts')
-		<div class="card">
-			<div class="card-header"><h4 class="card-title">Informations de la valeur</h4></div>
-			<div class="card-body">
-				<form action="{{ route('admin.valeurs.update', $valeur) }}" method="POST">
-					@csrf
-					@method('PUT')
+@include('admin.layouts.partials.alerts')
+<form action="{{ route('admin.valeurs.update', $valeur) }}" method="POST">
+	@csrf
+	@method('PUT')
+
+	<div class="row g-4 align-items-start">
+		<div class="col-xl-6">
+			<div class="card">
+				<div class="card-header"><h5>Informations de la valeur</h5></div>
+				<div class="card-body">
 					<div class="row g-3">
 						<div class="col-md-3">
 							<label class="form-label fw-semibold">Lettre <span class="text-danger">*</span></label>
@@ -44,13 +38,20 @@
 							<input type="number" class="form-control" name="ordre" value="{{ old('ordre', $valeur->ordre) }}" min="0">
 						</div>
 					</div>
-					<div class="d-flex gap-2 pt-4">
-						<button type="submit" class="btn btn-primary">Enregistrer</button>
-						<a href="{{ route('admin.valeurs.index') }}" class="btn btn-outline-secondary">Annuler</a>
-					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+
+	{{-- Sticky save bar --}}
+	<div class="a-save-bar">
+		<a href="{{ route('admin.valeurs.index') }}" class="btn btn-outline-secondary">
+			<i class="bi bi-x me-1"></i>Annuler
+		</a>
+		<button type="submit" class="btn btn-primary">
+			<i class="bi bi-check2 me-1"></i>Enregistrer
+		</button>
+	</div>
+
+</form>
 @endsection

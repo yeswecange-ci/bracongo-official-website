@@ -1,7 +1,6 @@
 @extends('admin.layouts.app')
 
 @section('title', 'Pages (CMS)')
-@section('footer-text', 'Gestion des pages (CMS)')
 
 @push('styles')
 <link href="{{ asset('admin/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
@@ -27,36 +26,22 @@
 </style>
 @endpush
 
-@section('header')
-@include('admin.layouts.partials.header')
-@endsection
-
 @push('header-left')
-<div class="input-group search-area">
-	<input type="text" class="form-control" placeholder="Rechercher une page…">
-	<span class="input-group-text">
-		<a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a>
-	</span>
+<div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Pages</li>
+    </ol></nav>
+    <h6 class="a-topbar-page-title">Pages du site (CMS)</h6>
 </div>
 @endpush
 
-@section('sidebar')
-@include('admin.layouts.partials.sidebar', ['currentPage' => 'pages'])
-@endsection
-
 @section('content')
-<div class="row page-titles">
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-		<li class="breadcrumb-item active"><a href="javascript:void(0)">Pages</a></li>
-	</ol>
-</div>
-
 <div class="row">
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header d-flex flex-wrap gap-2 justify-content-between align-items-center">
-				<h4 class="card-title mb-0">Pages du site (CMS)</h4>
+				<h5 class="mb-0">Pages du site (CMS)</h5>
 				<div class="d-flex flex-wrap gap-2">
 					<a href="{{ route('admin.pages.create') }}" class="btn btn-primary btn-sm">Créer / éditer</a>
 					<button type="button" class="btn btn-outline-secondary btn-sm" id="btnRefresh">Rafraîchir</button>
@@ -103,9 +88,9 @@
 	];
 
 	function badge(status) {
-		if (status === "Publié") return '<span class="badge light badge-success">Publié</span>';
-		if (status === "Brouillon") return '<span class="badge light badge-warning">Brouillon</span>';
-		return '<span class="badge light badge-secondary">' + status + '</span>';
+		if (status === "Publié") return '<span class="a-status a-status--published">Publié</span>';
+		if (status === "Brouillon") return '<span class="a-status a-status--draft">Brouillon</span>';
+		return '<span class="a-status a-status--inactive">' + status + '</span>';
 	}
 
 	function renderRows() {

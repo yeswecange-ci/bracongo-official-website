@@ -2,28 +2,23 @@
 @section('title', "Page d'Accueil")
 
 @push('header-left')
-<div class="me-auto">
-	<h4 class="card-title">Page d'Accueil</h4>
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Accueil</li>
-	</ol>
+<div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Accueil</li>
+    </ol></nav>
+    <h6 class="a-topbar-page-title">Page d'Accueil</h6>
 </div>
 @endpush
 @push('header-actions')
-<a href="{{ route('Accueil') }}" target="_blank" class="btn btn-sm btn-outline-primary me-2">Voir la page</a>
+<a href="{{ route('Accueil') }}" target="_blank" class="btn btn-sm btn-outline-primary me-2">
+    <i class="bi bi-box-arrow-up-right me-1"></i>Voir la page
+</a>
 <a href="{{ route('admin.hero-slides.index') }}" class="btn btn-sm btn-primary">
-	<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m9 8 6 4-6 4V8z"/></svg>
-	Gérer les slides
+    <i class="bi bi-collection-play me-1"></i>Gérer les slides
 </a>
 @endpush
 
-@section('header')
-@include('admin.layouts.partials.header')
-@endsection
-@section('sidebar')
-@include('admin.layouts.partials.sidebar')
-@endsection
 
 @section('content')
 @include('admin.layouts.partials.alerts')
@@ -36,8 +31,8 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
-					<span class="badge" style="background:#E30613;">1</span>
-					<h4 class="card-title mb-0">Section "Dernières Actualités"</h4>
+					<span class="a-step-badge">1</span>
+					<h5 class="mb-0">Section "Dernières Actualités"</h5>
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-md-6">
@@ -56,8 +51,8 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
-					<span class="badge" style="background:#E30613;">2</span>
-					<h4 class="card-title mb-0">Section "Qui sommes-nous ?"</h4>
+					<span class="a-step-badge">2</span>
+					<h5 class="mb-0">Section "Qui sommes-nous ?"</h5>
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-12">
@@ -88,8 +83,8 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
-					<span class="badge" style="background:#E30613;">3</span>
-					<h4 class="card-title mb-0">Section "Nos Marques"</h4>
+					<span class="a-step-badge">3</span>
+					<h5 class="mb-0">Section "Nos Marques"</h5>
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-md-4">
@@ -112,8 +107,8 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
-					<span class="badge" style="background:#E30613;">4</span>
-					<h4 class="card-title mb-0">Section "Rejoignez nous"</h4>
+					<span class="a-step-badge">4</span>
+					<h5 class="mb-0">Section "Rejoignez nous"</h5>
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-md-4">
@@ -140,9 +135,8 @@
 		</div>
 
 		<div class="col-12 pb-4">
-			<button type="submit" class="btn btn-primary btn-lg px-5">
-				<svg class="me-2" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
-				Enregistrer toutes les sections
+			<button type="submit" class="btn btn-primary">
+				<i class="bi bi-floppy me-1"></i>Enregistrer toutes les sections
 			</button>
 		</div>
 	</div>
