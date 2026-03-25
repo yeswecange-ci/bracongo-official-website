@@ -14,7 +14,6 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->string('image')->nullable();
-            $table->string('image_banner')->nullable();
             $table->string('lien')->nullable(); // URL vers la catégorie ou page dédiée
             $table->unsignedTinyInteger('ordre')->default(0);
             $table->boolean('is_active')->default(true);

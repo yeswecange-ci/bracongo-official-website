@@ -10,7 +10,7 @@ class Marque extends Model
     protected $table = 'marques';
 
     protected $fillable = [
-        'nom', 'slug', 'description', 'image', 'image_banner',
+        'nom', 'slug', 'description', 'image',
         'lien', 'ordre', 'is_active',
     ];
 

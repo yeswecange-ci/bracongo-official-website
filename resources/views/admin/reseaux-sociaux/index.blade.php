@@ -52,10 +52,10 @@
                         </td>
                         <td class="text-end">
                             <div class="d-flex gap-1 justify-content-end">
-                                <a href="{{ route('admin.reseaux-sociaux.edit', $rs) }}" class="a-action-btn a-action-btn--edit" title="Modifier">
+                                <a href="{{ action([\App\Http\Controllers\Admin\ReseauSocialController::class, 'edit'], ['reseaux_sociaux' => $rs->id]) }}" class="a-action-btn a-action-btn--edit" title="Modifier">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form action="{{ route('admin.reseaux-sociaux.destroy', $rs) }}" method="POST" style="display:contents" onsubmit="return confirm('Supprimer ?')">
+                                <form action="{{ action([\App\Http\Controllers\Admin\ReseauSocialController::class, 'destroy'], ['reseaux_sociaux' => $rs->id]) }}" method="POST" style="display:contents" onsubmit="return confirm('Supprimer ?')">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="a-action-btn a-action-btn--danger" title="Supprimer">
                                         <i class="bi bi-trash"></i>

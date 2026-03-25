@@ -23,9 +23,9 @@
 
 {{-- Filtres par type --}}
 <div class="a-filter-bar mb-3">
-    <a href="{{ route('admin.news.index') }}" class="a-filter-pill {{ !request('type') ? 'a-filter-pill--active' : '' }}">Tous</a>
+    <a href="{{ route('admin.news.index') }}" class="a-filter-pill {{ !$type ? 'a-filter-pill--active' : '' }}">Tous</a>
     @foreach($types as $key => $label)
-    <a href="{{ route('admin.news.index', ['type' => $key]) }}" class="a-filter-pill {{ request('type') === $key ? 'a-filter-pill--active' : '' }}">{{ $label }}</a>
+    <a href="{{ route('admin.news.index', ['type' => $key]) }}" class="a-filter-pill {{ $type === $key ? 'a-filter-pill--active' : '' }}">{{ $label }}</a>
     @endforeach
 </div>
 

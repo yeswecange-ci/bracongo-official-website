@@ -37,8 +37,7 @@
 				<div class="card-header"><h5>Images</h5></div>
 				<div class="card-body">
 					<x-admin.image-upload name="image" label="Image produit" :value="$marque->image" help="PNG, JPG, GIF — max 2 Mo" />
-					<hr class="my-3">
-					<x-admin.image-upload name="image_banner" label="Image bannière" :value="$marque->image_banner" help="PNG, JPG, GIF — max 2 Mo" />
+					<p class="small text-muted mb-0 mt-2">La bannière des pages par catégorie (bières, eaux, etc.) se gère dans <strong>Catalogue → Page Nos bières / Page Eaux / …</strong>.</p>
 				</div>
 			</div>
 
@@ -46,15 +45,7 @@
 			<div class="card mt-4">
 				<div class="card-header"><h5>Paramètres</h5></div>
 				<div class="card-body">
-					<div class="mb-3">
-						<label class="form-label fw-semibold">Catégorie <span class="text-danger">*</span></label>
-						<select class="form-select @error('categorie') is-invalid @enderror" name="categorie">
-							@foreach($categories as $key => $label)
-							<option value="{{ $key }}" {{ old('categorie', $marque->categorie) === $key ? 'selected' : '' }}>{{ $label }}</option>
-							@endforeach
-						</select>
-						@error('categorie')<div class="invalid-feedback">{{ $message }}</div>@enderror
-					</div>
+					<p class="small text-muted mb-3">La <strong>catégorie</strong> (bière, gazeuse, eau, énergisante) se règle sur chaque <a href="{{ route('admin.boissons.index') }}">fiche boisson</a>, pas sur la marque.</p>
 					<div class="mb-3">
 						<label class="form-label fw-semibold">Lien <x-admin.readonly-info /> <small class="text-muted">(ex: /Nos-marques-bieres)</small></label>
 						<div class="a-readonly-wrap">

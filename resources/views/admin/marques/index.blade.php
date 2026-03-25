@@ -44,11 +44,14 @@
 	@endforeach
 </div>
 
-{{-- Tableau 1 : marques uniquement --}}
+{{-- Tableau 1 : marques uniquement (liste plate, pas de regroupement par catégorie) --}}
 <div class="card mb-4">
-    <div class="card-header py-3 d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">{{ $label }}</h5>
-        <span class="a-count-badge">{{ $grouped[$key]->count() }}</span>
+    <div class="card-header py-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div>
+            <h5 class="mb-0">Marques</h5>
+            <small class="text-muted">Enseignes — le type de produit est sur chaque fiche <strong>boisson</strong></small>
+        </div>
+        <span class="badge bg-secondary">{{ $marques->count() }} marque(s)</span>
     </div>
     <div class="card-body p-0">
         <div class="table-responsive">
@@ -58,14 +61,13 @@
                         <th style="width:70px;">Image</th>
                         <th>Nom</th>
                         <th>Slug</th>
-                        <th class="text-center">Boissons</th>
-                        <th class="text-center" style="width:80px;">Ordre</th>
+                        <th class="text-center">Boissons liées</th>
                         <th class="text-center" style="width:100px;">Statut</th>
                         <th class="text-end" style="width:120px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($grouped[$key] as $marque)
+                    @forelse($marques as $marque)
                     <tr>
                         <td>
                             @if($marque->image)
@@ -77,9 +79,8 @@
                         <td class="fw-semibold">{{ $marque->nom }}</td>
                         <td class="text-muted small">{{ $marque->slug }}</td>
                         <td class="text-center">
-                            <a href="{{ route('admin.boissons.index', ['marque_id' => $marque->id]) }}" class="a-count-badge text-decoration-none">{{ $marque->boissons_count }}</a>
+                            <a href="{{ route('admin.marques.index') }}#boissons" class="a-count-badge text-decoration-none">{{ $marque->boissons_count }}</a>
                         </td>
-                        <td class="text-center"><span class="a-count-badge">{{ $marque->ordre }}</span></td>
                         <td class="text-center">
                             @if($marque->is_active)
                                 <span class="a-status a-status--active">Active</span>
@@ -102,7 +103,7 @@
                         </td>
                     </tr>
                     @empty
-                    <tr><td colspan="7">
+                    <tr><td colspan="6">
                         <div class="a-empty-state">
                             <i class="bi bi-inbox"></i>
                             <p>Aucune marque enregistrée.</p>
@@ -145,15 +146,14 @@
 			<table class="table table-hover mb-0">
 				<thead style="background:#f8f8f8;">
 					<tr>
-						<th style="width:70px;">Image</th>
-						<th>Nom</th>
-						<th>Marque</th>
-						<th>Catégorie</th>
-						<th>Type</th>
-						<th class="text-center" style="width:80px;">Ordre</th>
-						<th class="text-center" style="width:100px;">Statut</th>
-						<th class="text-end" style="width:120px;">Actions</th>
-					</tr>
+					<th style="width:70px;">Image</th>
+					<th>Nom</th>
+					<th>Marque</th>
+					<th>Catégorie</th>
+					<th>Type</th>
+					<th class="text-center" style="width:100px;">Statut</th>
+					<th class="text-end" style="width:120px;">Actions</th>
+				</tr>
 				</thead>
 				<tbody>
 					@forelse($boissons as $boisson)
@@ -179,9 +179,8 @@
 						<td>
 							<span class="badge badge-light border text-dark">{{ $categories[$boisson->categorie] ?? $boisson->categorie }}</span>
 						</td>
-						<td class="small text-muted">{{ $boisson->type }}</td>
-						<td class="text-center"><span class="badge badge-light">{{ $boisson->ordre }}</span></td>
-						<td class="text-center">
+					<td class="small text-muted">{{ $boisson->type }}</td>
+					<td class="text-center">
 							@if($boisson->is_active)
 								<span class="badge badge-success light">Active</span>
 							@else
@@ -202,7 +201,7 @@
 						</td>
 					</tr>
 					@empty
-					<tr><td colspan="8" class="text-center py-4 text-muted">Aucune boisson pour ce filtre.</td></tr>
+					<tr><td colspan="7" class="text-center py-4 text-muted">Aucune boisson pour ce filtre.</td></tr>
 					@endforelse
 				</tbody>
 			</table>

@@ -10,11 +10,21 @@ use Illuminate\Http\Request;
 class NewsController extends Controller
 {
     use HandlesImageUpload;
-    public function index()
+    public function index(Request $request)
     {
-        $news = News::orderBy('date_publication', 'desc')->orderBy('ordre')->get();
         $types = News::types();
-        return view('admin.news.index', compact('news', 'types'));
+        $type  = $request->query('type');
+        if ($type && !array_key_exists($type, $types)) {
+            $type = null;
+        }
+
+        $query = News::orderBy('date_publication', 'desc')->orderBy('ordre');
+        if ($type) {
+            $query->where('type', $type);
+        }
+        $news = $query->get();
+
+        return view('admin.news.index', compact('news', 'types', 'type'));
     }
 
     public function create()

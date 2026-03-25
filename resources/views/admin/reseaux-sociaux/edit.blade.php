@@ -13,7 +13,7 @@
 
 @section('content')
 @include('admin.layouts.partials.alerts')
-<form action="{{ route('admin.reseaux-sociaux.update', $reseauSocial) }}" method="POST">
+<form action="{{ action([\App\Http\Controllers\Admin\ReseauSocialController::class, 'update'], ['reseaux_sociaux' => $reseauSocial->id]) }}" method="POST">
 	@csrf
 	@method('PUT')
 

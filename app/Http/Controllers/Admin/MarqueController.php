@@ -48,7 +48,6 @@ class MarqueController extends Controller
             'slug'         => 'required|string|max:255|unique:marques',
             'description'  => 'nullable|string',
             'image'        => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
-            'image_banner' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
             'lien'         => 'nullable|string|max:255',
             'ordre'        => 'nullable|integer|min:0',
             'is_active'    => 'nullable|boolean',
@@ -59,12 +58,6 @@ class MarqueController extends Controller
         } else {
             unset($data['image']);
         }
-        if ($request->hasFile('image_banner')) {
-            $data['image_banner'] = $this->uploadImage($request->file('image_banner'), 'uploads/marques', 'banner');
-        } else {
-            unset($data['image_banner']);
-        }
-
         Marque::create($data);
 
         return redirect()->route('admin.marques.index')->with('success', 'Marque ajoutée.');
@@ -82,7 +75,6 @@ class MarqueController extends Controller
             'slug'         => 'required|string|max:255|unique:marques,slug,' . $marque->id,
             'description'  => 'nullable|string',
             'image'        => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
-            'image_banner' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
             'lien'         => 'nullable|string|max:255',
             'ordre'        => 'nullable|integer|min:0',
             'is_active'    => 'nullable|boolean',
@@ -93,12 +85,6 @@ class MarqueController extends Controller
         } else {
             unset($data['image']);
         }
-        if ($request->hasFile('image_banner')) {
-            $data['image_banner'] = $this->uploadImage($request->file('image_banner'), 'uploads/marques', 'banner');
-        } else {
-            unset($data['image_banner']);
-        }
-
         $marque->update($data);
 
         return redirect()->route('admin.marques.index')->with('success', 'Marque mise à jour.');

@@ -11,12 +11,14 @@ class NavigationItemController extends Controller
     public function index()
     {
         $items = NavigationItem::with('enfants')->parents()->get();
+
         return view('admin.navigation.index', compact('items'));
     }
 
     public function create()
     {
         $parents = NavigationItem::parents()->get();
+
         return view('admin.navigation.create', compact('parents'));
     }
 
@@ -37,13 +39,17 @@ class NavigationItemController extends Controller
             ->with('success', 'Item de navigation ajouté.');
     }
 
-    public function edit(NavigationItem $navigationItem)
+    /**
+     * Le paramètre doit s’appeler $navigation comme la route {navigation} (Laravel 12).
+     */
+    public function edit(NavigationItem $navigation)
     {
-        $parents = NavigationItem::parents()->where('id', '!=', $navigationItem->id)->get();
-        return view('admin.navigation.edit', compact('navigationItem', 'parents'));
+        $parents = NavigationItem::parents()->where('id', '!=', $navigation->id)->get();
+
+        return view('admin.navigation.edit', compact('navigation', 'parents'));
     }
 
-    public function update(Request $request, NavigationItem $navigationItem)
+    public function update(Request $request, NavigationItem $navigation)
     {
         $data = $request->validate([
             'label'     => 'required|string|max:255',
@@ -54,15 +60,16 @@ class NavigationItemController extends Controller
         ]);
         $data['is_active'] = $request->boolean('is_active');
 
-        $navigationItem->update($data);
+        $navigation->update($data);
 
         return redirect()->route('admin.navigation.index')
             ->with('success', 'Item mis à jour.');
     }
 
-    public function destroy(NavigationItem $navigationItem)
+    public function destroy(NavigationItem $navigation)
     {
-        $navigationItem->delete();
+        $navigation->delete();
+
         return redirect()->route('admin.navigation.index')
             ->with('success', 'Item supprimé.');
     }

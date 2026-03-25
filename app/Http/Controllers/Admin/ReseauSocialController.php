@@ -11,6 +11,7 @@ class ReseauSocialController extends Controller
     public function index()
     {
         $reseaux = ReseauSocial::orderBy('ordre')->get();
+
         return view('admin.reseaux-sociaux.index', compact('reseaux'));
     }
 
@@ -35,12 +36,15 @@ class ReseauSocialController extends Controller
             ->with('success', 'Réseau social ajouté.');
     }
 
-    public function edit(ReseauSocial $reseauSocial)
+    /**
+     * Nom du paramètre = {reseaux_sociaux} (Laravel 12 + resource kebab-case).
+     */
+    public function edit(ReseauSocial $reseaux_sociaux)
     {
-        return view('admin.reseaux-sociaux.edit', compact('reseauSocial'));
+        return view('admin.reseaux-sociaux.edit', ['reseauSocial' => $reseaux_sociaux]);
     }
 
-    public function update(Request $request, ReseauSocial $reseauSocial)
+    public function update(Request $request, ReseauSocial $reseaux_sociaux)
     {
         $data = $request->validate([
             'platform'  => 'required|string|in:facebook,instagram,twitter,youtube,linkedin,tiktok',
@@ -50,15 +54,16 @@ class ReseauSocialController extends Controller
         ]);
         $data['is_active'] = $request->boolean('is_active');
 
-        $reseauSocial->update($data);
+        $reseaux_sociaux->update($data);
 
         return redirect()->route('admin.reseaux-sociaux.index')
             ->with('success', 'Réseau social mis à jour.');
     }
 
-    public function destroy(ReseauSocial $reseauSocial)
+    public function destroy(ReseauSocial $reseaux_sociaux)
     {
-        $reseauSocial->delete();
+        $reseaux_sociaux->delete();
+
         return redirect()->route('admin.reseaux-sociaux.index')
             ->with('success', 'Réseau social supprimé.');
     }

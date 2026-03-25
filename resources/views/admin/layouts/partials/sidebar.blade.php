@@ -156,7 +156,7 @@
 <ul class="a-nav-list">
 
     {{-- Marques & Boissons --}}
-    @php $catalogueActive = request()->routeIs('admin.marques.*') || request()->routeIs('admin.boissons.*'); @endphp
+    @php $catalogueActive = request()->routeIs('admin.marques.*') || request()->routeIs('admin.boissons.*') || request()->routeIs('admin.pages.bieres.*') || request()->routeIs('admin.pages.categorie-boissons.*'); @endphp
     <li>
         <a href="javascript:void(0)"
            class="a-nav-link {{ $catalogueActive ? 'is-active' : '' }}"
@@ -167,6 +167,30 @@
             <i class="bi bi-chevron-down a-nav-arrow"></i>
         </a>
         <ul class="a-submenu a-nav-list" id="sub-catalogue" style="{{ $catalogueActive ? '' : 'display:none' }}">
+            <li>
+                <a href="{{ route('admin.pages.bieres.edit') }}"
+                   class="a-nav-link {{ request()->routeIs('admin.pages.bieres.*') ? 'is-active' : '' }}">
+                    <span class="a-nav-text">Page Nos bières</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.pages.categorie-boissons.edit', 'eaux') }}"
+                   class="a-nav-link {{ request()->routeIs('admin.pages.categorie-boissons.edit') && request()->route('categorie') === 'eaux' ? 'is-active' : '' }}">
+                    <span class="a-nav-text">Page Eaux</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.pages.categorie-boissons.edit', 'gazeuses') }}"
+                   class="a-nav-link {{ request()->routeIs('admin.pages.categorie-boissons.edit') && request()->route('categorie') === 'gazeuses' ? 'is-active' : '' }}">
+                    <span class="a-nav-text">Page Boissons gazeuses</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.pages.categorie-boissons.edit', 'energisantes') }}"
+                   class="a-nav-link {{ request()->routeIs('admin.pages.categorie-boissons.edit') && request()->route('categorie') === 'energisantes' ? 'is-active' : '' }}">
+                    <span class="a-nav-text">Page Boissons énergisantes</span>
+                </a>
+            </li>
             <li>
                 <a href="{{ route('admin.marques.index') }}"
                    class="a-nav-link {{ request()->routeIs('admin.marques.*') ? 'is-active' : '' }}">

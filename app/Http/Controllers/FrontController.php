@@ -12,6 +12,10 @@ use App\Models\MessageContact;
 use App\Models\PageCarriere;
 use App\Models\OffreEmploi;
 use App\Models\PagePro;
+use App\Models\PageBieres;
+use App\Models\PageEaux;
+use App\Models\PageBoissonsGazeuses;
+use App\Models\PageBoissonsEnergisantes;
 use App\Models\Marque;
 use App\Models\Boisson;
 use App\Models\News;
@@ -101,25 +105,34 @@ class FrontController extends Controller
         if (!array_key_exists($categorie, $categories)) {
             abort(404);
         }
-        $marqueGroupe = Marque::actives()
-            ->whereHas('boissons', fn ($q) => $q->where('categorie', $categorie))
-            ->with(['boissons' => fn ($q) => $q->where('categorie', $categorie)->orderBy('ordre')])
-            ->orderBy('ordre')
+        if ($categorie === 'bieres') {
+            return redirect()->route('bieres');
+        }
+
+        $page = match ($categorie) {
+            'eaux' => PageEaux::instance(),
+            'gazeuses' => PageBoissonsGazeuses::instance(),
+            'energisantes' => PageBoissonsEnergisantes::instance(),
+            default => abort(404),
+        };
+
+        $toutesBoissons = Boisson::actives()
+            ->where('categorie', $categorie)
+            ->with('marque')
             ->get();
 
-        return view('marques.categorie', compact('marqueGroupe', 'categories', 'categorie'));
+        return view('marques.liste-boissons-categorie', compact('page', 'toutesBoissons'));
     }
 
     public function bieres()
     {
-        $marquesBieres = Marque::actives()
-            ->whereHas('boissons', fn ($q) => $q->where('categorie', 'bieres'))
-            ->with(['boissons' => fn ($q) => $q->where('is_active', true)->where('categorie', 'bieres')->orderBy('ordre')])
-            ->orderBy('ordre')
+        $pageBieres = PageBieres::instance();
+        $toutesBoissons = Boisson::actives()
+            ->where('categorie', 'bieres')
+            ->with('marque')
             ->get();
-        $toutesBoissons = Boisson::actives()->where('categorie', 'bieres')->with('marque')->get();
 
-        return view('marques.bieres', compact('marquesBieres', 'toutesBoissons'));
+        return view('marques.bieres', compact('pageBieres', 'toutesBoissons'));
     }
 
     public function boissonBeaufort()

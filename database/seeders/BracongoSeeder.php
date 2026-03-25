@@ -14,6 +14,10 @@ use App\Models\PageContact;
 use App\Models\PageCarriere;
 use App\Models\OffreEmploi;
 use App\Models\PagePro;
+use App\Models\PageBieres;
+use App\Models\PageEaux;
+use App\Models\PageBoissonsGazeuses;
+use App\Models\PageBoissonsEnergisantes;
 use App\Models\NavigationItem;
 use App\Models\FooterSettings;
 use App\Models\FooterGallery;
@@ -172,6 +176,50 @@ class BracongoSeeder extends Seeder
             'pdf_lien' => null,
         ]);
 
+        // Page Nos bières (bannière, fil d’Ariane, recherche)
+        PageBieres::updateOrCreate(['id' => 1], [
+            'hero_image' => 'img/marque.jpg',
+            'hero_titre' => 'Nos Bières',
+            'hero_image_alt' => 'Nos Marques – Bières',
+            'breadcrumb_libelle' => 'Bières',
+            'meta_title' => null,
+            'search_placeholder' => 'Taper un nom de bière',
+            'message_liste_vide' => 'Aucune bière disponible pour le moment.',
+            'message_recherche_vide' => 'Aucune bière ne correspond à votre recherche.',
+        ]);
+
+        // Pages liste boissons (eaux, gazeuses, énergisantes) — H1 laissé vide pour l’équipe comm.
+        PageEaux::updateOrCreate(['id' => 1], [
+            'hero_image' => 'img/marque.jpg',
+            'hero_titre' => '',
+            'hero_image_alt' => null,
+            'breadcrumb_libelle' => 'Eaux',
+            'meta_title' => null,
+            'search_placeholder' => 'Taper le nom d\'une eau',
+            'message_liste_vide' => 'Aucune eau disponible pour le moment.',
+            'message_recherche_vide' => 'Aucune eau ne correspond à votre recherche.',
+        ]);
+        PageBoissonsGazeuses::updateOrCreate(['id' => 1], [
+            'hero_image' => 'img/marque.jpg',
+            'hero_titre' => '',
+            'hero_image_alt' => null,
+            'breadcrumb_libelle' => 'Boissons gazeuses',
+            'meta_title' => null,
+            'search_placeholder' => 'Taper le nom d\'une boisson',
+            'message_liste_vide' => 'Aucune boisson gazeuse disponible pour le moment.',
+            'message_recherche_vide' => 'Aucune boisson ne correspond à votre recherche.',
+        ]);
+        PageBoissonsEnergisantes::updateOrCreate(['id' => 1], [
+            'hero_image' => 'img/marque.jpg',
+            'hero_titre' => '',
+            'hero_image_alt' => null,
+            'breadcrumb_libelle' => 'Boissons énergisantes',
+            'meta_title' => null,
+            'search_placeholder' => 'Taper le nom d\'une boisson',
+            'message_liste_vide' => 'Aucune boisson énergisante disponible pour le moment.',
+            'message_recherche_vide' => 'Aucune boisson ne correspond à votre recherche.',
+        ]);
+
         // Marques et Boissons (basé sur bracongo.cd)
         Schema::disableForeignKeyConstraints();
         Boisson::truncate();
@@ -179,24 +227,25 @@ class BracongoSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         $marquesBieres = [
-            ['nom' => 'Beaufort', 'slug' => 'beaufort', 'image' => 'img/beaufort.png', 'image_banner' => 'img/beauban.jpg', 'lien' => '/Nos-marques-bieres', 'ordre' => 1],
-            ['nom' => 'Castel Beer', 'slug' => 'castel-beer', 'image' => 'img/castel.png', 'image_banner' => null, 'lien' => '/Nos-marques-bieres', 'ordre' => 2],
-            ['nom' => 'Doppel Munich', 'slug' => 'doppel-munich', 'image' => 'img/dopel.png', 'image_banner' => null, 'lien' => '/Nos-marques-bieres', 'ordre' => 3],
-            ['nom' => 'Nkoyi', 'slug' => 'nkoyi', 'image' => 'img/blonde.png', 'image_banner' => null, 'lien' => '/Nos-marques-bieres', 'ordre' => 4],
-            ['nom' => '33 Export', 'slug' => '33-export', 'image' => 'img/33b.png', 'image_banner' => null, 'lien' => '/Nos-marques-bieres', 'ordre' => 5],
-            ['nom' => 'TEMBO', 'slug' => 'tembo', 'image' => 'img/tembo.png', 'image_banner' => null, 'lien' => '/Nos-marques-bieres', 'ordre' => 6],
+            ['nom' => 'Beaufort', 'slug' => 'beaufort', 'image' => 'img/beaufort.png', 'lien' => '/Nos-marques-bieres', 'ordre' => 1],
+            ['nom' => 'Castel Beer', 'slug' => 'castel-beer', 'image' => 'img/castel.png', 'lien' => '/Nos-marques-bieres', 'ordre' => 2],
+            ['nom' => 'Doppel Munich', 'slug' => 'doppel-munich', 'image' => 'img/dopel.png', 'lien' => '/Nos-marques-bieres', 'ordre' => 3],
+            ['nom' => 'Nkoyi', 'slug' => 'nkoyi', 'image' => 'img/blonde.png', 'lien' => '/Nos-marques-bieres', 'ordre' => 4],
+            ['nom' => '33 Export', 'slug' => '33-export', 'image' => 'img/33b.png', 'lien' => '/Nos-marques-bieres', 'ordre' => 5],
+            ['nom' => 'TEMBO', 'slug' => 'tembo', 'image' => 'img/tembo.png', 'lien' => '/Nos-marques-bieres', 'ordre' => 6],
         ];
         foreach ($marquesBieres as $m) {
             Marque::create(array_merge($m, ['is_active' => true]));
         }
 
         $marquesAutres = [
-            ['nom' => 'Boissons gazeuses', 'slug' => 'boissons-gazeuses', 'image' => 'img/gazeux.png', 'lien' => '#', 'ordre' => 1],
-            ['nom' => 'Eaux', 'slug' => 'eaux', 'image' => 'img/eau.png', 'lien' => '#', 'ordre' => 2],
-            ['nom' => 'Boissons énergisantes', 'slug' => 'boissons-energisantes', 'image' => 'img/energie.png', 'lien' => '#', 'ordre' => 3],
+            ['nom' => 'Youzou', 'slug' => 'youzou', 'image' => 'img/gazeux.png', 'lien' => '/Nos-marques/gazeuses', 'ordre' => 7],
+            ['nom' => 'World Cola', 'slug' => 'worldcola', 'image' => 'img/gazeux.png', 'lien' => '/Nos-marques/gazeuses', 'ordre' => 8],
+            ['nom' => 'XXL Energy', 'slug' => 'xxl-energy', 'image' => 'img/energie.png', 'lien' => '/Nos-marques/energisantes', 'ordre' => 9],
+            ['nom' => 'Eau Vive', 'slug' => 'eau-vive', 'image' => 'img/eau.png', 'lien' => '/Nos-marques/eaux', 'ordre' => 10],
         ];
         foreach ($marquesAutres as $m) {
-            Marque::create(array_merge($m, ['image_banner' => null, 'is_active' => true]));
+            Marque::create(array_merge($m, ['is_active' => true]));
         }
 
         $beaufort = Marque::where('slug', 'beaufort')->first();
@@ -240,6 +289,20 @@ class BracongoSeeder extends Seeder
             Boisson::create(array_merge($b, ['is_active' => true]));
         }
 
+        $youzou = Marque::where('slug', 'youzou')->first();
+        $worldcola = Marque::where('slug', 'worldcola')->first();
+        $xxlEnergy = Marque::where('slug', 'xxl-energy')->first();
+        $eauVive = Marque::where('slug', 'eau-vive')->first();
+        $boissonsAutres = [
+            ['marque_id' => $youzou->id, 'categorie' => 'gazeuses', 'nom' => 'Youzou', 'slug' => 'youzou', 'image' => 'img/gazeux.png', 'ordre' => 1],
+            ['marque_id' => $worldcola->id, 'categorie' => 'gazeuses', 'nom' => 'World Cola', 'slug' => 'world-cola', 'image' => 'img/gazeux.png', 'ordre' => 1],
+            ['marque_id' => $xxlEnergy->id, 'categorie' => 'energisantes', 'nom' => 'XXL Energy', 'slug' => 'xxl-energy', 'image' => 'img/energie.png', 'ordre' => 1],
+            ['marque_id' => $eauVive->id, 'categorie' => 'eaux', 'nom' => 'Eau Vive', 'slug' => 'eau-vive', 'image' => 'img/eau.png', 'ordre' => 1],
+        ];
+        foreach ($boissonsAutres as $b) {
+            Boisson::create(array_merge($b, ['is_active' => true]));
+        }
+
         // Produits (goodies - vide pour l'instant, backend only)
         Produit::truncate();
 
@@ -276,9 +339,9 @@ class BracongoSeeder extends Seeder
             ],
             1 => [
                 ['label' => 'Bières', 'url' => '/Nos-marques-bieres'],
-                ['label' => 'Boissons gazeuses', 'url' => '#'],
-                ['label' => 'Eaux', 'url' => '#'],
-                ['label' => 'Boissons énergisantes', 'url' => '#'],
+                ['label' => 'Boissons gazeuses', 'url' => '/Nos-marques/gazeuses'],
+                ['label' => 'Eaux', 'url' => '/Nos-marques/eaux'],
+                ['label' => 'Boissons énergisantes', 'url' => '/Nos-marques/energisantes'],
             ],
             2 => [
                 ['label' => 'Dernières actualités', 'url' => '/Actualités-et-evenements'],

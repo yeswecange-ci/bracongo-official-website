@@ -18,6 +18,8 @@ use App\Http\Controllers\Admin\MessageContactController;
 use App\Http\Controllers\Admin\PageCarriereController;
 use App\Http\Controllers\Admin\OffreEmploiController;
 use App\Http\Controllers\Admin\PageProController;
+use App\Http\Controllers\Admin\PageBieresController;
+use App\Http\Controllers\Admin\PageCategorieBoissonsController;
 use App\Http\Controllers\Admin\NavigationItemController;
 use App\Http\Controllers\Admin\FooterController;
 use App\Http\Controllers\Admin\FooterGalleryController;
@@ -85,6 +87,16 @@ Route::prefix('back-office')->name('admin.')->group(function () {
 
         Route::get('/pro', [PageProController::class, 'edit'])->name('pro.edit');
         Route::put('/pro', [PageProController::class, 'update'])->name('pro.update');
+
+        Route::get('/bieres', [PageBieresController::class, 'edit'])->name('bieres.edit');
+        Route::put('/bieres', [PageBieresController::class, 'update'])->name('bieres.update');
+
+        Route::get('/categorie-boissons/{categorie}', [PageCategorieBoissonsController::class, 'edit'])
+            ->name('categorie-boissons.edit')
+            ->where('categorie', 'eaux|gazeuses|energisantes');
+        Route::put('/categorie-boissons/{categorie}', [PageCategorieBoissonsController::class, 'update'])
+            ->name('categorie-boissons.update')
+            ->where('categorie', 'eaux|gazeuses|energisantes');
     });
 
     // ── Hero Slides ────────────────────────────────────────────────────

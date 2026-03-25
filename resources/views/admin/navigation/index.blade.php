@@ -18,6 +18,39 @@
 @endpush
 
 
+@push('styles')
+<style>
+.table-navigation-parent-row {
+	background-color: #4f5866 !important;
+	color: #ffffff !important;
+	border-color: #606a78;
+}
+.table-navigation-parent-row td {
+	background-color: #4f5866 !important;
+	border-color: rgba(255,255,255,.08);
+	vertical-align: middle;
+	color: #ffffff !important;
+}
+.table-navigation-parent-row .a-count-badge {
+	background: rgba(255,255,255,.15) !important;
+	color: #fff !important;
+}
+.table-navigation-parent-row code {
+	color: #c8d4e8;
+	background: rgba(255,255,255,.1);
+	padding: 2px 6px;
+	border-radius: 4px;
+}
+.table-hover .table-navigation-parent-row:hover {
+	background-color: #5b6574 !important;
+	color: #fff;
+}
+.table-hover .table-navigation-parent-row:hover td {
+	background-color: #5b6574 !important;
+}
+</style>
+@endpush
+
 @section('content')
 @include('admin.layouts.partials.alerts')
 
@@ -37,7 +70,7 @@
                 </thead>
                 <tbody>
                     @forelse($items as $item)
-                    <tr>
+                    <tr class="table-navigation-parent-row">
                         <td class="fw-semibold">{{ $item->label }}</td>
                         <td><code class="small">{{ $item->url }}</code></td>
                         <td><span class="text-muted small">—</span></td>
@@ -51,10 +84,10 @@
                         </td>
                         <td class="text-end">
                             <div class="d-flex gap-1 justify-content-end">
-                                <a href="{{ route('admin.navigation.edit', $item) }}" class="a-action-btn a-action-btn--edit" title="Modifier">
+                                <a href="{{ action([\App\Http\Controllers\Admin\NavigationItemController::class, 'edit'], ['navigation' => $item->id]) }}" class="a-action-btn a-action-btn--edit" title="Modifier">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form action="{{ route('admin.navigation.destroy', $item) }}" method="POST" style="display:contents" onsubmit="return confirm('Supprimer ?')">
+                                <form action="{{ action([\App\Http\Controllers\Admin\NavigationItemController::class, 'destroy'], ['navigation' => $item->id]) }}" method="POST" style="display:contents" onsubmit="return confirm('Supprimer ?')">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="a-action-btn a-action-btn--danger" title="Supprimer">
                                         <i class="bi bi-trash"></i>
@@ -80,10 +113,10 @@
                         </td>
                         <td class="text-end">
                             <div class="d-flex gap-1 justify-content-end">
-                                <a href="{{ route('admin.navigation.edit', $enfant) }}" class="a-action-btn a-action-btn--edit" title="Modifier">
+                                <a href="{{ action([\App\Http\Controllers\Admin\NavigationItemController::class, 'edit'], ['navigation' => $enfant->id]) }}" class="a-action-btn a-action-btn--edit" title="Modifier">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form action="{{ route('admin.navigation.destroy', $enfant) }}" method="POST" style="display:contents" onsubmit="return confirm('Supprimer ?')">
+                                <form action="{{ action([\App\Http\Controllers\Admin\NavigationItemController::class, 'destroy'], ['navigation' => $enfant->id]) }}" method="POST" style="display:contents" onsubmit="return confirm('Supprimer ?')">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="a-action-btn a-action-btn--danger" title="Supprimer">
                                         <i class="bi bi-trash"></i>

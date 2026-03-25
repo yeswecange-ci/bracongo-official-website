@@ -10,7 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="shortcut icon" type="image/png" href="{{ asset('admin/images/favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('img/LOGO BRACONGO copie 1.png') }}?v=2">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('img/LOGO BRACONGO copie 1.png') }}?v=2">
 
     {{-- Google Fonts: Inter --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">

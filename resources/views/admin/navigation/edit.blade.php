@@ -7,13 +7,13 @@
 		<li class="breadcrumb-item"><a href="{{ route('admin.navigation.index') }}">Navigation</a></li>
 		<li class="breadcrumb-item active">Modifier</li>
 	</ol></nav>
-	<h6 class="a-topbar-page-title">Modifier — {{ $navigationItem->label }}</h6>
+	<h6 class="a-topbar-page-title">Modifier — {{ $navigation->label }}</h6>
 </div>
 @endpush
 
 @section('content')
 @include('admin.layouts.partials.alerts')
-<form action="{{ route('admin.navigation.update', $navigationItem) }}" method="POST">
+<form action="{{ action([\App\Http\Controllers\Admin\NavigationItemController::class, 'update'], ['navigation' => $navigation->id]) }}" method="POST">
 	@csrf
 	@method('PUT')
 
@@ -39,7 +39,7 @@
 						<select class="form-control" name="parent_id">
 							<option value="">— Aucun (item principal) —</option>
 							@foreach($parents as $parent)
-							<option value="{{ $parent->id }}" {{ old('parent_id', $navigationItem->parent_id) == $parent->id ? 'selected' : '' }}>
+							<option value="{{ $parent->id }}" {{ old('parent_id', $navigation->parent_id) == $parent->id ? 'selected' : '' }}>
 								{{ $parent->label }}
 							</option>
 							@endforeach
@@ -47,11 +47,11 @@
 					</div>
 					<div class="mb-3">
 						<label class="form-label fw-semibold">Ordre</label>
-						<input type="number" class="form-control" name="ordre" value="{{ old('ordre', $navigationItem->ordre) }}" min="0">
+						<input type="number" class="form-control" name="ordre" value="{{ old('ordre', $navigation->ordre) }}" min="0">
 					</div>
 					<div class="form-check form-switch">
 						<input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1"
-							{{ old('is_active', $navigationItem->is_active) ? 'checked' : '' }}>
+							{{ old('is_active', $navigation->is_active) ? 'checked' : '' }}>
 						<label class="form-check-label fw-semibold" for="is_active">Actif</label>
 					</div>
 				</div>
