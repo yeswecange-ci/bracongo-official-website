@@ -19,7 +19,10 @@ use App\Models\PageBoissonsEnergisantes;
 use App\Models\Marque;
 use App\Models\Boisson;
 use App\Models\News;
+use App\Models\NavigationItem;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class FrontController extends Controller
 {
@@ -170,5 +173,232 @@ class FrontController extends Controller
         }
         $news = $newsQuery->get();
         return view('actualites', compact('news', 'types', 'type'));
+    }
+
+    /**
+     * Auto-complétion recherche site public uniquement (aucune URL back-office).
+     */
+    public function searchAutocomplete(Request $request): JsonResponse
+    {
+        $q = trim((string) $request->query('q', ''));
+
+        if (mb_strlen($q) < 2) {
+            return response()->json([
+                'query' => $q,
+                'best_match' => null,
+                'results' => [],
+            ]);
+        }
+
+        $needle = Str::lower($this->normalizeSearchText($q));
+        $results = collect();
+
+        $staticPages = [
+            ['title' => 'Accueil', 'url' => route('Accueil'), 'type' => 'Page', 'keywords' => 'home bracongo'],
+            ['title' => 'Notre Histoire', 'url' => route('histoire'), 'type' => 'Page', 'keywords' => 'histoire valeurs rse'],
+            ['title' => 'Nos marques', 'url' => route('marque'), 'type' => 'Page', 'keywords' => 'marques produits boissons'],
+            ['title' => 'Nos bières', 'url' => route('bieres'), 'type' => 'Page', 'keywords' => 'bieres bieres'],
+            ['title' => 'Eaux', 'url' => route('marque.categorie', ['categorie' => 'eaux']), 'type' => 'Page', 'keywords' => 'eau eaux'],
+            ['title' => 'Boissons gazeuses', 'url' => route('marque.categorie', ['categorie' => 'gazeuses']), 'type' => 'Page', 'keywords' => 'gazeuse gazeuses soda'],
+            ['title' => 'Boissons énergisantes', 'url' => route('marque.categorie', ['categorie' => 'energisantes']), 'type' => 'Page', 'keywords' => 'energie energy xxl'],
+            ['title' => 'Beaufort Lager', 'url' => route('bieres.beaufort'), 'type' => 'Page', 'keywords' => 'beaufort lager'],
+            ['title' => 'Actualités et événements', 'url' => route('actualites'), 'type' => 'Page', 'keywords' => 'news actualites evenements'],
+            ['title' => 'Carrière', 'url' => route('carriere'), 'type' => 'Page', 'keywords' => 'emploi recrutement offres'],
+            ['title' => 'Contact', 'url' => route('contact'), 'type' => 'Page', 'keywords' => 'adresse telephone email'],
+            ['title' => 'Bracongo Pro', 'url' => route('pro'), 'type' => 'Page', 'keywords' => 'application pro'],
+        ];
+
+        foreach ($staticPages as $page) {
+            $score = $this->scoreSearchMatch($needle, $page['title'].' '.$page['keywords']);
+            if ($score > 0) {
+                $results->push([
+                    'title' => $page['title'],
+                    'url' => $page['url'],
+                    'type' => $page['type'],
+                    'description' => null,
+                    'score' => $score,
+                ]);
+            }
+        }
+
+        $boissons = Boisson::query()
+            ->where('is_active', true)
+            ->with(['marque:id,nom'])
+            ->get(['id', 'marque_id', 'nom', 'slug', 'categorie']);
+
+        foreach ($boissons as $boisson) {
+            $marqueNom = $boisson->marque->nom ?? '';
+            $haystack = $boisson->nom.' '.$marqueNom.' '.$boisson->categorie;
+            $score = $this->scoreSearchMatch($needle, $haystack);
+            if ($score > 0) {
+                $results->push([
+                    'title' => $boisson->nom,
+                    'url' => route('boisson.show', ['slug' => $boisson->slug]),
+                    'type' => 'Produit',
+                    'description' => $marqueNom !== '' ? $marqueNom : null,
+                    'score' => $score + 12,
+                ]);
+            }
+        }
+
+        $newsRows = News::query()
+            ->where('is_active', true)
+            ->get(['id', 'titre', 'type', 'extrait']);
+
+        $typesLabels = News::types();
+
+        foreach ($newsRows as $news) {
+            $haystack = $news->titre.' '.($news->extrait ?? '').' '.$news->type;
+            $score = $this->scoreSearchMatch($needle, $haystack);
+            if ($score > 0) {
+                $results->push([
+                    'title' => $news->titre,
+                    'url' => route('actualites', ['type' => $news->type]),
+                    'type' => 'Actualité',
+                    'description' => $typesLabels[$news->type] ?? null,
+                    'score' => $score,
+                ]);
+            }
+        }
+
+        $jobs = OffreEmploi::query()
+            ->where('is_active', true)
+            ->get(['id', 'titre', 'description']);
+
+        foreach ($jobs as $job) {
+            $plain = strip_tags((string) $job->description);
+            $haystack = $job->titre.' '.$plain.' emploi carriere';
+            $score = $this->scoreSearchMatch($needle, $haystack);
+            if ($score > 0) {
+                $results->push([
+                    'title' => $job->titre,
+                    'url' => route('carriere'),
+                    'type' => 'Offre',
+                    'description' => 'Carrière',
+                    'score' => $score,
+                ]);
+            }
+        }
+
+        $navRows = NavigationItem::query()
+            ->where('is_active', true)
+            ->get(['label', 'url']);
+
+        foreach ($navRows as $row) {
+            if (! $this->isPublicClientNavUrl((string) $row->url)) {
+                continue;
+            }
+            $score = $this->scoreSearchMatch($needle, (string) $row->label);
+            if ($score > 0) {
+                $results->push([
+                    'title' => $row->label,
+                    'url' => $row->url,
+                    'type' => 'Menu',
+                    'description' => null,
+                    'score' => $score - 5,
+                ]);
+            }
+        }
+
+        $ordered = $results
+            ->sortByDesc('score')
+            ->unique(fn (array $r) => $r['url'].'|'.$r['title'])
+            ->take(10)
+            ->values()
+            ->map(function (array $r) {
+                unset($r['score']);
+
+                return $r;
+            });
+
+        return response()->json([
+            'query' => $q,
+            'best_match' => $ordered->first(),
+            'results' => $ordered,
+        ]);
+    }
+
+    private function scoreSearchMatch(string $needle, string $candidate): int
+    {
+        $text = Str::lower($this->normalizeSearchText($candidate));
+        if ($needle === '' || $text === '') {
+            return 0;
+        }
+
+        if ($text === $needle) {
+            return 140;
+        }
+
+        if (Str::startsWith($text, $needle)) {
+            return 120;
+        }
+
+        if (str_contains($text, ' '.$needle)) {
+            return 95;
+        }
+
+        if (str_contains($text, $needle)) {
+            return 75;
+        }
+
+        $parts = preg_split('/\s+/', $needle) ?: [];
+        $matches = 0;
+        foreach ($parts as $part) {
+            if ($part !== '' && str_contains($text, $part)) {
+                $matches++;
+            }
+        }
+
+        return $matches > 0 ? (40 + ($matches * 10)) : 0;
+    }
+
+    private function normalizeSearchText(string $value): string
+    {
+        $decoded = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        return Str::of($decoded)
+            ->ascii()
+            ->lower()
+            ->replaceMatches('/[^a-z0-9\s]/', ' ')
+            ->replaceMatches('/\s+/', ' ')
+            ->trim()
+            ->value();
+    }
+
+    private function isPublicClientNavUrl(string $url): bool
+    {
+        $url = trim($url);
+        if ($url === '' || $url === '#') {
+            return false;
+        }
+
+        if (preg_match('#^javascript:#i', $url) || str_starts_with(strtolower($url), 'mailto:')) {
+            return false;
+        }
+
+        $host = parse_url($url, PHP_URL_HOST);
+        if ($host !== null) {
+            $appHost = parse_url((string) config('app.url'), PHP_URL_HOST);
+            if ($appHost !== null && strcasecmp((string) $host, (string) $appHost) !== 0) {
+                return false;
+            }
+        } elseif (! str_starts_with($url, '/')) {
+            return false;
+        }
+
+        $path = parse_url($url, PHP_URL_PATH);
+        if ($path === null || $path === '') {
+            $path = str_starts_with($url, '/') ? (strtok($url, '?') ?: '/') : '/';
+        }
+
+        $lower = strtolower((string) $path);
+        if (str_contains($lower, 'back-office')) {
+            return false;
+        }
+        if (str_contains($lower, '/invitation/')) {
+            return false;
+        }
+
+        return true;
     }
 }

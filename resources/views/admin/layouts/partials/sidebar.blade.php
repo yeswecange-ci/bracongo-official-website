@@ -283,4 +283,32 @@
         </a>
     </li>
 
+    @if(auth()->check() && (auth()->user()->isSuperAdmin() || auth()->user()->isAdmin()))
+    @php $usersSectionActive = request()->routeIs('admin.invitations.*') || request()->routeIs('admin.users.*'); @endphp
+    <li>
+        <a href="javascript:void(0)"
+           class="a-nav-link {{ $usersSectionActive ? 'is-active' : '' }}"
+           data-sub="sub-users"
+           aria-expanded="{{ $usersSectionActive ? 'true' : 'false' }}">
+            <i class="a-nav-icon bi bi-people"></i>
+            <span class="a-nav-text">Utilisateurs</span>
+            <i class="bi bi-chevron-down a-nav-arrow"></i>
+        </a>
+        <ul class="a-submenu a-nav-list" id="sub-users" style="{{ $usersSectionActive ? '' : 'display:none' }}">
+            <li>
+                <a href="{{ route('admin.invitations.index') }}"
+                   class="a-nav-link {{ request()->routeIs('admin.invitations.*') ? 'is-active' : '' }}">
+                    <span class="a-nav-text">Invitations</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.users.index') }}"
+                   class="a-nav-link {{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}">
+                    <span class="a-nav-text">Comptes</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    @endif
+
 </ul>

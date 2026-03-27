@@ -1,4 +1,4 @@
-<nav class="bg-white py-4 px-6 md:px-12 flex items-center justify-between shadow-sm font-sans relative z-50">
+<nav class="bg-white py-4 px-6 md:px-12 flex items-center justify-between shadow-sm font-sans relative z-50" data-search-endpoint="{{ route('recherche.autocomplete') }}">
     <div class="flex-shrink-0">
         <a href="{{ route('Accueil') }}">
             <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Logo" class="h-16 w-auto object-contain">
@@ -49,7 +49,8 @@
                 <div class="flex items-center justify-between gap-8 mb-8">
                     <div class="relative flex-grow">
                         <input type="text" id="desktop-search-input" placeholder="Rechercher un produit, une actualité..."
-                            class="w-full text-2xl md:text-4xl font-bold border-none focus:ring-0 text-gray-900 placeholder-gray-300 bg-transparent py-2">
+                            class="w-full text-2xl md:text-4xl font-bold border-none focus:ring-0 text-gray-900 placeholder-gray-300 bg-transparent py-2"
+                            autocomplete="off" spellcheck="false">
                         <div class="absolute bottom-0 left-0 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
                             <div class="h-full bg-bracongo w-0 transition-all duration-500 ease-out" id="search-underline"></div>
                         </div>
@@ -60,18 +61,27 @@
                         </svg>
                     </button>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div>
-                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Suggestions</h4>
-                        <div class="flex flex-wrap gap-2">
-                            @foreach(explode(',', $parametres->search_suggestions ?? 'Beaufort,Actualités,Nkoyi,RSE') as $sugg)
-                            <a href="#" class="px-4 py-2 bg-gray-50 hover:bg-bracongo hover:text-white rounded-full text-sm font-medium text-gray-600 transition-all">{{ trim($sugg) }}</a>
-                            @endforeach
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+                    <div class="min-w-0">
+                        <div id="desktop-search-live" class="hidden mb-6">
+                            <h4 class="text-xs font-bold text-bracongo uppercase tracking-widest mb-2">Meilleure correspondance</h4>
+                            <a id="desktop-search-best-link" href="#" class="block rounded-xl border border-gray-100 bg-gray-50/80 px-4 py-3 hover:border-bracongo/40 hover:bg-white transition-colors">
+                                <div id="desktop-search-best-title" class="font-bold text-gray-900 text-lg"></div>
+                                <div id="desktop-search-best-meta" class="text-xs text-gray-500 mt-1"></div>
+                            </a>
                         </div>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Résultats</h4>
+                        <div id="desktop-search-results" class="max-h-[45vh] overflow-y-auto pr-1 space-y-1 min-h-[120px]"></div>
                     </div>
                     <div>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Suggestions rapides</h4>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            @foreach(explode(',', $parametres->search_suggestions ?? 'Beaufort,Actualités,Nkoyi,RSE') as $sugg)
+                            <button type="button" class="search-quick-sugg px-4 py-2 bg-gray-50 hover:bg-bracongo hover:text-white rounded-full text-sm font-medium text-gray-600 transition-all" data-apply-suggestion="{{ trim($sugg) }}">{{ trim($sugg) }}</button>
+                            @endforeach
+                        </div>
                         <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Besoin d'aide ?</h4>
-                        <p class="text-sm text-gray-500 leading-relaxed">Trouvez rapidement nos produits, nos points de vente ou nos dernières offres d'emploi.</p>
+                        <p class="text-sm text-gray-500 leading-relaxed">Recherche uniquement sur le site public (pas d’accès au back-office). Produit, actualité, page ou entrée de menu correspondante.</p>
                     </div>
                 </div>
             </div>
@@ -117,18 +127,22 @@
 
             <div class="pt-6">
                 <div class="relative">
-                    <input type="text" placeholder="Rechercher un produit..."
-                        class="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border border-gray-100 focus:outline-none focus:border-bracongo focus:ring-1 focus:ring-bracongo text-gray-900 font-medium">
+                    <input type="text" id="mobile-search-input" placeholder="Rechercher sur le site..."
+                        class="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border border-gray-100 focus:outline-none focus:border-bracongo focus:ring-1 focus:ring-bracongo text-gray-900 font-medium"
+                        autocomplete="off" spellcheck="false">
                     <svg class="w-6 h-6 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
                 </div>
+                <div id="mobile-search-results" class="mt-3 max-h-60 overflow-y-auto rounded-xl border border-gray-100 bg-white hidden"></div>
             </div>
         </div>
     </div>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const nav = document.querySelector('nav[data-search-endpoint]');
+        const searchEndpoint = nav ? nav.getAttribute('data-search-endpoint') : '';
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const burgerIcon = document.getElementById('burger-icon');
@@ -140,6 +154,133 @@
         const searchUnderline = document.getElementById('search-underline');
         const closeSearchButton = document.getElementById('close-search-button');
         const desktopSearchInput = document.getElementById('desktop-search-input');
+        const desktopSearchResults = document.getElementById('desktop-search-results');
+        const desktopSearchLive = document.getElementById('desktop-search-live');
+        const desktopSearchBestLink = document.getElementById('desktop-search-best-link');
+        const desktopSearchBestTitle = document.getElementById('desktop-search-best-title');
+        const desktopSearchBestMeta = document.getElementById('desktop-search-best-meta');
+        const mobileSearchInput = document.getElementById('mobile-search-input');
+        const mobileSearchResults = document.getElementById('mobile-search-results');
+
+        let desktopDebounce = null;
+        let mobileDebounce = null;
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text == null ? '' : String(text);
+            return div.innerHTML;
+        }
+
+        function renderResultLinks(container, items, query) {
+            if (!container) return;
+            container.innerHTML = '';
+            if (!items || !items.length) {
+                container.innerHTML = '<p class="text-sm text-gray-500 py-4">Aucun résultat public pour « ' + escapeHtml(query) + ' ».</p>';
+                return;
+            }
+            items.forEach(function(item, idx) {
+                var a = document.createElement('a');
+                a.href = item.url;
+                a.className = 'block rounded-lg px-3 py-2.5 hover:bg-gray-50 border border-transparent hover:border-gray-100 transition-colors';
+                if (idx === 0) {
+                    a.setAttribute('data-search-result', '1');
+                }
+                var typeLine = escapeHtml(item.type || '');
+                if (item.description) {
+                    typeLine += ' · ' + escapeHtml(item.description);
+                }
+                a.innerHTML = '<div class="font-semibold text-gray-900">' + escapeHtml(item.title) + '</div>' +
+                    '<div class="text-xs text-gray-500 mt-0.5">' + typeLine + '</div>';
+                container.appendChild(a);
+            });
+        }
+
+        function resetDesktopPanel() {
+            if (desktopSearchLive) desktopSearchLive.classList.add('hidden');
+            if (desktopSearchBestLink) desktopSearchBestLink.href = '#';
+            if (desktopSearchResults) {
+                desktopSearchResults.innerHTML = '<p class="text-sm text-gray-400">Tapez au moins 2 caractères pour voir des suggestions de pages et de produits.</p>';
+            }
+        }
+
+        function applyDesktopData(data) {
+            var q = data.query || '';
+            if (data.best_match && desktopSearchLive && desktopSearchBestLink && desktopSearchBestTitle && desktopSearchBestMeta) {
+                desktopSearchLive.classList.remove('hidden');
+                desktopSearchBestLink.href = data.best_match.url;
+                desktopSearchBestTitle.textContent = data.best_match.title;
+                var meta = [data.best_match.type, data.best_match.description].filter(Boolean).join(' · ');
+                desktopSearchBestMeta.textContent = meta;
+            } else if (desktopSearchLive) {
+                desktopSearchLive.classList.add('hidden');
+            }
+            renderResultLinks(desktopSearchResults, data.results || [], q);
+        }
+
+        function fetchSearch(q, isDesktop) {
+            if (!searchEndpoint) return;
+            var trimmed = (q || '').trim();
+            if (trimmed.length < 2) {
+                if (isDesktop) resetDesktopPanel();
+                if (!isDesktop && mobileSearchResults) {
+                    mobileSearchResults.classList.add('hidden');
+                    mobileSearchResults.innerHTML = '';
+                }
+                return;
+            }
+            fetch(searchEndpoint + '?q=' + encodeURIComponent(trimmed), {
+                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+            }).then(function(r) { return r.json(); }).then(function(data) {
+                if (isDesktop) {
+                    applyDesktopData(data);
+                } else if (mobileSearchResults) {
+                    mobileSearchResults.classList.remove('hidden');
+                    renderResultLinks(mobileSearchResults, data.results || [], data.query || trimmed);
+                }
+            }).catch(function() {
+                if (isDesktop && desktopSearchResults) {
+                    desktopSearchResults.innerHTML = '<p class="text-sm text-red-600 py-4">Impossible de charger les suggestions.</p>';
+                }
+            });
+        }
+
+        document.querySelectorAll('.search-quick-sugg').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var term = btn.getAttribute('data-apply-suggestion');
+                if (desktopSearchInput && term) {
+                    desktopSearchInput.value = term;
+                    desktopSearchInput.focus();
+                    fetchSearch(term, true);
+                }
+            });
+        });
+
+        if (desktopSearchInput) {
+            desktopSearchInput.addEventListener('input', function() {
+                clearTimeout(desktopDebounce);
+                desktopDebounce = setTimeout(function() {
+                    fetchSearch(desktopSearchInput.value, true);
+                }, 200);
+            });
+            desktopSearchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    var first = desktopSearchResults ? desktopSearchResults.querySelector('a[data-search-result="1"]') : null;
+                    if (first && first.getAttribute('href')) {
+                        e.preventDefault();
+                        window.location.href = first.getAttribute('href');
+                    }
+                }
+            });
+        }
+
+        if (mobileSearchInput) {
+            mobileSearchInput.addEventListener('input', function() {
+                clearTimeout(mobileDebounce);
+                mobileDebounce = setTimeout(function() {
+                    fetchSearch(mobileSearchInput.value, false);
+                }, 200);
+            });
+        }
 
         if (desktopSearchButton && desktopSearchBar) {
             desktopSearchButton.addEventListener('click', function() {
@@ -148,28 +289,38 @@
                 desktopSearchBar.classList.add('opacity-100');
                 searchContent.classList.remove('-translate-y-full');
                 searchContent.classList.add('translate-y-0');
-                setTimeout(() => {
+                setTimeout(function() {
                     desktopSearchInput.focus();
                     searchUnderline.classList.remove('w-0');
                     searchUnderline.classList.add('w-full');
+                    if (desktopSearchInput.value.trim().length >= 2) {
+                        fetchSearch(desktopSearchInput.value, true);
+                    } else {
+                        resetDesktopPanel();
+                    }
                 }, 300);
                 document.body.style.overflow = 'hidden';
             });
-            const closeSearch = () => {
+            var closeSearch = function() {
                 desktopSearchBar.classList.remove('opacity-100');
                 searchContent.classList.remove('translate-y-0');
                 searchContent.classList.add('-translate-y-full');
                 searchUnderline.classList.remove('w-full');
                 searchUnderline.classList.add('w-0');
-                setTimeout(() => { desktopSearchBar.classList.add('hidden'); document.body.style.overflow = ''; }, 300);
+                setTimeout(function() {
+                    desktopSearchBar.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }, 300);
             };
             closeSearchButton.addEventListener('click', closeSearch);
             desktopSearchBar.addEventListener('click', function(e) { if (e.target === desktopSearchBar) closeSearch(); });
-            document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && !desktopSearchBar.classList.contains('hidden')) closeSearch(); });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !desktopSearchBar.classList.contains('hidden')) closeSearch();
+            });
         }
 
         mobileMenuButton.addEventListener('click', function() {
-            const isOpen = !mobileMenu.classList.contains('hidden');
+            var isOpen = !mobileMenu.classList.contains('hidden');
             if (isOpen) {
                 mobileMenu.classList.add('hidden'); burgerIcon.classList.remove('hidden'); closeIcon.classList.add('hidden'); document.body.style.overflow = '';
             } else {
@@ -177,17 +328,17 @@
             }
         });
 
-        mobileDropdownBtns.forEach(btn => {
+        mobileDropdownBtns.forEach(function(btn) {
             btn.addEventListener('click', function() {
-                const dropdownContent = this.nextElementSibling;
-                const arrowIcon = this.querySelector('svg');
+                var dropdownContent = this.nextElementSibling;
+                var arrowIcon = this.querySelector('svg');
                 dropdownContent.classList.toggle('hidden');
                 arrowIcon.classList.toggle('rotate-180');
             });
         });
 
-        const mobileLinks = mobileMenu ? mobileMenu.querySelectorAll('a') : [];
-        mobileLinks.forEach(link => {
+        var mobileLinks = mobileMenu ? mobileMenu.querySelectorAll('a') : [];
+        mobileLinks.forEach(function(link) {
             link.addEventListener('click', function() {
                 mobileMenu.classList.add('hidden'); burgerIcon.classList.remove('hidden'); closeIcon.classList.add('hidden'); document.body.style.overflow = '';
             });

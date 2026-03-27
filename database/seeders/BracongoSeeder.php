@@ -26,16 +26,23 @@ use App\Models\Marque;
 use App\Models\Boisson;
 use App\Models\Produit;
 use App\Models\News;
+use App\Models\User;
+use App\Enums\UserRole;
+use App\Enums\UserStatus;
+use Illuminate\Support\Facades\Hash;
 
 class BracongoSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->call(RbacSeeder::class);
+
         // Paramètres globaux
         ParametresSite::updateOrCreate(['id' => 1], [
             'logo' => 'img/LOGO BRACONGO copie 1.png',
             'couleur_principale' => '#E30613',
             'search_suggestions' => 'Beaufort Lager,Actualités,Nkoyi,RSE',
+            'invitation_expires_hours' => '48',
         ]);
 
         // Page Welcome
@@ -402,5 +409,20 @@ class BracongoSeeder extends Seeder
         foreach ($reseaux as $rs) {
             ReseauSocial::create($rs);
         }
+
+        $superEmail = env('BRACONGO_SUPER_ADMIN_EMAIL', 'superadmin@bracongo.local');
+        $superPassword = env('BRACONGO_SUPER_ADMIN_PASSWORD', 'SuperAdmin@123456');
+        $superName = env('BRACONGO_SUPER_ADMIN_NAME', 'Super Admin');
+
+        User::updateOrCreate(
+            ['email' => $superEmail],
+            [
+                'name' => $superName,
+                'password' => Hash::make($superPassword),
+                'role' => UserRole::SuperAdmin->value,
+                'status' => UserStatus::Active,
+                'email_verified_at' => now(),
+            ]
+        );
     }
 }

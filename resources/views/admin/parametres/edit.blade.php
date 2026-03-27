@@ -28,13 +28,6 @@
 						<div class="col-12">
 							<x-admin.image-upload name="logo" label="Logo" :value="$parametres->logo ?? null" help="PNG, JPG, GIF — max 2 Mo" />
 						</div>
-						<div class="col-md-6">
-							<label class="form-label fw-semibold">Couleur principale</label>
-							<div class="input-group">
-								<input type="color" class="form-control form-control-color" name="couleur_principale" value="{{ old('couleur_principale', $parametres->couleur_principale) }}" style="width:60px;">
-								<input type="text" class="form-control" value="{{ old('couleur_principale', $parametres->couleur_principale) }}" readonly id="colorText">
-							</div>
-						</div>
 						<div class="col-12">
 							<label class="form-label fw-semibold">Suggestions de recherche <span class="text-muted small">(séparées par des virgules)</span></label>
 							<input type="text" class="form-control" name="search_suggestions" value="{{ old('search_suggestions', $parametres->search_suggestions) }}" placeholder="Beaufort Lager,Actualités,Nkoyi">
@@ -46,6 +39,19 @@
 						<div class="col-md-6">
 							<label class="form-label fw-semibold">Page Actualités — libellé « tout voir »</label>
 							<input type="text" class="form-control" name="actualites_filtre_tout_label" value="{{ old('actualites_filtre_tout_label', $parametres->actualites_filtre_tout_label ?? 'Tout voir') }}">
+						</div>
+						<div class="col-md-6">
+							<label class="form-label fw-semibold">Invitations — durée de validité</label>
+							<select name="invitation_expires_hours" class="form-select @error('invitation_expires_hours') is-invalid @enderror">
+								@php
+									$currentInvitationHours = (string) old('invitation_expires_hours', $parametres->invitation_expires_hours?->value ?? $parametres->invitation_expires_hours ?? '48');
+								@endphp
+								@foreach($invitationExpiresOptions as $opt)
+								<option value="{{ $opt->value }}" @selected($currentInvitationHours === $opt->value)>{{ $opt->label() }}</option>
+								@endforeach
+							</select>
+							@error('invitation_expires_hours')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+							<div class="form-text">S’applique aux nouvelles invitations.</div>
 						</div>
 						<div class="col-12 pt-2">
 							<button type="submit" class="btn btn-primary">
@@ -70,12 +76,8 @@
 		</div>
 	</div>
 </div>
+
 @endsection
 
 @push('scripts')
-<script>
-document.querySelector('input[type=color]').addEventListener('input', function() {
-    document.getElementById('colorText').value = this.value;
-});
-</script>
 @endpush
