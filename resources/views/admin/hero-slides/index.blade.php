@@ -61,7 +61,11 @@
                                 <a href="{{ route('admin.hero-slides.edit', $slide) }}" class="a-action-btn a-action-btn--edit" title="Modifier">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form action="{{ route('admin.hero-slides.destroy', $slide) }}" method="POST" style="display:contents" onsubmit="return confirm('Supprimer ce slide ?')">
+                                <form action="{{ route('admin.hero-slides.destroy', $slide) }}" method="POST" style="display:contents"
+                                      data-bracongo-confirm
+                                      data-bc-title="Supprimer ce slide ?"
+                                      data-bc-icon="warning"
+                                      data-bc-confirm-text="Supprimer">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="a-action-btn a-action-btn--danger" title="Supprimer">
                                         <i class="bi bi-trash"></i>

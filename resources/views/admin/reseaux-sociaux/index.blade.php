@@ -55,7 +55,11 @@
                                 <a href="{{ action([\App\Http\Controllers\Admin\ReseauSocialController::class, 'edit'], ['reseaux_sociaux' => $rs->id]) }}" class="a-action-btn a-action-btn--edit" title="Modifier">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form action="{{ action([\App\Http\Controllers\Admin\ReseauSocialController::class, 'destroy'], ['reseaux_sociaux' => $rs->id]) }}" method="POST" style="display:contents" onsubmit="return confirm('Supprimer ?')">
+                                <form action="{{ action([\App\Http\Controllers\Admin\ReseauSocialController::class, 'destroy'], ['reseaux_sociaux' => $rs->id]) }}" method="POST" style="display:contents"
+                                      data-bracongo-confirm
+                                      data-bc-title="Supprimer ce réseau social ?"
+                                      data-bc-icon="warning"
+                                      data-bc-confirm-text="Supprimer">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="a-action-btn a-action-btn--danger" title="Supprimer">
                                         <i class="bi bi-trash"></i>

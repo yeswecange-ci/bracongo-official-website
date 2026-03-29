@@ -71,7 +71,11 @@
                                         <a href="{{ route('admin.valeurs.edit', $valeur) }}" class="a-action-btn a-action-btn--edit" title="Modifier">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <form action="{{ route('admin.valeurs.destroy', $valeur) }}" method="POST" style="display:contents" onsubmit="return confirm('Supprimer cette valeur ?')">
+                                        <form action="{{ route('admin.valeurs.destroy', $valeur) }}" method="POST" style="display:contents"
+                                        data-bracongo-confirm
+                                        data-bc-title="Supprimer cette valeur ?"
+                                        data-bc-icon="warning"
+                                        data-bc-confirm-text="Supprimer">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="a-action-btn a-action-btn--danger" title="Supprimer">
                                                 <i class="bi bi-trash"></i>

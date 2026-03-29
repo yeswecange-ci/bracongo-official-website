@@ -117,50 +117,87 @@
 <div class="row g-3 mb-4">
     <div class="col-12">
         <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5>Bannières — Hero Slides</h5>
-                <a href="{{ route('admin.hero-slides.index') }}"
-                   class="btn btn-sm btn-outline-primary">Gérer</a>
+            <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <div>
+                    <h5 class="mb-0">Bannières — Hero Slides</h5>
+                    <small class="text-muted">{{ $slidesForDashboard->count() }} visuel{{ $slidesForDashboard->count() > 1 ? 's' : '' }}
+                        · {{ $statsSlides }} slide{{ $statsSlides > 1 ? 's' : '' }} actif{{ $statsSlides > 1 ? 's' : '' }} (carrousel)</small>
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="{{ route('admin.pages.accueil.edit') }}"
+                       class="btn btn-sm btn-outline-secondary">Page Accueil</a>
+                    <a href="{{ route('admin.hero-slides.index') }}"
+                       class="btn btn-sm btn-outline-primary">Hero slides</a>
+                </div>
             </div>
             <div class="card-body">
-                <div class="swiper bracongo-banner-swiper" style="border-radius:8px;overflow:hidden">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="dash-slide" style="background:linear-gradient(135deg,#E30613,#ff4d4d)">
-                                <div>
-                                    <h4 class="mb-1">{{ $statsSlides }} slide{{ $statsSlides > 1 ? 's' : '' }} actif{{ $statsSlides > 1 ? 's' : '' }}</h4>
-                                    <p class="mb-0 opacity-75">Carrousel d'accueil administrable.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="dash-slide" style="background:linear-gradient(135deg,#6d28d9,#db2777)">
-                                <div>
-                                    <h4 class="mb-1">100 % dynamique</h4>
-                                    <p class="mb-0 opacity-75">Données issues de la base de données.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="dash-slide" style="background:linear-gradient(135deg,#0F172A,#334155)">
-                                <div>
-                                    <h4 class="mb-1">Responsive</h4>
-                                    <p class="mb-0 opacity-75">Adapté mobile & desktop.</p>
-                                </div>
-                            </div>
+                @if($slidesForDashboard->isEmpty())
+                    <div class="text-center py-5 px-3" style="color:var(--text-secondary);border:1px dashed var(--border);border-radius:8px">
+                        <i class="bi bi-image" style="font-size:2rem;opacity:.35"></i>
+                        <p class="mt-2 mb-3">Aucune image pour l’instant. Ajoutez des visuels sur la page Accueil (sections) et dans les hero slides.</p>
+                        <div class="d-flex flex-wrap justify-content-center gap-2">
+                            <a href="{{ route('admin.pages.accueil.edit') }}" class="btn btn-sm btn-primary">Page Accueil</a>
+                            <a href="{{ route('admin.hero-slides.index') }}" class="btn btn-sm btn-outline-primary">Gérer les slides</a>
                         </div>
                     </div>
-                    <div class="swiper-pagination"></div>
-                </div>
+                @else
+                    <div class="swiper bracongo-banner-swiper" style="border-radius:8px;overflow:hidden">
+                        <div class="swiper-wrapper">
+                            @foreach($slidesForDashboard as $dashSlide)
+                                <div class="swiper-slide">
+                                    <a href="{{ $dashSlide['edit_url'] }}"
+                                       class="dash-slide-link text-decoration-none d-block position-relative">
+                                        <img src="{{ asset($dashSlide['image']) }}"
+                                             alt="{{ $dashSlide['title'] }}"
+                                             class="dash-slide-img"
+                                             loading="lazy"
+                                             width="1200"
+                                             height="480">
+                                        <div class="dash-slide-caption">
+                                            <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                                                <strong class="text-white">{{ $dashSlide['title'] }}</strong>
+                                                @if($dashSlide['kind'] === 'banner')
+                                                    <span class="badge bg-info text-dark">Bannière accueil</span>
+                                                @else
+                                                    @if($dashSlide['active'] === false)
+                                                        <span class="badge bg-warning text-dark">Inactif</span>
+                                                    @else
+                                                        <span class="badge bg-success">Actif</span>
+                                                    @endif
+                                                @endif
+                                            </div>
+                                            <p class="mb-0 small text-white-50">{{ $dashSlide['subtitle'] }}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                @endif
                 <style>
-                    .dash-slide {
+                    .dash-slide-link { border-radius: 8px; overflow: hidden; }
+                    .dash-slide-img {
+                        width: 100%;
+                        height: auto;
                         min-height: 200px;
-                        padding: 28px;
-                        display: flex;
-                        align-items: flex-end;
-                        color: #fff;
+                        max-height: 420px;
+                        object-fit: cover;
+                        display: block;
+                        vertical-align: middle;
                     }
-                    @media (max-width: 576px) { .dash-slide { min-height: 150px; padding: 18px; } }
+                    .dash-slide-caption {
+                        position: absolute;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        padding: 18px 20px;
+                        background: linear-gradient(to top, rgba(0,0,0,.75), transparent);
+                    }
+                    @media (max-width: 576px) {
+                        .dash-slide-img { min-height: 150px; max-height: 280px; }
+                        .dash-slide-caption { padding: 12px 14px; }
+                    }
                 </style>
             </div>
         </div>
@@ -269,13 +306,19 @@
 
 @push('scripts')
 <script>
-if (typeof Swiper !== 'undefined') {
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof Swiper === 'undefined') return;
+    var el = document.querySelector('.bracongo-banner-swiper');
+    if (!el) return;
+    var n = el.querySelectorAll('.swiper-slide').length;
+    if (n === 0) return;
     new Swiper('.bracongo-banner-swiper', {
-        loop: true,
+        loop: n > 1,
         slidesPerView: 1,
+        spaceBetween: 0,
         pagination: { el: '.bracongo-banner-swiper .swiper-pagination', clickable: true },
-        autoplay: { delay: 4500, disableOnInteraction: false }
+        autoplay: n > 1 ? { delay: 4500, disableOnInteraction: false } : false
     });
-}
+});
 </script>
 @endpush

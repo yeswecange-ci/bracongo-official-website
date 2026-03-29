@@ -93,7 +93,12 @@
                                 <a href="{{ route('admin.marques.edit', $marque) }}" class="a-action-btn a-action-btn--edit" title="Modifier">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form action="{{ route('admin.marques.destroy', $marque) }}" method="POST" style="display:contents" onsubmit="return confirm('Supprimer cette marque et toutes ses boissons ?')">
+                                <form action="{{ route('admin.marques.destroy', $marque) }}" method="POST" style="display:contents"
+                                      data-bracongo-confirm
+                                      data-bc-title="Supprimer cette marque ?"
+                                      data-bc-text="Toutes les boissons associées seront supprimées."
+                                      data-bc-icon="warning"
+                                      data-bc-confirm-text="Supprimer">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="a-action-btn a-action-btn--danger" title="Supprimer">
                                         <i class="bi bi-trash"></i>
@@ -191,7 +196,12 @@
 							<a href="{{ route('admin.boissons.edit', $boisson) }}" class="btn btn-xs btn-warning me-1">
 								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
 							</a>
-							<form action="{{ route('admin.boissons.destroy', $boisson) }}" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cette boisson ?')">
+							<form action="{{ route('admin.boissons.destroy', $boisson) }}" method="POST" style="display:inline;"
+							data-bracongo-confirm
+							data-bc-title="Supprimer cette boisson ?"
+							data-bc-text="Cette action est irréversible."
+							data-bc-icon="warning"
+							data-bc-confirm-text="Supprimer">
 								@csrf
 								@method('DELETE')
 								<button type="submit" class="btn btn-xs btn-danger">

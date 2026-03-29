@@ -16,13 +16,14 @@
 @include('admin.layouts.partials.alerts')
 
 @if($nonLus > 0)
-<div class="alert alert-danger d-flex align-items-center gap-2 mb-4" style="border-radius:10px">
-    <i class="bi bi-envelope-exclamation-fill"></i>
-    <strong>{{ $nonLus }}</strong>&nbsp;message(s) non lu(s) en attente
+<div class="alert alert-warning d-flex align-items-center gap-2 mb-4 border-0 shadow-sm" style="border-radius:12px">
+    <i class="bi bi-envelope-exclamation-fill fs-5"></i>
+    <span><strong>{{ $nonLus }}</strong>&nbsp;message(s) non lu(s) en attente</span>
 </div>
 @endif
 
-<div class="card">
+<div class="a-msg-list-wrap">
+<div class="card border-0 shadow-sm" style="border-radius:12px;overflow:hidden">
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-hover mb-0">
@@ -58,7 +59,11 @@
                                 <a href="{{ route('admin.messages.show', $msg) }}" class="a-action-btn a-action-btn--view" title="Voir">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                                <form action="{{ route('admin.messages.destroy', $msg) }}" method="POST" style="display:contents" onsubmit="return confirm('Supprimer ce message ?')">
+                                <form action="{{ route('admin.messages.destroy', $msg) }}" method="POST" style="display:contents"
+                                      data-bracongo-confirm
+                                      data-bc-title="Supprimer ce message ?"
+                                      data-bc-icon="warning"
+                                      data-bc-confirm-text="Supprimer">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="a-action-btn a-action-btn--danger" title="Supprimer">
                                         <i class="bi bi-trash"></i>
@@ -80,7 +85,8 @@
         </div>
     </div>
     @if($messages->hasPages())
-    <div class="card-footer">{{ $messages->links() }}</div>
+    <div class="card-footer bg-light border-top">{{ $messages->links() }}</div>
     @endif
+</div>
 </div>
 @endsection

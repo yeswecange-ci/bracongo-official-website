@@ -43,7 +43,7 @@
                         @endif
                         @if($pro->pourquoi_items ?? null)
                         <div class="text-gray-700 text-sm md:text-base font-medium [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-3 [&_strong]:font-bold">
-                            {!! $pro->pourquoi_items !!}
+                            {!! \App\Support\CmsHtmlSanitizer::sanitize($pro->pourquoi_items) !!}
                         </div>
                         @endif
                     </div>
@@ -57,7 +57,7 @@
                         </div>
                         @if($pro->fonctionnalites_items ?? null)
                         <div class="text-gray-700 text-sm md:text-base font-medium [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-3 [&_strong]:font-bold [&_a]:text-bracongo [&_a]:hover:underline">
-                            {!! $pro->fonctionnalites_items !!}
+                            {!! \App\Support\CmsHtmlSanitizer::sanitize($pro->fonctionnalites_items) !!}
                         </div>
                         @endif
                     </div>

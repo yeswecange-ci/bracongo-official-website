@@ -1,33 +1,40 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Admin\AccountTwoFactorController;
+use App\Http\Controllers\Admin\BoissonController;
 // ── Controllers Front ──────────────────────────────────────────────────────
-use App\Http\Controllers\FrontController;
-// ── Controllers Admin ─────────────────────────────────────────────────────
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\PageController;
-use App\Http\Controllers\Admin\ParametresSiteController;
-use App\Http\Controllers\Admin\PageWelcomeController;
-use App\Http\Controllers\Admin\PageAccueilController;
-use App\Http\Controllers\Admin\HeroSlideController;
-use App\Http\Controllers\Admin\PageHistoireController;
-use App\Http\Controllers\Admin\ValeurController;
-use App\Http\Controllers\Admin\PageContactController;
-use App\Http\Controllers\Admin\MessageContactController;
-use App\Http\Controllers\Admin\PageCarriereController;
-use App\Http\Controllers\Admin\OffreEmploiController;
-use App\Http\Controllers\Admin\PageProController;
-use App\Http\Controllers\Admin\PageBieresController;
-use App\Http\Controllers\Admin\PageCategorieBoissonsController;
-use App\Http\Controllers\Admin\NavigationItemController;
+// ── Controllers Admin ─────────────────────────────────────────────────────
 use App\Http\Controllers\Admin\FooterController;
 use App\Http\Controllers\Admin\FooterGalleryController;
-use App\Http\Controllers\Admin\ReseauSocialController;
+use App\Http\Controllers\Admin\HeroSlideController;
+use App\Http\Controllers\Admin\InvitationController;
 use App\Http\Controllers\Admin\MarqueController;
-use App\Http\Controllers\Admin\BoissonController;
-use App\Http\Controllers\Admin\ProduitController;
+use App\Http\Controllers\Admin\MessageContactController;
+use App\Http\Controllers\Admin\NavigationItemController;
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\OffreEmploiController;
+use App\Http\Controllers\Admin\OnboardingTwoFactorController;
+use App\Http\Controllers\Admin\PageAccueilController;
+use App\Http\Controllers\Admin\PageBieresController;
+use App\Http\Controllers\Admin\PageCarriereController;
+use App\Http\Controllers\Admin\PageCategorieBoissonsController;
+use App\Http\Controllers\Admin\PageContactController;
+use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\PageHistoireController;
+use App\Http\Controllers\Admin\PageProController;
+use App\Http\Controllers\Admin\PageWelcomeController;
+use App\Http\Controllers\Admin\ParametresSiteController;
+use App\Http\Controllers\Admin\ProduitController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\ReseauSocialController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ValeurController;
+use App\Http\Controllers\Auth\AcceptInvitationController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\TwoFactorChallengeController;
+use App\Http\Controllers\FrontController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,89 +56,127 @@ Route::get('/Contact', [FrontController::class, 'contact'])->name('contact');
 Route::post('/Contact', [FrontController::class, 'contactStore'])->name('contact.store');
 Route::get('Bracongo-pro', [FrontController::class, 'pro'])->name('pro');
 
+Route::get('/api/recherche', [FrontController::class, 'searchAutocomplete'])->name('recherche.autocomplete');
+
+// Invitation publique (création de compte éditeur)
+Route::get('/invitation/{token}', [AcceptInvitationController::class, 'show'])->name('invitation.show');
+Route::post('/invitation/{token}', [AcceptInvitationController::class, 'accept'])
+    ->middleware('throttle:invitation-accept')
+    ->name('invitation.accept');
+
 /*
 |--------------------------------------------------------------------------
 | Routes Admin (prefix: back-office)
 |--------------------------------------------------------------------------
 */
 Route::prefix('back-office')->name('admin.')->group(function () {
-
-    // Dashboard
-    Route::get('/', DashboardController::class)->name('dashboard');
-
-    // ── CMS Pages (ancien système) ─────────────────────────────────────
-    Route::get('/pages', [PageController::class, 'index'])->name('pages.index');
-    Route::get('/pages/create', [PageController::class, 'create'])->name('pages.create');
-
-    // ── Paramètres globaux ─────────────────────────────────────────────
-    Route::get('/parametres', [ParametresSiteController::class, 'edit'])->name('parametres.edit');
-    Route::put('/parametres', [ParametresSiteController::class, 'update'])->name('parametres.update');
-
-    // ── Contenu des pages (single-row) ─────────────────────────────────
-    Route::prefix('pages-contenu')->name('pages.')->group(function () {
-
-        Route::get('/welcome', [PageWelcomeController::class, 'edit'])->name('welcome.edit');
-        Route::put('/welcome', [PageWelcomeController::class, 'update'])->name('welcome.update');
-
-        Route::get('/accueil', [PageAccueilController::class, 'edit'])->name('accueil.edit');
-        Route::put('/accueil', [PageAccueilController::class, 'update'])->name('accueil.update');
-
-        Route::get('/histoire', [PageHistoireController::class, 'edit'])->name('histoire.edit');
-        Route::put('/histoire', [PageHistoireController::class, 'update'])->name('histoire.update');
-
-        Route::get('/contact', [PageContactController::class, 'edit'])->name('contact.edit');
-        Route::put('/contact', [PageContactController::class, 'update'])->name('contact.update');
-
-        Route::get('/carriere', [PageCarriereController::class, 'edit'])->name('carriere.edit');
-        Route::put('/carriere', [PageCarriereController::class, 'update'])->name('carriere.update');
-
-        Route::get('/pro', [PageProController::class, 'edit'])->name('pro.edit');
-        Route::put('/pro', [PageProController::class, 'update'])->name('pro.update');
-
-        Route::get('/bieres', [PageBieresController::class, 'edit'])->name('bieres.edit');
-        Route::put('/bieres', [PageBieresController::class, 'update'])->name('bieres.update');
-
-        Route::get('/categorie-boissons/{categorie}', [PageCategorieBoissonsController::class, 'edit'])
-            ->name('categorie-boissons.edit')
-            ->where('categorie', 'eaux|gazeuses|energisantes');
-        Route::put('/categorie-boissons/{categorie}', [PageCategorieBoissonsController::class, 'update'])
-            ->name('categorie-boissons.update')
-            ->where('categorie', 'eaux|gazeuses|energisantes');
+    Route::middleware('guest')->group(function () {
+        Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+        Route::post('login', [LoginController::class, 'login'])->middleware('throttle:login');
+        Route::get('login/two-factor', [TwoFactorChallengeController::class, 'show'])->name('login.two-factor');
+        Route::post('login/two-factor', [TwoFactorChallengeController::class, 'store'])
+            ->middleware('throttle:two-factor')
+            ->name('login.two-factor.verify');
     });
 
-    // ── Hero Slides ────────────────────────────────────────────────────
-    Route::resource('hero-slides', HeroSlideController::class)->names('hero-slides');
+    Route::middleware(['backoffice.auth', 'two_factor.setup'])->group(function () {
+        // Dashboard
+        Route::get('/', DashboardController::class)->name('dashboard');
 
-    // ── Valeurs (page Histoire) ────────────────────────────────────────
-    Route::resource('valeurs', ValeurController::class)->names('valeurs');
+        Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-    // ── Offres d'emploi ────────────────────────────────────────────────
-    Route::resource('offres-emploi', OffreEmploiController::class)->names('offres-emploi');
+        Route::get('/onboarding/two-factor', [OnboardingTwoFactorController::class, 'show'])->name('onboarding.two-factor');
 
-    // ── Messages de contact ────────────────────────────────────────────
-    Route::get('/messages', [MessageContactController::class, 'index'])->name('messages.index');
-    Route::get('/messages/{messageContact}', [MessageContactController::class, 'show'])->name('messages.show');
-    Route::patch('/messages/{messageContact}/read', [MessageContactController::class, 'markAsRead'])->name('messages.read');
-    Route::delete('/messages/{messageContact}', [MessageContactController::class, 'destroy'])->name('messages.destroy');
+        Route::get('/profil', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profil', [ProfileController::class, 'update'])->name('profile.update');
 
-    // ── Navigation ─────────────────────────────────────────────────────
-    Route::resource('navigation', NavigationItemController::class)->names('navigation');
+        Route::post('/account/two-factor/start', [AccountTwoFactorController::class, 'start'])->name('two-factor.start');
+        Route::post('/account/two-factor/confirm', [AccountTwoFactorController::class, 'confirm'])->name('two-factor.confirm');
+        Route::post('/account/two-factor/disable', [AccountTwoFactorController::class, 'disable'])->name('two-factor.disable');
+        Route::post('/account/two-factor/recovery/regenerate', [AccountTwoFactorController::class, 'regenerateRecovery'])->name('two-factor.recovery.regenerate');
 
-    // ── Footer ─────────────────────────────────────────────────────────
-    Route::get('/footer', [FooterController::class, 'edit'])->name('footer.edit');
-    Route::put('/footer', [FooterController::class, 'update'])->name('footer.update');
+        Route::get('/invitations', [InvitationController::class, 'index'])->name('invitations.index');
+        Route::post('/invitations', [InvitationController::class, 'store'])->name('invitations.store');
+        Route::delete('/invitations/{invitation}', [InvitationController::class, 'destroy'])->name('invitations.destroy');
 
-    Route::resource('footer-gallery', FooterGalleryController::class)->names('footer-gallery');
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+        Route::post('/users/{user}/two-factor/reset', [UserController::class, 'resetTwoFactor'])->name('users.two-factor.reset');
+        // ── CMS Pages (ancien système) ─────────────────────────────────────
+        Route::get('/pages', [PageController::class, 'index'])->name('pages.index');
+        Route::get('/pages/create', [PageController::class, 'create'])->name('pages.create');
 
-    Route::resource('reseaux-sociaux', ReseauSocialController::class)->names('reseaux-sociaux');
+        // ── Paramètres globaux ─────────────────────────────────────────────
+        Route::get('/parametres', [ParametresSiteController::class, 'edit'])->name('parametres.edit');
+        Route::put('/parametres', [ParametresSiteController::class, 'update'])->name('parametres.update');
 
-    // ── Marques & Boissons ─────────────────────────────────────────────
-    Route::resource('marques', MarqueController::class)->names('marques');
-    Route::resource('boissons', BoissonController::class)->names('boissons');
+        // ── Contenu des pages (single-row) ─────────────────────────────────
+        Route::prefix('pages-contenu')->name('pages.')->group(function () {
 
-    // ── Produits (backend only) ────────────────────────────────────────
-    Route::resource('produits', ProduitController::class)->names('produits');
+            Route::get('/welcome', [PageWelcomeController::class, 'edit'])->name('welcome.edit');
+            Route::put('/welcome', [PageWelcomeController::class, 'update'])->name('welcome.update');
 
-    // ── News ───────────────────────────────────────────────────────────
-    Route::resource('news', NewsController::class)->names('news');
+            Route::get('/accueil', [PageAccueilController::class, 'edit'])->name('accueil.edit');
+            Route::put('/accueil', [PageAccueilController::class, 'update'])->name('accueil.update');
+
+            Route::get('/histoire', [PageHistoireController::class, 'edit'])->name('histoire.edit');
+            Route::put('/histoire', [PageHistoireController::class, 'update'])->name('histoire.update');
+
+            Route::get('/contact', [PageContactController::class, 'edit'])->name('contact.edit');
+            Route::put('/contact', [PageContactController::class, 'update'])->name('contact.update');
+
+            Route::get('/carriere', [PageCarriereController::class, 'edit'])->name('carriere.edit');
+            Route::put('/carriere', [PageCarriereController::class, 'update'])->name('carriere.update');
+
+            Route::get('/pro', [PageProController::class, 'edit'])->name('pro.edit');
+            Route::put('/pro', [PageProController::class, 'update'])->name('pro.update');
+
+            Route::get('/bieres', [PageBieresController::class, 'edit'])->name('bieres.edit');
+            Route::put('/bieres', [PageBieresController::class, 'update'])->name('bieres.update');
+
+            Route::get('/categorie-boissons/{categorie}', [PageCategorieBoissonsController::class, 'edit'])
+                ->name('categorie-boissons.edit')
+                ->where('categorie', 'eaux|gazeuses|energisantes');
+            Route::put('/categorie-boissons/{categorie}', [PageCategorieBoissonsController::class, 'update'])
+                ->name('categorie-boissons.update')
+                ->where('categorie', 'eaux|gazeuses|energisantes');
+        });
+
+        // ── Hero Slides ────────────────────────────────────────────────────
+        Route::resource('hero-slides', HeroSlideController::class)->names('hero-slides');
+
+        // ── Valeurs (page Histoire) ────────────────────────────────────────
+        Route::resource('valeurs', ValeurController::class)->names('valeurs');
+
+        // ── Offres d'emploi ────────────────────────────────────────────────
+        Route::resource('offres-emploi', OffreEmploiController::class)->names('offres-emploi');
+
+        // ── Messages de contact ────────────────────────────────────────────
+        Route::get('/messages', [MessageContactController::class, 'index'])->name('messages.index');
+        Route::post('/messages/{messageContact}/reply', [MessageContactController::class, 'reply'])->name('messages.reply');
+        Route::get('/messages/{messageContact}', [MessageContactController::class, 'show'])->name('messages.show');
+        Route::patch('/messages/{messageContact}/read', [MessageContactController::class, 'markAsRead'])->name('messages.read');
+        Route::delete('/messages/{messageContact}', [MessageContactController::class, 'destroy'])->name('messages.destroy');
+
+        // ── Navigation ─────────────────────────────────────────────────────
+        Route::resource('navigation', NavigationItemController::class)->names('navigation');
+
+        // ── Footer ─────────────────────────────────────────────────────────
+        Route::get('/footer', [FooterController::class, 'edit'])->name('footer.edit');
+        Route::put('/footer', [FooterController::class, 'update'])->name('footer.update');
+
+        Route::resource('footer-gallery', FooterGalleryController::class)->names('footer-gallery');
+
+        Route::resource('reseaux-sociaux', ReseauSocialController::class)->names('reseaux-sociaux');
+
+        // ── Marques & Boissons ─────────────────────────────────────────────
+        Route::resource('marques', MarqueController::class)->names('marques');
+        Route::resource('boissons', BoissonController::class)->names('boissons');
+
+        // ── Produits (backend only) ────────────────────────────────────────
+        Route::resource('produits', ProduitController::class)->names('produits');
+
+        // ── News ───────────────────────────────────────────────────────────
+        Route::resource('news', NewsController::class)->names('news');
+    });
 });

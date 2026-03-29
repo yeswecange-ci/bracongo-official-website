@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MessageContact extends Model
 {
@@ -15,5 +16,13 @@ class MessageContact extends Model
     public function scopeNonLus($query)
     {
         return $query->where('lu', false);
+    }
+
+    /**
+     * Réponses e-mail déjà envoyées pour ce message de contact (plus récent en premier).
+     */
+    public function sentReplies(): HasMany
+    {
+        return $this->hasMany(MessageContactReply::class);
     }
 }

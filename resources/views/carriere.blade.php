@@ -39,7 +39,7 @@
                         <div class="space-y-6">
                             <h3 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">{{ $offre->titre }}</h3>
                             <div class="space-y-4 text-gray-700 text-sm md:text-base leading-relaxed">
-                                {!! $offre->description !!}
+                                {!! \App\Support\CmsHtmlSanitizer::sanitize($offre->description) !!}
                             </div>
                             <div class="pt-4">
                                 <a href="{{ $offre->lien ?? '#' }}" class="inline-flex items-center gap-2 px-8 py-3 border border-bracongo text-bracongo rounded-full font-bold hover:bg-bracongo hover:text-white transition-all duration-300 group">

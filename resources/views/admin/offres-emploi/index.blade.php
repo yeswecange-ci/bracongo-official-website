@@ -62,7 +62,11 @@
                                 <a href="{{ route('admin.offres-emploi.edit', ['offres_emploi' => $offre]) }}" class="a-action-btn a-action-btn--edit" title="Modifier">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form action="{{ route('admin.offres-emploi.destroy', ['offres_emploi' => $offre]) }}" method="POST" style="display:contents" onsubmit="return confirm('Supprimer cette offre ?')">
+                                <form action="{{ route('admin.offres-emploi.destroy', ['offres_emploi' => $offre]) }}" method="POST" style="display:contents"
+                                      data-bracongo-confirm
+                                      data-bc-title="Supprimer cette offre d’emploi ?"
+                                      data-bc-icon="warning"
+                                      data-bc-confirm-text="Supprimer">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="a-action-btn a-action-btn--danger" title="Supprimer">
                                         <i class="bi bi-trash"></i>

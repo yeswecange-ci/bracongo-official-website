@@ -25,6 +25,12 @@
         {{-- Slot for per-view actions --}}
         @stack('header-actions')
 
+        @guest
+        <a href="{{ route('admin.login') }}" class="a-icon-btn" title="Connexion back-office">
+            <i class="bi bi-box-arrow-in-right"></i>
+        </a>
+        @endguest
+
         {{-- Messages --}}
         <a href="{{ route('admin.messages.index') }}"
            class="a-icon-btn"
@@ -42,11 +48,11 @@
         <div class="dropdown">
             <a href="#" class="a-user-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <img class="a-user-avatar"
-                     src="{{ asset('admin/images/user.jpg') }}"
+                     src="{{ Auth::user()->avatarUrl() }}"
                      alt="{{ Auth::user()->name ?? 'Admin' }}">
                 <div class="a-user-info d-none d-sm-block">
                     <div class="a-user-name">{{ Auth::user()->name ?? 'Admin' }}</div>
-                    <div class="a-user-role">CMS</div>
+                    <div class="a-user-role">{{ Auth::user()->roleEnum()->label() }}</div>
                 </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end a-dropdown">
@@ -59,8 +65,8 @@
                     </div>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="javascript:void(0)">
-                        <i class="bi bi-person me-2"></i>Profil
+                    <a class="dropdown-item" href="{{ route('admin.profile.edit') }}">
+                        <i class="bi bi-person me-2"></i>Mon profil
                     </a>
                 </li>
                 <li>
@@ -70,12 +76,12 @@
                 </li>
                 <li><hr class="dropdown-divider"></li>
                 <li>
-                    @if(Route::has('logout'))
+                    @if(Route::has('admin.logout'))
                     <a class="dropdown-item text-danger" href="javascript:void(0)"
                        onclick="event.preventDefault();document.getElementById('logout-form').submit()">
                         <i class="bi bi-box-arrow-right me-2"></i>Déconnexion
                     </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
                     @else
