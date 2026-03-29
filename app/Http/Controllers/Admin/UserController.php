@@ -16,7 +16,7 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
-        $query = User::query()->orderBy('name');
+        $query = User::query()->visibleInAdminUserList()->orderBy('name');
 
         if ($request->user()->isAdmin() && ! $request->user()->isSuperAdmin()) {
             $query->where('role', UserRole::Editor->value);

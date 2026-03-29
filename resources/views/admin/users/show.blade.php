@@ -55,7 +55,12 @@
             </div>
             <div class="card-body">
                 <p class="small text-muted mb-3">Révoque les secrets et codes de récupération. L’utilisateur devra reconfigurer le 2FA à la prochaine connexion (flux à finaliser).</p>
-                <form action="{{ route('admin.users.two-factor.reset', $user) }}" method="POST" onsubmit="return confirm('Réinitialiser le 2FA pour {{ $user->name }} ?');">
+                <form action="{{ route('admin.users.two-factor.reset', $user) }}" method="POST"
+                      data-bracongo-confirm
+                      data-bc-title="Réinitialiser le 2FA pour {{ e($user->name) }} ?"
+                      data-bc-text="L’utilisateur devra reconfigurer son application d’authentification."
+                      data-bc-icon="question"
+                      data-bc-confirm-text="Réinitialiser">
                     @csrf
                     <button type="submit" class="btn btn-outline-danger btn-sm">
                         <i class="bi bi-arrow-counterclockwise me-1"></i>Réinitialiser le 2FA

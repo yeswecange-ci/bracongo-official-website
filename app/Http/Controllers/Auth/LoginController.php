@@ -23,7 +23,9 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+        $remember = $request->boolean('remember');
+
+        if (Auth::attempt($credentials, $remember)) {
             $user = Auth::user();
             if ($user->status === UserStatus::Disabled) {
                 Auth::logout();
@@ -35,7 +37,19 @@ class LoginController extends Controller
                 ])->onlyInput('email');
             }
 
+            if ($user->hasTwoFactorEnabled() && ! $user->isTwoFactorExempt()) {
+                Auth::logout();
+                $request->session()->put('two_factor.login.id', $user->id);
+                $request->session()->put('two_factor.login.remember', $remember);
+
+                return redirect()->route('admin.login.two-factor');
+            }
+
             $request->session()->regenerate();
+
+            if (! $user->hasSatisfiedBackOfficeTwoFactorRequirement()) {
+                return redirect()->intended(route('admin.onboarding.two-factor'));
+            }
 
             $user->forceFill(['last_login_at' => now()])->save();
 

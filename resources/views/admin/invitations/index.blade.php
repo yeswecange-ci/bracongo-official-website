@@ -104,7 +104,12 @@
                                 </td>
                                 <td class="text-end">
                                     @if(!$inv->accepted_at && !$inv->revoked_at)
-                                    <form action="{{ route('admin.invitations.destroy', $inv) }}" method="POST" class="d-inline" onsubmit="return confirm('Révoquer cette invitation ?');">
+                                    <form action="{{ route('admin.invitations.destroy', $inv) }}" method="POST" class="d-inline"
+                                          data-bracongo-confirm
+                                          data-bc-title="Révoquer cette invitation ?"
+                                          data-bc-text="Le lien envoyé par e-mail ne fonctionnera plus."
+                                          data-bc-icon="warning"
+                                          data-bc-confirm-text="Révoquer">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="a-action-btn a-action-btn--danger" title="Révoquer">

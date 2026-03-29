@@ -25,9 +25,12 @@ class InvitationEditeurNotification extends Notification
         $url = url('/invitation/'.$this->plainToken);
 
         return (new MailMessage)
-            ->subject('Invitation éditeur — Bracongo')
-            ->line('Vous avez été invité à rejoindre le back-office Bracongo en tant qu’éditeur.')
+            ->theme('bracongo')
+            ->subject('Invitation à rejoindre l’espace d’administration — Bracongo')
+            ->greeting('Bonjour,')
+            ->line('Vous avez été invité à rejoindre l’espace d’administration du site Bracongo en tant qu’éditeur. Utilisez le bouton ci-dessous pour accepter l’invitation et activer votre accès.')
             ->action('Accepter l’invitation', $url)
-            ->line('Si vous n’êtes pas à l’origine de cette demande, ignorez ce message.');
+            ->line('Si vous n’êtes pas à l’origine de cette demande ou si vous ne souhaitez pas créer de compte, vous pouvez ignorer cet e-mail en toute sécurité.')
+            ->salutation('Cordialement, — L’équipe Bracongo');
     }
 }

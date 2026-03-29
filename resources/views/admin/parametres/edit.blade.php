@@ -12,18 +12,22 @@
 @endpush
 
 @section('content')
+@php
+    $canEditContactEmail = auth()->user()->isSuperAdmin() || auth()->user()->isAdmin();
+@endphp
 <div class="row">
 	<div class="col-xl-8">
 		@include('admin.layouts.partials.alerts')
 
-		<div class="card">
-			<div class="card-header">
-				<h5 class="mb-0"><i class="bi bi-gear me-2" style="color:#E30613"></i>Paramètres globaux</h5>
-			</div>
-			<div class="card-body">
-				<form action="{{ route('admin.parametres.update') }}" method="POST" enctype="multipart/form-data">
-					@csrf
-					@method('PUT')
+		<form action="{{ route('admin.parametres.update') }}" method="POST" enctype="multipart/form-data">
+			@csrf
+			@method('PUT')
+
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0"><i class="bi bi-gear me-2" style="color:#E30613"></i>Paramètres globaux</h5>
+				</div>
+				<div class="card-body">
 					<div class="row g-4">
 						<div class="col-12">
 							<x-admin.image-upload name="logo" label="Logo" :value="$parametres->logo ?? null" help="PNG, JPG, GIF — max 2 Mo" />
@@ -53,15 +57,36 @@
 							@error('invitation_expires_hours')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
 							<div class="form-text">S’applique aux nouvelles invitations.</div>
 						</div>
-						<div class="col-12 pt-2">
-							<button type="submit" class="btn btn-primary">
-						<i class="bi bi-floppy me-1"></i>Enregistrer
-					</button>
-						</div>
 					</div>
-				</form>
+				</div>
 			</div>
-		</div>
+
+			@if($canEditContactEmail)
+			<div class="card mt-3">
+				<div class="card-header">
+					<h5 class="mb-0"><i class="bi bi-envelope-paper me-2" style="color:#E30613"></i>Réponses aux messages de contact</h5>
+				</div>
+				<div class="card-body">
+					<label class="form-label fw-semibold" for="contact_reply_closing">Formule de politesse (pied de l’e-mail)</label>
+					@php
+						$closingPlaceholder = "Cordialement,\n\nL'équipe ".config('app.name');
+					@endphp
+					<textarea class="form-control @error('contact_reply_closing') is-invalid @enderror" name="contact_reply_closing" id="contact_reply_closing" rows="5" placeholder="{{ $closingPlaceholder }}">{{ old('contact_reply_closing', $parametres->contact_reply_closing) }}</textarea>
+					@error('contact_reply_closing')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+					<div class="form-text mt-2">
+						Ce texte apparaît sous votre réponse, avant le rappel du message initial du contact. Il remplace l’ancienne signature automatique avec le nom du rédacteur.
+						Si vous laissez le champ vide, une formule professionnelle par défaut est utilisée (cordialement + « L’équipe {{ config('app.name') }} »).
+					</div>
+				</div>
+			</div>
+			@endif
+
+			<div class="mt-3">
+				<button type="submit" class="btn btn-primary">
+					<i class="bi bi-floppy me-1"></i>Enregistrer
+				</button>
+			</div>
+		</form>
 	</div>
 
 	<div class="col-xl-4">

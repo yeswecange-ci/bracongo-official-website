@@ -13,6 +13,14 @@
         </a>
     </li>
 
+    <li>
+        <a href="{{ route('admin.profile.edit') }}"
+           class="a-nav-link {{ request()->routeIs('admin.profile.*') ? 'is-active' : '' }}">
+            <i class="a-nav-icon bi bi-person-circle"></i>
+            <span class="a-nav-text">Mon profil</span>
+        </a>
+    </li>
+
 </ul>
 
 <div class="a-nav-section">Contenu des Pages</div>

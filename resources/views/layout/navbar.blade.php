@@ -45,11 +45,11 @@
     {{-- Desktop Search Overlay --}}
     <div id="desktop-search-bar" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] transition-all duration-300 opacity-0">
         <div class="absolute inset-x-0 top-0 bg-white shadow-2xl transform -translate-y-full transition-transform duration-300 ease-out py-8 md:py-12" id="search-content">
-            <div class="max-w-4xl mx-auto px-6">
-                <div class="flex items-center justify-between gap-8 mb-8">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6">
+                <div class="flex items-center justify-between gap-4 sm:gap-8 mb-6 sm:mb-8">
                     <div class="relative flex-grow">
                         <input type="text" id="desktop-search-input" placeholder="Rechercher un produit, une actualité..."
-                            class="w-full text-2xl md:text-4xl font-bold border-none focus:ring-0 text-gray-900 placeholder-gray-300 bg-transparent py-2"
+                            class="w-full min-w-0 text-xl sm:text-2xl md:text-4xl font-bold border-none focus:ring-0 text-gray-900 placeholder-gray-300 bg-transparent py-2"
                             autocomplete="off" spellcheck="false">
                         <div class="absolute bottom-0 left-0 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
                             <div class="h-full bg-bracongo w-0 transition-all duration-500 ease-out" id="search-underline"></div>
@@ -61,27 +61,17 @@
                         </svg>
                     </button>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-                    <div class="min-w-0">
-                        <div id="desktop-search-live" class="hidden mb-6">
-                            <h4 class="text-xs font-bold text-bracongo uppercase tracking-widest mb-2">Meilleure correspondance</h4>
-                            <a id="desktop-search-best-link" href="#" class="block rounded-xl border border-gray-100 bg-gray-50/80 px-4 py-3 hover:border-bracongo/40 hover:bg-white transition-colors">
-                                <div id="desktop-search-best-title" class="font-bold text-gray-900 text-lg"></div>
-                                <div id="desktop-search-best-meta" class="text-xs text-gray-500 mt-1"></div>
-                            </a>
-                        </div>
-                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Résultats</h4>
-                        <div id="desktop-search-results" class="max-h-[45vh] overflow-y-auto pr-1 space-y-1 min-h-[120px]"></div>
+                <div class="w-full max-w-3xl mx-auto space-y-6">
+                    <div id="desktop-search-live" class="hidden">
+                        <h4 class="text-xs font-bold text-bracongo uppercase tracking-widest mb-2">Meilleure correspondance</h4>
+                        <a id="desktop-search-best-link" href="#" class="block rounded-xl border border-gray-100 bg-gray-50/80 px-4 py-3 hover:border-bracongo/40 hover:bg-white transition-colors">
+                            <div id="desktop-search-best-title" class="font-bold text-gray-900 text-lg break-words"></div>
+                            <div id="desktop-search-best-meta" class="text-xs text-gray-500 mt-1"></div>
+                        </a>
                     </div>
-                    <div>
-                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Suggestions rapides</h4>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            @foreach(explode(',', $parametres->search_suggestions ?? 'Beaufort,Actualités,Nkoyi,RSE') as $sugg)
-                            <button type="button" class="search-quick-sugg px-4 py-2 bg-gray-50 hover:bg-bracongo hover:text-white rounded-full text-sm font-medium text-gray-600 transition-all" data-apply-suggestion="{{ trim($sugg) }}">{{ trim($sugg) }}</button>
-                            @endforeach
-                        </div>
-                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Besoin d'aide ?</h4>
-                        <p class="text-sm text-gray-500 leading-relaxed">Recherche uniquement sur le site public (pas d’accès au back-office). Produit, actualité, page ou entrée de menu correspondante.</p>
+                    <div class="min-w-0">
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Résultats</h4>
+                        <div id="desktop-search-results" class="max-h-[min(50vh,28rem)] sm:max-h-[45vh] overflow-y-auto overscroll-contain pr-1 space-y-1 min-h-[120px] rounded-lg border border-gray-100/80 bg-gray-50/30 p-2 sm:p-3"></div>
                     </div>
                 </div>
             </div>
@@ -243,17 +233,6 @@
                 }
             });
         }
-
-        document.querySelectorAll('.search-quick-sugg').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var term = btn.getAttribute('data-apply-suggestion');
-                if (desktopSearchInput && term) {
-                    desktopSearchInput.value = term;
-                    desktopSearchInput.focus();
-                    fetchSearch(term, true);
-                }
-            });
-        });
 
         if (desktopSearchInput) {
             desktopSearchInput.addEventListener('input', function() {

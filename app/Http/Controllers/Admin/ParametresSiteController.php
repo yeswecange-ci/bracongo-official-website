@@ -12,6 +12,7 @@ use Illuminate\Validation\Rule;
 class ParametresSiteController extends Controller
 {
     use HandlesImageUpload;
+
     public function edit()
     {
         $parametres = ParametresSite::instance();
@@ -22,15 +23,22 @@ class ParametresSiteController extends Controller
 
     public function update(Request $request)
     {
-        $data = $request->validate([
-            'logo'               => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
-            'favicon'            => 'nullable|string|max:255',
+        $rules = [
+            'logo' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'favicon' => 'nullable|string|max:255',
             'couleur_principale' => 'nullable|string|max:20',
             'search_suggestions' => 'nullable|string',
-            'actualites_hero_titre'         => 'nullable|string|max:255',
-            'actualites_filtre_tout_label'  => 'nullable|string|max:100',
-            'invitation_expires_hours'      => ['required', Rule::enum(InvitationExpiresHours::class)],
-        ]);
+            'actualites_hero_titre' => 'nullable|string|max:255',
+            'actualites_filtre_tout_label' => 'nullable|string|max:100',
+            'invitation_expires_hours' => ['required', Rule::enum(InvitationExpiresHours::class)],
+        ];
+
+        $user = $request->user();
+        if ($user !== null && ($user->isSuperAdmin() || $user->isAdmin())) {
+            $rules['contact_reply_closing'] = 'nullable|string|max:5000';
+        }
+
+        $data = $request->validate($rules);
         if ($request->hasFile('logo')) {
             $data['logo'] = $this->uploadImage($request->file('logo'), 'uploads/parametres', 'logo');
         } else {

@@ -2,8 +2,14 @@
 
 namespace App\Providers;
 
+use App\Services\GoogleTwoFactorService;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use PragmaRX\Google2FA\Google2FA;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -12,7 +18,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(Google2FA::class, fn () => new Google2FA);
+        $this->app->singleton(GoogleTwoFactorService::class);
     }
 
     /**
@@ -21,5 +28,23 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
+
+        // Les helpers url() / route() utilisent sinon l’hôte de la requête (ex. 127.0.0.1) au lieu d’APP_URL (ex. ngrok).
+        $root = config('app.url');
+        if (is_string($root) && $root !== '') {
+            URL::forceRootUrl(rtrim($root, '/'));
+        }
+
+        RateLimiter::for('login', function (Request $request) {
+            return Limit::perMinute(10)->by($request->ip());
+        });
+
+        RateLimiter::for('two-factor', function (Request $request) {
+            return Limit::perMinute(20)->by($request->ip());
+        });
+
+        RateLimiter::for('invitation-accept', function (Request $request) {
+            return Limit::perMinute(10)->by($request->ip());
+        });
     }
 }

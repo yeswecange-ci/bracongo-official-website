@@ -2,34 +2,34 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
-use App\Models\ParametresSite;
-use App\Models\PageWelcome;
-use App\Models\PageAccueil;
-use App\Models\HeroSlide;
-use App\Models\PageHistoire;
-use App\Models\Valeur;
-use App\Models\PageContact;
-use App\Models\PageCarriere;
-use App\Models\OffreEmploi;
-use App\Models\PagePro;
-use App\Models\PageBieres;
-use App\Models\PageEaux;
-use App\Models\PageBoissonsGazeuses;
-use App\Models\PageBoissonsEnergisantes;
-use App\Models\NavigationItem;
-use App\Models\FooterSettings;
-use App\Models\FooterGallery;
-use App\Models\ReseauSocial;
-use App\Models\Marque;
-use App\Models\Boisson;
-use App\Models\Produit;
-use App\Models\News;
-use App\Models\User;
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
+use App\Models\Boisson;
+use App\Models\FooterGallery;
+use App\Models\FooterSettings;
+use App\Models\HeroSlide;
+use App\Models\Marque;
+use App\Models\NavigationItem;
+use App\Models\News;
+use App\Models\OffreEmploi;
+use App\Models\PageAccueil;
+use App\Models\PageBieres;
+use App\Models\PageBoissonsEnergisantes;
+use App\Models\PageBoissonsGazeuses;
+use App\Models\PageCarriere;
+use App\Models\PageContact;
+use App\Models\PageEaux;
+use App\Models\PageHistoire;
+use App\Models\PagePro;
+use App\Models\PageWelcome;
+use App\Models\ParametresSite;
+use App\Models\Produit;
+use App\Models\ReseauSocial;
+use App\Models\User;
+use App\Models\Valeur;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 
 class BracongoSeeder extends Seeder
 {
@@ -59,12 +59,12 @@ class BracongoSeeder extends Seeder
         // Page Accueil
         PageAccueil::updateOrCreate(['id' => 1], [
             'qui_titre' => 'Qui sommes-nous ?',
-            'qui_texte' => "Lorem ipsum dolor sit amet consectetur. Nec augue tortor cursus vulputate ultricies mattis a. Bibendum gravida morbi urna at id dui vitae. Massa bibendum magna in quis amet neque neque diam eget. Tincidunt scelerisque mattis at habitant malesuada congue. Ut malesuada ac mauris amet non sit lobortis proin.",
+            'qui_texte' => 'Lorem ipsum dolor sit amet consectetur. Nec augue tortor cursus vulputate ultricies mattis a. Bibendum gravida morbi urna at id dui vitae. Massa bibendum magna in quis amet neque neque diam eget. Tincidunt scelerisque mattis at habitant malesuada congue. Ut malesuada ac mauris amet non sit lobortis proin.',
             'qui_image_fond' => 'img/brasserie.jpg',
             'qui_cta_texte' => 'Lire plus',
             'qui_cta_lien' => '/histoire',
             'marques_titre' => 'Nos marques',
-            'marques_description' => "Lorem ipsum dolor sit amet consectetur. Nec augue tortor cursus vulputate ultricies mattis a. Bibendum gravida morbi urna at id dui vitae. Lorem ipsum dolor sit amet consectetur. Nec augue tortor cursus.",
+            'marques_description' => 'Lorem ipsum dolor sit amet consectetur. Nec augue tortor cursus vulputate ultricies mattis a. Bibendum gravida morbi urna at id dui vitae. Lorem ipsum dolor sit amet consectetur. Nec augue tortor cursus.',
             'rejoignez_titre' => 'Rejoignez nous',
             'rejoignez_texte' => "Employer et former les bonnes personnes pour le poste est la clé de notre succès. Notre aspiration est d'offrir le meilleur à nos clients et consommateurs et d'offrir des produits de qualité à des prix abordables. Si vous appréciez l'action, la qualité et l'intégrité, notre entreprise est l'endroit idéal pour vous",
             'rejoignez_image' => 'img/rejoignez.png',
@@ -88,11 +88,11 @@ class BracongoSeeder extends Seeder
         PageHistoire::updateOrCreate(['id' => 1], [
             'hero_image' => 'img/bracongo.jpg',
             'titre' => 'Notre histoire',
-            'paragraphe_1' => "Lorem ipsum dolor sit amet consectetur. Sapien fusce scelerisque condimentum iaculis viverra aliquam varius. Senectus tristique dapibus aliquet faucibus semper euismod nibh mauris leo. Sed adipiscing faucibus cursus scelerisque non turpis pellentesque.",
-            'paragraphe_2' => "Lorem ipsum dolor sit amet consectetur. Sapien fusce scelerisque condimentum iaculis viverra aliquam varius. Senectus tristique dapibus aliquet faucibus semper euismod nibh mauris leo. Sed adipiscing faucibus cursus scelerisque non turpis pellentesque.",
-            'paragraphe_3' => "Lorem ipsum dolor sit amet consectetur. Sapien fusce scelerisque condimentum iaculis viverra aliquam varius. Senectus tristique dapibus aliquet faucibus semper euismod nibh mauris leo. Sed adipiscing faucibus cursus scelerisque non turpis pellentesque.",
+            'paragraphe_1' => 'Lorem ipsum dolor sit amet consectetur. Sapien fusce scelerisque condimentum iaculis viverra aliquam varius. Senectus tristique dapibus aliquet faucibus semper euismod nibh mauris leo. Sed adipiscing faucibus cursus scelerisque non turpis pellentesque.',
+            'paragraphe_2' => 'Lorem ipsum dolor sit amet consectetur. Sapien fusce scelerisque condimentum iaculis viverra aliquam varius. Senectus tristique dapibus aliquet faucibus semper euismod nibh mauris leo. Sed adipiscing faucibus cursus scelerisque non turpis pellentesque.',
+            'paragraphe_3' => 'Lorem ipsum dolor sit amet consectetur. Sapien fusce scelerisque condimentum iaculis viverra aliquam varius. Senectus tristique dapibus aliquet faucibus semper euismod nibh mauris leo. Sed adipiscing faucibus cursus scelerisque non turpis pellentesque.',
             'image_brasserie' => 'img/Frame-115.png',
-            'rse_texte' => "Lorem ipsum dolor sit amet consectetur. Ultricies nulla at tincidunt orci et. Adipiscing risus dictum ullamcorper massa sit mattis suspendisse orci netus.",
+            'rse_texte' => 'Lorem ipsum dolor sit amet consectetur. Ultricies nulla at tincidunt orci et. Adipiscing risus dictum ullamcorper massa sit mattis suspendisse orci netus.',
             'rse_image' => 'img/Frame 33.png',
             'rse_cta_texte' => 'En savoir plus sur nos engagements RSE',
             'rse_cta_lien' => '#',
@@ -173,10 +173,10 @@ class BracongoSeeder extends Seeder
             'hero_image' => 'img/brcpro.png',
             'description' => "Bracongo Pro est l'application mobile pensée pour les ténanciers de bars, clients fidèles de Bracongo. Simple, intuitive et 100% mobile, elle facilite la gestion quotidienne des achats, permet un suivi personnalisé et rapproche encore plus les utilisateurs des services Bracongo dans un secteur en pleine digitalisation.",
             'pourquoi_titre' => 'Pourquoi choisir Bracongo Pro?',
-            'pourquoi_intro' => "Dans une dynamique citoyenne et innovante, Bracongo met à disposition de ses partenaires une solution numérique conçue pour:",
+            'pourquoi_intro' => 'Dans une dynamique citoyenne et innovante, Bracongo met à disposition de ses partenaires une solution numérique conçue pour:',
             'pourquoi_items' => "<ul><li><strong>Informer:</strong> Recevez, au quotidien, le détail de vos achats, montants payés et remises sur une interface claire.</li><li><strong>Consulter les tarifs:</strong> Accédez instantanément à tous les produits Bracongo et comparez les formats et les prix pour mieux piloter votre activité.</li><li><strong>Gérer votre profil:</strong> Retrouvez toutes vos informations client (nom, code, circuit, centre de distribution) en un clic.</li><li><strong>Suivre les livraisons:</strong> Localisez la position du camion de votre circuit en temps réel sur la carte, pour planifier vos réceptions en toute sérénité.</li><li><strong>Satisfaire vos besoins:</strong> Adressez vos réclamations directement par l'application, suivez l'état de votre demande et bénéficiez d'une prise en charge optimisée.</li></ul>",
             'fonctionnalites_titre' => 'Fonctionnalités clés',
-            'fonctionnalites_items' => "<ul><li><strong>Accueil personnalisé:</strong> Visualisez votre catégorie client, vos chiffres du mois et les réductions appliquées.</li><li><strong>Historique complet:</strong> Tableaux et graphiques présentant la progression de vos achats, volumes et montants détaillés par période.</li><li><strong>Module Camion:</strong> Suivi géolocalisé du camion SRD avec historique de passage.</li><li><strong>Gestion des plaintes:</strong> Suivi des réclamations avec notifications à chaque étape.</li><li><strong>Catalogue produits:</strong> Galerie de produits Bracongo avec images, tarifs et formats.</li></ul>",
+            'fonctionnalites_items' => '<ul><li><strong>Accueil personnalisé:</strong> Visualisez votre catégorie client, vos chiffres du mois et les réductions appliquées.</li><li><strong>Historique complet:</strong> Tableaux et graphiques présentant la progression de vos achats, volumes et montants détaillés par période.</li><li><strong>Module Camion:</strong> Suivi géolocalisé du camion SRD avec historique de passage.</li><li><strong>Gestion des plaintes:</strong> Suivi des réclamations avec notifications à chaque étape.</li><li><strong>Catalogue produits:</strong> Galerie de produits Bracongo avec images, tarifs et formats.</li></ul>',
             'app_image' => 'img/tel.png',
             'cta_texte' => 'Télécharger Bracongo pro',
             'cta_lien' => '#',
@@ -377,7 +377,7 @@ class BracongoSeeder extends Seeder
 
         // Footer
         FooterSettings::updateOrCreate(['id' => 1], [
-            'mission_texte' => "« Assurer une qualité et une disponibilité constantes de nos produits au meilleur prix avec un réseau de distribution complet, rapide et performant »",
+            'mission_texte' => '« Assurer une qualité et une disponibilité constantes de nos produits au meilleur prix avec un réseau de distribution complet, rapide et performant »',
             'adresse' => 'Les Boissons Rafraîchissantes du Congo, BRACONGO SA Avenue des Brasseries, N° 7666, Kingabwa, Limete, Kinshasa, RDC',
             'telephone' => '+243 815 586 874',
             'email' => 'bracongo.contact@castel-afrique.com',
@@ -414,6 +414,7 @@ class BracongoSeeder extends Seeder
         $superPassword = env('BRACONGO_SUPER_ADMIN_PASSWORD', 'SuperAdmin@123456');
         $superName = env('BRACONGO_SUPER_ADMIN_NAME', 'Super Admin');
 
+        /** Compte secours interne : pas de TOTP (e-mail non opérationnel), masqué de la liste utilisateurs. */
         User::updateOrCreate(
             ['email' => $superEmail],
             [
@@ -422,7 +423,17 @@ class BracongoSeeder extends Seeder
                 'role' => UserRole::SuperAdmin->value,
                 'status' => UserStatus::Active,
                 'email_verified_at' => now(),
+                'two_factor_exempt' => true,
+                'two_factor_secret' => null,
+                'two_factor_recovery_codes' => null,
+                'two_factor_confirmed_at' => null,
             ]
         );
+
+        if ($this->command !== null) {
+            $this->command->newLine();
+            $this->command->warn('[Super admin] Compte technique (2FA exemptée, non listé dans Utilisateurs). Identifiants :');
+            $this->command->line('  '.$superEmail);
+        }
     }
 }

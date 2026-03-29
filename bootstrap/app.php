@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Middleware\EnsureBackOfficeAuthenticated;
+use App\Http\Middleware\EnsureTwoFactorSetupComplete;
+use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -11,12 +14,16 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Requis derrière ngrok / reverse proxy : HTTPS et URL correctes (X-Forwarded-*).
+        $middleware->trustProxies(at: '*');
+
         $middleware->redirectGuestsTo(fn () => route('admin.login'));
         $middleware->redirectUsersTo(fn () => route('admin.dashboard'));
 
         $middleware->alias([
-            'guest' => \Illuminate\Auth\Middleware\RedirectIfAuthenticated::class,
-            'backoffice.auth' => \App\Http\Middleware\EnsureBackOfficeAuthenticated::class,
+            'guest' => RedirectIfAuthenticated::class,
+            'backoffice.auth' => EnsureBackOfficeAuthenticated::class,
+            'two_factor.setup' => EnsureTwoFactorSetupComplete::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

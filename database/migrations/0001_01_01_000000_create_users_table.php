@@ -15,8 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('avatar', 512)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('role', 32)->default('editor');
+            $table->string('status', 32)->default('active');
+            $table->foreignId('invited_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->timestamp('last_login_at')->nullable();
+            $table->text('two_factor_secret')->nullable();
+            $table->text('two_factor_recovery_codes')->nullable();
+            $table->timestamp('two_factor_confirmed_at')->nullable();
+            $table->boolean('two_factor_exempt')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

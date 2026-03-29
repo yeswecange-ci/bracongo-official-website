@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('invited_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamp('expires_at');
             $table->timestamp('accepted_at')->nullable();
+            $table->timestamp('revoked_at')->nullable();
+            $table->json('meta')->nullable();
             $table->timestamps();
 
             $table->index('email');

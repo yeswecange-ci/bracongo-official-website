@@ -51,7 +51,11 @@
                                 <a href="{{ route('admin.footer-gallery.edit', $img) }}" class="a-action-btn a-action-btn--edit" title="Modifier">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form action="{{ route('admin.footer-gallery.destroy', $img) }}" method="POST" style="display:contents" onsubmit="return confirm('Supprimer ?')">
+                                <form action="{{ route('admin.footer-gallery.destroy', $img) }}" method="POST" style="display:contents"
+                                      data-bracongo-confirm
+                                      data-bc-title="Supprimer cette image de la galerie ?"
+                                      data-bc-icon="warning"
+                                      data-bc-confirm-text="Supprimer">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="a-action-btn a-action-btn--danger" title="Supprimer">
                                         <i class="bi bi-trash"></i>

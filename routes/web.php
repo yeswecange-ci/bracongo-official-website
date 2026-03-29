@@ -1,37 +1,40 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Admin\AccountTwoFactorController;
+use App\Http\Controllers\Admin\BoissonController;
 // ── Controllers Front ──────────────────────────────────────────────────────
-use App\Http\Controllers\FrontController;
-// ── Controllers Admin ─────────────────────────────────────────────────────
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\PageController;
-use App\Http\Controllers\Admin\ParametresSiteController;
-use App\Http\Controllers\Admin\PageWelcomeController;
-use App\Http\Controllers\Admin\PageAccueilController;
-use App\Http\Controllers\Admin\HeroSlideController;
-use App\Http\Controllers\Admin\PageHistoireController;
-use App\Http\Controllers\Admin\ValeurController;
-use App\Http\Controllers\Admin\PageContactController;
-use App\Http\Controllers\Admin\MessageContactController;
-use App\Http\Controllers\Admin\PageCarriereController;
-use App\Http\Controllers\Admin\OffreEmploiController;
-use App\Http\Controllers\Admin\PageProController;
-use App\Http\Controllers\Admin\PageBieresController;
-use App\Http\Controllers\Admin\PageCategorieBoissonsController;
-use App\Http\Controllers\Admin\NavigationItemController;
+// ── Controllers Admin ─────────────────────────────────────────────────────
 use App\Http\Controllers\Admin\FooterController;
 use App\Http\Controllers\Admin\FooterGalleryController;
-use App\Http\Controllers\Admin\ReseauSocialController;
-use App\Http\Controllers\Admin\MarqueController;
-use App\Http\Controllers\Admin\BoissonController;
-use App\Http\Controllers\Admin\ProduitController;
-use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\HeroSlideController;
 use App\Http\Controllers\Admin\InvitationController;
+use App\Http\Controllers\Admin\MarqueController;
+use App\Http\Controllers\Admin\MessageContactController;
+use App\Http\Controllers\Admin\NavigationItemController;
+use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\OffreEmploiController;
+use App\Http\Controllers\Admin\OnboardingTwoFactorController;
+use App\Http\Controllers\Admin\PageAccueilController;
+use App\Http\Controllers\Admin\PageBieresController;
+use App\Http\Controllers\Admin\PageCarriereController;
+use App\Http\Controllers\Admin\PageCategorieBoissonsController;
+use App\Http\Controllers\Admin\PageContactController;
+use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\PageHistoireController;
+use App\Http\Controllers\Admin\PageProController;
+use App\Http\Controllers\Admin\PageWelcomeController;
+use App\Http\Controllers\Admin\ParametresSiteController;
+use App\Http\Controllers\Admin\ProduitController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\ReseauSocialController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ValeurController;
 use App\Http\Controllers\Auth\AcceptInvitationController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\TwoFactorChallengeController;
+use App\Http\Controllers\FrontController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,7 +60,9 @@ Route::get('/api/recherche', [FrontController::class, 'searchAutocomplete'])->na
 
 // Invitation publique (création de compte éditeur)
 Route::get('/invitation/{token}', [AcceptInvitationController::class, 'show'])->name('invitation.show');
-Route::post('/invitation/{token}', [AcceptInvitationController::class, 'accept'])->name('invitation.accept');
+Route::post('/invitation/{token}', [AcceptInvitationController::class, 'accept'])
+    ->middleware('throttle:invitation-accept')
+    ->name('invitation.accept');
 
 /*
 |--------------------------------------------------------------------------
@@ -67,14 +72,28 @@ Route::post('/invitation/{token}', [AcceptInvitationController::class, 'accept']
 Route::prefix('back-office')->name('admin.')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-        Route::post('login', [LoginController::class, 'login']);
+        Route::post('login', [LoginController::class, 'login'])->middleware('throttle:login');
+        Route::get('login/two-factor', [TwoFactorChallengeController::class, 'show'])->name('login.two-factor');
+        Route::post('login/two-factor', [TwoFactorChallengeController::class, 'store'])
+            ->middleware('throttle:two-factor')
+            ->name('login.two-factor.verify');
     });
 
-    Route::middleware('backoffice.auth')->group(function () {
+    Route::middleware(['backoffice.auth', 'two_factor.setup'])->group(function () {
         // Dashboard
         Route::get('/', DashboardController::class)->name('dashboard');
 
         Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+        Route::get('/onboarding/two-factor', [OnboardingTwoFactorController::class, 'show'])->name('onboarding.two-factor');
+
+        Route::get('/profil', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profil', [ProfileController::class, 'update'])->name('profile.update');
+
+        Route::post('/account/two-factor/start', [AccountTwoFactorController::class, 'start'])->name('two-factor.start');
+        Route::post('/account/two-factor/confirm', [AccountTwoFactorController::class, 'confirm'])->name('two-factor.confirm');
+        Route::post('/account/two-factor/disable', [AccountTwoFactorController::class, 'disable'])->name('two-factor.disable');
+        Route::post('/account/two-factor/recovery/regenerate', [AccountTwoFactorController::class, 'regenerateRecovery'])->name('two-factor.recovery.regenerate');
 
         Route::get('/invitations', [InvitationController::class, 'index'])->name('invitations.index');
         Route::post('/invitations', [InvitationController::class, 'store'])->name('invitations.store');
@@ -94,33 +113,33 @@ Route::prefix('back-office')->name('admin.')->group(function () {
         // ── Contenu des pages (single-row) ─────────────────────────────────
         Route::prefix('pages-contenu')->name('pages.')->group(function () {
 
-        Route::get('/welcome', [PageWelcomeController::class, 'edit'])->name('welcome.edit');
-        Route::put('/welcome', [PageWelcomeController::class, 'update'])->name('welcome.update');
+            Route::get('/welcome', [PageWelcomeController::class, 'edit'])->name('welcome.edit');
+            Route::put('/welcome', [PageWelcomeController::class, 'update'])->name('welcome.update');
 
-        Route::get('/accueil', [PageAccueilController::class, 'edit'])->name('accueil.edit');
-        Route::put('/accueil', [PageAccueilController::class, 'update'])->name('accueil.update');
+            Route::get('/accueil', [PageAccueilController::class, 'edit'])->name('accueil.edit');
+            Route::put('/accueil', [PageAccueilController::class, 'update'])->name('accueil.update');
 
-        Route::get('/histoire', [PageHistoireController::class, 'edit'])->name('histoire.edit');
-        Route::put('/histoire', [PageHistoireController::class, 'update'])->name('histoire.update');
+            Route::get('/histoire', [PageHistoireController::class, 'edit'])->name('histoire.edit');
+            Route::put('/histoire', [PageHistoireController::class, 'update'])->name('histoire.update');
 
-        Route::get('/contact', [PageContactController::class, 'edit'])->name('contact.edit');
-        Route::put('/contact', [PageContactController::class, 'update'])->name('contact.update');
+            Route::get('/contact', [PageContactController::class, 'edit'])->name('contact.edit');
+            Route::put('/contact', [PageContactController::class, 'update'])->name('contact.update');
 
-        Route::get('/carriere', [PageCarriereController::class, 'edit'])->name('carriere.edit');
-        Route::put('/carriere', [PageCarriereController::class, 'update'])->name('carriere.update');
+            Route::get('/carriere', [PageCarriereController::class, 'edit'])->name('carriere.edit');
+            Route::put('/carriere', [PageCarriereController::class, 'update'])->name('carriere.update');
 
-        Route::get('/pro', [PageProController::class, 'edit'])->name('pro.edit');
-        Route::put('/pro', [PageProController::class, 'update'])->name('pro.update');
+            Route::get('/pro', [PageProController::class, 'edit'])->name('pro.edit');
+            Route::put('/pro', [PageProController::class, 'update'])->name('pro.update');
 
-        Route::get('/bieres', [PageBieresController::class, 'edit'])->name('bieres.edit');
-        Route::put('/bieres', [PageBieresController::class, 'update'])->name('bieres.update');
+            Route::get('/bieres', [PageBieresController::class, 'edit'])->name('bieres.edit');
+            Route::put('/bieres', [PageBieresController::class, 'update'])->name('bieres.update');
 
-        Route::get('/categorie-boissons/{categorie}', [PageCategorieBoissonsController::class, 'edit'])
-            ->name('categorie-boissons.edit')
-            ->where('categorie', 'eaux|gazeuses|energisantes');
-        Route::put('/categorie-boissons/{categorie}', [PageCategorieBoissonsController::class, 'update'])
-            ->name('categorie-boissons.update')
-            ->where('categorie', 'eaux|gazeuses|energisantes');
+            Route::get('/categorie-boissons/{categorie}', [PageCategorieBoissonsController::class, 'edit'])
+                ->name('categorie-boissons.edit')
+                ->where('categorie', 'eaux|gazeuses|energisantes');
+            Route::put('/categorie-boissons/{categorie}', [PageCategorieBoissonsController::class, 'update'])
+                ->name('categorie-boissons.update')
+                ->where('categorie', 'eaux|gazeuses|energisantes');
         });
 
         // ── Hero Slides ────────────────────────────────────────────────────
@@ -134,6 +153,7 @@ Route::prefix('back-office')->name('admin.')->group(function () {
 
         // ── Messages de contact ────────────────────────────────────────────
         Route::get('/messages', [MessageContactController::class, 'index'])->name('messages.index');
+        Route::post('/messages/{messageContact}/reply', [MessageContactController::class, 'reply'])->name('messages.reply');
         Route::get('/messages/{messageContact}', [MessageContactController::class, 'show'])->name('messages.show');
         Route::patch('/messages/{messageContact}/read', [MessageContactController::class, 'markAsRead'])->name('messages.read');
         Route::delete('/messages/{messageContact}', [MessageContactController::class, 'destroy'])->name('messages.destroy');

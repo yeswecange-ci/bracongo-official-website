@@ -21,6 +21,10 @@ class UserPolicy
             return true;
         }
 
+        if ($model->isTwoFactorExempt()) {
+            return false;
+        }
+
         if ($user->isSuperAdmin()) {
             return true;
         }
@@ -34,6 +38,10 @@ class UserPolicy
 
     public function resetTwoFactor(User $user, User $model): bool
     {
+        if ($model->isTwoFactorExempt()) {
+            return false;
+        }
+
         return $user->isSuperAdmin();
     }
 }
