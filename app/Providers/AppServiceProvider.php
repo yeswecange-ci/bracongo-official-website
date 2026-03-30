@@ -29,7 +29,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        // Les helpers url() / route() utilisent sinon l’hôte de la requête (ex. 127.0.0.1) au lieu d’APP_URL (ex. ngrok).
         $root = config('app.url');
         if (is_string($root) && $root !== '') {
             URL::forceRootUrl(rtrim($root, '/'));

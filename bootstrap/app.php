@@ -14,7 +14,6 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Requis derrière ngrok / reverse proxy : HTTPS et URL correctes (X-Forwarded-*).
         $middleware->trustProxies(at: '*');
 
         $middleware->redirectGuestsTo(fn () => route('admin.login'));

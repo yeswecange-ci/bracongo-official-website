@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('rejoignez_cta_lien')->default('/Carriere');
             // Section "Actualités"
             $table->string('actualites_titre')->default('Dernières actualités');
-            $table->string('actualites_voir_plus_lien')->default('/Actualités-et-evenements');
+            $table->string('actualites_voir_plus_lien')->default('/Actualites-et-evenements');
             $table->timestamps();
         });
     }
