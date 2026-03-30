@@ -71,7 +71,7 @@ class BracongoSeeder extends Seeder
             'rejoignez_cta_texte' => "Voir nos offres d'emploi",
             'rejoignez_cta_lien' => '/Carriere',
             'actualites_titre' => 'Dernières actualités',
-            'actualites_voir_plus_lien' => '/Actualités-et-evenements',
+            'actualites_voir_plus_lien' => '/Actualites-et-evenements',
         ]);
 
         // Hero slides
@@ -316,7 +316,40 @@ class BracongoSeeder extends Seeder
         // News (actualités, événements, etc.)
         News::truncate();
         $news = [
-            ['titre' => 'Actualité exemple', 'slug' => 'actualite-exemple', 'type' => 'actualites', 'extrait' => 'Lorem ipsum...', 'date_publication' => now(), 'ordre' => 1],
+            [
+                'titre' => 'Rencontre avec Lumumba',
+                'slug' => 'rencontre-avec-lumumba',
+                'type' => 'actualites',
+                'extrait' => 'Retour en images sur une rencontre marquante autour des valeurs de la marque.',
+                'contenu' => '<p>Un moment fort de partage et de proximité avec nos partenaires et consommateurs.</p>',
+                'image' => 'img/lumumba.png',
+                'date_publication' => now()->subDays(2),
+                'ordre' => 1,
+            ],
+            [
+                'titre' => 'Rencontre des influenceurs',
+                'slug' => 'rencontre-des-influenceurs',
+                'type' => 'evenements',
+                'extrait' => 'Une session dédiée aux créateurs de contenu pour présenter les nouveautés Bracongo.',
+                'contenu' => '<p>Cette rencontre a permis de renforcer les liens avec notre écosystème digital.</p>',
+                'image' => 'img/influ.png',
+                'date_publication' => now()->subDay(),
+                'date_evenement' => now()->subDay(),
+                'lieu' => 'Kinshasa',
+                'ordre' => 2,
+            ],
+            [
+                'titre' => 'Soirée festive en championnat',
+                'slug' => 'soiree-festive-en-championnat',
+                'type' => 'sponsoring',
+                'extrait' => 'Une ambiance exceptionnelle lors de notre activation autour du championnat local.',
+                'contenu' => '<p>Nos équipes étaient mobilisées pour offrir une expérience premium aux participants.</p>',
+                'image' => 'img/champ.png',
+                'date_publication' => now(),
+                'date_evenement' => now(),
+                'lieu' => 'Stade des Martyrs',
+                'ordre' => 3,
+            ],
         ];
         foreach ($news as $n) {
             News::create(array_merge($n, ['is_active' => true]));
@@ -351,7 +384,7 @@ class BracongoSeeder extends Seeder
                 ['label' => 'Boissons énergisantes', 'url' => '/Nos-marques/energisantes'],
             ],
             2 => [
-                ['label' => 'Dernières actualités', 'url' => '/Actualités-et-evenements'],
+                ['label' => 'Dernières actualités', 'url' => '/Actualites-et-evenements'],
             ],
             3 => [
                 ['label' => 'Nous rejoindre ?', 'url' => '/Carriere'],

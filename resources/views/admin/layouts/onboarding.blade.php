@@ -50,6 +50,7 @@
     <script src="{{ asset('admin/vendor/global/global.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('admin/js/bracongo-confirm.js') }}"></script>
+    <script src="{{ asset('admin/js/bracongo-form-submit.js') }}"></script>
     @stack('scripts')
 </body>
 </html>

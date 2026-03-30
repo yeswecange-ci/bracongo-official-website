@@ -51,6 +51,7 @@ Route::get('/Nos-marques-bieres', [FrontController::class, 'bieres'])->name('bie
 Route::get('/Boisson/{slug}', [FrontController::class, 'boisson'])->name('boisson.show');
 Route::get('/Nos-marques-bieres-beaufort', [FrontController::class, 'boissonBeaufort'])->name('bieres.beaufort');
 Route::get('/Actualites-et-evenements', [FrontController::class, 'actualites'])->name('actualites');
+Route::redirect('/Actualités-et-evenements', '/Actualites-et-evenements', 301);
 Route::get('/Carriere', [FrontController::class, 'carriere'])->name('carriere');
 Route::get('/Contact', [FrontController::class, 'contact'])->name('contact');
 Route::post('/Contact', [FrontController::class, 'contactStore'])->name('contact.store');
