@@ -11,6 +11,7 @@ class ParametresSite extends Model
 
     protected $fillable = [
         'logo', 'favicon', 'couleur_principale', 'search_suggestions',
+        'seo_meta_description', 'telephone_public',
         'actualites_hero_titre', 'actualites_filtre_tout_label',
         'invitation_expires_hours',
         'contact_reply_closing',
@@ -28,9 +29,6 @@ class ParametresSite extends Model
         return static::firstOrCreate(['id' => 1]);
     }
 
-    /**
-     * Formule de politesse par défaut pour les réponses aux messages de contact (e-mail).
-     */
     public static function defaultContactReplyClosing(): string
     {
         $name = config('app.name', 'Bracongo');
@@ -39,8 +37,15 @@ class ParametresSite extends Model
     }
 
     /**
-     * Texte affiché en pied de réponse e-mail (paramètre ou défaut).
+     * Texte affiché comme placeholder dans la barre de recherche du site public (même valeur que les suggestions BO).
      */
+    public function resolvedSearchPlaceholder(): string
+    {
+        $s = trim((string) ($this->search_suggestions ?? ''));
+
+        return $s !== '' ? $s : 'Rechercher sur le site…';
+    }
+
     public function resolvedContactReplyClosing(): string
     {
         $raw = $this->contact_reply_closing;

@@ -59,9 +59,6 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * TOTP réellement configuré et confirmé (hors compte technique exempté).
-     */
     public function hasTwoFactorEnabled(): bool
     {
         return $this->two_factor_confirmed_at !== null
@@ -69,17 +66,11 @@ class User extends Authenticatable
             && $this->two_factor_secret !== '';
     }
 
-    /**
-     * Compte super admin interne (secours) : pas de TOTP, pas d’étape à la connexion.
-     */
     public function isTwoFactorExempt(): bool
     {
         return $this->two_factor_exempt === true;
     }
 
-    /**
-     * Accès back-office autorisé côté 2FA (TOTP actif ou compte technique exempté).
-     */
     public function hasSatisfiedBackOfficeTwoFactorRequirement(): bool
     {
         return $this->hasTwoFactorEnabled() || $this->isTwoFactorExempt();
@@ -96,12 +87,6 @@ class User extends Authenticatable
             && $this->two_factor_confirmed_at === null;
     }
 
-    /**
-     * Utilisateurs visibles dans l’admin (le compte technique interne est exclu).
-     *
-     * @param  Builder<User>  $query
-     * @return Builder<User>
-     */
     public function scopeVisibleInAdminUserList(Builder $query): Builder
     {
         return $query->where('two_factor_exempt', false);
@@ -122,16 +107,16 @@ class User extends Authenticatable
         return $this->role === UserRole::Admin->value;
     }
 
+    public function isAdministration(): bool
+    {
+        return $this->isSuperAdmin() || $this->isAdmin();
+    }
+
     public function isEditor(): bool
     {
         return $this->role === UserRole::Editor->value;
     }
 
-    /**
-     * Rôles qu’un utilisateur peut attribuer via une invitation.
-     *
-     * @return list<UserRole>
-     */
     public static function assignableInvitationRoles(self $inviter): array
     {
         if ($inviter->isSuperAdmin()) {
@@ -179,7 +164,6 @@ class User extends Authenticatable
             return $override->effect === 'allow';
         }
 
-        // Éditeur avec permissions déléguées : uniquement les droits explicitement accordés.
         if ($this->isEditor() && $this->userPermissions()->exists()) {
             return false;
         }

@@ -12,13 +12,11 @@
 
 @section('content')
 
-{{-- Page header --}}
 <div class="a-page-header">
     <h3>Bienvenue, {{ Auth::user()->name ?? 'Admin' }} 👋</h3>
     <p>Vue d'ensemble de votre back-office CMS Bracongo</p>
 </div>
 
-{{-- ===== KPI STATS ===== --}}
 <div class="row g-3 mb-4">
 
     <div class="col-xl-2 col-md-4 col-6">
@@ -113,7 +111,6 @@
 
 </div>
 
-{{-- ===== BANNER SWIPER ===== --}}
 <div class="row g-3 mb-4">
     <div class="col-12">
         <div class="card">
@@ -204,10 +201,8 @@
     </div>
 </div>
 
-{{-- ===== MESSAGES + QUICK ACTIONS ===== --}}
 <div class="row g-3">
 
-    {{-- Derniers messages --}}
     <div class="col-xl-8">
         <div class="card h-100">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -264,7 +259,6 @@
         </div>
     </div>
 
-    {{-- Actions rapides --}}
     <div class="col-xl-4">
         <div class="card h-100">
             <div class="card-header">
@@ -278,8 +272,10 @@
                     ['label' => 'Notre Histoire',   'route' => route('admin.pages.histoire.edit'),     'icon' => 'bi-book'],
                     ['label' => 'Offres d\'emploi', 'route' => route('admin.offres-emploi.index'),     'icon' => 'bi-briefcase'],
                     ['label' => 'Messages',         'route' => route('admin.messages.index'),          'icon' => 'bi-envelope'],
-                    ['label' => 'Paramètres',       'route' => route('admin.parametres.edit'),         'icon' => 'bi-gear'],
                 ];
+                if (auth()->user()->isSuperAdmin()) {
+                    $actions[] = ['label' => 'Paramètres', 'route' => route('admin.parametres.edit'), 'icon' => 'bi-gear'];
+                }
                 @endphp
                 @foreach($actions as $action)
                 <a href="{{ $action['route'] }}"

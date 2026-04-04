@@ -3,8 +3,18 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    @php
+        $faviconHrefWelcome = isset($parametres) && filled($parametres->favicon ?? null)
+            ? asset($parametres->favicon)
+            : asset('img/LOGO BRACONGO copie 1.png');
+    @endphp
+    <link rel="icon" href="{{ $faviconHrefWelcome }}?v=2">
+    <link rel="shortcut icon" href="{{ $faviconHrefWelcome }}?v=2">
 
     <title>Bracongo - Bienvenue</title>
+    @if(isset($parametres) && filled(trim((string) ($parametres->seo_meta_description ?? ''))))
+        <meta name="description" content="{{ e($parametres->seo_meta_description) }}">
+    @endif
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

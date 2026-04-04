@@ -35,7 +35,6 @@
         <div class="col-lg-7 col-xl-8">
             <div class="a-msg-detail pe-lg-1">
 
-                {{-- En-tête expéditeur + sujet --}}
                 <section class="a-msg-detail__card a-msg-detail__card--hero">
                     <div class="a-msg-detail__hero-top">
                         <div class="a-msg-detail__avatar" aria-hidden="true">{{ $initials }}</div>
@@ -77,7 +76,6 @@
                     </div>
                 </section>
 
-                {{-- Corps du message --}}
                 <section class="a-msg-detail__bubble" aria-labelledby="msg-received-label">
                     <div class="a-msg-detail__bubble-head">
                         <span id="msg-received-label" class="a-msg-detail__bubble-label">Message reçu</span>
@@ -87,7 +85,6 @@
                     </div>
                 </section>
 
-                {{-- Réponse --}}
                 <section class="a-msg-detail__reply" aria-labelledby="reply-title">
                     <div class="a-msg-detail__reply-head">
                         <h2 id="reply-title" class="a-msg-detail__reply-title"><i class="bi bi-reply-fill me-2"></i>Répondre au message</h2>
@@ -137,12 +134,10 @@
             </div>
         </div>
 
-        {{-- Aperçu e-mail + historique des envois --}}
         <div class="col-lg-5 col-xl-4 a-msg-preview-col">
             <p class="a-msg-preview__label mb-2">
                 <i class="bi bi-envelope-check me-1"></i>Aperçu côté client
             </p>
-            {{-- Sticky limité à la carte : évite que « Réponses envoyées » passe sous tout le bloc au scroll --}}
             <div class="a-msg-preview-sticky">
                 <div class="a-msg-preview" id="client-email-preview" aria-live="polite">
                     <div class="a-msg-preview__header">{{ config('app.name') }}</div>
@@ -195,7 +190,6 @@
     </div>
 </div>
 
-{{-- Modale : contenu complet d’une réponse envoyée --}}
 <div class="modal fade" id="modalSentReply" tabindex="-1" aria-labelledby="modalSentReplyLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
         <div class="modal-content">

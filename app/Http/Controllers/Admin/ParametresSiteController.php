@@ -25,9 +25,11 @@ class ParametresSiteController extends Controller
     {
         $rules = [
             'logo' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
-            'favicon' => 'nullable|string|max:255',
+            'favicon' => 'nullable|file|mimes:jpeg,jpg,png,gif,webp,ico|max:1024',
             'couleur_principale' => 'nullable|string|max:20',
-            'search_suggestions' => 'nullable|string',
+            'search_suggestions' => 'nullable|string|max:2000',
+            'seo_meta_description' => 'nullable|string|max:500',
+            'telephone_public' => 'nullable|string|max:80',
             'actualites_hero_titre' => 'nullable|string|max:255',
             'actualites_filtre_tout_label' => 'nullable|string|max:100',
             'invitation_expires_hours' => ['required', Rule::enum(InvitationExpiresHours::class)],
@@ -43,6 +45,12 @@ class ParametresSiteController extends Controller
             $data['logo'] = $this->uploadImage($request->file('logo'), 'uploads/parametres', 'logo');
         } else {
             unset($data['logo']);
+        }
+
+        if ($request->hasFile('favicon')) {
+            $data['favicon'] = $this->uploadImage($request->file('favicon'), 'uploads/parametres', 'favicon');
+        } else {
+            unset($data['favicon']);
         }
 
         ParametresSite::instance()->update($data);

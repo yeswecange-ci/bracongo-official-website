@@ -6,10 +6,9 @@
 		@error('label')<div class="invalid-feedback">{{ $message }}</div>@enderror
 	</div>
 	<div class="col-12">
-		<label class="form-label fw-semibold">URL <x-admin.readonly-info /></label>
-		<div class="a-readonly-wrap">
-			<i class="bi bi-lock a-lock-icon"></i>
-			<input type="text" class="form-control" name="url" value="{{ old('url', optional($nav)->url ?? '#') }}" placeholder="/histoire, /Contact, #..." readonly>
-		</div>
+		<label class="form-label fw-semibold">URL</label>
+		<input type="text" class="form-control @error('url') is-invalid @enderror" name="url" value="{{ old('url', optional($nav)->url ?? '#') }}" placeholder="/histoire, /Contact, https://…">
+		@error('url')<div class="invalid-feedback">{{ $message }}</div>@enderror
+		<div class="form-text">Chemin interne ou URL complète.</div>
 	</div>
 </div>

@@ -3,10 +3,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="{{ asset('img/LOGO BRACONGO copie 1.png') }}?v=2">
-    <link rel="shortcut icon" type="image/png" href="{{ asset('img/LOGO BRACONGO copie 1.png') }}?v=2">
+    @php
+        $faviconHref = isset($parametres) && filled($parametres->favicon ?? null)
+            ? asset($parametres->favicon)
+            : asset('img/LOGO BRACONGO copie 1.png');
+    @endphp
+    <link rel="icon" href="{{ $faviconHref }}?v=2">
+    <link rel="shortcut icon" href="{{ $faviconHref }}?v=2">
 
     <title>Bracongo - @yield('title', 'Accueil')</title>
+    @hasSection('meta_description')
+        <meta name="description" content="@yield('meta_description')">
+    @elseif(isset($parametres) && filled(trim((string) ($parametres->seo_meta_description ?? ''))))
+        <meta name="description" content="{{ e($parametres->seo_meta_description) }}">
+    @endif
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,7 +64,7 @@
 </head>
 <body class="font-sans antialiased overflow-x-hidden loading">
     <div id="loader" class="loader-wrapper">
-        <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Loading" class="loader-logo">
+        <img src="{{ asset(isset($parametres) && filled($parametres->logo ?? null) ? $parametres->logo : 'img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Loading" class="loader-logo">
     </div>
 
     <div class="min-h-screen bg-white overflow-x-hidden">

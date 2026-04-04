@@ -10,9 +10,11 @@ use Illuminate\Http\Request;
 class OffreEmploiController extends Controller
 {
     use HandlesImageUpload;
+
     public function index()
     {
         $offres = OffreEmploi::orderBy('ordre')->get();
+
         return view('admin.offres-emploi.index', compact('offres'));
     }
 
@@ -24,19 +26,28 @@ class OffreEmploiController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'titre'       => 'required|string|max:255',
+            'titre' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:offres_emploi,slug',
             'description' => 'required|string',
-            'image'       => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
-            'lien'        => 'nullable|string|max:255',
-            'is_active'   => 'nullable|boolean',
-            'ordre'       => 'nullable|integer|min:0',
+            'lieu' => 'nullable|string|max:255',
+            'type_contrat' => 'nullable|string|max:120',
+            'date_limite_candidature' => 'nullable|date',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'is_active' => 'nullable|boolean',
+            'require_lettre_motivation' => 'nullable|boolean',
+            'ordre' => 'nullable|integer|min:0',
         ]);
         $data['is_active'] = $request->boolean('is_active');
+        $data['require_lettre_motivation'] = $request->boolean('require_lettre_motivation');
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadImage($request->file('image'), 'uploads/offres-emploi', 'offre');
         } else {
             unset($data['image']);
         }
+        if (empty($data['slug'])) {
+            unset($data['slug']);
+        }
+        $data['lien'] = '#';
 
         OffreEmploi::create($data);
 
@@ -52,18 +63,26 @@ class OffreEmploiController extends Controller
     public function update(Request $request, OffreEmploi $offres_emploi)
     {
         $data = $request->validate([
-            'titre'       => 'required|string|max:255',
+            'titre' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:offres_emploi,slug,'.$offres_emploi->id,
             'description' => 'required|string',
-            'image'       => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
-            'lien'        => 'nullable|string|max:255',
-            'is_active'   => 'nullable|boolean',
-            'ordre'       => 'nullable|integer|min:0',
+            'lieu' => 'nullable|string|max:255',
+            'type_contrat' => 'nullable|string|max:120',
+            'date_limite_candidature' => 'nullable|date',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'is_active' => 'nullable|boolean',
+            'require_lettre_motivation' => 'nullable|boolean',
+            'ordre' => 'nullable|integer|min:0',
         ]);
         $data['is_active'] = $request->boolean('is_active');
+        $data['require_lettre_motivation'] = $request->boolean('require_lettre_motivation');
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadImage($request->file('image'), 'uploads/offres-emploi', 'offre');
         } else {
             unset($data['image']);
+        }
+        if (empty($data['slug'])) {
+            unset($data['slug']);
         }
 
         $offres_emploi->update($data);
@@ -75,6 +94,7 @@ class OffreEmploiController extends Controller
     public function destroy(OffreEmploi $offres_emploi)
     {
         $offres_emploi->delete();
+
         return redirect()->route('admin.offres-emploi.index')
             ->with('success', "Offre d'emploi supprimée.");
     }

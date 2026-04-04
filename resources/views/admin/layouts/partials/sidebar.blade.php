@@ -4,7 +4,6 @@
 
 <ul class="a-nav-list">
 
-    {{-- Dashboard --}}
     <li>
         <a href="{{ route('admin.dashboard') }}"
            class="a-nav-link {{ request()->routeIs('admin.dashboard') ? 'is-active' : '' }}">
@@ -27,7 +26,6 @@
 
 <ul class="a-nav-list">
 
-    {{-- Page Welcome --}}
     <li>
         <a href="{{ route('admin.pages.welcome.edit') }}"
            class="a-nav-link {{ request()->routeIs('admin.pages.welcome.*') ? 'is-active' : '' }}">
@@ -36,7 +34,6 @@
         </a>
     </li>
 
-    {{-- Page Accueil --}}
     @php $accueilActive = request()->routeIs('admin.pages.accueil.*') || request()->routeIs('admin.hero-slides.*'); @endphp
     <li>
         <a href="javascript:void(0)"
@@ -63,7 +60,6 @@
         </ul>
     </li>
 
-    {{-- Notre Histoire --}}
     @php $histoireActive = request()->routeIs('admin.pages.histoire.*') || request()->routeIs('admin.valeurs.*'); @endphp
     <li>
         <a href="javascript:void(0)"
@@ -90,8 +86,7 @@
         </ul>
     </li>
 
-    {{-- Carrière --}}
-    @php $carriereActive = request()->routeIs('admin.pages.carriere.*') || request()->routeIs('admin.offres-emploi.*'); @endphp
+    @php $carriereActive = request()->routeIs('admin.pages.carriere.*') || request()->routeIs('admin.offres-emploi.*') || request()->routeIs('admin.candidatures-emploi.*'); @endphp
     <li>
         <a href="javascript:void(0)"
            class="a-nav-link {{ $carriereActive ? 'is-active' : '' }}"
@@ -114,10 +109,15 @@
                     <span class="a-nav-text">Offres d'emploi</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin.candidatures-emploi.index') }}"
+                   class="a-nav-link {{ request()->routeIs('admin.candidatures-emploi.*') ? 'is-active' : '' }}">
+                    <span class="a-nav-text">Candidatures</span>
+                </a>
+            </li>
         </ul>
     </li>
 
-    {{-- Contact --}}
     @php $contactActive = request()->routeIs('admin.pages.contact.*') || request()->routeIs('admin.messages.*'); @endphp
     <li>
         <a href="javascript:void(0)"
@@ -148,7 +148,6 @@
         </ul>
     </li>
 
-    {{-- Bracongo Pro --}}
     <li>
         <a href="{{ route('admin.pages.pro.edit') }}"
            class="a-nav-link {{ request()->routeIs('admin.pages.pro.*') ? 'is-active' : '' }}">
@@ -163,7 +162,6 @@
 
 <ul class="a-nav-list">
 
-    {{-- Marques & Boissons --}}
     @php $catalogueActive = request()->routeIs('admin.marques.*') || request()->routeIs('admin.boissons.*') || request()->routeIs('admin.pages.bieres.*') || request()->routeIs('admin.pages.categorie-boissons.*'); @endphp
     <li>
         <a href="javascript:void(0)"
@@ -214,7 +212,6 @@
         </ul>
     </li>
 
-    {{-- News --}}
     <li>
         <a href="{{ route('admin.news.index') }}"
            class="a-nav-link {{ request()->routeIs('admin.news.*') ? 'is-active' : '' }}">
@@ -223,7 +220,6 @@
         </a>
     </li>
 
-    {{-- Produits (backend only) --}}
     <li>
         <a href="{{ route('admin.produits.index') }}"
            class="a-nav-link {{ request()->routeIs('admin.produits.*') ? 'is-active' : '' }}">
@@ -240,7 +236,7 @@
 
 <ul class="a-nav-list">
 
-    {{-- Navigation --}}
+    @if(auth()->user()->isAdministration())
     <li>
         <a href="{{ route('admin.navigation.index') }}"
            class="a-nav-link {{ request()->routeIs('admin.navigation.*') ? 'is-active' : '' }}">
@@ -248,8 +244,8 @@
             <span class="a-nav-text">Navigation</span>
         </a>
     </li>
+    @endif
 
-    {{-- Footer --}}
     @php $footerActive = request()->routeIs('admin.footer.*') || request()->routeIs('admin.footer-gallery.*') || request()->routeIs('admin.reseaux-sociaux.*'); @endphp
     <li>
         <a href="javascript:void(0)"
@@ -282,7 +278,7 @@
         </ul>
     </li>
 
-    {{-- Paramètres --}}
+    @if(auth()->check() && auth()->user()->isSuperAdmin())
     <li>
         <a href="{{ route('admin.parametres.edit') }}"
            class="a-nav-link {{ request()->routeIs('admin.parametres.*') ? 'is-active' : '' }}">
@@ -290,6 +286,7 @@
             <span class="a-nav-text">Paramètres</span>
         </a>
     </li>
+    @endif
 
     @if(auth()->check() && (auth()->user()->isSuperAdmin() || auth()->user()->isAdmin()))
     @php $usersSectionActive = request()->routeIs('admin.invitations.*') || request()->routeIs('admin.users.*'); @endphp

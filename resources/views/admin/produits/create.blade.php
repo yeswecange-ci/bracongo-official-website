@@ -18,7 +18,6 @@
 
 	<div class="row g-4 align-items-start">
 
-		{{-- Colonne principale --}}
 		<div class="col-xl-8">
 			<div class="card">
 				<div class="card-header"><h5>Informations du produit</h5></div>
@@ -28,10 +27,8 @@
 			</div>
 		</div>
 
-		{{-- Sidebar métadonnées --}}
 		<div class="col-xl-4 a-form-sidebar">
 
-			{{-- Card Image --}}
 			<div class="card">
 				<div class="card-header"><h5>Image</h5></div>
 				<div class="card-body">
@@ -39,7 +36,6 @@
 				</div>
 			</div>
 
-			{{-- Card Paramètres --}}
 			<div class="card mt-4">
 				<div class="card-header"><h5>Paramètres</h5></div>
 				<div class="card-body">
@@ -55,18 +51,10 @@
 				</div>
 			</div>
 
+			@include('admin.layouts.partials.form-actions', ['cancelUrl' => route('admin.produits.index')])
+
 		</div>
 
-	</div>
-
-	{{-- Sticky save bar --}}
-	<div class="a-save-bar">
-		<a href="{{ route('admin.produits.index') }}" class="btn btn-outline-secondary">
-			<i class="bi bi-x me-1"></i>Annuler
-		</a>
-		<button type="submit" class="btn btn-primary">
-			<i class="bi bi-check2 me-1"></i>Enregistrer
-		</button>
 	</div>
 
 </form>

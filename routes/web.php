@@ -2,9 +2,8 @@
 
 use App\Http\Controllers\Admin\AccountTwoFactorController;
 use App\Http\Controllers\Admin\BoissonController;
-// ── Controllers Front ──────────────────────────────────────────────────────
+use App\Http\Controllers\Admin\CandidatureEmploiController;
 use App\Http\Controllers\Admin\DashboardController;
-// ── Controllers Admin ─────────────────────────────────────────────────────
 use App\Http\Controllers\Admin\FooterController;
 use App\Http\Controllers\Admin\FooterGalleryController;
 use App\Http\Controllers\Admin\HeroSlideController;
@@ -36,11 +35,6 @@ use App\Http\Controllers\Auth\TwoFactorChallengeController;
 use App\Http\Controllers\FrontController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Routes Front (client)
-|--------------------------------------------------------------------------
-*/
 Route::get('/', [FrontController::class, 'welcome']);
 Route::get('/Accueil', [FrontController::class, 'accueil'])->name('Accueil');
 Route::get('/histoire', [FrontController::class, 'histoire'])->name('histoire');
@@ -51,25 +45,24 @@ Route::get('/Nos-marques-bieres', [FrontController::class, 'bieres'])->name('bie
 Route::get('/Boisson/{slug}', [FrontController::class, 'boisson'])->name('boisson.show');
 Route::get('/Nos-marques-bieres-beaufort', [FrontController::class, 'boissonBeaufort'])->name('bieres.beaufort');
 Route::get('/Actualites-et-evenements', [FrontController::class, 'actualites'])->name('actualites');
+Route::get('/Actualites-et-evenements/{slug}', [FrontController::class, 'actualiteShow'])->name('actualites.show');
 Route::redirect('/Actualités-et-evenements', '/Actualites-et-evenements', 301);
 Route::get('/Carriere', [FrontController::class, 'carriere'])->name('carriere');
+Route::get('/Carriere/offre/{offre}', [FrontController::class, 'offreShow'])->name('carriere.offre.show');
+Route::post('/Carriere/offre/{offre}/candidature', [FrontController::class, 'offreCandidatureStore'])
+    ->middleware('throttle:candidature-emploi')
+    ->name('carriere.offre.candidature.store');
 Route::get('/Contact', [FrontController::class, 'contact'])->name('contact');
 Route::post('/Contact', [FrontController::class, 'contactStore'])->name('contact.store');
 Route::get('Bracongo-pro', [FrontController::class, 'pro'])->name('pro');
 
 Route::get('/api/recherche', [FrontController::class, 'searchAutocomplete'])->name('recherche.autocomplete');
 
-// Invitation publique (création de compte éditeur)
 Route::get('/invitation/{token}', [AcceptInvitationController::class, 'show'])->name('invitation.show');
 Route::post('/invitation/{token}', [AcceptInvitationController::class, 'accept'])
     ->middleware('throttle:invitation-accept')
     ->name('invitation.accept');
 
-/*
-|--------------------------------------------------------------------------
-| Routes Admin (prefix: back-office)
-|--------------------------------------------------------------------------
-*/
 Route::prefix('back-office')->name('admin.')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -81,7 +74,6 @@ Route::prefix('back-office')->name('admin.')->group(function () {
     });
 
     Route::middleware(['backoffice.auth', 'two_factor.setup'])->group(function () {
-        // Dashboard
         Route::get('/', DashboardController::class)->name('dashboard');
 
         Route::post('logout', [LoginController::class, 'logout'])->name('logout');
@@ -103,15 +95,14 @@ Route::prefix('back-office')->name('admin.')->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
         Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
         Route::post('/users/{user}/two-factor/reset', [UserController::class, 'resetTwoFactor'])->name('users.two-factor.reset');
-        // ── CMS Pages (ancien système) ─────────────────────────────────────
         Route::get('/pages', [PageController::class, 'index'])->name('pages.index');
         Route::get('/pages/create', [PageController::class, 'create'])->name('pages.create');
 
-        // ── Paramètres globaux ─────────────────────────────────────────────
-        Route::get('/parametres', [ParametresSiteController::class, 'edit'])->name('parametres.edit');
-        Route::put('/parametres', [ParametresSiteController::class, 'update'])->name('parametres.update');
+        Route::middleware('super_admin')->group(function () {
+            Route::get('/parametres', [ParametresSiteController::class, 'edit'])->name('parametres.edit');
+            Route::put('/parametres', [ParametresSiteController::class, 'update'])->name('parametres.update');
+        });
 
-        // ── Contenu des pages (single-row) ─────────────────────────────────
         Route::prefix('pages-contenu')->name('pages.')->group(function () {
 
             Route::get('/welcome', [PageWelcomeController::class, 'edit'])->name('welcome.edit');
@@ -143,26 +134,24 @@ Route::prefix('back-office')->name('admin.')->group(function () {
                 ->where('categorie', 'eaux|gazeuses|energisantes');
         });
 
-        // ── Hero Slides ────────────────────────────────────────────────────
         Route::resource('hero-slides', HeroSlideController::class)->names('hero-slides');
 
-        // ── Valeurs (page Histoire) ────────────────────────────────────────
         Route::resource('valeurs', ValeurController::class)->names('valeurs');
 
-        // ── Offres d'emploi ────────────────────────────────────────────────
         Route::resource('offres-emploi', OffreEmploiController::class)->names('offres-emploi');
 
-        // ── Messages de contact ────────────────────────────────────────────
+        Route::get('/candidatures-emploi', [CandidatureEmploiController::class, 'index'])->name('candidatures-emploi.index');
+        Route::get('/candidatures-emploi/{candidature_emploi}/cv', [CandidatureEmploiController::class, 'downloadCv'])->name('candidatures-emploi.cv');
+        Route::get('/candidatures-emploi/{candidature_emploi}', [CandidatureEmploiController::class, 'show'])->name('candidatures-emploi.show');
+
         Route::get('/messages', [MessageContactController::class, 'index'])->name('messages.index');
         Route::post('/messages/{messageContact}/reply', [MessageContactController::class, 'reply'])->name('messages.reply');
         Route::get('/messages/{messageContact}', [MessageContactController::class, 'show'])->name('messages.show');
         Route::patch('/messages/{messageContact}/read', [MessageContactController::class, 'markAsRead'])->name('messages.read');
         Route::delete('/messages/{messageContact}', [MessageContactController::class, 'destroy'])->name('messages.destroy');
 
-        // ── Navigation ─────────────────────────────────────────────────────
         Route::resource('navigation', NavigationItemController::class)->names('navigation');
 
-        // ── Footer ─────────────────────────────────────────────────────────
         Route::get('/footer', [FooterController::class, 'edit'])->name('footer.edit');
         Route::put('/footer', [FooterController::class, 'update'])->name('footer.update');
 
@@ -170,14 +159,11 @@ Route::prefix('back-office')->name('admin.')->group(function () {
 
         Route::resource('reseaux-sociaux', ReseauSocialController::class)->names('reseaux-sociaux');
 
-        // ── Marques & Boissons ─────────────────────────────────────────────
         Route::resource('marques', MarqueController::class)->names('marques');
         Route::resource('boissons', BoissonController::class)->names('boissons');
 
-        // ── Produits (backend only) ────────────────────────────────────────
         Route::resource('produits', ProduitController::class)->names('produits');
 
-        // ── News ───────────────────────────────────────────────────────────
         Route::resource('news', NewsController::class)->names('news');
     });
 });

@@ -16,7 +16,6 @@
 @include('admin.layouts.partials.alerts')
 
 <div class="row g-4">
-	{{-- Formulaire principal --}}
 	<div class="col-xl-8">
 		<div class="card">
 			<div class="card-header"><h5 class="mb-0">Informations du footer</h5></div>
@@ -45,7 +44,6 @@
 							@error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
 						</div>
 
-						{{-- Image certification : upload fichier avec prévisualisation --}}
 						<div class="col-12">
 							<label class="form-label fw-semibold">Image certification <small class="text-muted">(PNG, JPG — logo certification)</small></label>
 							<div class="d-flex align-items-start gap-3 flex-wrap">
@@ -86,7 +84,6 @@
 		</div>
 	</div>
 
-	{{-- Carte combinée Galerie + Réseaux sociaux --}}
 	<div class="col-xl-4">
 		<div class="card">
 			<div class="card-header border-0 pb-0">
@@ -107,7 +104,6 @@
 			</div>
 			<div class="card-body">
 				<div class="tab-content">
-					{{-- Onglet Galerie --}}
 					<div class="tab-pane fade show active" id="tab-galerie" role="tabpanel">
 						<div class="d-flex justify-content-between align-items-center mb-3">
 							<span class="text-muted small">Images du bandeau footer</span>
@@ -124,7 +120,6 @@
 						</div>
 					</div>
 
-					{{-- Onglet Réseaux sociaux --}}
 					<div class="tab-pane fade" id="tab-reseaux" role="tabpanel">
 						<div class="d-flex justify-content-between align-items-center mb-3">
 							<span class="text-muted small">Liens vers vos réseaux</span>
@@ -148,7 +143,6 @@
 	</div>
 </div>
 
-{{-- Modale prévisualisation image certification --}}
 <div class="modal fade" id="modalPreviewCertification" tabindex="-1" aria-labelledby="modalPreviewCertificationLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-sm">
 		<div class="modal-content">

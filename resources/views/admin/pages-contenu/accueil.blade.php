@@ -27,7 +27,6 @@
 	@csrf
 	@method('PUT')
 	<div class="row g-4">
-		{{-- Section Actualités --}}
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
@@ -47,7 +46,6 @@
 			</div>
 		</div>
 
-		{{-- Section Qui sommes-nous --}}
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
@@ -79,7 +77,6 @@
 			</div>
 		</div>
 
-		{{-- Section Nos marques --}}
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
@@ -103,7 +100,6 @@
 			</div>
 		</div>
 
-		{{-- Section Rejoignez-nous --}}
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">

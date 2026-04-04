@@ -10,15 +10,22 @@
 	<h6 class="a-topbar-page-title">Nouvel item de navigation</h6>
 </div>
 @endpush
+@push('header-actions')
+<a href="{{ route('admin.navigation.index') }}" class="btn btn-outline-secondary btn-sm me-2">
+	<i class="bi bi-x-lg me-1"></i>Annuler
+</a>
+<button type="submit" form="form-navigation-create" class="btn btn-primary btn-sm">
+	<i class="bi bi-check2 me-1"></i>Enregistrer
+</button>
+@endpush
 
 @section('content')
 @include('admin.layouts.partials.alerts')
-<form action="{{ route('admin.navigation.store') }}" method="POST">
+<form id="form-navigation-create" action="{{ route('admin.navigation.store') }}" method="POST">
 	@csrf
 
 	<div class="row g-4 align-items-start">
 
-		{{-- Colonne principale --}}
 		<div class="col-xl-8">
 			<div class="card">
 				<div class="card-header"><h5>Informations</h5></div>
@@ -28,7 +35,6 @@
 			</div>
 		</div>
 
-		{{-- Sidebar paramètres --}}
 		<div class="col-xl-4 a-form-sidebar">
 			<div class="card">
 				<div class="card-header"><h5>Paramètres</h5></div>
@@ -57,16 +63,6 @@
 			</div>
 		</div>
 
-	</div>
-
-	{{-- Sticky save bar --}}
-	<div class="a-save-bar">
-		<a href="{{ route('admin.navigation.index') }}" class="btn btn-outline-secondary">
-			<i class="bi bi-x me-1"></i>Annuler
-		</a>
-		<button type="submit" class="btn btn-primary">
-			<i class="bi bi-check2 me-1"></i>Enregistrer
-		</button>
 	</div>
 
 </form>

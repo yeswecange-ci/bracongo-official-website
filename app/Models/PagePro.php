@@ -12,7 +12,7 @@ class PagePro extends Model
         'hero_image', 'hero_titre', 'description',
         'pourquoi_titre', 'pourquoi_intro', 'pourquoi_items',
         'fonctionnalites_titre', 'fonctionnalites_items',
-        'app_image', 'cta_texte', 'cta_lien', 'pdf_lien',
+        'app_image', 'cta_texte', 'cta_lien',
     ];
 
     public static function instance(): self

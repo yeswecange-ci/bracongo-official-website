@@ -36,19 +36,21 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 @foreach($news as $item)
                 <article class="flex flex-col bg-white rounded-[1.5rem] overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                    @if($item->image)
-                    <div class="h-52 overflow-hidden">
-                        <img src="{{ asset($item->image) }}" alt="{{ $item->titre }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-                    </div>
-                    @else
-                    <div class="h-52 bg-gray-100 flex items-center justify-center">
-                        <svg class="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="1.5"/>
-                            <circle cx="8.5" cy="8.5" r="1.5" stroke-width="1.5"/>
-                            <polyline points="21 15 16 10 5 21" stroke-width="1.5"/>
-                        </svg>
-                    </div>
-                    @endif
+                    <a href="{{ route('actualites.show', $item->slug) }}" class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-bracongo focus-visible:ring-offset-2 rounded-t-[1.5rem]">
+                        @if($item->image)
+                        <div class="h-52 overflow-hidden">
+                            <img src="{{ asset($item->image) }}" alt="{{ $item->titre }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        </div>
+                        @else
+                        <div class="h-52 bg-gray-100 flex items-center justify-center">
+                            <svg class="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="1.5"/>
+                                <circle cx="8.5" cy="8.5" r="1.5" stroke-width="1.5"/>
+                                <polyline points="21 15 16 10 5 21" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        @endif
+                    </a>
                     <div class="flex flex-col flex-1 p-6 gap-4">
                         <div class="flex items-center gap-3">
                             <span class="text-xs font-bold text-bracongo uppercase tracking-widest">{{ $types[$item->type] ?? $item->type }}</span>
@@ -56,7 +58,9 @@
                             <span class="text-xs text-gray-400">{{ $item->date_publication->format('d/m/Y') }}</span>
                             @endif
                         </div>
-                        <h2 class="text-xl font-bold text-gray-900 leading-snug">{{ $item->titre }}</h2>
+                        <h2 class="text-xl font-bold text-gray-900 leading-snug">
+                            <a href="{{ route('actualites.show', $item->slug) }}" class="hover:text-bracongo transition-colors">{{ $item->titre }}</a>
+                        </h2>
                         @if($item->extrait)
                         <p class="text-gray-600 text-sm leading-relaxed flex-1">{{ Str::limit($item->extrait, 150) }}</p>
                         @endif
@@ -69,15 +73,24 @@
                             @endif
                         </div>
                         @endif
-                        @if($item->lien_externe)
-                        <a href="{{ $item->lien_externe }}" target="_blank" rel="noopener"
-                            class="inline-flex items-center gap-2 text-bracongo font-bold text-sm hover:underline mt-auto">
-                            En savoir plus
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </a>
-                        @endif
+                        <div class="flex flex-wrap items-center gap-4 mt-auto pt-2">
+                            <a href="{{ route('actualites.show', $item->slug) }}"
+                                class="inline-flex items-center gap-2 text-bracongo font-bold text-sm hover:underline">
+                                Lire l’article
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                            @if($item->lien_externe)
+                            <a href="{{ $item->lien_externe }}" target="_blank" rel="noopener"
+                                class="inline-flex items-center gap-2 text-gray-500 font-semibold text-sm hover:text-bracongo hover:underline">
+                                Lien externe
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                            </a>
+                            @endif
+                        </div>
                     </div>
                 </article>
                 @endforeach

@@ -8,9 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureTwoFactorSetupComplete
 {
-    /**
-     * Tant que la 2FA n’est pas confirmée, accès limité à l’onboarding (QR + code) et à la déconnexion.
-     */
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();

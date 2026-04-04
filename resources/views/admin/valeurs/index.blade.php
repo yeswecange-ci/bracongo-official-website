@@ -23,7 +23,6 @@
 @include('admin.layouts.partials.alerts')
 
 <div class="row g-4">
-    {{-- Aperçu visuel --}}
     <div class="col-12">
         <div class="card">
             <div class="card-header">
@@ -42,7 +41,6 @@
         </div>
     </div>
 
-    {{-- Table de gestion --}}
     <div class="col-12">
         <div class="card">
             <div class="card-body p-0">

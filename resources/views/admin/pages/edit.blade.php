@@ -30,7 +30,6 @@
 				<form id="pageForm" autocomplete="off">
 					@csrf
 
-					{{-- Contenu principal --}}
 					<div class="card h-auto">
 						<div class="card-body">
 							<div class="mb-3">
@@ -52,7 +51,6 @@
 						</div>
 					</div>
 
-					{{-- Hero --}}
 					<div class="card h-auto">
 						<div class="card-header d-block py-3">
 							<h5 class="mb-0">Hero</h5>
@@ -73,7 +71,6 @@
 						</div>
 					</div>
 
-					{{-- CTA --}}
 					<div class="card h-auto">
 						<div class="card-header d-block py-3">
 							<h5 class="mb-0">CTA</h5>
@@ -96,7 +93,6 @@
 
 			<div class="col-xl-4">
 				<div class="right-sidebar-sticky">
-					{{-- Thumbnail / Aperçu image hero --}}
 					<div class="card h-auto">
 						<div class="card-header py-3">
 							<h5 class="mb-0">Aperçu image hero</h5>
@@ -113,7 +109,6 @@
 						</div>
 					</div>
 
-					{{-- Statut --}}
 					<div class="card h-auto">
 						<div class="card-header py-3">
 							<h5 class="mb-0">Statut</h5>
@@ -131,7 +126,6 @@
 						</div>
 					</div>
 
-					{{-- Actions --}}
 					<div class="card h-auto">
 						<div class="card-header py-3">
 							<h5 class="mb-0">Actions</h5>

@@ -29,11 +29,6 @@ class DashboardController extends Controller
         ]);
     }
 
-    /**
-     * Images visibles sur le dashboard : bannières page Accueil + tous les hero slides.
-     *
-     * @return Collection<int, array{kind: string, title: string, subtitle: string, image: string, edit_url: string, active: bool|null}>
-     */
     private function buildDashboardBannerSlides(): Collection
     {
         $slides = collect();

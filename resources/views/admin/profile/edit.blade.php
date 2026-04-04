@@ -14,7 +14,6 @@
 @section('content')
 @include('admin.layouts.partials.alerts')
 
-{{-- En-tête type WorldNic : bandeau + avatar --}}
 <div class="card a-profile-hero mb-4 overflow-hidden border-0 shadow-sm">
     <div class="a-profile-cover"></div>
     <div class="a-profile-hero-body position-relative px-3 px-md-4 pb-4">
@@ -47,7 +46,6 @@
 </div>
 
 <div class="row g-4">
-    {{-- Colonne gauche : selon le rôle --}}
     <div class="col-lg-4 a-form-sidebar">
         @if($user->isSuperAdmin() && $stats)
             <div class="card border-0 shadow-sm a-profile-role-card a-profile-role-card--super">
@@ -121,7 +119,6 @@
         @endif
     </div>
 
-    {{-- Formulaire --}}
     <div class="col-lg-8">
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white border-bottom py-3">

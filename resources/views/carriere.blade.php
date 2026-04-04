@@ -41,11 +41,17 @@
                             <div class="space-y-4 text-gray-700 text-sm md:text-base leading-relaxed">
                                 {!! \App\Support\CmsHtmlSanitizer::sanitize($offre->description) !!}
                             </div>
-                            <div class="pt-4">
-                                <a href="{{ $offre->lien ?? '#' }}" class="inline-flex items-center gap-2 px-8 py-3 border border-bracongo text-bracongo rounded-full font-bold hover:bg-bracongo hover:text-white transition-all duration-300 group">
-                                    Plus de détails sur l'offre
+                            <div class="pt-4 flex flex-wrap gap-3">
+                                <a href="{{ route('carriere.offre.show', $offre) }}" class="inline-flex items-center gap-2 px-8 py-3 border border-bracongo text-bracongo rounded-full font-bold hover:bg-bracongo hover:text-white transition-all duration-300 group">
+                                    Détails de l’offre &amp; candidature
                                     <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                                 </a>
+                                @if($offre->lien && $offre->lien !== '#')
+                                <a href="{{ $offre->lien }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 text-gray-600 font-semibold text-sm hover:text-bracongo">
+                                    Lien externe
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                </a>
+                                @endif
                             </div>
                         </div>
                     </div>

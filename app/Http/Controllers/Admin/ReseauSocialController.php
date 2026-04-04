@@ -36,9 +36,6 @@ class ReseauSocialController extends Controller
             ->with('success', 'Réseau social ajouté.');
     }
 
-    /**
-     * Nom du paramètre = {reseaux_sociaux} (Laravel 12 + resource kebab-case).
-     */
     public function edit(ReseauSocial $reseaux_sociaux)
     {
         return view('admin.reseaux-sociaux.edit', ['reseauSocial' => $reseaux_sociaux]);

@@ -15,13 +15,12 @@
 @php
     $canEditContactEmail = auth()->user()->isSuperAdmin() || auth()->user()->isAdmin();
 @endphp
-<div class="row">
+<form action="{{ route('admin.parametres.update') }}" method="POST" enctype="multipart/form-data" class="row align-items-start">
+	@csrf
+	@method('PUT')
+
 	<div class="col-xl-8">
 		@include('admin.layouts.partials.alerts')
-
-		<form action="{{ route('admin.parametres.update') }}" method="POST" enctype="multipart/form-data">
-			@csrf
-			@method('PUT')
 
 			<div class="card">
 				<div class="card-header">
@@ -34,7 +33,18 @@
 						</div>
 						<div class="col-12">
 							<label class="form-label fw-semibold">Suggestions de recherche <span class="text-muted small">(séparées par des virgules)</span></label>
-							<input type="text" class="form-control" name="search_suggestions" value="{{ old('search_suggestions', $parametres->search_suggestions) }}" placeholder="Beaufort Lager,Actualités,Nkoyi">
+							<input type="text" class="form-control" name="search_suggestions" value="{{ old('search_suggestions', $parametres->search_suggestions) }}" placeholder="Beaufort Lager,Actualités,Nkoyi,RSE">
+							<div class="form-text">Ce texte sert de <strong>placeholder</strong> dans la barre de recherche du site public (header).</div>
+						</div>
+						<div class="col-12">
+							<label class="form-label fw-semibold">Méta description par défaut (SEO)</label>
+							<textarea class="form-control" name="seo_meta_description" rows="2" maxlength="500" placeholder="Résumé du site pour les moteurs de recherche (facultatif)">{{ old('seo_meta_description', $parametres->seo_meta_description) }}</textarea>
+							<div class="form-text">Injectée dans <code class="small">&lt;meta name="description"&gt;</code> sur le site public pour les pages sans description dédiée (max. 500 caractères).</div>
+						</div>
+						<div class="col-md-6">
+							<label class="form-label fw-semibold">Téléphone affiché (public)</label>
+							<input type="text" class="form-control" name="telephone_public" value="{{ old('telephone_public', $parametres->telephone_public) }}" placeholder="+243 …" maxlength="80">
+							<div class="form-text">Référence centralisée pour affichage futur (footer, contact, etc.).</div>
 						</div>
 						<div class="col-md-6">
 							<label class="form-label fw-semibold">Page Actualités — titre hero</label>
@@ -86,21 +96,49 @@
 					<i class="bi bi-floppy me-1"></i>Enregistrer
 				</button>
 			</div>
-		</form>
 	</div>
 
-	<div class="col-xl-4">
-		<div class="card">
-			<div class="card-header"><h5 class="mb-0">Aperçu</h5></div>
-			<div class="card-body text-center">
-				<img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.png') }}" alt="Logo" style="height:80px;object-fit:contain;" class="mb-3">
-				<div class="badge px-3 py-2" style="background-color:{{ $parametres->couleur_principale }};font-size:1rem;">
-					{{ $parametres->couleur_principale }}
+	<div class="col-xl-4 align-self-start mt-4 mt-xl-0">
+		<div class="card border-0 shadow-sm mb-3">
+			<div class="card-header py-2 bg-white border-bottom"><h5 class="mb-0 small fw-bold text-muted text-uppercase">Aperçu</h5></div>
+			<div class="card-body py-3 text-center">
+				<div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+					<img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.png') }}" alt="Logo" class="object-contain" style="max-height:52px;width:auto;">
+					<span class="badge px-2 py-1 rounded-pill text-white small" style="background-color:{{ $parametres->couleur_principale }};">
+						{{ $parametres->couleur_principale }}
+					</span>
 				</div>
+				@if(filled($parametres->favicon ?? null))
+				<div class="mt-3 pt-3 border-top text-start">
+					<p class="small text-muted mb-2 fw-semibold">Favicon actuel</p>
+					<div class="d-flex align-items-center gap-2">
+						<img src="{{ asset($parametres->favicon) }}" alt="" width="32" height="32" class="rounded border bg-white p-1" style="object-fit:contain;">
+						<span class="small text-break text-muted">{{ basename($parametres->favicon) }}</span>
+					</div>
+				</div>
+				@endif
+			</div>
+		</div>
+
+		<div class="card border-0 shadow-sm">
+			<div class="card-header py-2 bg-white border-bottom">
+				<h5 class="mb-0 small fw-bold text-muted text-uppercase">Favicon &amp; référencement</h5>
+			</div>
+			<div class="card-body">
+				<x-admin.image-upload name="favicon" label="Favicon" :value="$parametres->favicon ?? null" help="PNG, ICO, JPG — max 1 Mo" />
+				<p class="form-text mb-0">Icône affichée dans l’onglet du navigateur sur le site public. Si aucun fichier n’est choisi, le logo par défaut reste utilisé.</p>
+				@if(filled(trim((string) ($parametres->seo_meta_description ?? ''))))
+				<div class="mt-3 p-3 rounded bg-light border small">
+					<p class="fw-semibold mb-1 text-muted text-uppercase" style="font-size:0.7rem;">Aperçu méta description</p>
+					<p class="mb-0 text-body-secondary" style="line-height:1.35;">{{ Str::limit($parametres->seo_meta_description, 220) }}</p>
+				</div>
+				@else
+				<p class="small text-muted mt-3 mb-0">Renseignez la méta description dans le formulaire de gauche pour un aperçu ici et pour les moteurs de recherche.</p>
+				@endif
 			</div>
 		</div>
 	</div>
-</div>
+</form>
 
 @endsection
 

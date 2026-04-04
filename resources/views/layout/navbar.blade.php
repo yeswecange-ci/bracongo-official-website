@@ -5,7 +5,6 @@
         </a>
     </div>
 
-    {{-- Desktop --}}
     <div class="hidden lg:flex items-center space-x-8">
         @foreach($navItems ?? [] as $item)
         <div class="relative group">
@@ -42,13 +41,12 @@
         </button>
     </div>
 
-    {{-- Desktop Search Overlay --}}
     <div id="desktop-search-bar" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] transition-all duration-300 opacity-0">
         <div class="absolute inset-x-0 top-0 bg-white shadow-2xl transform -translate-y-full transition-transform duration-300 ease-out py-8 md:py-12" id="search-content">
             <div class="max-w-4xl mx-auto px-4 sm:px-6">
                 <div class="flex items-center justify-between gap-4 sm:gap-8 mb-6 sm:mb-8">
                     <div class="relative flex-grow">
-                        <input type="text" id="desktop-search-input" placeholder="Rechercher un produit, une actualité..."
+                        <input type="text" id="desktop-search-input" placeholder="{{ isset($parametres) ? $parametres->resolvedSearchPlaceholder() : 'Rechercher sur le site…' }}"
                             class="w-full min-w-0 text-xl sm:text-2xl md:text-4xl font-bold border-none focus:ring-0 text-gray-900 placeholder-gray-300 bg-transparent py-2"
                             autocomplete="off" spellcheck="false">
                         <div class="absolute bottom-0 left-0 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
@@ -78,7 +76,6 @@
         </div>
     </div>
 
-    {{-- Mobile burger --}}
     <div class="lg:hidden flex items-center">
         <button id="mobile-menu-button" class="text-gray-800 hover:text-bracongo focus:outline-none transition-colors duration-300">
             <svg id="burger-icon" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,7 +87,6 @@
         </button>
     </div>
 
-    {{-- Mobile menu --}}
     <div id="mobile-menu" class="hidden fixed inset-x-0 top-[88px] bottom-0 bg-white z-[60] overflow-y-auto lg:hidden">
         <div class="p-6 space-y-4">
             @foreach($navItems ?? [] as $item)
@@ -117,7 +113,7 @@
 
             <div class="pt-6">
                 <div class="relative">
-                    <input type="text" id="mobile-search-input" placeholder="Rechercher sur le site..."
+                    <input type="text" id="mobile-search-input" placeholder="{{ isset($parametres) ? $parametres->resolvedSearchPlaceholder() : 'Rechercher sur le site…' }}"
                         class="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border border-gray-100 focus:outline-none focus:border-bracongo focus:ring-1 focus:ring-bracongo text-gray-900 font-medium"
                         autocomplete="off" spellcheck="false">
                     <svg class="w-6 h-6 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

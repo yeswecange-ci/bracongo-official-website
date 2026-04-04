@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PagePro;
 use App\Traits\HandlesImageUpload;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PageProController extends Controller
 {
@@ -18,7 +19,7 @@ class PageProController extends Controller
 
     public function update(Request $request)
     {
-        $data = $request->validate([
+        $rules = [
             'hero_image'            => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
             'hero_titre'            => 'nullable|string|max:255',
             'description'           => 'nullable|string',
@@ -29,9 +30,11 @@ class PageProController extends Controller
             'fonctionnalites_items' => 'nullable|string',
             'app_image'             => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
             'cta_texte'             => 'nullable|string|max:100',
-            'cta_lien'              => 'nullable|string|max:255',
-            'pdf_lien'              => 'nullable|string|max:255',
-        ]);
+        ];
+        if (Auth::user()->isAdministration()) {
+            $rules['cta_lien'] = 'nullable|string|max:500';
+        }
+        $data = $request->validate($rules);
         foreach (['hero_image', 'app_image'] as $key) {
             if ($request->hasFile($key)) {
                 $data[$key] = $this->uploadImage($request->file($key), 'uploads/pages', 'pro-' . $key);

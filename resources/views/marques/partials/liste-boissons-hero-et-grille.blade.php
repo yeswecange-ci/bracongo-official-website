@@ -1,4 +1,3 @@
-{{-- Réutilisé par la page Bières et par /Nos-marques/{eaux|gazeuses|energisantes} --}}
 @php
     $imgAlt = $page->hero_image_alt ?: $page->titreOnglet();
 @endphp

@@ -39,17 +39,10 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 
-	{{-- Sticky save bar --}}
-	<div class="a-save-bar">
-		<a href="{{ route('admin.valeurs.index') }}" class="btn btn-outline-secondary">
-			<i class="bi bi-x me-1"></i>Annuler
-		</a>
-		<button type="submit" class="btn btn-primary">
-			<i class="bi bi-check2 me-1"></i>Enregistrer
-		</button>
+			@include('admin.layouts.partials.form-actions', ['cancelUrl' => route('admin.valeurs.index')])
+
+		</div>
 	</div>
 
 </form>

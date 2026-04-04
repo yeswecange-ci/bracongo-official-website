@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Articles, goodies, merchandising – backend only, non visible côté client.
-     */
     public function up(): void
     {
         Schema::create('produits', function (Blueprint $table) {

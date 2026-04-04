@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\EnsureBackOfficeAuthenticated;
+use App\Http\Middleware\EnsureSuperAdmin;
 use App\Http\Middleware\EnsureTwoFactorSetupComplete;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Foundation\Application;
@@ -23,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'guest' => RedirectIfAuthenticated::class,
             'backoffice.auth' => EnsureBackOfficeAuthenticated::class,
             'two_factor.setup' => EnsureTwoFactorSetupComplete::class,
+            'super_admin' => EnsureSuperAdmin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PageContact;
 use App\Traits\HandlesImageUpload;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PageContactController extends Controller
 {
@@ -18,7 +19,7 @@ class PageContactController extends Controller
 
     public function update(Request $request)
     {
-        $data = $request->validate([
+        $rules = [
             'hero_image'          => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
             'hero_titre'          => 'required|string|max:255',
             'form_titre'          => 'required|string|max:255',
@@ -30,8 +31,11 @@ class PageContactController extends Controller
             'tel_fetes'           => 'nullable|string|max:50',
             'tel_fournisseurs'    => 'nullable|string|max:50',
             'tel_cle_chateaux'    => 'nullable|string|max:50',
-            'devenir_client_lien' => 'nullable|string|max:255',
-        ]);
+        ];
+        if (Auth::user()->isAdministration()) {
+            $rules['devenir_client_lien'] = 'nullable|string|max:500';
+        }
+        $data = $request->validate($rules);
         if ($request->hasFile('hero_image')) {
             $data['hero_image'] = $this->uploadImage($request->file('hero_image'), 'uploads/pages', 'contact');
         } else {

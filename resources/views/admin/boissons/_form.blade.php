@@ -1,5 +1,4 @@
 <div class="row g-3">
-	{{-- Marque & Identification --}}
 	<div class="col-md-6">
 		<label class="form-label fw-semibold">Marque <span class="text-danger">*</span></label>
 		<select class="form-select @error('marque_id') is-invalid @enderror" name="marque_id">
@@ -40,7 +39,6 @@
 		<textarea class="form-control" name="description" rows="4">{{ old('description', $boisson->description ?? '') }}</textarea>
 	</div>
 
-	{{-- Fiche technique --}}
 	<div class="col-12">
 		<hr class="my-2">
 		<h6 class="fw-600 text-muted mb-3" style="font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Fiche technique</h6>
@@ -82,7 +80,6 @@
 		<input type="text" class="form-control" name="coeur_cible" value="{{ old('coeur_cible', $boisson->coeur_cible ?? '') }}" placeholder="25-35 ans...">
 	</div>
 
-	{{-- Vidéos --}}
 	<div class="col-12">
 		<hr class="my-2">
 		<h6 class="fw-600 text-muted mb-3" style="font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Vidéos</h6>
