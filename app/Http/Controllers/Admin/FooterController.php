@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\FooterSettings;
 use App\Models\FooterGallery;
 use App\Models\ReseauSocial;
+use App\Traits\HandlesImageUpload;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class FooterController extends Controller
 {
+    use HandlesImageUpload;
+
     public function edit()
     {
         $footer  = FooterSettings::instance();
@@ -33,14 +35,12 @@ class FooterController extends Controller
         $footer = FooterSettings::instance();
 
         if ($request->hasFile('certification_image')) {
-            $file = $request->file('certification_image');
-            $dir = 'uploads/footer';
-            if (!is_dir(public_path($dir))) {
-                mkdir(public_path($dir), 0755, true);
-            }
-            $name = 'certification_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path($dir), $name);
-            $data['certification_image'] = $dir . '/' . $name;
+            $this->deleteImageFile($footer->certification_image);
+            $data['certification_image'] = $this->uploadImage(
+                $request->file('certification_image'),
+                'uploads/footer',
+                'certification'
+            );
         } else {
             unset($data['certification_image']);
         }
