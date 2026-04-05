@@ -5,9 +5,6 @@ namespace App\Support;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 
-/**
- * HTML édité via le CMS : suppression des scripts / comportements dangereux tout en gardant la mise en forme courante.
- */
 final class CmsHtmlSanitizer
 {
     private static ?HtmlSanitizer $sanitizer = null;

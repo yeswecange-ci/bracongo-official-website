@@ -27,7 +27,6 @@
 	@csrf
 	@method('PUT')
 	<div class="row g-4">
-		{{-- Hero + Titre --}}
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
@@ -47,7 +46,6 @@
 			</div>
 		</div>
 
-		{{-- Textes histoire --}}
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
@@ -78,7 +76,6 @@
 			</div>
 		</div>
 
-		{{-- Section RSE --}}
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
@@ -109,7 +106,6 @@
 			</div>
 		</div>
 
-		{{-- Carte Maps --}}
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center gap-2">
@@ -138,7 +134,6 @@
 			</div>
 		</div>
 
-		{{-- Valeurs (lecture seule, gestion via autre page) --}}
 		<div class="col-12">
 			<div class="card border-dashed">
 				<div class="card-header d-flex align-items-center justify-content-between">

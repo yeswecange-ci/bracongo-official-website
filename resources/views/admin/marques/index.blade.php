@@ -30,7 +30,6 @@
 	</ul>
 </div>
 
-{{-- Compteurs par catégorie (boissons) --}}
 <div class="row g-3 mb-4">
 	@foreach($categories as $key => $label)
 	<div class="col-6 col-md-3">
@@ -44,7 +43,6 @@
 	@endforeach
 </div>
 
-{{-- Tableau 1 : marques uniquement (liste plate, pas de regroupement par catégorie) --}}
 <div class="card mb-4">
     <div class="card-header py-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
         <div>
@@ -124,7 +122,6 @@
     </div>
 </div>
 
-{{-- Tableau 2 : boissons filtrées par catégorie --}}
 <div class="card mb-4" id="boissons">
 	<div class="card-header py-3">
 		<h5 class="card-title mb-1">Boissons par catégorie</h5>

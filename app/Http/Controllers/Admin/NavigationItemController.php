@@ -8,6 +8,18 @@ use Illuminate\Http\Request;
 
 class NavigationItemController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $user = $request->user();
+            if (! $user || ! $user->isAdministration()) {
+                abort(403, 'Accès réservé aux administrateurs.');
+            }
+
+            return $next($request);
+        });
+    }
+
     public function index()
     {
         $items = NavigationItem::with('enfants')->parents()->get();
@@ -39,9 +51,6 @@ class NavigationItemController extends Controller
             ->with('success', 'Item de navigation ajouté.');
     }
 
-    /**
-     * Le paramètre doit s’appeler $navigation comme la route {navigation} (Laravel 12).
-     */
     public function edit(NavigationItem $navigation)
     {
         $parents = NavigationItem::parents()->where('id', '!=', $navigation->id)->get();

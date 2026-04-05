@@ -79,10 +79,13 @@
 						<label class="form-label fw-semibold">Tél. Clé des Châteaux</label>
 						<input type="text" class="form-control" name="tel_cle_chateaux" value="{{ old('tel_cle_chateaux', $page->tel_cle_chateaux) }}">
 					</div>
+					@if(auth()->user()->isAdministration())
 					<div class="col-12">
-						<label class="form-label fw-semibold">Lien "Devenir client" <x-admin.readonly-info /></label>
-						<input type="text" class="form-control bg-light" name="devenir_client_lien" value="{{ old('devenir_client_lien', $page->devenir_client_lien) }}" readonly>
+						<label class="form-label fw-semibold">Lien « Devenir client »</label>
+						<input type="text" class="form-control" name="devenir_client_lien" value="{{ old('devenir_client_lien', $page->devenir_client_lien) }}" placeholder="https://… ou lien vers l’app">
+						<div class="form-text">URL ou deeplink (réservé aux administrateurs).</div>
 					</div>
+					@endif
 					<div class="col-12 pt-2">
 						<button type="submit" class="btn btn-primary">
 							<i class="bi bi-floppy me-1"></i>Enregistrer

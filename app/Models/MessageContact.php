@@ -18,9 +18,6 @@ class MessageContact extends Model
         return $query->where('lu', false);
     }
 
-    /**
-     * Réponses e-mail déjà envoyées pour ce message de contact (plus récent en premier).
-     */
     public function sentReplies(): HasMany
     {
         return $this->hasMany(MessageContactReply::class);

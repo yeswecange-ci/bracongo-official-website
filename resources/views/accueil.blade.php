@@ -3,7 +3,6 @@
 @section('title', 'Accueil')
 
 @section('content')
-    {{-- ── Hero Carousel ── --}}
     <section class="relative w-full overflow-hidden group">
         <div id="hero-carousel" class="relative w-full h-[500px] md:h-[900px]">
             @forelse($slides as $i => $slide)
@@ -78,7 +77,6 @@
         </script>
     </section>
 
-    {{-- ── Dernières actualités ── --}}
     <div class="container mx-auto px-4 py-16">
         <div class="flex items-center justify-center gap-4 mb-12">
             <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-10 w-auto">
@@ -89,7 +87,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             @forelse($dernieresNews as $item)
             @php
-                $href = $item->lien_externe ?: route('actualites');
+                $href = $item->lien_externe ?: route('actualites.show', $item->slug);
             @endphp
             <a href="{{ $href }}" @if($item->lien_externe) target="_blank" rel="noopener" @endif class="bg-[#F8F8F8] rounded-[2rem] overflow-hidden flex flex-col h-full shadow-sm hover:shadow-md transition-shadow text-left">
                 <div class="h-64 overflow-hidden bg-gray-100">
@@ -126,7 +124,6 @@
         </div>
     </div>
 
-    {{-- ── Qui sommes-nous ── --}}
     <section class="relative w-full h-[500px] mt-20 overflow-hidden">
         <div class="absolute inset-0">
             <img src="{{ asset($accueil->qui_image_fond ?? 'img/brasserie.jpg') }}" alt="Brasserie Bracongo" class="w-full h-full object-cover">
@@ -150,7 +147,6 @@
         </div>
     </section>
 
-    {{-- ── Nos Marques ── --}}
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
@@ -210,7 +206,6 @@
         </div>
     </section>
 
-    {{-- ── Rejoignez-nous ── --}}
     <section class="py-20 bg-[#F9F9F9]">
         <div class="container mx-auto px-4">
             <div class="flex flex-col lg:flex-row items-center gap-12">

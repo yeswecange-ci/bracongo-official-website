@@ -10,16 +10,23 @@
 	<h6 class="a-topbar-page-title">Modifier — {{ $navigation->label }}</h6>
 </div>
 @endpush
+@push('header-actions')
+<a href="{{ route('admin.navigation.index') }}" class="btn btn-outline-secondary btn-sm me-2">
+	<i class="bi bi-x-lg me-1"></i>Annuler
+</a>
+<button type="submit" form="form-navigation-edit" class="btn btn-primary btn-sm">
+	<i class="bi bi-check2 me-1"></i>Enregistrer
+</button>
+@endpush
 
 @section('content')
 @include('admin.layouts.partials.alerts')
-<form action="{{ action([\App\Http\Controllers\Admin\NavigationItemController::class, 'update'], ['navigation' => $navigation->id]) }}" method="POST">
+<form id="form-navigation-edit" action="{{ action([\App\Http\Controllers\Admin\NavigationItemController::class, 'update'], ['navigation' => $navigation->id]) }}" method="POST">
 	@csrf
 	@method('PUT')
 
 	<div class="row g-4 align-items-start">
 
-		{{-- Colonne principale --}}
 		<div class="col-xl-8">
 			<div class="card">
 				<div class="card-header"><h5>Informations</h5></div>
@@ -29,7 +36,6 @@
 			</div>
 		</div>
 
-		{{-- Sidebar paramètres --}}
 		<div class="col-xl-4 a-form-sidebar">
 			<div class="card">
 				<div class="card-header"><h5>Paramètres</h5></div>
@@ -58,16 +64,6 @@
 			</div>
 		</div>
 
-	</div>
-
-	{{-- Sticky save bar --}}
-	<div class="a-save-bar">
-		<a href="{{ route('admin.navigation.index') }}" class="btn btn-outline-secondary">
-			<i class="bi bi-x me-1"></i>Annuler
-		</a>
-		<button type="submit" class="btn btn-primary">
-			<i class="bi bi-check2 me-1"></i>Enregistrer
-		</button>
 	</div>
 
 </form>

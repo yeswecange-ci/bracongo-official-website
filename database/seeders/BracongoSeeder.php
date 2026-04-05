@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Models\Boisson;
+use App\Models\CandidatureEmploi;
 use App\Models\FooterGallery;
 use App\Models\FooterSettings;
 use App\Models\HeroSlide;
@@ -37,15 +38,15 @@ class BracongoSeeder extends Seeder
     {
         $this->call(RbacSeeder::class);
 
-        // Paramètres globaux
         ParametresSite::updateOrCreate(['id' => 1], [
             'logo' => 'img/LOGO BRACONGO copie 1.png',
             'couleur_principale' => '#E30613',
             'search_suggestions' => 'Beaufort Lager,Actualités,Nkoyi,RSE',
+            'seo_meta_description' => null,
+            'telephone_public' => null,
             'invitation_expires_hours' => '48',
         ]);
 
-        // Page Welcome
         PageWelcome::updateOrCreate(['id' => 1], [
             'fond_image' => 'img/fete.png',
             'titre' => 'BIENVENUE SUR LE SITE BRACONGO SA',
@@ -56,7 +57,6 @@ class BracongoSeeder extends Seeder
             'mention_legale' => "L'abus de l'alcool est dangereux pour la santé, à consommer avec modération.",
         ]);
 
-        // Page Accueil
         PageAccueil::updateOrCreate(['id' => 1], [
             'qui_titre' => 'Qui sommes-nous ?',
             'qui_texte' => 'Lorem ipsum dolor sit amet consectetur. Nec augue tortor cursus vulputate ultricies mattis a. Bibendum gravida morbi urna at id dui vitae. Massa bibendum magna in quis amet neque neque diam eget. Tincidunt scelerisque mattis at habitant malesuada congue. Ut malesuada ac mauris amet non sit lobortis proin.',
@@ -74,7 +74,6 @@ class BracongoSeeder extends Seeder
             'actualites_voir_plus_lien' => '/Actualites-et-evenements',
         ]);
 
-        // Hero slides
         HeroSlide::truncate();
         $slides = [
             ['image' => 'img/coverhome.jpg', 'alt' => 'Beaufort Hero', 'ordre' => 1, 'is_active' => true],
@@ -84,7 +83,6 @@ class BracongoSeeder extends Seeder
             HeroSlide::create($slide);
         }
 
-        // Page Histoire
         PageHistoire::updateOrCreate(['id' => 1], [
             'hero_image' => 'img/bracongo.jpg',
             'titre' => 'Notre histoire',
@@ -100,7 +98,6 @@ class BracongoSeeder extends Seeder
             'presence_note' => '* Cliquez sur la carte pour explorer nos différents centres de distribution à travers le pays.',
         ]);
 
-        // Valeurs PREMIERS
         Valeur::truncate();
         $valeurs = [
             ['lettre' => 'P', 'description' => 'Parler vrai', 'ordre' => 1],
@@ -116,7 +113,6 @@ class BracongoSeeder extends Seeder
             Valeur::create($v);
         }
 
-        // Page Contact
         PageContact::updateOrCreate(['id' => 1], [
             'hero_image' => 'img/bracongo.jpg',
             'denomination' => "Les Boissons Rafraîchissantes du Congo,\nBRACONGO SA",
@@ -130,18 +126,21 @@ class BracongoSeeder extends Seeder
             'devenir_client_lien' => '#',
         ]);
 
-        // Page Carrière
         PageCarriere::updateOrCreate(['id' => 1], [
             'hero_image' => 'img/rejoins.png',
             'texte_intro' => "Employer et former les bonnes personnes pour le poste est la clé de notre succès. Notre aspiration est d'offrir le meilleur à nos clients et consommateurs et d'offrir des produits de qualité à des prix abordables. Si vous appréciez l'action, la qualité et l'intégrité, notre entreprise est l'endroit idéal pour vous",
         ]);
 
-        // Offres d'emploi
-        OffreEmploi::truncate();
+        CandidatureEmploi::query()->delete();
+        OffreEmploi::query()->delete();
         $offres = [
             [
                 'titre' => "Responsable Sécurité des Systèmes d'information",
+                'slug' => 'responsable-securite-des-systemes-dinformation',
                 'description' => "<p>BRACONGO recherche un(e) Responsable Sécurité des Systèmes d'information pour piloter la stratégie de cybersécurité et garantir la protection des actifs numériques de l'entreprise.</p><p>Ce poste stratégique, rattaché au Département des Systèmes d'Information, implique une étroite collaboration avec les équipes informatiques, la direction générale et les référents sécurité du groupe.</p><p><strong>Prêt(e) à relever le défi ? Postulez dès maintenant !</strong></p>",
+                'lieu' => 'Kinshasa',
+                'type_contrat' => 'CDI',
+                'date_limite_candidature' => now()->addMonths(2)->toDateString(),
                 'image' => 'img/secu.jpg',
                 'lien' => '#',
                 'is_active' => true,
@@ -149,7 +148,11 @@ class BracongoSeeder extends Seeder
             ],
             [
                 'titre' => 'Ingénieur de Maintenance Industrielle',
+                'slug' => 'ingenieur-de-maintenance-industrielle',
                 'description' => "<p>Garantissez la performance de nos lignes de production en pilotant les interventions préventives et curatives.</p><p>Expert technique, vous veillez à la sécurité des installations et à l'optimisation des coûts de maintenance.</p><p><strong>Mettez votre expertise au service de l'excellence industrielle.</strong></p>",
+                'lieu' => 'Kinshasa',
+                'type_contrat' => 'CDI',
+                'date_limite_candidature' => now()->addMonth()->toDateString(),
                 'image' => 'img/brasserie.jpg',
                 'lien' => '#',
                 'is_active' => true,
@@ -157,7 +160,11 @@ class BracongoSeeder extends Seeder
             ],
             [
                 'titre' => 'Analyste Financier Senior',
+                'slug' => 'analyste-financier-senior',
                 'description' => "<p>Accompagnez la direction dans le pilotage de la performance économique de l'entreprise.</p><p>Vous assurez le contrôle budgétaire, l'analyse des écarts et proposez des plans d'actions correctifs.</p><p><strong>Un rôle clé au cœur de la stratégie financière.</strong></p>",
+                'lieu' => 'Kinshasa',
+                'type_contrat' => 'CDI',
+                'date_limite_candidature' => now()->addMonths(3)->toDateString(),
                 'image' => 'img/rejoignez.png',
                 'lien' => '#',
                 'is_active' => true,
@@ -168,7 +175,6 @@ class BracongoSeeder extends Seeder
             OffreEmploi::create($offre);
         }
 
-        // Page Pro
         PagePro::updateOrCreate(['id' => 1], [
             'hero_image' => 'img/brcpro.png',
             'description' => "Bracongo Pro est l'application mobile pensée pour les ténanciers de bars, clients fidèles de Bracongo. Simple, intuitive et 100% mobile, elle facilite la gestion quotidienne des achats, permet un suivi personnalisé et rapproche encore plus les utilisateurs des services Bracongo dans un secteur en pleine digitalisation.",
@@ -180,10 +186,8 @@ class BracongoSeeder extends Seeder
             'app_image' => 'img/tel.png',
             'cta_texte' => 'Télécharger Bracongo pro',
             'cta_lien' => '#',
-            'pdf_lien' => null,
         ]);
 
-        // Page Nos bières (bannière, fil d’Ariane, recherche)
         PageBieres::updateOrCreate(['id' => 1], [
             'hero_image' => 'img/marque.jpg',
             'hero_titre' => 'Nos Bières',
@@ -195,7 +199,6 @@ class BracongoSeeder extends Seeder
             'message_recherche_vide' => 'Aucune bière ne correspond à votre recherche.',
         ]);
 
-        // Pages liste boissons (eaux, gazeuses, énergisantes) — H1 laissé vide pour l’équipe comm.
         PageEaux::updateOrCreate(['id' => 1], [
             'hero_image' => 'img/marque.jpg',
             'hero_titre' => '',
@@ -227,7 +230,6 @@ class BracongoSeeder extends Seeder
             'message_recherche_vide' => 'Aucune boisson ne correspond à votre recherche.',
         ]);
 
-        // Marques et Boissons (basé sur bracongo.cd)
         Schema::disableForeignKeyConstraints();
         Boisson::truncate();
         Marque::truncate();
@@ -310,10 +312,8 @@ class BracongoSeeder extends Seeder
             Boisson::create(array_merge($b, ['is_active' => true]));
         }
 
-        // Produits (goodies - vide pour l'instant, backend only)
         Produit::truncate();
 
-        // News (actualités, événements, etc.)
         News::truncate();
         $news = [
             [
@@ -355,7 +355,6 @@ class BracongoSeeder extends Seeder
             News::create(array_merge($n, ['is_active' => true]));
         }
 
-        // Navigation
         NavigationItem::truncate();
         $menuParents = [
             ['label' => 'Bracongo SA', 'url' => '#', 'ordre' => 1],
@@ -408,7 +407,6 @@ class BracongoSeeder extends Seeder
             }
         }
 
-        // Footer
         FooterSettings::updateOrCreate(['id' => 1], [
             'mission_texte' => '« Assurer une qualité et une disponibilité constantes de nos produits au meilleur prix avec un réseau de distribution complet, rapide et performant »',
             'adresse' => 'Les Boissons Rafraîchissantes du Congo, BRACONGO SA Avenue des Brasseries, N° 7666, Kingabwa, Limete, Kinshasa, RDC',
@@ -418,7 +416,6 @@ class BracongoSeeder extends Seeder
             'copyright_debut_annee' => 1996,
         ]);
 
-        // Footer gallery
         FooterGallery::truncate();
         $gallery = [
             ['image' => 'img/beau.png', 'alt' => 'Beaufort Gallery', 'ordre' => 1],
@@ -432,7 +429,6 @@ class BracongoSeeder extends Seeder
             FooterGallery::create($img);
         }
 
-        // Réseaux sociaux
         ReseauSocial::truncate();
         $reseaux = [
             ['platform' => 'facebook', 'url' => '#', 'is_active' => true, 'ordre' => 1],
@@ -447,7 +443,6 @@ class BracongoSeeder extends Seeder
         $superPassword = env('BRACONGO_SUPER_ADMIN_PASSWORD', 'SuperAdmin@123456');
         $superName = env('BRACONGO_SUPER_ADMIN_NAME', 'Super Admin');
 
-        /** Compte secours interne : pas de TOTP (e-mail non opérationnel), masqué de la liste utilisateurs. */
         User::updateOrCreate(
             ['email' => $superEmail],
             [

@@ -2,9 +2,6 @@
 
 namespace App\Enums;
 
-/**
- * Aligné sur la colonne MySQL ENUM('12','24','48','72').
- */
 enum InvitationExpiresHours: string
 {
     case H12 = '12';

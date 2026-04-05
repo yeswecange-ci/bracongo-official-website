@@ -21,7 +21,7 @@
                 <h5 class="mb-0"><i class="bi bi-envelope-plus me-2" style="color:#E30613"></i>Nouvelle invitation</h5>
             </div>
             <div class="card-body">
-                <p class="text-muted small mb-3">Un e-mail avec un lien d’acceptation sera envoyé. Délai d’expiration : <strong>{{ $invitationExpiresHours->label() }}</strong> (réglable dans <a href="{{ route('admin.parametres.edit') }}">Paramètres</a>).</p>
+                <p class="text-muted small mb-3">Un e-mail avec un lien d’acceptation sera envoyé. Délai d’expiration : <strong>{{ $invitationExpiresHours->label() }}</strong>@if(auth()->user()->isSuperAdmin()) (réglable dans <a href="{{ route('admin.parametres.edit') }}">Paramètres</a>)@endif.</p>
                 <form action="{{ route('admin.invitations.store') }}" method="POST" id="form-invitation">
                     @csrf
                     <div class="mb-3">

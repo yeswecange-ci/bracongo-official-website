@@ -18,7 +18,6 @@
 
 	<div class="row g-4 align-items-start">
 
-		{{-- Colonne principale --}}
 		<div class="col-xl-8">
 			<div class="card">
 				<div class="card-header"><h5>Informations de l'offre</h5></div>
@@ -28,10 +27,8 @@
 			</div>
 		</div>
 
-		{{-- Sidebar métadonnées --}}
 		<div class="col-xl-4 a-form-sidebar">
 
-			{{-- Card Image --}}
 			<div class="card">
 				<div class="card-header"><h5>Image</h5></div>
 				<div class="card-body">
@@ -39,41 +36,31 @@
 				</div>
 			</div>
 
-			{{-- Card Paramètres --}}
 			<div class="card mt-4">
 				<div class="card-header"><h5>Paramètres</h5></div>
 				<div class="card-body">
 					<div class="mb-3">
-						<label class="form-label fw-semibold">Lien "Plus de détails" <x-admin.readonly-info /></label>
-						<div class="a-readonly-wrap">
-							<i class="bi bi-lock a-lock-icon"></i>
-							<input type="text" class="form-control" name="lien" value="{{ old('lien', '#') }}" readonly>
-						</div>
-					</div>
-					<div class="mb-3">
 						<label class="form-label fw-semibold">Ordre</label>
 						<input type="number" class="form-control" name="ordre" value="{{ old('ordre', 0) }}" min="0">
 					</div>
-					<div class="form-check form-switch">
+					<div class="form-check form-switch mb-3">
 						<input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1"
 							{{ old('is_active', true) ? 'checked' : '' }}>
 						<label class="form-check-label fw-semibold" for="is_active">Offre active</label>
 					</div>
+					<div class="form-check form-switch">
+						<input class="form-check-input" type="checkbox" name="require_lettre_motivation" id="require_lettre_motivation" value="1"
+							{{ old('require_lettre_motivation', false) ? 'checked' : '' }}>
+						<label class="form-check-label fw-semibold" for="require_lettre_motivation">Lettre de motivation obligatoire</label>
+						<div class="form-text small">Champ obligatoire sur la page candidature publique.</div>
+					</div>
 				</div>
 			</div>
 
+			@include('admin.layouts.partials.form-actions', ['cancelUrl' => route('admin.offres-emploi.index')])
+
 		</div>
 
-	</div>
-
-	{{-- Sticky save bar --}}
-	<div class="a-save-bar">
-		<a href="{{ route('admin.offres-emploi.index') }}" class="btn btn-outline-secondary">
-			<i class="bi bi-x me-1"></i>Annuler
-		</a>
-		<button type="submit" class="btn btn-primary">
-			<i class="bi bi-check2 me-1"></i>Enregistrer
-		</button>
 	</div>
 
 </form>

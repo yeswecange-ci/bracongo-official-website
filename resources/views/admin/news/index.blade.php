@@ -21,7 +21,6 @@
 @section('content')
 @include('admin.layouts.partials.alerts')
 
-{{-- Filtres par type --}}
 <div class="a-filter-bar mb-3">
     <a href="{{ route('admin.news.index') }}" class="a-filter-pill {{ !$type ? 'a-filter-pill--active' : '' }}">Tous</a>
     @foreach($types as $key => $label)

@@ -9,9 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureBackOfficeAuthenticated
 {
-    /**
-     * Redirect unauthenticated users to back-office login page.
-     */
     public function handle(Request $request, Closure $next): Response
     {
         if (! Auth::check()) {

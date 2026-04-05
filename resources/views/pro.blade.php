@@ -63,12 +63,6 @@
                     </div>
                     @endif
 
-                    @if($pro->pdf_lien ?? null)
-                    <p class="text-sm text-gray-700">
-                        <a href="{{ $pro->pdf_lien }}" target="_blank" rel="noopener" class="text-bracongo hover:underline italic">Bracongopro-presentation.pdf</a>
-                    </p>
-                    @endif
-
                     <div class="pt-4">
                         <a href="{{ $pro->cta_lien ?? '#' }}" class="inline-flex items-center gap-3 px-10 py-4 bg-bracongo text-white rounded-full font-bold hover:opacity-90 transition-all shadow-lg group">
                             <span>{{ $pro->cta_texte ?? 'Télécharger Bracongo pro' }}</span>

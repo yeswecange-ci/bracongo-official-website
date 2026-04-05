@@ -14,6 +14,8 @@ return new class extends Migration
             $table->string('favicon')->nullable();
             $table->string('couleur_principale')->default('#E30613');
             $table->text('search_suggestions')->nullable()->comment('Suggestions séparées par des virgules');
+            $table->text('seo_meta_description')->nullable();
+            $table->string('telephone_public', 80)->nullable();
             $table->string('actualites_hero_titre')->default('Actualités & Événements');
             $table->string('actualites_filtre_tout_label')->default('Tout voir');
             $table->enum('invitation_expires_hours', ['12', '24', '48', '72'])->default('48');

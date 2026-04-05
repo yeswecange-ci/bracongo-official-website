@@ -13,21 +13,16 @@
     <link rel="icon" type="image/png" href="{{ asset('img/LOGO BRACONGO copie 1.png') }}?v=2">
     <link rel="shortcut icon" type="image/png" href="{{ asset('img/LOGO BRACONGO copie 1.png') }}?v=2">
 
-    {{-- Google Fonts: Inter --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    {{-- Bootstrap Icons --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    {{-- Plugin CSS (select, etc.) --}}
     <link href="{{ asset('admin/vendor/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet">
 
-    {{-- Template base CSS (Bootstrap 5 + plugin styles) --}}
     <link class="main-css" href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
 
-    {{-- New redesign — chargé en dernier pour override --}}
     <link href="{{ asset('admin/css/admin-redesign.css') }}" rel="stylesheet">
 
     @stack('styles')
@@ -35,7 +30,6 @@
 
 <body>
 
-    {{-- Preloader --}}
     <div id="a-preloader">
         <div class="a-preloader-inner">
             <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo">
@@ -43,43 +37,31 @@
         </div>
     </div>
 
-    {{-- Overlay mobile --}}
     <div class="a-overlay" id="aOverlay"></div>
 
     <div class="a-layout" id="aLayout">
 
-        {{-- ============================
-             SIDEBAR
-             ============================ --}}
         <aside class="a-sidebar" id="aSidebar">
 
-            {{-- Brand --}}
             <a href="{{ route('admin.dashboard') }}" class="a-sidebar-brand">
                 <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo">
                 <span class="a-brand-name">BRA<em>CONGO</em></span>
             </a>
 
-            {{-- Navigation --}}
             <div class="a-sidebar-body">
                 @include('admin.layouts.partials.sidebar')
             </div>
 
         </aside>
 
-        {{-- ============================
-             MAIN
-             ============================ --}}
         <div class="a-main" id="aMain">
 
-            {{-- Topbar --}}
             @include('admin.layouts.partials.header')
 
-            {{-- Content --}}
             <main class="a-content">
                 @yield('content')
             </main>
 
-            {{-- Footer --}}
             @include('admin.layouts.partials.footer')
 
         </div>
@@ -88,7 +70,6 @@
 
     @include('admin.layouts.partials.modal-image-preview')
 
-    {{-- Scripts --}}
     <script src="{{ asset('admin/vendor/global/global.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('admin/js/bracongo-confirm.js') }}"></script>
@@ -96,11 +77,9 @@
     <script src="{{ asset('admin/vendor/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
     @stack('scripts-vendor')
 
-    {{-- Admin UI script --}}
     <script>
     (function () {
 
-        /* --- Preloader --- */
         window.addEventListener('load', function () {
             var el = document.getElementById('a-preloader');
             if (!el) return;
@@ -108,17 +87,14 @@
             setTimeout(function () { el.remove(); }, 400);
         });
 
-        /* --- Refs --- */
         var layout  = document.getElementById('aLayout');
         var sidebar = document.getElementById('aSidebar');
         var overlay = document.getElementById('aOverlay');
 
-        /* --- Restore collapsed state (desktop only) --- */
         if (window.innerWidth > 991 && localStorage.getItem('sidebarCollapsed') === 'true') {
             layout.classList.add('sidebar-collapsed');
         }
 
-        /* --- Toggle sidebar --- */
         document.querySelectorAll('.a-sidebar-toggle').forEach(function (btn) {
             btn.addEventListener('click', function () {
                 if (window.innerWidth <= 991) {
@@ -134,13 +110,11 @@
             });
         });
 
-        /* --- Overlay click closes sidebar (mobile) --- */
         overlay.addEventListener('click', function () {
             sidebar.classList.remove('is-open');
             overlay.classList.remove('show');
         });
 
-        /* --- Submenu accordion --- */
         document.querySelectorAll('.a-nav-link[data-sub]').forEach(function (link) {
             link.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -150,7 +124,6 @@
 
                 var isOpen = (menu.style.display === 'block');
 
-                /* Close all other submenus */
                 document.querySelectorAll('.a-submenu').forEach(function (m) {
                     if (m.id !== targetId) {
                         m.style.display = 'none';
@@ -169,7 +142,6 @@
             });
         });
 
-        /* --- Open active submenu on load --- */
         document.querySelectorAll('.a-submenu').forEach(function (menu) {
             if (menu.querySelector('.a-nav-link.is-active')) {
                 menu.style.display = 'block';

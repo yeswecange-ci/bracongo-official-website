@@ -1,4 +1,3 @@
-{{-- Modale partagée pour prévisualiser les images uploadées --}}
 <div class="modal fade" id="modalPreviewImage" tabindex="-1" aria-labelledby="modalPreviewImageLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">

@@ -13,18 +13,12 @@ use PragmaRX\Google2FA\Google2FA;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         $this->app->singleton(Google2FA::class, fn () => new Google2FA);
         $this->app->singleton(GoogleTwoFactorService::class);
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         Schema::defaultStringLength(191);
@@ -44,6 +38,19 @@ class AppServiceProvider extends ServiceProvider
 
         RateLimiter::for('invitation-accept', function (Request $request) {
             return Limit::perMinute(10)->by($request->ip());
+        });
+
+        RateLimiter::for('candidature-emploi', function (Request $request) {
+            $ip = (string) $request->ip();
+            $emailKey = strtolower((string) $request->input('email', ''));
+            $byEmail = $emailKey !== '' ? sha1($emailKey) : 'no-email';
+
+            return [
+                Limit::perMinute(5)->by('ce-m|'.$ip),
+                Limit::perHour(15)->by('ce-h|'.$ip),
+                Limit::perDay(30)->by('ce-d|'.$ip),
+                Limit::perDay(8)->by('ce-mail|'.$byEmail),
+            ];
         });
     }
 }

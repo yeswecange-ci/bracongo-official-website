@@ -11,9 +11,6 @@ use Illuminate\View\View;
 
 class OnboardingTwoFactorController extends Controller
 {
-    /**
-     * Première connexion : page unique pour scanner le QR et confirmer la 2FA (secret généré au chargement si besoin).
-     */
     public function show(Request $request, GoogleTwoFactorService $g2fa): View|RedirectResponse
     {
         /** @var User $user */

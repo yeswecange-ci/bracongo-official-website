@@ -4,7 +4,6 @@
 
 <header class="a-topbar">
 
-    {{-- Toggle sidebar --}}
     <button class="a-topbar-toggle a-sidebar-toggle" type="button" aria-label="Menu">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -14,15 +13,12 @@
         </svg>
     </button>
 
-    {{-- Left slot (breadcrumb / search pushed from views) --}}
     <div class="a-topbar-left">
         @stack('header-left')
     </div>
 
-    {{-- Right actions --}}
     <div class="a-topbar-right">
 
-        {{-- Slot for per-view actions --}}
         @stack('header-actions')
 
         @guest
@@ -31,7 +27,6 @@
         </a>
         @endguest
 
-        {{-- Messages --}}
         <a href="{{ route('admin.messages.index') }}"
            class="a-icon-btn"
            title="{{ $topbarNonLus > 0 ? $topbarNonLus . ' message(s) non lu(s)' : 'Messages' }}">
@@ -39,12 +34,10 @@
             @if($topbarNonLus > 0)<span class="a-dot"></span>@endif
         </a>
 
-        {{-- Site front-office --}}
         <a href="{{ url('/') }}" target="_blank" class="a-icon-btn" title="Voir le site">
             <i class="bi bi-box-arrow-up-right"></i>
         </a>
 
-        {{-- User dropdown --}}
         <div class="dropdown">
             <a href="#" class="a-user-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <img class="a-user-avatar"
@@ -69,11 +62,13 @@
                         <i class="bi bi-person me-2"></i>Mon profil
                     </a>
                 </li>
+                @if(Auth::user()->isSuperAdmin())
                 <li>
                     <a class="dropdown-item" href="{{ route('admin.parametres.edit') }}">
                         <i class="bi bi-gear me-2"></i>Paramètres
                     </a>
                 </li>
+                @endif
                 <li><hr class="dropdown-divider"></li>
                 <li>
                     @if(Route::has('admin.logout'))

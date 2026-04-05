@@ -98,18 +98,17 @@
 					<h5 class="mb-0">CTA Téléchargement</h5>
 				</div>
 				<div class="card-body row g-3">
-					<div class="col-md-4">
+					<div class="{{ auth()->user()->isAdministration() ? 'col-md-6' : 'col-12' }}">
 						<label class="form-label fw-semibold">Texte du bouton</label>
 						<input type="text" class="form-control" name="cta_texte" value="{{ old('cta_texte', $page->cta_texte) }}">
 					</div>
-					<div class="col-md-4">
-						<label class="form-label fw-semibold">Lien de téléchargement <x-admin.readonly-info /></label>
-						<input type="text" class="form-control bg-light" name="cta_lien" value="{{ old('cta_lien', $page->cta_lien) }}" readonly>
+					@if(auth()->user()->isAdministration())
+					<div class="col-md-6">
+						<label class="form-label fw-semibold">Lien de téléchargement</label>
+						<input type="text" class="form-control" name="cta_lien" value="{{ old('cta_lien', $page->cta_lien) }}" placeholder="https://… ou schéma d’app (ex. bracongopro://)">
+						<div class="form-text">Store, site ou deeplink vers l’application.</div>
 					</div>
-					<div class="col-md-4">
-						<label class="form-label fw-semibold">Lien PDF de présentation <x-admin.readonly-info /></label>
-						<input type="text" class="form-control bg-light" name="pdf_lien" value="{{ old('pdf_lien', $page->pdf_lien) }}" readonly>
-					</div>
+					@endif
 				</div>
 			</div>
 		</div>

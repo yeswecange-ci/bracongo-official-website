@@ -32,7 +32,6 @@ class FooterController extends Controller
 
         $footer = FooterSettings::instance();
 
-        // Gestion upload image certification (conserver l'ancienne si pas de nouveau fichier)
         if ($request->hasFile('certification_image')) {
             $file = $request->file('certification_image');
             $dir = 'uploads/footer';

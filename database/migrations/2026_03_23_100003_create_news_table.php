@@ -6,23 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Actualités, événements, activations, sponsoring, communiqués, médiathèque.
-     */
     public function up(): void
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
             $table->string('titre');
             $table->string('slug')->unique();
-            $table->string('type'); // actualites, evenements, activations, sponsoring, communiques, mediatheque
+            $table->string('type');
             $table->text('extrait')->nullable();
             $table->longText('contenu')->nullable();
             $table->string('image')->nullable();
             $table->string('lien_externe')->nullable();
             $table->date('date_publication')->nullable();
-            $table->date('date_evenement')->nullable(); // pour les événements
-            $table->string('lieu')->nullable(); // pour les événements
+            $table->date('date_evenement')->nullable();
+            $table->string('lieu')->nullable();
             $table->unsignedTinyInteger('ordre')->default(0);
             $table->boolean('is_active')->default(true);
             $table->timestamps();

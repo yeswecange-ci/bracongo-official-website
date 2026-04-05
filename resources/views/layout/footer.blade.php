@@ -1,5 +1,4 @@
 <div class="w-full">
-    {{-- Bande réseaux sociaux --}}
     @if(isset($reseaux) && $reseaux->isNotEmpty())
     <div class="bg-bracongo py-4 px-6 flex items-center justify-center gap-6 text-white">
         <span class="text-xl font-medium">Suivez nous</span>
@@ -25,7 +24,6 @@
     </div>
     @endif
 
-    {{-- Galerie footer --}}
     @if(isset($footerGallery) && $footerGallery->isNotEmpty())
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 w-full h-64 md:h-80 overflow-hidden">
         @foreach($footerGallery as $img)
@@ -37,7 +35,6 @@
     <footer class="bg-white pt-16 pb-8 border-t border-gray-100 font-sans">
         <div class="container mx-auto px-4 lg:px-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 items-start">
-                {{-- Logo + Mission --}}
                 <div class="space-y-6">
                     <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Logo" class="h-20 w-auto object-contain">
                     <p class="text-gray-800 text-sm font-bold leading-relaxed max-w-xs">
@@ -45,7 +42,6 @@
                     </p>
                 </div>
 
-                {{-- Liens nav (2 premières colonnes dynamiques) --}}
                 @if(isset($navItems) && $navItems->isNotEmpty())
                 @foreach($navItems->take(2) as $item)
                 <div class="space-y-6">
@@ -80,7 +76,6 @@
                 </div>
                 @endif
 
-                {{-- Contacts --}}
                 <div class="space-y-8">
                     <div class="space-y-4">
                         <h4 class="text-xl font-bold text-bracongo">Nos contacts</h4>
