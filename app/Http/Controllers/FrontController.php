@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Boisson;
+use App\Models\Produit;
 use App\Models\CandidatureEmploi;
 use App\Models\HeroSlide;
 use App\Models\Marque;
@@ -83,6 +84,13 @@ class FrontController extends Controller
         $offres = OffreEmploi::where('is_active', true)->orderBy('ordre')->get();
 
         return view('carriere', compact('carriere', 'offres'));
+    }
+
+    public function boutique()
+    {
+        $produits = Produit::actifs()->paginate(12)->withQueryString();
+
+        return view('boutique', compact('produits'));
     }
 
     public function pro()
