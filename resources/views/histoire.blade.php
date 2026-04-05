@@ -5,12 +5,12 @@
 @section('content')
     <section class="w-full">
         <div class="w-full h-[500px] md:h-[600px] overflow-hidden">
-            <img src="{{ asset($histoire->hero_image ?? 'img/bracongo.jpg') }}" alt="Usine Bracongo" class="w-full h-full object-cover">
+            <img src="{{ asset($histoire->hero_image ?? 'img/bracongo.jpg') }}" alt="Usine Bracongo" class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async">
         </div>
 
         <div class="container mx-auto px-4 py-16 max-w-5xl">
             <div class="flex items-center justify-center gap-3 mb-12">
-                <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Icon" class="h-8 w-auto">
+                <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="" class="h-8 w-auto" loading="lazy" decoding="async" aria-hidden="true">
                 <h1 class="text-3xl md:text-4xl font-bold text-gray-900">{{ $histoire->titre ?? 'Notre histoire' }}</h1>
             </div>
 
@@ -31,13 +31,13 @@
     <section class="container mx-auto px-4 py-16 max-w-6xl">
         <div class="grid grid-cols-1 gap-6 mb-20">
             <div class="rounded-[2rem] overflow-hidden h-[300px] md:h-[400px]">
-                <img src="{{ asset($histoire->image_brasserie ?? 'img/Frame-115.png') }}" alt="Brasserie" class="w-full h-full object-cover">
+                <img src="{{ asset($histoire->image_brasserie ?? 'img/Frame-115.png') }}" alt="Brasserie" class="w-full h-full object-cover" loading="lazy" decoding="async">
             </div>
         </div>
 
         <div id="valeurs" class="text-center mb-24">
             <div class="flex items-center justify-center gap-3 mb-12">
-                <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-8 w-auto">
+                <img src="{{ asset('img/Group.png') }}" alt="" class="h-8 w-auto" loading="lazy" decoding="async" aria-hidden="true">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900">{{ $histoire->valeurs_titre ?? 'Nos valeurs' }}</h2>
             </div>
 
@@ -54,13 +54,13 @@
         <div id="rse" class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center py-12">
             <div class="space-y-8">
                 <div class="flex items-center gap-3">
-                    <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-8 w-auto">
+                    <img src="{{ asset('img/Group.png') }}" alt="" class="h-8 w-auto" loading="lazy" decoding="async" aria-hidden="true">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900">{{ $histoire->rse_titre ?? 'Nos engagements RSE' }}</h2>
                 </div>
 
                 <div class="lg:hidden">
                     <div class="rounded-[2rem] overflow-hidden shadow-xl h-[350px]">
-                        <img src="{{ asset($histoire->rse_image ?? 'img/Frame 33.png') }}" alt="Engagements RSE" class="w-full h-full object-cover">
+                        <img src="{{ asset($histoire->rse_image ?? 'img/Frame 33.png') }}" alt="Engagements RSE" class="w-full h-full object-cover" loading="lazy" decoding="async">
                     </div>
                 </div>
 
@@ -86,7 +86,7 @@
 
         <div id="presence" class="py-24">
             <div class="flex items-center justify-center gap-3 mb-12 text-center">
-                <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-8 w-auto">
+                <img src="{{ asset('img/Group.png') }}" alt="" class="h-8 w-auto" loading="lazy" decoding="async" aria-hidden="true">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 uppercase tracking-widest">{{ $histoire->presence_titre ?? 'Notre présence nationale' }}</h2>
             </div>
 

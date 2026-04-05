@@ -7,11 +7,11 @@
         <div id="hero-carousel" class="relative w-full h-[500px] md:h-[900px]">
             @forelse($slides as $i => $slide)
             <div class="carousel-item absolute inset-0 transition-opacity duration-1000 {{ $i === 0 ? 'opacity-100' : 'opacity-0' }}">
-                <img src="{{ asset($slide->image) }}" alt="{{ $slide->alt }}" class="w-full h-full object-cover">
+                <img src="{{ asset($slide->image) }}" alt="{{ $slide->alt }}" class="w-full h-full object-cover" @if($i === 0) loading="eager" fetchpriority="high" @else loading="lazy" @endif decoding="async">
             </div>
             @empty
             <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-100">
-                <img src="{{ asset('img/coverhome.jpg') }}" alt="Hero" class="w-full h-full object-cover">
+                <img src="{{ asset('img/coverhome.jpg') }}" alt="Hero" class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async">
             </div>
             @endforelse
         </div>
@@ -79,7 +79,7 @@
 
     <div class="container mx-auto px-4 py-16">
         <div class="flex items-center justify-center gap-4 mb-12">
-            <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-10 w-auto">
+            <img src="{{ asset('img/Group.png') }}" alt="" class="h-10 w-auto" loading="lazy" decoding="async" aria-hidden="true">
             <h1 class="text-3xl font-bold text-gray-900 uppercase tracking-widest">{{ $accueil->actualites_titre ?? 'Dernières actualités' }}</h1>
         </div>
         
@@ -92,7 +92,7 @@
             <a href="{{ $href }}" @if($item->lien_externe) target="_blank" rel="noopener" @endif class="bg-[#F8F8F8] rounded-[2rem] overflow-hidden flex flex-col h-full shadow-sm hover:shadow-md transition-shadow text-left">
                 <div class="h-64 overflow-hidden bg-gray-100">
                     @if($item->image)
-                    <img src="{{ asset($item->image) }}" alt="{{ $item->titre }}" class="w-full h-full object-cover">
+                    <img src="{{ asset($item->image) }}" alt="{{ $item->titre }}" class="w-full h-full object-cover" loading="lazy" decoding="async">
                     @else
                     <div class="w-full h-full flex items-center justify-center text-gray-300">
                         <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke-width="1.5"/></svg>
@@ -126,13 +126,13 @@
 
     <section class="relative w-full h-[500px] mt-20 overflow-hidden">
         <div class="absolute inset-0">
-            <img src="{{ asset($accueil->qui_image_fond ?? 'img/brasserie.jpg') }}" alt="Brasserie Bracongo" class="w-full h-full object-cover">
+            <img src="{{ asset($accueil->qui_image_fond ?? 'img/brasserie.jpg') }}" alt="Brasserie Bracongo" class="w-full h-full object-cover" loading="lazy" decoding="async">
             <div class="absolute inset-0 bg-black/60"></div>
         </div>
 
         <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 max-w-4xl mx-auto">
             <div class="flex items-center gap-3 mb-6">
-                <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-8 w-auto">
+                <img src="{{ asset('img/Group.png') }}" alt="" class="h-8 w-auto" loading="lazy" decoding="async" aria-hidden="true">
                 <h2 class="text-white text-3xl md:text-5xl font-bold tracking-tight">{{ $accueil->qui_titre ?? 'Qui sommes-nous ?' }}</h2>
             </div>
             
@@ -151,7 +151,7 @@
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
                 <div class="flex items-center justify-center gap-3 mb-4">
-                    <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Icon" class="h-6 w-auto">
+                    <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="" class="h-6 w-auto" loading="lazy" decoding="async" aria-hidden="true">
                     <h2 class="text-3xl font-bold text-gray-900">{{ $accueil->marques_titre ?? 'Nos marques' }}</h2>
                 </div>
                 <p class="text-gray-600 max-w-3xl mx-auto text-sm leading-relaxed">
@@ -179,20 +179,20 @@
                 @continue(!$m1)
                 <div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-12 transition-all duration-500 hover:shadow-2xl">
                     <div class="absolute top-10 left-0 right-0 flex justify-center opacity-60 pointer-events-none group-hover:opacity-100 transition-opacity duration-500">
-                        <img src="{{ asset('img/Group2.png') }}" alt="" class="w-4/5 h-auto object-contain brightness-100 hue-rotate-[340deg] saturate-[500%] contrast-[150%]">
+                        <img src="{{ asset('img/Group2.png') }}" alt="" class="w-4/5 h-auto object-contain brightness-100 hue-rotate-[340deg] saturate-[500%] contrast-[150%]" loading="lazy" decoding="async" aria-hidden="true">
                     </div>
                     @if($m2)
                     <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
-                        <img src="{{ asset($m2->image ?? 'img/marron.png') }}" alt="" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:-translate-x-20 group-hover:-rotate-12 transition-all duration-500 ease-out">
+                        <img src="{{ asset($m2->image ?? 'img/marron.png') }}" alt="" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:-translate-x-20 group-hover:-rotate-12 transition-all duration-500 ease-out" loading="lazy" decoding="async">
                     </div>
                     @endif
                     @if($m3)
                     <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
-                        <img src="{{ asset($m3->image ?? 'img/marron.png') }}" alt="" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:translate-x-20 group-hover:rotate-12 transition-all duration-500 ease-out">
+                        <img src="{{ asset($m3->image ?? 'img/marron.png') }}" alt="" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:translate-x-20 group-hover:rotate-12 transition-all duration-500 ease-out" loading="lazy" decoding="async">
                     </div>
                     @endif
                     <div class="absolute -top-20 left-0 right-0 flex justify-center z-10 pointer-events-none transition-transform duration-500 group-hover:-translate-y-4 group-hover:scale-105">
-                        <img src="{{ asset($m1->image ?? 'img/marron.png') }}" alt="{{ $m1->nom }}" class="h-80 w-auto object-contain drop-shadow-2xl">
+                        <img src="{{ asset($m1->image ?? 'img/marron.png') }}" alt="{{ $m1->nom }}" class="h-80 w-auto object-contain drop-shadow-2xl" loading="lazy" decoding="async">
                     </div>
                     <div class="relative z-20 text-center px-4">
                         <h3 class="text-white text-2xl font-bold mb-8">{{ $categoriesMarques[$cat] ?? $cat }}</h3>
@@ -211,13 +211,13 @@
             <div class="flex flex-col lg:flex-row items-center gap-12">
                 <div class="w-full lg:w-1/2">
                     <div class="flex items-center gap-3 mb-6">
-                        <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Icon" class="h-6 w-auto">
+                        <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="" class="h-6 w-auto" loading="lazy" decoding="async" aria-hidden="true">
                         <h2 class="text-3xl md:text-4xl font-bold text-gray-900">{{ $accueil->rejoignez_titre ?? 'Rejoignez nous' }}</h2>
                     </div>
 
                     <div class="lg:hidden mb-10">
                         <div class="rounded-[2rem] overflow-hidden shadow-2xl">
-                            <img src="{{ asset($accueil->rejoignez_image ?? 'img/rejoignez.png') }}" alt="Rejoignez Bracongo" class="w-full h-auto object-cover">
+                            <img src="{{ asset($accueil->rejoignez_image ?? 'img/rejoignez.png') }}" alt="Rejoignez Bracongo" class="w-full h-auto object-cover" loading="lazy" decoding="async">
                         </div>
                     </div>
                     
@@ -233,7 +233,7 @@
 
                 <div class="hidden lg:block w-full lg:w-1/2">
                     <div class="rounded-[2rem] overflow-hidden shadow-2xl">
-                        <img src="{{ asset($accueil->rejoignez_image ?? 'img/rejoignez.png') }}" alt="Rejoignez Bracongo" class="w-full h-auto object-cover">
+                        <img src="{{ asset($accueil->rejoignez_image ?? 'img/rejoignez.png') }}" alt="Rejoignez Bracongo" class="w-full h-auto object-cover" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 <nav class="bg-white py-4 px-6 md:px-12 flex items-center justify-between shadow-sm font-sans relative z-50" data-search-endpoint="{{ route('recherche.autocomplete') }}">
     <div class="flex-shrink-0">
         <a href="{{ route('Accueil') }}">
-            <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Logo" class="h-16 w-auto object-contain">
+            <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Logo" class="h-16 w-auto object-contain" loading="eager" fetchpriority="high" decoding="async">
         </a>
     </div>
 

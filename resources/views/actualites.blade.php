@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
-        <img src="{{ asset('img/bracongo.jpg') }}" alt="Actualités" class="w-full h-full object-cover">
+        <img src="{{ asset('img/bracongo.jpg') }}" alt="Actualités" class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async">
         <div class="absolute inset-0 bg-black/60"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-center uppercase tracking-[0.2em]">
@@ -39,7 +39,7 @@
                     <a href="{{ route('actualites.show', $item->slug) }}" class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-bracongo focus-visible:ring-offset-2 rounded-t-[1.5rem]">
                         @if($item->image)
                         <div class="h-52 overflow-hidden">
-                            <img src="{{ asset($item->image) }}" alt="{{ $item->titre }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                            <img src="{{ asset($item->image) }}" alt="{{ $item->titre }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async">
                         </div>
                         @else
                         <div class="h-52 bg-gray-100 flex items-center justify-center">

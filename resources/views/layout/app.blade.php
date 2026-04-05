@@ -50,7 +50,7 @@
 </head>
 <body class="font-sans antialiased overflow-x-hidden loading">
     <div id="loader" class="loader-wrapper">
-        <img src="{{ asset(isset($parametres) && filled($parametres->logo ?? null) ? $parametres->logo : 'img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Loading" class="loader-logo">
+        <img src="{{ asset(isset($parametres) && filled($parametres->logo ?? null) ? $parametres->logo : 'img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Loading" class="loader-logo" loading="eager" fetchpriority="high" decoding="sync">
     </div>
 
     <div class="min-h-screen bg-white overflow-x-hidden">
@@ -64,7 +64,7 @@
     </div>
 
     <script>
-        window.addEventListener('load', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('img').forEach(img => {
                 if (!img.getAttribute('loading')) {
                     img.setAttribute('loading', 'lazy');
@@ -72,11 +72,9 @@
             });
 
             const loader = document.getElementById('loader');
-            setTimeout(() => {
-                loader.style.opacity = '0';
-                loader.style.visibility = 'hidden';
-                document.body.classList.remove('loading');
-            }, 150);
+            loader.style.opacity = '0';
+            loader.style.visibility = 'hidden';
+            document.body.classList.remove('loading');
         });
     </script>
 </body>
