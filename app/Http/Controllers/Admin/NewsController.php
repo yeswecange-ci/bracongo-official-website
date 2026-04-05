@@ -97,6 +97,7 @@ class NewsController extends Controller
 
     public function destroy(News $news)
     {
+        $this->deleteImageFile($news->image);
         $news->delete();
         return redirect()->route('admin.news.index')->with('success', 'News supprimée.');
     }

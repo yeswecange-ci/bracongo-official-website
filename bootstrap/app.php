@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureAdminRole;
 use App\Http\Middleware\EnsureBackOfficeAuthenticated;
 use App\Http\Middleware\EnsureSuperAdmin;
 use App\Http\Middleware\EnsureTwoFactorSetupComplete;
@@ -25,6 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'backoffice.auth' => EnsureBackOfficeAuthenticated::class,
             'two_factor.setup' => EnsureTwoFactorSetupComplete::class,
             'super_admin' => EnsureSuperAdmin::class,
+            'admin_role'  => EnsureAdminRole::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

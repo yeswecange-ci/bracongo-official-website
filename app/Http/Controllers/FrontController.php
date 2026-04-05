@@ -24,6 +24,7 @@ use App\Models\Valeur;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -283,9 +284,24 @@ class FrontController extends Controller
 
     private function storeCandidatureCvFile(UploadedFile $file, string $nom, string $prenom, OffreEmploi $offre): string
     {
-        $ext = strtolower($file->getClientOriginalExtension() ?: (string) $file->guessExtension() ?: 'pdf');
-        if (! in_array($ext, ['pdf', 'doc', 'docx'], true)) {
-            $ext = 'pdf';
+        // Déterminer l'extension via le vrai type MIME, pas le nom fourni par le client
+        $allowedMimes = [
+            'application/pdf'  => 'pdf',
+            'application/msword' => 'doc',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
+        ];
+        $mime = $file->getMimeType() ?? '';
+        $ext = $allowedMimes[$mime] ?? null;
+
+        // Fallback sur l'extension cliente uniquement si le MIME est reconnu
+        if ($ext === null) {
+            $clientExt = strtolower($file->getClientOriginalExtension());
+            $ext = in_array($clientExt, ['pdf', 'doc', 'docx'], true) ? $clientExt : null;
+        }
+
+        // Refus si aucun type valide détecté
+        if ($ext === null) {
+            abort(422, 'Format de fichier non autorisé.');
         }
 
         $nomSeg = $this->sanitizeCandidatureFilenameSegment($nom);

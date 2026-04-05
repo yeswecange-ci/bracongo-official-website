@@ -111,6 +111,9 @@ class BoissonController extends Controller
 
     public function destroy(Boisson $boisson)
     {
+        foreach (['hero_image', 'image', 'logo'] as $field) {
+            $this->deleteImageFile($boisson->$field);
+        }
         $boisson->delete();
         return redirect()->route('admin.boissons.index')->with('success', 'Boisson supprimée.');
     }

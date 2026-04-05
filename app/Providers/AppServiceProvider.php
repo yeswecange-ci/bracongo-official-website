@@ -40,6 +40,13 @@ class AppServiceProvider extends ServiceProvider
             return Limit::perMinute(10)->by($request->ip());
         });
 
+        RateLimiter::for('contact-store', function (Request $request) {
+            return [
+                Limit::perMinute(3)->by('contact-m|'.(string) $request->ip()),
+                Limit::perHour(10)->by('contact-h|'.(string) $request->ip()),
+            ];
+        });
+
         RateLimiter::for('candidature-emploi', function (Request $request) {
             $ip = (string) $request->ip();
             $emailKey = strtolower((string) $request->input('email', ''));

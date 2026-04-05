@@ -53,7 +53,9 @@ Route::post('/Carriere/offre/{offre}/candidature', [FrontController::class, 'off
     ->middleware('throttle:candidature-emploi')
     ->name('carriere.offre.candidature.store');
 Route::get('/Contact', [FrontController::class, 'contact'])->name('contact');
-Route::post('/Contact', [FrontController::class, 'contactStore'])->name('contact.store');
+Route::post('/Contact', [FrontController::class, 'contactStore'])
+    ->middleware('throttle:contact-store')
+    ->name('contact.store');
 Route::get('Bracongo-pro', [FrontController::class, 'pro'])->name('pro');
 
 Route::get('/api/recherche', [FrontController::class, 'searchAutocomplete'])->name('recherche.autocomplete');
@@ -134,36 +136,33 @@ Route::prefix('back-office')->name('admin.')->group(function () {
                 ->where('categorie', 'eaux|gazeuses|energisantes');
         });
 
-        Route::resource('hero-slides', HeroSlideController::class)->names('hero-slides');
+        // Réservé admin/super_admin uniquement
+        Route::middleware('admin_role')->group(function () {
+            Route::resource('hero-slides', HeroSlideController::class)->names('hero-slides');
+            Route::resource('valeurs', ValeurController::class)->names('valeurs');
+            Route::resource('offres-emploi', OffreEmploiController::class)->names('offres-emploi');
+            Route::resource('footer-gallery', FooterGalleryController::class)->names('footer-gallery');
+            Route::resource('reseaux-sociaux', ReseauSocialController::class)->names('reseaux-sociaux');
+            Route::resource('marques', MarqueController::class)->names('marques');
+            Route::resource('boissons', BoissonController::class)->names('boissons');
+            Route::resource('produits', ProduitController::class)->names('produits');
+            Route::resource('news', NewsController::class)->names('news');
 
-        Route::resource('valeurs', ValeurController::class)->names('valeurs');
+            Route::get('/candidatures-emploi', [CandidatureEmploiController::class, 'index'])->name('candidatures-emploi.index');
+            Route::get('/candidatures-emploi/{candidature_emploi}/cv', [CandidatureEmploiController::class, 'downloadCv'])->name('candidatures-emploi.cv');
+            Route::get('/candidatures-emploi/{candidature_emploi}', [CandidatureEmploiController::class, 'show'])->name('candidatures-emploi.show');
 
-        Route::resource('offres-emploi', OffreEmploiController::class)->names('offres-emploi');
+            Route::get('/messages', [MessageContactController::class, 'index'])->name('messages.index');
+            Route::post('/messages/{messageContact}/reply', [MessageContactController::class, 'reply'])->name('messages.reply');
+            Route::get('/messages/{messageContact}', [MessageContactController::class, 'show'])->name('messages.show');
+            Route::patch('/messages/{messageContact}/read', [MessageContactController::class, 'markAsRead'])->name('messages.read');
+            Route::delete('/messages/{messageContact}', [MessageContactController::class, 'destroy'])->name('messages.destroy');
 
-        Route::get('/candidatures-emploi', [CandidatureEmploiController::class, 'index'])->name('candidatures-emploi.index');
-        Route::get('/candidatures-emploi/{candidature_emploi}/cv', [CandidatureEmploiController::class, 'downloadCv'])->name('candidatures-emploi.cv');
-        Route::get('/candidatures-emploi/{candidature_emploi}', [CandidatureEmploiController::class, 'show'])->name('candidatures-emploi.show');
+            Route::get('/footer', [FooterController::class, 'edit'])->name('footer.edit');
+            Route::put('/footer', [FooterController::class, 'update'])->name('footer.update');
+        });
 
-        Route::get('/messages', [MessageContactController::class, 'index'])->name('messages.index');
-        Route::post('/messages/{messageContact}/reply', [MessageContactController::class, 'reply'])->name('messages.reply');
-        Route::get('/messages/{messageContact}', [MessageContactController::class, 'show'])->name('messages.show');
-        Route::patch('/messages/{messageContact}/read', [MessageContactController::class, 'markAsRead'])->name('messages.read');
-        Route::delete('/messages/{messageContact}', [MessageContactController::class, 'destroy'])->name('messages.destroy');
-
+        // Navigation : déjà protégé dans le constructeur du controller
         Route::resource('navigation', NavigationItemController::class)->names('navigation');
-
-        Route::get('/footer', [FooterController::class, 'edit'])->name('footer.edit');
-        Route::put('/footer', [FooterController::class, 'update'])->name('footer.update');
-
-        Route::resource('footer-gallery', FooterGalleryController::class)->names('footer-gallery');
-
-        Route::resource('reseaux-sociaux', ReseauSocialController::class)->names('reseaux-sociaux');
-
-        Route::resource('marques', MarqueController::class)->names('marques');
-        Route::resource('boissons', BoissonController::class)->names('boissons');
-
-        Route::resource('produits', ProduitController::class)->names('produits');
-
-        Route::resource('news', NewsController::class)->names('news');
     });
 });
