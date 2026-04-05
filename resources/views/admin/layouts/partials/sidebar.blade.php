@@ -223,10 +223,16 @@
     <li>
         <a href="{{ route('admin.produits.index') }}"
            class="a-nav-link {{ request()->routeIs('admin.produits.*') ? 'is-active' : '' }}">
-            <i class="a-nav-icon bi bi-bag"></i>
-            <span class="a-nav-text">
-                Produits&nbsp;<small style="opacity:.55;font-size:.7em;font-weight:400">(backend)</small>
-            </span>
+            <i class="a-nav-icon bi bi-box-seam"></i>
+            <span class="a-nav-text">Produits</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ route('admin.commandes.index') }}"
+           class="a-nav-link {{ request()->routeIs('admin.commandes.*') ? 'is-active' : '' }}">
+            <i class="a-nav-icon bi bi-bag-check"></i>
+            <span class="a-nav-text">Commandes</span>
         </a>
     </li>
 

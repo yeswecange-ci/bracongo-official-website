@@ -22,6 +22,14 @@
         </div>
     </div>
 
+    {{-- Flash --}}
+    @if(session('success'))
+    <div class="bg-green-50 border-b border-green-200 text-green-800 text-sm font-semibold text-center py-3 px-4">
+        {{ session('success') }} —
+        <a href="{{ route('panier') }}" class="underline hover:text-green-900">Voir le panier</a>
+    </div>
+    @endif
+
     {{-- Contenu --}}
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4 lg:px-12 max-w-7xl">
@@ -94,8 +102,8 @@
                             </p>
                             @endif
 
-                            {{-- Prix + action --}}
-                            <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
+                            {{-- Prix --}}
+                            <div class="mt-auto pt-3 border-t border-gray-100">
                                 @if($produit->prix !== null)
                                     <span class="text-bracongo font-bold text-lg">
                                         {{ number_format((float) $produit->prix, 0, ',', ' ') }}
@@ -105,13 +113,23 @@
                                     <span class="text-gray-400 text-sm font-medium italic">Prix sur demande</span>
                                 @endif
 
-                                <a href="{{ route('contact') }}"
-                                   class="inline-flex items-center gap-1.5 px-4 py-2 bg-bracongo text-white text-xs font-bold rounded-full hover:opacity-90 transition-all group/btn">
-                                    Commander
-                                    <svg class="w-3 h-3 transform group-hover/btn:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
-                                    </svg>
-                                </a>
+                                {{-- Ajouter au panier --}}
+                                @if($produit->stock === null || $produit->stock > 0)
+                                <form action="{{ route('panier.ajouter', $produit) }}" method="POST" class="mt-3 flex items-center gap-2">
+                                    @csrf
+                                    <input type="number" name="quantite" value="1" min="1" max="99"
+                                           class="w-14 text-center border border-gray-200 rounded-full text-sm py-1.5 focus:outline-none focus:border-bracongo">
+                                    <button type="submit"
+                                            class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-bracongo text-white text-xs font-bold rounded-full hover:opacity-90 transition-all">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                        </svg>
+                                        Ajouter
+                                    </button>
+                                </form>
+                                @else
+                                <p class="mt-3 text-xs text-gray-400 italic text-center">Indisponible</p>
+                                @endif
                             </div>
                         </div>
                     </article>

@@ -86,6 +86,11 @@ class FrontController extends Controller
         return view('carriere', compact('carriere', 'offres'));
     }
 
+    public function faq()
+    {
+        return view('faq');
+    }
+
     public function boutique()
     {
         $produits = Produit::actifs()->paginate(12)->withQueryString();

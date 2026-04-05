@@ -47,6 +47,13 @@ class AppServiceProvider extends ServiceProvider
             ];
         });
 
+        RateLimiter::for('commande', function (Request $request) {
+            return [
+                Limit::perMinute(5)->by('cmd-m|'.(string) $request->ip()),
+                Limit::perHour(20)->by('cmd-h|'.(string) $request->ip()),
+            ];
+        });
+
         RateLimiter::for('candidature-emploi', function (Request $request) {
             $ip = (string) $request->ip();
             $emailKey = strtolower((string) $request->input('email', ''));
