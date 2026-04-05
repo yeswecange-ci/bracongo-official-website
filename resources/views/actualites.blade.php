@@ -103,6 +103,35 @@
                 <p class="text-lg font-medium">Aucune actualité disponible pour le moment.</p>
             </div>
             @endif
+
+            @if($news->hasPages())
+            <div class="mt-12 flex justify-center">
+                <nav class="flex items-center gap-1" aria-label="Pagination">
+                    {{-- Précédent --}}
+                    @if($news->onFirstPage())
+                        <span class="px-4 py-2 rounded-full text-sm text-gray-300 border border-gray-200 cursor-not-allowed">←</span>
+                    @else
+                        <a href="{{ $news->previousPageUrl() }}" class="px-4 py-2 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-bracongo hover:text-bracongo transition-all">←</a>
+                    @endif
+
+                    {{-- Pages --}}
+                    @foreach($news->getUrlRange(1, $news->lastPage()) as $page => $url)
+                        @if($page == $news->currentPage())
+                            <span class="px-4 py-2 rounded-full text-sm font-bold bg-bracongo text-white">{{ $page }}</span>
+                        @else
+                            <a href="{{ $url }}" class="px-4 py-2 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-bracongo hover:text-bracongo transition-all">{{ $page }}</a>
+                        @endif
+                    @endforeach
+
+                    {{-- Suivant --}}
+                    @if($news->hasMorePages())
+                        <a href="{{ $news->nextPageUrl() }}" class="px-4 py-2 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-bracongo hover:text-bracongo transition-all">→</a>
+                    @else
+                        <span class="px-4 py-2 rounded-full text-sm text-gray-300 border border-gray-200 cursor-not-allowed">→</span>
+                    @endif
+                </nav>
+            </div>
+            @endif
         </div>
     </section>
 @endsection
