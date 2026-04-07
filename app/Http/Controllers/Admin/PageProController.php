@@ -20,7 +20,7 @@ class PageProController extends Controller
     public function update(Request $request)
     {
         $rules = [
-            'hero_image'            => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'hero_image'            => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'hero_titre'            => 'nullable|string|max:255',
             'description'           => 'nullable|string',
             'pourquoi_titre'        => 'nullable|string|max:255',
@@ -28,7 +28,7 @@ class PageProController extends Controller
             'pourquoi_items'        => 'nullable|string',
             'fonctionnalites_titre' => 'nullable|string|max:255',
             'fonctionnalites_items' => 'nullable|string',
-            'app_image'             => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'app_image'             => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'cta_texte'             => 'nullable|string|max:100',
         ];
         if (Auth::user()->isAdministration()) {

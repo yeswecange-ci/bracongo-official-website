@@ -19,7 +19,7 @@ class PageWelcomeController extends Controller
     public function update(Request $request)
     {
         $data = $request->validate([
-            'fond_image'          => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'fond_image'          => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'titre'               => 'required|string|max:255',
             'texte_avertissement' => 'required|string',
             'btn_majeur_texte'    => 'required|string|max:100',

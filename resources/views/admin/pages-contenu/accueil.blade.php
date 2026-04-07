@@ -63,7 +63,7 @@
 						<textarea class="form-control" name="qui_texte" rows="4">{{ old('qui_texte', $page->qui_texte) }}</textarea>
 					</div>
 					<div class="col-md-6">
-						<x-admin.image-upload name="qui_image_fond" label="Image de fond" :value="$page->qui_image_fond ?? null" help="PNG, JPG, GIF — max 2 Mo" />
+						<x-admin.image-upload name="qui_image_fond" label="Image de fond" :value="$page->qui_image_fond ?? null" help="PNG, JPG, GIF — max 10 Mo" />
 					</div>
 					<div class="col-md-3">
 						<label class="form-label fw-semibold">Texte CTA</label>
@@ -112,7 +112,7 @@
 						<input type="text" class="form-control" name="rejoignez_titre" value="{{ old('rejoignez_titre', $page->rejoignez_titre) }}">
 					</div>
 					<div class="col-md-4">
-						<x-admin.image-upload name="rejoignez_image" label="Image" :value="$page->rejoignez_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
+						<x-admin.image-upload name="rejoignez_image" label="Image" :value="$page->rejoignez_image ?? null" help="PNG, JPG, GIF — max 10 Mo" />
 					</div>
 					<div class="col-md-2">
 						<label class="form-label fw-semibold">Texte CTA</label>

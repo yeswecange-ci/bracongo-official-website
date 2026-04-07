@@ -21,7 +21,7 @@ class PageBieresController extends Controller
     public function update(Request $request)
     {
         $data = $request->validate([
-            'hero_image' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'hero_image' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'hero_titre' => 'nullable|string|max:255',
             'hero_image_alt' => 'nullable|string|max:255',
             'breadcrumb_libelle' => 'nullable|string|max:100',

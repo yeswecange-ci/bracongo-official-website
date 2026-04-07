@@ -33,11 +33,11 @@
 			<div class="card">
 				<div class="card-header"><h5>Images</h5></div>
 				<div class="card-body">
-					<x-admin.image-upload name="hero_image" label="Image bannière hero" :value="$boisson->hero_image" help="PNG, JPG, GIF — max 2 Mo" />
+					<x-admin.image-upload name="hero_image" label="Image bannière hero" :value="$boisson->hero_image" help="PNG, JPG, GIF — max 10 Mo" />
 					<hr class="my-3">
-					<x-admin.image-upload name="image" label="Image produit/bouteille" :value="$boisson->image" help="PNG, JPG, GIF — max 2 Mo" />
+					<x-admin.image-upload name="image" label="Image produit/bouteille" :value="$boisson->image" help="PNG, JPG, GIF — max 10 Mo" />
 					<hr class="my-3">
-					<x-admin.image-upload name="logo" label="Logo" :value="$boisson->logo" help="PNG, JPG, GIF — max 2 Mo" />
+					<x-admin.image-upload name="logo" label="Logo" :value="$boisson->logo" help="PNG, JPG, GIF — max 10 Mo" />
 				</div>
 			</div>
 

@@ -44,7 +44,7 @@
 						<input type="text" class="form-control" name="breadcrumb_libelle" value="{{ old('breadcrumb_libelle', $page->breadcrumb_libelle) }}">
 					</div>
 					<div class="col-md-6">
-						<x-admin.image-upload name="hero_image" label="Image bannière" :value="$page->hero_image ?? null" help="PNG, JPG, GIF, WebP — max 2 Mo" />
+						<x-admin.image-upload name="hero_image" label="Image bannière" :value="$page->hero_image ?? null" help="PNG, JPG, GIF, WebP — max 10 Mo" />
 					</div>
 					<div class="col-12 col-md-6">
 						<label class="form-label fw-semibold">Texte alternatif de l’image</label>

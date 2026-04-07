@@ -38,15 +38,11 @@
 		<hr class="my-2">
 		<h6 class="fw-600 text-muted mb-3" style="font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Dates &amp; Localisation</h6>
 	</div>
-	<div class="col-md-4">
-		<label class="form-label fw-semibold">Date de publication</label>
-		<input type="date" class="form-control" name="date_publication" value="{{ old('date_publication', isset($news) && $news->date_publication ? $news->date_publication->format('Y-m-d') : '') }}">
-	</div>
-	<div class="col-md-4">
+	<div class="col-md-6">
 		<label class="form-label fw-semibold">Date de l'événement <small class="text-muted">(si événement)</small></label>
 		<input type="date" class="form-control" name="date_evenement" value="{{ old('date_evenement', isset($news) && $news->date_evenement ? $news->date_evenement->format('Y-m-d') : '') }}">
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-6">
 		<label class="form-label fw-semibold">Lieu <small class="text-muted">(si événement)</small></label>
 		<input type="text" class="form-control" name="lieu" value="{{ old('lieu', $news->lieu ?? '') }}" placeholder="Kinshasa, RDC">
 	</div>

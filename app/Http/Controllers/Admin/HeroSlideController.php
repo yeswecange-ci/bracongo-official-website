@@ -24,7 +24,7 @@ class HeroSlideController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'image'     => 'required|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'image'     => 'required|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'alt'       => 'nullable|string|max:255',
             'ordre'     => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
@@ -50,7 +50,7 @@ class HeroSlideController extends Controller
             'ordre'     => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
         ];
-        $rules['image'] = $request->hasFile('image') ? 'required|image|mimes:jpeg,jpg,png,gif,webp|max:2048' : 'nullable';
+        $rules['image'] = $request->hasFile('image') ? 'required|image|mimes:jpeg,jpg,png,gif,webp|max:10240' : 'nullable';
         $data = $request->validate($rules);
         $data['is_active'] = $request->boolean('is_active');
         if ($request->hasFile('image')) {

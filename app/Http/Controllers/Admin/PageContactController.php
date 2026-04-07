@@ -20,7 +20,7 @@ class PageContactController extends Controller
     public function update(Request $request)
     {
         $rules = [
-            'hero_image'          => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'hero_image'          => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'hero_titre'          => 'required|string|max:255',
             'form_titre'          => 'required|string|max:255',
             'denomination'        => 'required|string',

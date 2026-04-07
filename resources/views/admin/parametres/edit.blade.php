@@ -29,7 +29,7 @@
 				<div class="card-body">
 					<div class="row g-4">
 						<div class="col-12">
-							<x-admin.image-upload name="logo" label="Logo" :value="$parametres->logo ?? null" help="PNG, JPG, GIF — max 2 Mo" />
+							<x-admin.image-upload name="logo" label="Logo" :value="$parametres->logo ?? null" help="PNG, JPG, GIF — max 10 Mo" />
 						</div>
 						<div class="col-12">
 							<label class="form-label fw-semibold">Suggestions de recherche <span class="text-muted small">(séparées par des virgules)</span></label>
@@ -125,7 +125,7 @@
 				<h5 class="mb-0 small fw-bold text-muted text-uppercase">Favicon &amp; référencement</h5>
 			</div>
 			<div class="card-body">
-				<x-admin.image-upload name="favicon" label="Favicon" :value="$parametres->favicon ?? null" help="PNG, ICO, JPG — max 1 Mo" />
+				<x-admin.image-upload name="favicon" label="Favicon" :value="$parametres->favicon ?? null" help="PNG, ICO, JPG — max 10 Mo" />
 				<p class="form-text mb-0">Icône affichée dans l’onglet du navigateur sur le site public. Si aucun fichier n’est choisi, le logo par défaut reste utilisé.</p>
 				@if(filled(trim((string) ($parametres->seo_meta_description ?? ''))))
 				<div class="mt-3 p-3 rounded bg-light border small">

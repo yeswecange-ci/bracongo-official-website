@@ -25,7 +25,7 @@ class FooterGalleryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'image' => 'required|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'alt'   => 'nullable|string|max:255',
             'ordre' => 'nullable|integer|min:0',
         ]);
@@ -50,7 +50,7 @@ class FooterGalleryController extends Controller
             'ordre' => 'nullable|integer|min:0',
         ];
         $rules['image'] = $request->hasFile('image')
-            ? 'required|image|mimes:jpeg,jpg,png,gif,webp|max:2048'
+            ? 'required|image|mimes:jpeg,jpg,png,gif,webp|max:10240'
             : 'nullable';
 
         $data = $request->validate($rules);

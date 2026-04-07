@@ -35,7 +35,7 @@
 				</div>
 				<div class="card-body row g-3">
 					<div class="col-md-6">
-						<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
+						<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 10 Mo" />
 					</div>
 					<div class="col-md-6">
 						<label class="form-label fw-semibold">Titre de la page <span class="text-danger">*</span></label>
@@ -66,7 +66,7 @@
 						<textarea class="form-control" name="paragraphe_3" rows="4">{{ old('paragraphe_3', $page->paragraphe_3) }}</textarea>
 					</div>
 					<div class="col-12">
-						<x-admin.image-upload name="image_brasserie" label="Image brasserie" :value="$page->image_brasserie ?? null" help="PNG, JPG, GIF — max 2 Mo" />
+						<x-admin.image-upload name="image_brasserie" label="Image brasserie" :value="$page->image_brasserie ?? null" help="PNG, JPG, GIF — max 10 Mo" />
 					</div>
 					<div class="col-md-6">
 						<label class="form-label fw-semibold">Titre section « Valeurs »</label>
@@ -92,7 +92,7 @@
 						<textarea class="form-control" name="rse_texte" rows="4">{{ old('rse_texte', $page->rse_texte) }}</textarea>
 					</div>
 					<div class="col-md-4">
-						<x-admin.image-upload name="rse_image" label="Image RSE" :value="$page->rse_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
+						<x-admin.image-upload name="rse_image" label="Image RSE" :value="$page->rse_image ?? null" help="PNG, JPG, GIF — max 10 Mo" />
 					</div>
 					<div class="col-md-4">
 						<label class="form-label fw-semibold">Texte du CTA</label>

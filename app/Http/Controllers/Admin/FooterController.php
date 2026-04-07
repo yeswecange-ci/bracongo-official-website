@@ -28,7 +28,7 @@ class FooterController extends Controller
             'adresse'               => 'required|string',
             'telephone'             => 'nullable|string|max:50',
             'email'                 => 'required|email|max:255',
-            'certification_image'   => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'certification_image'   => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'copyright_debut_annee' => 'required|integer|min:1900|max:2100',
         ]);
 

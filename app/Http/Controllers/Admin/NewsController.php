@@ -41,15 +41,15 @@ class NewsController extends Controller
             'type'             => 'required|in:actualites,evenements,activations,sponsoring,communiques,mediatheque',
             'extrait'          => 'nullable|string',
             'contenu'          => 'nullable|string',
-            'image'            => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'image'            => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'lien_externe'     => 'nullable|string|max:255',
-            'date_publication' => 'nullable|date',
             'date_evenement'   => 'nullable|date',
             'lieu'             => 'nullable|string|max:255',
             'ordre'            => 'nullable|integer|min:0',
             'is_active'        => 'nullable|boolean',
         ]);
         $data['is_active'] = $request->boolean('is_active');
+        $data['date_publication'] = now()->toDateString();
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadImage($request->file('image'), 'uploads/news', 'news');
         } else {
@@ -75,9 +75,8 @@ class NewsController extends Controller
             'type'             => 'required|in:actualites,evenements,activations,sponsoring,communiques,mediatheque',
             'extrait'          => 'nullable|string',
             'contenu'          => 'nullable|string',
-            'image'            => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'image'            => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'lien_externe'     => 'nullable|string|max:255',
-            'date_publication' => 'nullable|date',
             'date_evenement'   => 'nullable|date',
             'lieu'             => 'nullable|string|max:255',
             'ordre'            => 'nullable|integer|min:0',

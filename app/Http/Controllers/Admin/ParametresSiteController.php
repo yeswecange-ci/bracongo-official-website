@@ -24,8 +24,8 @@ class ParametresSiteController extends Controller
     public function update(Request $request)
     {
         $rules = [
-            'logo' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
-            'favicon' => 'nullable|file|mimes:jpeg,jpg,png,gif,webp,ico|max:1024',
+            'logo' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
+            'favicon' => 'nullable|file|mimes:jpeg,jpg,png,gif,webp,ico|max:10240',
             'couleur_principale' => 'nullable|string|max:20',
             'search_suggestions' => 'nullable|string|max:2000',
             'seo_meta_description' => 'nullable|string|max:500',

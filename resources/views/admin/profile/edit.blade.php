@@ -147,7 +147,7 @@
                             <label class="form-label fw-semibold" for="avatar">Photo de profil</label>
                             <input type="file" name="avatar" id="avatar" accept="image/jpeg,image/png,image/gif,image/webp"
                                    class="form-control @error('avatar') is-invalid @enderror">
-                            <div class="form-text">JPG, PNG, GIF ou WebP — max 2 Mo.</div>
+                            <div class="form-text">JPG, PNG, GIF ou WebP — max 10 Mo.</div>
                             @error('avatar')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                         </div>
                     </div>
