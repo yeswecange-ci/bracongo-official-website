@@ -29,7 +29,7 @@
 					@method('PUT')
 					<div class="row g-4">
 						<div class="col-12">
-							<x-admin.image-upload name="fond_image" label="Image de fond" :value="$page->fond_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
+							<x-admin.image-upload name="fond_image" label="Image de fond" :value="$page->fond_image ?? null" help="PNG, JPG, GIF — max 10 Mo" />
 						</div>
 						<div class="col-12">
 							<label class="form-label fw-semibold">Titre principal <span class="text-danger">*</span></label>

@@ -36,10 +36,10 @@
 						<input type="text" class="form-control" name="hero_titre" value="{{ old('hero_titre', $page->hero_titre ?? 'Bracongo Pro') }}">
 					</div>
 					<div class="col-md-6">
-						<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
+						<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 10 Mo" />
 					</div>
 					<div class="col-md-6">
-						<x-admin.image-upload name="app_image" label="Image mockup app" :value="$page->app_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
+						<x-admin.image-upload name="app_image" label="Image mockup app" :value="$page->app_image ?? null" help="PNG, JPG, GIF — max 10 Mo" />
 					</div>
 					<div class="col-12">
 						<label class="form-label fw-semibold">Description principale</label>

@@ -21,16 +21,16 @@ class PageHistoireController extends Controller
     public function update(Request $request)
     {
         $data = $request->validate([
-            'hero_image'      => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'hero_image'      => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'titre'           => 'required|string|max:255',
             'paragraphe_1'    => 'nullable|string',
             'paragraphe_2'    => 'nullable|string',
             'paragraphe_3'    => 'nullable|string',
-            'image_brasserie' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'image_brasserie' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'valeurs_titre'   => 'nullable|string|max:255',
             'rse_titre'       => 'nullable|string|max:255',
             'rse_texte'       => 'nullable|string',
-            'rse_image'       => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'rse_image'       => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'rse_cta_texte'   => 'nullable|string|max:255',
             'rse_cta_lien'    => 'nullable|string|max:255',
             'presence_titre'     => 'nullable|string|max:255',

@@ -3,7 +3,7 @@
 	'label' => 'Image',
 	'value' => null,
 	'required' => false,
-	'help' => 'PNG, JPG, GIF — max 2 Mo',
+	'help' => 'PNG, JPG, GIF — max 10 Mo',
 ])
 
 @php

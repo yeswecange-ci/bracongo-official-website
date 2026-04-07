@@ -21,7 +21,7 @@ class PageAccueilController extends Controller
         $data = $request->validate([
             'qui_titre'                  => 'required|string|max:255',
             'qui_texte'                  => 'nullable|string',
-            'qui_image_fond'             => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'qui_image_fond'             => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'qui_cta_texte'              => 'nullable|string|max:100',
             'qui_cta_lien'               => 'nullable|string|max:255',
             'marques_titre'              => 'nullable|string|max:255',
@@ -29,7 +29,7 @@ class PageAccueilController extends Controller
             'marques_cartes_cta_texte'   => 'nullable|string|max:100',
             'rejoignez_titre'            => 'nullable|string|max:255',
             'rejoignez_texte'            => 'nullable|string',
-            'rejoignez_image'            => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'rejoignez_image'            => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'rejoignez_cta_texte'        => 'nullable|string|max:100',
             'rejoignez_cta_lien'         => 'nullable|string|max:255',
             'actualites_titre'           => 'nullable|string|max:255',

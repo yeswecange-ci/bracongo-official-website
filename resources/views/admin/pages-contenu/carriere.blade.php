@@ -33,7 +33,7 @@
 					@method('PUT')
 					<div class="row g-3">
 						<div class="col-12">
-							<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
+							<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 10 Mo" />
 						</div>
 						<div class="col-12">
 							<label class="form-label fw-semibold">Titre hero <span class="text-danger">*</span></label>

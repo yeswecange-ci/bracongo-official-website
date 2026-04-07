@@ -32,7 +32,7 @@
 			<div class="card">
 				<div class="card-header"><h5>Image</h5></div>
 				<div class="card-body">
-					<x-admin.image-upload name="image" label="Image" :value="null" help="PNG, JPG, GIF — max 2 Mo" />
+					<x-admin.image-upload name="image" label="Image" :value="null" help="PNG, JPG, GIF — max 10 Mo" />
 				</div>
 			</div>
 

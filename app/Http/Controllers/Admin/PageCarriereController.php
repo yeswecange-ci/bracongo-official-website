@@ -19,7 +19,7 @@ class PageCarriereController extends Controller
     public function update(Request $request)
     {
         $data = $request->validate([
-            'hero_image'  => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:2048',
+            'hero_image'  => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'hero_titre'  => 'required|string|max:255',
             'texte_intro' => 'required|string',
             'offres_titre' => 'required|string|max:255',

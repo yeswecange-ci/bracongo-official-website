@@ -32,7 +32,7 @@
 				<div class="card-header"><h5 class="mb-0">Informations de contact</h5></div>
 				<div class="card-body row g-3">
 					<div class="col-12">
-						<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 2 Mo" />
+						<x-admin.image-upload name="hero_image" label="Image hero" :value="$page->hero_image ?? null" help="PNG, JPG, GIF — max 10 Mo" />
 					</div>
 					<div class="col-md-6">
 						<label class="form-label fw-semibold">Titre de la bannière <span class="text-danger">*</span></label>
