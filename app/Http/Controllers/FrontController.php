@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Boisson;
+use App\Models\Produit;
 use App\Models\CandidatureEmploi;
 use App\Models\HeroSlide;
 use App\Models\Marque;
@@ -24,6 +25,7 @@ use App\Models\Valeur;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -84,6 +86,18 @@ class FrontController extends Controller
         return view('carriere', compact('carriere', 'offres'));
     }
 
+    public function faq()
+    {
+        return view('faq');
+    }
+
+    public function boutique()
+    {
+        $produits = Produit::actifs()->paginate(12)->withQueryString();
+
+        return view('boutique', compact('produits'));
+    }
+
     public function pro()
     {
         $pro = PagePro::instance();
@@ -95,15 +109,21 @@ class FrontController extends Controller
     {
         $categories = Marque::categories();
         $ordre = ['bieres', 'gazeuses', 'eaux', 'energisantes'];
+
+        // Une seule requête : toutes les marques actives avec leurs boissons actives
+        $toutesMarques = Marque::actives()
+            ->with(['boissons' => fn ($q) => $q->where('is_active', true)->orderBy('ordre')])
+            ->get();
+
         $marques = collect();
         foreach ($ordre as $cat) {
-            $items = Marque::actives()
-                ->whereHas('boissons', fn ($q) => $q->where('categorie', $cat))
-                ->with(['boissons' => fn ($q) => $q->where('categorie', $cat)->orderBy('ordre')])
-                ->orderBy('ordre')
-                ->get();
+            $items = $toutesMarques->filter(
+                fn ($m) => $m->boissons->where('categorie', $cat)->isNotEmpty()
+            )->each(fn ($m) => $m->setRelation(
+                'boissons', $m->boissons->where('categorie', $cat)->values()
+            ));
             if ($items->isNotEmpty()) {
-                $marques[$cat] = $items;
+                $marques[$cat] = $items->values();
             }
         }
 
@@ -181,7 +201,7 @@ class FrontController extends Controller
         if ($type && array_key_exists($type, $types)) {
             $newsQuery->byType($type);
         }
-        $news = $newsQuery->get();
+        $news = $newsQuery->paginate(12)->withQueryString();
 
         return view('actualites', compact('news', 'types', 'type'));
     }
@@ -277,9 +297,24 @@ class FrontController extends Controller
 
     private function storeCandidatureCvFile(UploadedFile $file, string $nom, string $prenom, OffreEmploi $offre): string
     {
-        $ext = strtolower($file->getClientOriginalExtension() ?: (string) $file->guessExtension() ?: 'pdf');
-        if (! in_array($ext, ['pdf', 'doc', 'docx'], true)) {
-            $ext = 'pdf';
+        // Déterminer l'extension via le vrai type MIME, pas le nom fourni par le client
+        $allowedMimes = [
+            'application/pdf'  => 'pdf',
+            'application/msword' => 'doc',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
+        ];
+        $mime = $file->getMimeType() ?? '';
+        $ext = $allowedMimes[$mime] ?? null;
+
+        // Fallback sur l'extension cliente uniquement si le MIME est reconnu
+        if ($ext === null) {
+            $clientExt = strtolower($file->getClientOriginalExtension());
+            $ext = in_array($clientExt, ['pdf', 'doc', 'docx'], true) ? $clientExt : null;
+        }
+
+        // Refus si aucun type valide détecté
+        if ($ext === null) {
+            abort(422, 'Format de fichier non autorisé.');
         }
 
         $nomSeg = $this->sanitizeCandidatureFilenameSegment($nom);
@@ -401,12 +436,26 @@ class FrontController extends Controller
             }
         }
 
-        $boissons = Boisson::query()
-            ->where('is_active', true)
-            ->with(['marque:id,nom'])
-            ->get(['id', 'marque_id', 'nom', 'slug', 'categorie']);
+        // Données de recherche mises en cache 10 minutes — recharge uniquement si le contenu change
+        $searchData = Cache::remember('front.search_data', 600, function () {
+            return [
+                'boissons' => Boisson::query()
+                    ->where('is_active', true)
+                    ->with(['marque:id,nom'])
+                    ->get(['id', 'marque_id', 'nom', 'slug', 'categorie']),
+                'news' => News::query()
+                    ->where('is_active', true)
+                    ->get(['id', 'titre', 'slug', 'type', 'extrait']),
+                'jobs' => OffreEmploi::query()
+                    ->where('is_active', true)
+                    ->get(['id', 'titre', 'slug']),
+                'nav' => NavigationItem::query()
+                    ->where('is_active', true)
+                    ->get(['label', 'url']),
+            ];
+        });
 
-        foreach ($boissons as $boisson) {
+        foreach ($searchData['boissons'] as $boisson) {
             $marqueNom = $boisson->marque->nom ?? '';
             $haystack = $boisson->nom.' '.$marqueNom.' '.$boisson->categorie;
             $score = $this->scoreSearchMatch($needle, $haystack);
@@ -421,13 +470,9 @@ class FrontController extends Controller
             }
         }
 
-        $newsRows = News::query()
-            ->where('is_active', true)
-            ->get(['id', 'titre', 'slug', 'type', 'extrait']);
-
         $typesLabels = News::types();
 
-        foreach ($newsRows as $news) {
+        foreach ($searchData['news'] as $news) {
             $haystack = $news->titre.' '.($news->extrait ?? '').' '.$news->type;
             $score = $this->scoreSearchMatch($needle, $haystack);
             if ($score > 0) {
@@ -441,13 +486,8 @@ class FrontController extends Controller
             }
         }
 
-        $jobs = OffreEmploi::query()
-            ->where('is_active', true)
-            ->get(['id', 'titre', 'slug', 'description']);
-
-        foreach ($jobs as $job) {
-            $plain = strip_tags((string) $job->description);
-            $haystack = $job->titre.' '.$plain.' emploi carriere';
+        foreach ($searchData['jobs'] as $job) {
+            $haystack = $job->titre.' emploi carriere';
             $score = $this->scoreSearchMatch($needle, $haystack);
             if ($score > 0) {
                 $results->push([
@@ -460,9 +500,7 @@ class FrontController extends Controller
             }
         }
 
-        $navRows = NavigationItem::query()
-            ->where('is_active', true)
-            ->get(['label', 'url']);
+        $navRows = $searchData['nav'];
 
         foreach ($navRows as $row) {
             if (! $this->isPublicClientNavUrl((string) $row->url)) {

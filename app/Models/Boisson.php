@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Cache;
 
 class Boisson extends Model
 {
@@ -23,6 +24,13 @@ class Boisson extends Model
         'video_urls' => 'array',
         'annee_lancement' => 'integer',
     ];
+
+    protected static function booted(): void
+    {
+        $flush = fn () => Cache::forget('front.search_data');
+        static::saved($flush);
+        static::deleted($flush);
+    }
 
     public function marque(): BelongsTo
     {

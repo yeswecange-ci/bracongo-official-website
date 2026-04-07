@@ -22,21 +22,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        bracongo: '#E30613',
-                    },
-                    fontFamily: {
-                        sans: ['Catamaran', 'ui-sans-serif', 'system-ui'],
-                    },
-                }
-            }
-        }
-    </script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @if(isset($parametres) && filled($parametres->couleur_principale ?? null))
+    <style>:root { --color-bracongo: {{ e($parametres->couleur_principale) }}; }</style>
+    @endif
     <style>
         .loader-wrapper {
             position: fixed;
@@ -64,7 +53,7 @@
 </head>
 <body class="font-sans antialiased overflow-x-hidden loading">
     <div id="loader" class="loader-wrapper">
-        <img src="{{ asset(isset($parametres) && filled($parametres->logo ?? null) ? $parametres->logo : 'img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Loading" class="loader-logo">
+        <img src="{{ asset(isset($parametres) && filled($parametres->logo ?? null) ? $parametres->logo : 'img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Loading" class="loader-logo" loading="eager" fetchpriority="high" decoding="sync">
     </div>
 
     <div class="min-h-screen bg-white overflow-x-hidden">
@@ -78,7 +67,7 @@
     </div>
 
     <script>
-        window.addEventListener('load', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('img').forEach(img => {
                 if (!img.getAttribute('loading')) {
                     img.setAttribute('loading', 'lazy');
@@ -86,11 +75,9 @@
             });
 
             const loader = document.getElementById('loader');
-            setTimeout(() => {
-                loader.style.opacity = '0';
-                loader.style.visibility = 'hidden';
-                document.body.classList.remove('loading');
-            }, 150);
+            loader.style.opacity = '0';
+            loader.style.visibility = 'hidden';
+            document.body.classList.remove('loading');
         });
     </script>
 </body>

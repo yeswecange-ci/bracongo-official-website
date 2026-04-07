@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
-        <img src="{{ asset($carriere->hero_image ?? 'img/rejoins.png') }}" alt="Rejoignez-nous" class="w-full h-full object-cover">
+        <img src="{{ asset($carriere->hero_image ?? 'img/rejoins.png') }}" alt="Rejoignez-nous" class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async">
         <div class="absolute inset-0 bg-black/50"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-center uppercase tracking-[0.2em]">
@@ -24,7 +24,7 @@
     <section class="pb-24 bg-white">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex items-center justify-center gap-3 mb-16">
-                <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-8 w-auto">
+                <img src="{{ asset('img/Group.png') }}" alt="" class="h-8 w-auto" loading="lazy" decoding="async" aria-hidden="true">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900">{{ $carriere->offres_titre ?? "Nos offres d'emploi" }}</h2>
             </div>
 
@@ -34,7 +34,7 @@
                 <div class="job-page space-y-16 {{ $index > 0 ? 'hidden' : '' }}" data-page="{{ $index + 1 }}">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div class="rounded-[2rem] overflow-hidden shadow-xl border border-gray-100 h-[350px] md:h-[450px]">
-                            <img src="{{ asset($offre->image ?? 'img/brasserie.jpg') }}" alt="{{ $offre->titre }}" class="w-full h-full object-cover">
+                            <img src="{{ asset($offre->image ?? 'img/brasserie.jpg') }}" alt="{{ $offre->titre }}" class="w-full h-full object-cover" loading="lazy" decoding="async">
                         </div>
                         <div class="space-y-6">
                             <h3 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">{{ $offre->titre }}</h3>

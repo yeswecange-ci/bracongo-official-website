@@ -27,7 +27,7 @@
     @if(isset($footerGallery) && $footerGallery->isNotEmpty())
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 w-full h-64 md:h-80 overflow-hidden">
         @foreach($footerGallery as $img)
-        <img src="{{ asset($img->image) }}" alt="{{ $img->alt }}" class="w-full h-full object-cover">
+        <img src="{{ asset($img->image) }}" alt="{{ $img->alt }}" class="w-full h-full object-cover" loading="lazy" decoding="async">
         @endforeach
     </div>
     @endif
@@ -36,7 +36,7 @@
         <div class="container mx-auto px-4 lg:px-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 items-start">
                 <div class="space-y-6">
-                    <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Logo" class="h-20 w-auto object-contain">
+                    <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Logo" class="h-20 w-auto object-contain" loading="lazy" decoding="async">
                     <p class="text-gray-800 text-sm font-bold leading-relaxed max-w-xs">
                         {{ $footerConfig->mission_texte ?? '« Assurer une qualité et une disponibilité constantes de nos produits au meilleur prix »' }}
                     </p>
@@ -87,7 +87,7 @@
                     </div>
                     @if($footerConfig->certification_image ?? null)
                     <div class="pt-4">
-                        <img src="{{ asset($footerConfig->certification_image) }}" alt="Certification" class="h-16 w-auto object-contain">
+                        <img src="{{ asset($footerConfig->certification_image) }}" alt="Certification" class="h-16 w-auto object-contain" loading="lazy" decoding="async">
                     </div>
                     @endif
                 </div>

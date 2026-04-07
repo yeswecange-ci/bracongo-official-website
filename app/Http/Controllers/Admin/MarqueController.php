@@ -92,6 +92,7 @@ class MarqueController extends Controller
 
     public function destroy(Marque $marque)
     {
+        $this->deleteImageFile($marque->image);
         $marque->delete();
         return redirect()->route('admin.marques.index')->with('success', 'Marque supprimée.');
     }

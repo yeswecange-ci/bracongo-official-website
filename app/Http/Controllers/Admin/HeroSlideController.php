@@ -67,6 +67,7 @@ class HeroSlideController extends Controller
 
     public function destroy(HeroSlide $heroSlide)
     {
+        $this->deleteImageFile($heroSlide->image);
         $heroSlide->delete();
         return redirect()->route('admin.hero-slides.index')
             ->with('success', 'Slide supprimé.');

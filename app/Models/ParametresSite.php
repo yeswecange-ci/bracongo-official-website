@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\InvitationExpiresHours;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class ParametresSite extends Model
 {
@@ -22,6 +23,13 @@ class ParametresSite extends Model
         return [
             'invitation_expires_hours' => InvitationExpiresHours::class,
         ];
+    }
+
+    protected static function booted(): void
+    {
+        $flush = fn () => Cache::forget('front.parametres');
+        static::saved($flush);
+        static::deleted($flush);
     }
 
     public static function instance(): self

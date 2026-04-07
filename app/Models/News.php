@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class News extends Model
 {
@@ -19,6 +20,13 @@ class News extends Model
         'date_publication' => 'date',
         'date_evenement' => 'date',
     ];
+
+    protected static function booted(): void
+    {
+        $flush = fn () => Cache::forget('front.search_data');
+        static::saved($flush);
+        static::deleted($flush);
+    }
 
     public function scopeActives($query)
     {

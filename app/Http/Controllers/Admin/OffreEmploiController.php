@@ -93,6 +93,7 @@ class OffreEmploiController extends Controller
 
     public function destroy(OffreEmploi $offres_emploi)
     {
+        $this->deleteImageFile($offres_emploi->image);
         $offres_emploi->delete();
 
         return redirect()->route('admin.offres-emploi.index')

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class OffreEmploi extends Model
@@ -37,6 +38,10 @@ class OffreEmploi extends Model
 
     protected static function booted(): void
     {
+        $flushSearch = fn () => Cache::forget('front.search_data');
+        static::saved($flushSearch);
+        static::deleted($flushSearch);
+
         static::saving(function (OffreEmploi $offre) {
             if (filled($offre->slug) || blank($offre->titre)) {
                 return;

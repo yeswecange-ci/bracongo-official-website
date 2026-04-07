@@ -1,7 +1,7 @@
 <nav class="bg-white py-4 px-6 md:px-12 flex items-center justify-between shadow-sm font-sans relative z-50" data-search-endpoint="{{ route('recherche.autocomplete') }}">
     <div class="flex-shrink-0">
         <a href="{{ route('Accueil') }}">
-            <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Logo" class="h-16 w-auto object-contain">
+            <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Logo" class="h-16 w-auto object-contain" loading="eager" fetchpriority="high" decoding="async">
         </a>
     </div>
 
@@ -33,6 +33,19 @@
             @endif
         </div>
         @endforeach
+
+        {{-- Panier --}}
+        <a href="{{ route('panier') }}" class="relative text-gray-800 hover:text-bracongo transition-colors py-2" title="Panier">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+            @php $panierCount = array_sum(array_column(session('panier', []), 'quantite')); @endphp
+            @if($panierCount > 0)
+            <span class="absolute -top-1 -right-1.5 bg-bracongo text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center leading-none">
+                {{ $panierCount > 9 ? '9+' : $panierCount }}
+            </span>
+            @endif
+        </a>
 
         <button id="desktop-search-button" class="text-gray-800 hover:text-bracongo transition-colors py-2">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

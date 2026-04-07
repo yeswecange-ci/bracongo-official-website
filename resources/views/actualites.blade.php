@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
-        <img src="{{ asset('img/bracongo.jpg') }}" alt="Actualités" class="w-full h-full object-cover">
+        <img src="{{ asset('img/bracongo.jpg') }}" alt="Actualités" class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async">
         <div class="absolute inset-0 bg-black/60"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-center uppercase tracking-[0.2em]">
@@ -39,7 +39,7 @@
                     <a href="{{ route('actualites.show', $item->slug) }}" class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-bracongo focus-visible:ring-offset-2 rounded-t-[1.5rem]">
                         @if($item->image)
                         <div class="h-52 overflow-hidden">
-                            <img src="{{ asset($item->image) }}" alt="{{ $item->titre }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                            <img src="{{ asset($item->image) }}" alt="{{ $item->titre }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async">
                         </div>
                         @else
                         <div class="h-52 bg-gray-100 flex items-center justify-center">
@@ -101,6 +101,35 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
                 </svg>
                 <p class="text-lg font-medium">Aucune actualité disponible pour le moment.</p>
+            </div>
+            @endif
+
+            @if($news->hasPages())
+            <div class="mt-12 flex justify-center">
+                <nav class="flex items-center gap-1" aria-label="Pagination">
+                    {{-- Précédent --}}
+                    @if($news->onFirstPage())
+                        <span class="px-4 py-2 rounded-full text-sm text-gray-300 border border-gray-200 cursor-not-allowed">←</span>
+                    @else
+                        <a href="{{ $news->previousPageUrl() }}" class="px-4 py-2 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-bracongo hover:text-bracongo transition-all">←</a>
+                    @endif
+
+                    {{-- Pages --}}
+                    @foreach($news->getUrlRange(1, $news->lastPage()) as $page => $url)
+                        @if($page == $news->currentPage())
+                            <span class="px-4 py-2 rounded-full text-sm font-bold bg-bracongo text-white">{{ $page }}</span>
+                        @else
+                            <a href="{{ $url }}" class="px-4 py-2 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-bracongo hover:text-bracongo transition-all">{{ $page }}</a>
+                        @endif
+                    @endforeach
+
+                    {{-- Suivant --}}
+                    @if($news->hasMorePages())
+                        <a href="{{ $news->nextPageUrl() }}" class="px-4 py-2 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-bracongo hover:text-bracongo transition-all">→</a>
+                    @else
+                        <span class="px-4 py-2 rounded-full text-sm text-gray-300 border border-gray-200 cursor-not-allowed">→</span>
+                    @endif
+                </nav>
             </div>
             @endif
         </div>

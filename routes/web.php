@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AccountTwoFactorController;
 use App\Http\Controllers\Admin\BoissonController;
 use App\Http\Controllers\Admin\CandidatureEmploiController;
+use App\Http\Controllers\Admin\CommandeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FooterController;
 use App\Http\Controllers\Admin\FooterGalleryController;
@@ -32,7 +33,9 @@ use App\Http\Controllers\Admin\ValeurController;
 use App\Http\Controllers\Auth\AcceptInvitationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\TwoFactorChallengeController;
+use App\Http\Controllers\CommandeFrontController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\PanierController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontController::class, 'welcome']);
@@ -46,6 +49,7 @@ Route::get('/Boisson/{slug}', [FrontController::class, 'boisson'])->name('boisso
 Route::get('/Nos-marques-bieres-beaufort', [FrontController::class, 'boissonBeaufort'])->name('bieres.beaufort');
 Route::get('/Actualites-et-evenements', [FrontController::class, 'actualites'])->name('actualites');
 Route::get('/Actualites-et-evenements/{slug}', [FrontController::class, 'actualiteShow'])->name('actualites.show');
+Route::get('/boutique', [FrontController::class, 'boutique'])->name('boutique');
 Route::redirect('/Actualités-et-evenements', '/Actualites-et-evenements', 301);
 Route::get('/Carriere', [FrontController::class, 'carriere'])->name('carriere');
 Route::get('/Carriere/offre/{offre}', [FrontController::class, 'offreShow'])->name('carriere.offre.show');
@@ -53,8 +57,23 @@ Route::post('/Carriere/offre/{offre}/candidature', [FrontController::class, 'off
     ->middleware('throttle:candidature-emploi')
     ->name('carriere.offre.candidature.store');
 Route::get('/Contact', [FrontController::class, 'contact'])->name('contact');
-Route::post('/Contact', [FrontController::class, 'contactStore'])->name('contact.store');
+Route::post('/Contact', [FrontController::class, 'contactStore'])
+    ->middleware('throttle:contact-store')
+    ->name('contact.store');
 Route::get('Bracongo-pro', [FrontController::class, 'pro'])->name('pro');
+Route::get('/faq', [FrontController::class, 'faq'])->name('faq');
+
+// Panier
+Route::get('/panier', [PanierController::class, 'index'])->name('panier');
+Route::post('/panier/{produit}/ajouter', [PanierController::class, 'ajouter'])->name('panier.ajouter');
+Route::patch('/panier/{produitId}/mettre-a-jour', [PanierController::class, 'mettreAJour'])->name('panier.update');
+Route::delete('/panier/{produitId}/supprimer', [PanierController::class, 'supprimer'])->name('panier.supprimer');
+Route::delete('/panier/vider', [PanierController::class, 'vider'])->name('panier.vider');
+
+// Commande
+Route::get('/boutique/commander', [CommandeFrontController::class, 'checkout'])->name('commande.checkout');
+Route::post('/boutique/commander', [CommandeFrontController::class, 'store'])->name('commande.store')->middleware('throttle:commande');
+Route::get('/boutique/confirmation/{reference}', [CommandeFrontController::class, 'confirmation'])->name('commande.confirmation');
 
 Route::get('/api/recherche', [FrontController::class, 'searchAutocomplete'])->name('recherche.autocomplete');
 
@@ -134,36 +153,38 @@ Route::prefix('back-office')->name('admin.')->group(function () {
                 ->where('categorie', 'eaux|gazeuses|energisantes');
         });
 
-        Route::resource('hero-slides', HeroSlideController::class)->names('hero-slides');
+        // Réservé admin/super_admin uniquement
+        Route::middleware('admin_role')->group(function () {
+            Route::resource('hero-slides', HeroSlideController::class)->names('hero-slides');
+            Route::resource('valeurs', ValeurController::class)->names('valeurs');
+            Route::resource('offres-emploi', OffreEmploiController::class)->names('offres-emploi');
+            Route::resource('footer-gallery', FooterGalleryController::class)->names('footer-gallery');
+            Route::resource('reseaux-sociaux', ReseauSocialController::class)->names('reseaux-sociaux');
+            Route::resource('marques', MarqueController::class)->names('marques');
+            Route::resource('boissons', BoissonController::class)->names('boissons');
+            Route::resource('produits', ProduitController::class)->names('produits');
+            Route::resource('news', NewsController::class)->names('news');
 
-        Route::resource('valeurs', ValeurController::class)->names('valeurs');
+            Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
+            Route::get('/commandes/{commande}', [CommandeController::class, 'show'])->name('commandes.show');
+            Route::patch('/commandes/{commande}/statut', [CommandeController::class, 'updateStatut'])->name('commandes.statut');
+            Route::delete('/commandes/{commande}', [CommandeController::class, 'destroy'])->name('commandes.destroy');
 
-        Route::resource('offres-emploi', OffreEmploiController::class)->names('offres-emploi');
+            Route::get('/candidatures-emploi', [CandidatureEmploiController::class, 'index'])->name('candidatures-emploi.index');
+            Route::get('/candidatures-emploi/{candidature_emploi}/cv', [CandidatureEmploiController::class, 'downloadCv'])->name('candidatures-emploi.cv');
+            Route::get('/candidatures-emploi/{candidature_emploi}', [CandidatureEmploiController::class, 'show'])->name('candidatures-emploi.show');
 
-        Route::get('/candidatures-emploi', [CandidatureEmploiController::class, 'index'])->name('candidatures-emploi.index');
-        Route::get('/candidatures-emploi/{candidature_emploi}/cv', [CandidatureEmploiController::class, 'downloadCv'])->name('candidatures-emploi.cv');
-        Route::get('/candidatures-emploi/{candidature_emploi}', [CandidatureEmploiController::class, 'show'])->name('candidatures-emploi.show');
+            Route::get('/messages', [MessageContactController::class, 'index'])->name('messages.index');
+            Route::post('/messages/{messageContact}/reply', [MessageContactController::class, 'reply'])->name('messages.reply');
+            Route::get('/messages/{messageContact}', [MessageContactController::class, 'show'])->name('messages.show');
+            Route::patch('/messages/{messageContact}/read', [MessageContactController::class, 'markAsRead'])->name('messages.read');
+            Route::delete('/messages/{messageContact}', [MessageContactController::class, 'destroy'])->name('messages.destroy');
 
-        Route::get('/messages', [MessageContactController::class, 'index'])->name('messages.index');
-        Route::post('/messages/{messageContact}/reply', [MessageContactController::class, 'reply'])->name('messages.reply');
-        Route::get('/messages/{messageContact}', [MessageContactController::class, 'show'])->name('messages.show');
-        Route::patch('/messages/{messageContact}/read', [MessageContactController::class, 'markAsRead'])->name('messages.read');
-        Route::delete('/messages/{messageContact}', [MessageContactController::class, 'destroy'])->name('messages.destroy');
+            Route::get('/footer', [FooterController::class, 'edit'])->name('footer.edit');
+            Route::put('/footer', [FooterController::class, 'update'])->name('footer.update');
+        });
 
+        // Navigation : déjà protégé dans le constructeur du controller
         Route::resource('navigation', NavigationItemController::class)->names('navigation');
-
-        Route::get('/footer', [FooterController::class, 'edit'])->name('footer.edit');
-        Route::put('/footer', [FooterController::class, 'update'])->name('footer.update');
-
-        Route::resource('footer-gallery', FooterGalleryController::class)->names('footer-gallery');
-
-        Route::resource('reseaux-sociaux', ReseauSocialController::class)->names('reseaux-sociaux');
-
-        Route::resource('marques', MarqueController::class)->names('marques');
-        Route::resource('boissons', BoissonController::class)->names('boissons');
-
-        Route::resource('produits', ProduitController::class)->names('produits');
-
-        Route::resource('news', NewsController::class)->names('news');
     });
 });

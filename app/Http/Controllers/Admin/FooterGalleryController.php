@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\FooterGallery;
+use App\Traits\HandlesImageUpload;
 use Illuminate\Http\Request;
 
 class FooterGalleryController extends Controller
 {
+    use HandlesImageUpload;
+
     public function index()
     {
         $images = FooterGallery::orderBy('ordre')->get();
@@ -27,14 +30,7 @@ class FooterGalleryController extends Controller
             'ordre' => 'nullable|integer|min:0',
         ]);
 
-        $file = $request->file('image');
-        $dir = 'uploads/footer/gallery';
-        if (!is_dir(public_path($dir))) {
-            mkdir(public_path($dir), 0755, true);
-        }
-        $name = 'gallery_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path($dir), $name);
-        $data['image'] = $dir . '/' . $name;
+        $data['image'] = $this->uploadImage($request->file('image'), 'uploads/footer/gallery', 'gallery');
 
         FooterGallery::create($data);
 
@@ -60,14 +56,8 @@ class FooterGalleryController extends Controller
         $data = $request->validate($rules);
 
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $dir = 'uploads/footer/gallery';
-            if (!is_dir(public_path($dir))) {
-                mkdir(public_path($dir), 0755, true);
-            }
-            $name = 'gallery_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path($dir), $name);
-            $data['image'] = $dir . '/' . $name;
+            $this->deleteImageFile($footerGallery->image);
+            $data['image'] = $this->uploadImage($request->file('image'), 'uploads/footer/gallery', 'gallery');
         } else {
             unset($data['image']);
         }
@@ -80,6 +70,7 @@ class FooterGalleryController extends Controller
 
     public function destroy(FooterGallery $footerGallery)
     {
+        $this->deleteImageFile($footerGallery->image);
         $footerGallery->delete();
         return redirect()->route('admin.footer-gallery.index')
             ->with('success', 'Image supprimée.');

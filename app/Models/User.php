@@ -17,6 +17,9 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
+    /** Cache in-request des résultats hasPermission() pour éviter les requêtes répétées. */
+    private array $permissionCache = [];
+
     /**
      * @var list<string>
      */
@@ -150,6 +153,17 @@ class User extends Authenticatable
     }
 
     public function hasPermission(string $code): bool
+    {
+        if (array_key_exists($code, $this->permissionCache)) {
+            return $this->permissionCache[$code];
+        }
+
+        $this->permissionCache[$code] = $this->resolvePermission($code);
+
+        return $this->permissionCache[$code];
+    }
+
+    private function resolvePermission(string $code): bool
     {
         $permission = Permission::query()->where('code', $code)->first();
         if (! $permission) {
