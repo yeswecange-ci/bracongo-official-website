@@ -15,6 +15,7 @@ use App\Models\PageAccueil;
 use App\Models\PageBieres;
 use App\Models\PageBoissonsEnergisantes;
 use App\Models\PageBoissonsGazeuses;
+use App\Models\PageBoutique;
 use App\Models\PageCarriere;
 use App\Models\PageContact;
 use App\Models\PageEaux;
@@ -94,8 +95,9 @@ class FrontController extends Controller
     public function boutique()
     {
         $produits = Produit::actifs()->paginate(12)->withQueryString();
+        $pageBoutique = PageBoutique::instance();
 
-        return view('boutique', compact('produits'));
+        return view('boutique', compact('produits', 'pageBoutique'));
     }
 
     public function pro()
@@ -421,6 +423,7 @@ class FrontController extends Controller
             ['title' => 'Carrière', 'url' => route('carriere'), 'type' => 'Page', 'keywords' => 'emploi recrutement offres'],
             ['title' => 'Contact', 'url' => route('contact'), 'type' => 'Page', 'keywords' => 'adresse telephone email'],
             ['title' => 'Bracongo Pro', 'url' => route('pro'), 'type' => 'Page', 'keywords' => 'application pro'],
+            ['title' => 'Boutique', 'url' => route('boutique'), 'type' => 'Page', 'keywords' => 'boutique panier produits accessoires commande'],
         ];
 
         foreach ($staticPages as $page) {

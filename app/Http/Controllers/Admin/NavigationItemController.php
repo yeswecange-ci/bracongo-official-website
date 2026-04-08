@@ -8,18 +8,6 @@ use Illuminate\Http\Request;
 
 class NavigationItemController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            $user = $request->user();
-            if (! $user || ! $user->isAdministration()) {
-                abort(403, 'Accès réservé aux administrateurs.');
-            }
-
-            return $next($request);
-        });
-    }
-
     public function index()
     {
         $items = NavigationItem::with('enfants')->parents()->get();

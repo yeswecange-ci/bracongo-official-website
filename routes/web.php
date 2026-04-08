@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\OffreEmploiController;
 use App\Http\Controllers\Admin\OnboardingTwoFactorController;
 use App\Http\Controllers\Admin\PageAccueilController;
 use App\Http\Controllers\Admin\PageBieresController;
+use App\Http\Controllers\Admin\PageBoutiqueController;
 use App\Http\Controllers\Admin\PageCarriereController;
 use App\Http\Controllers\Admin\PageCategorieBoissonsController;
 use App\Http\Controllers\Admin\PageContactController;
@@ -142,6 +143,9 @@ Route::prefix('back-office')->name('admin.')->group(function () {
             Route::get('/pro', [PageProController::class, 'edit'])->name('pro.edit');
             Route::put('/pro', [PageProController::class, 'update'])->name('pro.update');
 
+            Route::get('/boutique', [PageBoutiqueController::class, 'edit'])->name('boutique.edit');
+            Route::put('/boutique', [PageBoutiqueController::class, 'update'])->name('boutique.update');
+
             Route::get('/bieres', [PageBieresController::class, 'edit'])->name('bieres.edit');
             Route::put('/bieres', [PageBieresController::class, 'update'])->name('bieres.update');
 
@@ -184,7 +188,6 @@ Route::prefix('back-office')->name('admin.')->group(function () {
             Route::put('/footer', [FooterController::class, 'update'])->name('footer.update');
         });
 
-        // Navigation : déjà protégé dans le constructeur du controller
-        Route::resource('navigation', NavigationItemController::class)->names('navigation');
+        Route::resource('navigation', NavigationItemController::class)->middleware('admin_role')->names('navigation');
     });
 });
