@@ -156,6 +156,14 @@
         </a>
     </li>
 
+    <li>
+        <a href="{{ route('admin.pages.boutique.edit') }}"
+           class="a-nav-link {{ request()->routeIs('admin.pages.boutique.*') ? 'is-active' : '' }}">
+            <i class="a-nav-icon bi bi-bag"></i>
+            <span class="a-nav-text">Page Boutique</span>
+        </a>
+    </li>
+
 </ul>
 
 <div class="a-nav-section">Catalogue</div>

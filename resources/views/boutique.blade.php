@@ -5,19 +5,25 @@
 @section('meta_description', 'Découvrez les produits et accessoires officiels Bracongo.')
 
 @section('content')
+    @php
+        $heroImage = $pageBoutique->hero_image ?? 'img/brasserie.jpg';
+        $heroBadge = $pageBoutique->hero_badge ?? 'Bracongo officiel';
+        $heroTitre = $pageBoutique->hero_titre ?? 'Boutique';
+        $heroDescription = $pageBoutique->hero_description ?? 'Retrouvez ici nos produits et accessoires officiels.';
+    @endphp
 
     {{-- Hero --}}
     <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
-        <img src="{{ asset('img/bracongo.jpg') }}" alt="Boutique Bracongo"
+        <img src="{{ asset($heroImage) }}" alt="Boutique Bracongo"
              class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async">
         <div class="absolute inset-0 bg-black/65"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white px-4 text-center">
-            <span class="inline-block px-4 py-1 border border-white/40 rounded-full text-xs font-semibold tracking-[0.2em] uppercase text-white/80 mb-4">Bracongo officiel</span>
+            <span class="inline-block px-4 py-1 border border-white/40 rounded-full text-xs font-semibold tracking-[0.2em] uppercase text-white/80 mb-4">{{ $heroBadge }}</span>
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight uppercase tracking-[0.15em]">
-                Boutique
+                {{ $heroTitre }}
             </h1>
             <p class="mt-4 text-white/75 text-sm md:text-base max-w-xl font-medium">
-                Retrouvez ici nos produits et accessoires officiels.
+                {{ $heroDescription }}
             </p>
         </div>
     </div>

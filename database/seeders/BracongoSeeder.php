@@ -17,6 +17,7 @@ use App\Models\PageAccueil;
 use App\Models\PageBieres;
 use App\Models\PageBoissonsEnergisantes;
 use App\Models\PageBoissonsGazeuses;
+use App\Models\PageBoutique;
 use App\Models\PageCarriere;
 use App\Models\PageContact;
 use App\Models\PageEaux;
@@ -30,7 +31,6 @@ use App\Models\User;
 use App\Models\Valeur;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Schema;
 
 class BracongoSeeder extends Seeder
 {
@@ -74,7 +74,7 @@ class BracongoSeeder extends Seeder
             'actualites_voir_plus_lien' => '/Actualites-et-evenements',
         ]);
 
-        HeroSlide::truncate();
+        HeroSlide::query()->delete();
         $slides = [
             ['image' => 'img/coverhome.jpg', 'alt' => 'Beaufort Hero', 'ordre' => 1, 'is_active' => true],
             ['image' => 'img/banniere.jpg', 'alt' => 'Tembo Hero', 'ordre' => 2, 'is_active' => true],
@@ -98,7 +98,7 @@ class BracongoSeeder extends Seeder
             'presence_note' => '* Cliquez sur la carte pour explorer nos différents centres de distribution à travers le pays.',
         ]);
 
-        Valeur::truncate();
+        Valeur::query()->delete();
         $valeurs = [
             ['lettre' => 'P', 'description' => 'Parler vrai', 'ordre' => 1],
             ['lettre' => 'R', 'description' => 'Réussir en équipe', 'ordre' => 2],
@@ -188,6 +188,13 @@ class BracongoSeeder extends Seeder
             'cta_lien' => '#',
         ]);
 
+        PageBoutique::updateOrCreate(['id' => 1], [
+            'hero_image' => 'img/brasserie.jpg',
+            'hero_badge' => 'Bracongo officiel',
+            'hero_titre' => 'Boutique',
+            'hero_description' => 'Retrouvez ici nos produits et accessoires officiels.',
+        ]);
+
         PageBieres::updateOrCreate(['id' => 1], [
             'hero_image' => 'img/marque.jpg',
             'hero_titre' => 'Nos Bières',
@@ -230,10 +237,8 @@ class BracongoSeeder extends Seeder
             'message_recherche_vide' => 'Aucune boisson ne correspond à votre recherche.',
         ]);
 
-        Schema::disableForeignKeyConstraints();
-        Boisson::truncate();
-        Marque::truncate();
-        Schema::enableForeignKeyConstraints();
+        Boisson::query()->delete();
+        Marque::query()->delete();
 
         $marquesBieres = [
             ['nom' => 'Beaufort', 'slug' => 'beaufort', 'image' => 'img/beaufort.png', 'lien' => '/Nos-marques-bieres', 'ordre' => 1],
@@ -312,9 +317,10 @@ class BracongoSeeder extends Seeder
             Boisson::create(array_merge($b, ['is_active' => true]));
         }
 
-        Produit::truncate();
+        Produit::query()->delete();
+        $this->call(MerchandisingProduitsSeeder::class);
 
-        News::truncate();
+        News::query()->delete();
         $news = [
             [
                 'titre' => 'Rencontre avec Lumumba',
@@ -355,7 +361,8 @@ class BracongoSeeder extends Seeder
             News::create(array_merge($n, ['is_active' => true]));
         }
 
-        NavigationItem::truncate();
+        NavigationItem::whereNotNull('parent_id')->delete();
+        NavigationItem::query()->delete();
         $menuParents = [
             ['label' => 'Bracongo SA', 'url' => '#', 'ordre' => 1],
             ['label' => 'Nos marques', 'url' => '/Nos-marques', 'ordre' => 2],
@@ -363,7 +370,7 @@ class BracongoSeeder extends Seeder
             ['label' => 'Carrière', 'url' => '#', 'ordre' => 4],
             ['label' => 'Contacts', 'url' => '#', 'ordre' => 5],
             ['label' => 'Bracongo Pro', 'url' => '#', 'ordre' => 6],
-            ['label' => 'FAQ', 'url' => '#', 'ordre' => 7],
+            ['label' => 'Boutique', 'url' => '/boutique', 'ordre' => 7],
         ];
         $createdParents = [];
         foreach ($menuParents as $item) {
@@ -390,6 +397,7 @@ class BracongoSeeder extends Seeder
             ],
             4 => [
                 ['label' => 'Nous écrire', 'url' => '/Contact'],
+                ['label' => 'FAQ', 'url' => '/faq'],
             ],
             5 => [
                 ['label' => 'Rejoindre Bracongo Pro', 'url' => '/Bracongo-pro'],
@@ -416,7 +424,7 @@ class BracongoSeeder extends Seeder
             'copyright_debut_annee' => 1996,
         ]);
 
-        FooterGallery::truncate();
+        FooterGallery::query()->delete();
         $gallery = [
             ['image' => 'img/beau.png', 'alt' => 'Beaufort Gallery', 'ordre' => 1],
             ['image' => 'img/tempo.png', 'alt' => 'Tempo Gallery', 'ordre' => 2],
@@ -429,7 +437,7 @@ class BracongoSeeder extends Seeder
             FooterGallery::create($img);
         }
 
-        ReseauSocial::truncate();
+        ReseauSocial::query()->delete();
         $reseaux = [
             ['platform' => 'facebook', 'url' => '#', 'is_active' => true, 'ordre' => 1],
             ['platform' => 'instagram', 'url' => '#', 'is_active' => true, 'ordre' => 2],
