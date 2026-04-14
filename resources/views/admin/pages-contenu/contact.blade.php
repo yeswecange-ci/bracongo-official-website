@@ -44,6 +44,21 @@
 						<input type="text" class="form-control @error('form_titre') is-invalid @enderror" name="form_titre" value="{{ old('form_titre', $page->form_titre ?? 'Nous contacter') }}">
 						@error('form_titre')<div class="invalid-feedback">{{ $message }}</div>@enderror
 					</div>
+					<div class="col-md-6">
+						<label class="form-label fw-semibold">Libellé du bouton du formulaire</label>
+						<input type="text" class="form-control @error('submit_label') is-invalid @enderror" name="submit_label" value="{{ old('submit_label', $page->submit_label ?? 'Envoyer') }}">
+						@error('submit_label')<div class="invalid-feedback">{{ $message }}</div>@enderror
+					</div>
+					<div class="col-md-6">
+						<label class="form-label fw-semibold">Libellé du bouton WhatsApp</label>
+						<input type="text" class="form-control @error('whatsapp_label') is-invalid @enderror" name="whatsapp_label" value="{{ old('whatsapp_label', $page->whatsapp_label ?? 'Discutons sur WhatsApp') }}">
+						@error('whatsapp_label')<div class="invalid-feedback">{{ $message }}</div>@enderror
+					</div>
+					<div class="col-12">
+						<label class="form-label fw-semibold">Lien du bot WhatsApp</label>
+						<input type="text" class="form-control @error('whatsapp_url') is-invalid @enderror" name="whatsapp_url" value="{{ old('whatsapp_url', $page->whatsapp_url ?? '#') }}" placeholder="https://wa.me/... ou https://api.whatsapp.com/...">
+						@error('whatsapp_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
+					</div>
 					<div class="col-12">
 						<label class="form-label fw-semibold">Dénomination sociale <span class="text-danger">*</span></label>
 						<textarea class="form-control @error('denomination') is-invalid @enderror" name="denomination" rows="2">{{ old('denomination', $page->denomination) }}</textarea>

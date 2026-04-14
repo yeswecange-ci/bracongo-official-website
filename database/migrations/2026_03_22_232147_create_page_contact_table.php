@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('tel_cle_chateaux')->default('082 850 00 40');
             $table->string('devenir_client_lien')->default('#');
             $table->string('form_titre')->default('Nous contacter');
+            $table->string('submit_label')->default('Envoyer');
+            $table->string('whatsapp_label')->default('Discutons sur WhatsApp');
+            $table->string('whatsapp_url', 500)->default('#');
             $table->timestamps();
         });
     }

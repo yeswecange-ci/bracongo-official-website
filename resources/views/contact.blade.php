@@ -3,6 +3,9 @@
 @section('title', $contact->hero_titre ?? 'Nos Contacts')
 
 @section('content')
+    @php
+        $brandIcon = asset($parametres->logo ?? 'img/Group.png');
+    @endphp
     <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
         <img src="{{ asset($contact->hero_image ?? 'img/bracongo.jpg') }}" alt="Nos Contacts Banner" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-black/50"></div>
@@ -27,7 +30,7 @@
                     <div class="bg-[#F8F8F8] rounded-[2.5rem] p-10 md:p-16 space-y-10">
                         <div class="space-y-4">
                             <div class="flex items-center gap-3">
-                                <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-6 w-auto">
+                                <img src="{{ $brandIcon }}" alt="Icon" class="h-6 w-auto">
                                 <h3 class="text-2xl font-bold text-gray-900">Dénomination sociale</h3>
                             </div>
                             <p class="text-gray-700 font-medium leading-relaxed">
@@ -37,7 +40,7 @@
 
                         <div class="space-y-4">
                             <div class="flex items-center gap-3">
-                                <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-6 w-auto">
+                                <img src="{{ $brandIcon }}" alt="Icon" class="h-6 w-auto">
                                 <h3 class="text-2xl font-bold text-gray-900">Adresse :</h3>
                             </div>
                             <p class="text-gray-700 font-medium leading-relaxed">
@@ -50,7 +53,7 @@
 
                         <div class="space-y-6">
                             <div class="flex items-center gap-3">
-                                <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-6 w-auto">
+                                <img src="{{ $brandIcon }}" alt="Icon" class="h-6 w-auto">
                                 <h3 class="text-2xl font-bold text-gray-900">Contact :</h3>
                             </div>
                             <div class="space-y-4">
@@ -99,7 +102,7 @@
 
                 <div class="space-y-12">
                     <div class="flex items-center gap-3">
-                        <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-8 w-auto">
+                        <img src="{{ $brandIcon }}" alt="Icon" class="h-8 w-auto">
                         <h2 class="text-3xl md:text-4xl font-bold text-gray-900">{{ $contact->form_titre ?? 'Nous contacter' }}</h2>
                     </div>
 
@@ -115,13 +118,38 @@
                             </div>
                         </div>
 
-                        <div class="pt-4 flex justify-start">
-                            <button type="submit" class="inline-flex items-center gap-3 px-10 py-3 border border-bracongo text-bracongo rounded-full font-bold hover:bg-bracongo hover:text-white transition-all duration-300 group">
-                                <span>Envoyer</span>
+                        @php
+                            $whatsAppUrl = filled($contact->whatsapp_url ?? null) && ($contact->whatsapp_url ?? '#') !== '#'
+                                ? $contact->whatsapp_url
+                                : 'https://wa.me/243815586874?text=Bonjour%20BRACONGO';
+                            $whatsAppLabel = filled($contact->whatsapp_label ?? null)
+                                ? $contact->whatsapp_label
+                                : 'Discutons sur WhatsApp';
+                        @endphp
+                        <div class="pt-4 flex flex-wrap items-center gap-4">
+                            <button type="submit"
+                                class="inline-flex items-center justify-center gap-2 px-10 py-4 min-w-[180px]
+                                       border border-bracongo text-bracongo rounded-full font-bold
+                                       hover:bg-bracongo hover:text-white
+                                       transition-all duration-300 group">
+                                <span>{{ $contact->submit_label ?? 'Envoyer' }}</span>
                                 <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                 </svg>
                             </button>
+
+                            <a href="{{ $whatsAppUrl }}"
+                               target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center justify-center gap-3 px-10 py-4 min-w-[220px]
+                                      rounded-full font-bold text-white
+                                      shadow-lg hover:scale-[1.03]
+                                      transition-all duration-300 group"
+                               style="background: linear-gradient(90deg, #25D366 0%, #1ebe5d 100%); box-shadow: 0 12px 24px rgba(37, 211, 102, 0.35);">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12.03 2C6.49 2 2 6.4 2 11.83c0 1.89.56 3.73 1.62 5.31L2 22l5.03-1.56a10.14 10.14 0 0 0 5 1.31h.01c5.54 0 10.03-4.4 10.03-9.83S17.58 2 12.03 2zm0 17.96h-.01a8.4 8.4 0 0 1-4.29-1.17l-.31-.18-2.98.93.97-2.89-.2-.3a8.15 8.15 0 0 1-1.3-4.42c0-4.5 3.7-8.16 8.23-8.16a8.2 8.2 0 0 1 8.23 8.16 8.2 8.2 0 0 1-8.24 8.03z"/>
+                                </svg>
+                                <span>{{ $whatsAppLabel }}</span>
+                            </a>
                         </div>
                     </form>
                 </div>

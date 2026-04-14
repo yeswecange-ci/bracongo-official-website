@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\PageCategorieBoissonsController;
 use App\Http\Controllers\Admin\PageContactController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PageHistoireController;
+use App\Http\Controllers\Admin\PageLacledeschateauxController;
 use App\Http\Controllers\Admin\PageProController;
 use App\Http\Controllers\Admin\PageWelcomeController;
 use App\Http\Controllers\Admin\ParametresSiteController;
@@ -43,6 +44,7 @@ Route::get('/', [FrontController::class, 'welcome']);
 Route::get('/Accueil', [FrontController::class, 'accueil'])->name('Accueil');
 Route::get('/histoire', [FrontController::class, 'histoire'])->name('histoire');
 Route::get('/Notre-Histoire', [FrontController::class, 'histoire'])->name('Histoire');
+Route::get('/lacledeschateaux', [FrontController::class, 'lacledeschateaux'])->name('lacledeschateaux');
 Route::get('/Nos-marques', [FrontController::class, 'marques'])->name('marque');
 Route::get('/Nos-marques/{categorie}', [FrontController::class, 'marqueCategorie'])->name('marque.categorie');
 Route::get('/Nos-marques-bieres', [FrontController::class, 'bieres'])->name('bieres');
@@ -145,6 +147,9 @@ Route::prefix('back-office')->name('admin.')->group(function () {
 
             Route::get('/boutique', [PageBoutiqueController::class, 'edit'])->name('boutique.edit');
             Route::put('/boutique', [PageBoutiqueController::class, 'update'])->name('boutique.update');
+
+            Route::get('/lacledeschateaux', [PageLacledeschateauxController::class, 'edit'])->name('lacledeschateaux.edit');
+            Route::put('/lacledeschateaux', [PageLacledeschateauxController::class, 'update'])->name('lacledeschateaux.update');
 
             Route::get('/bieres', [PageBieresController::class, 'edit'])->name('bieres.edit');
             Route::put('/bieres', [PageBieresController::class, 'update'])->name('bieres.update');

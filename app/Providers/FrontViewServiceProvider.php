@@ -19,7 +19,7 @@ class FrontViewServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        View::composer(['layout.app', 'layout.navbar', 'layout.footer', 'accueil', 'histoire', 'contact', 'carriere', 'pro', 'marques.*', 'actualites', 'welcome'], function ($view) {
+        View::composer(['layout.app', 'layout.navbar', 'layout.footer', 'accueil', 'histoire', 'contact', 'carriere', 'pro', 'marques.*', 'actualites', 'welcome', 'lacledeschateaux'], function ($view) {
             try {
                 $navItems = Cache::remember('front.nav_items', self::CACHE_TTL, function () {
                     return NavigationItem::with('enfants')->parents()->actifs()->get();

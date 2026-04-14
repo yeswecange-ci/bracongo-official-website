@@ -22,6 +22,7 @@ use App\Models\PageCarriere;
 use App\Models\PageContact;
 use App\Models\PageEaux;
 use App\Models\PageHistoire;
+use App\Models\PageLacledeschateaux;
 use App\Models\PagePro;
 use App\Models\PageWelcome;
 use App\Models\ParametresSite;
@@ -30,6 +31,7 @@ use App\Models\ReseauSocial;
 use App\Models\User;
 use App\Models\Valeur;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 class BracongoSeeder extends Seeder
@@ -115,6 +117,11 @@ class BracongoSeeder extends Seeder
 
         PageContact::updateOrCreate(['id' => 1], [
             'hero_image' => 'img/bracongo.jpg',
+            'hero_titre' => 'Nos Contacts',
+            'form_titre' => 'Nous contacter',
+            'submit_label' => 'Envoyer',
+            'whatsapp_label' => 'Discutons sur WhatsApp',
+            'whatsapp_url' => '#',
             'denomination' => "Les Boissons Rafraîchissantes du Congo,\nBRACONGO SA",
             'adresse' => "Avenue des Brasseries, numéro 7666, Quartier Kingabwa,\nCommune de Limete, dans la province de Kinshasa, en\nRépublique Démocratique du Congo.",
             'bp' => 'BP: 7.600 KINSHASA 1',
@@ -193,6 +200,24 @@ class BracongoSeeder extends Seeder
             'hero_badge' => 'Bracongo officiel',
             'hero_titre' => 'Boutique',
             'hero_description' => 'Retrouvez ici nos produits et accessoires officiels.',
+        ]);
+
+        PageLacledeschateaux::updateOrCreate(['id' => 1], [
+            'hero_image' => 'img/brasserie.jpg',
+            'hero_titre' => 'Clé des Châteaux',
+            'paragraphe_1' => 'Vins de France et d’ailleurs, La Clé Des Châteaux propose le plus large choix de vins à Kinshasa. Représentante de Castel & Frères en Afrique, notre boutique bénéficie d’une expérience dans le vin depuis 1949 avec plus de 20 Châteaux & Domaines possédés. La Clé Des Châteaux propose le meilleur de ce qui se fait en vins, champagnes et spiritueux.',
+            'paragraphe_2' => 'Que ce soit en boutique pour du vin à emporter, ou au bar à vins & tapas pour consommer sur place, venez profiter d’un service de qualité et déguster les meilleurs vins de la place.',
+            'horaire' => 'Ouvert de mardi à dimanche de 10h à 23h',
+            'adresse' => '64, Boulevard du 30 Juin, Commune de Gombe Kinshasa, République Démocratique du Congo',
+            'telephone' => '+243 828 500 048 / +243 828 500 343',
+            'email' => 'lacledeschateaux@bracongo.cd',
+            'cta_libelle' => 'En savoir plus',
+            'cta_url' => 'https://bracongo.cd/lacledeschateaux/',
+            'selection_titre' => 'Sélection du mois',
+            'selection_texte' => 'Chaque mois, notre caviste vous propose une sélection de vins à découvrir et à déguster.',
+            'services_titre' => 'Nos services',
+            'services_html' => '<ul><li><h4>Location d’espace</h4><p>Profitez de nos différents espaces pour des réunions, petites cérémonies, dégustations en groupe. Appelez pour réserver et bénéficier de nos meilleures offres.</p></li>'
+                .'<li><h4>Livraison à domicile à partir de 6 bouteilles</h4><p>Nous assurons la livraison pour tout achat à partir de 6 bouteilles. Appelez-nous pour vous aider à passer votre commande.</p></li></ul>',
         ]);
 
         PageBieres::updateOrCreate(['id' => 1], [
@@ -388,6 +413,7 @@ class BracongoSeeder extends Seeder
                 ['label' => 'Boissons gazeuses', 'url' => '/Nos-marques/gazeuses'],
                 ['label' => 'Eaux', 'url' => '/Nos-marques/eaux'],
                 ['label' => 'Boissons énergisantes', 'url' => '/Nos-marques/energisantes'],
+                ['label' => 'Clé des Châteaux', 'url' => '/lacledeschateaux'],
             ],
             2 => [
                 ['label' => 'Dernières actualités', 'url' => '/Actualites-et-evenements'],
@@ -470,6 +496,19 @@ class BracongoSeeder extends Seeder
             $this->command->newLine();
             $this->command->warn('[Super admin] Compte technique (2FA exemptée, non listé dans Utilisateurs). Identifiants :');
             $this->command->line('  '.$superEmail);
+        }
+
+        // DatabaseSeeder utilise WithoutModelEvents : les hooks NavigationItem::saved ne tournent pas,
+        // donc le cache front n’est pas invalidé automatiquement après le seed.
+        foreach ([
+            'front.nav_items',
+            'front.footer_config',
+            'front.footer_gallery',
+            'front.reseaux',
+            'front.parametres',
+            'front.search_data',
+        ] as $key) {
+            Cache::forget($key);
         }
     }
 }

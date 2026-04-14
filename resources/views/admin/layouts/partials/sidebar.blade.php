@@ -164,7 +164,15 @@
         </a>
     </li>
 
-</ul>
+    <li>
+        <a href="{{ route('admin.pages.lacledeschateaux.edit') }}"
+           class="a-nav-link {{ request()->routeIs('admin.pages.lacledeschateaux.*') ? 'is-active' : '' }}">
+            <i class="a-nav-icon bi bi-shop"></i>
+            <span class="a-nav-text">Clé des Châteaux</span>
+        </a>
+    </li>
+
+ </ul>
 
 <div class="a-nav-section">Catalogue</div>
 
