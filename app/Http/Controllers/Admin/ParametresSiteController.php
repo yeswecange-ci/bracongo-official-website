@@ -40,6 +40,9 @@ class ParametresSiteController extends Controller
             $rules['contact_reply_closing'] = 'nullable|string|max:5000';
         }
 
+        $rules['commande_statut_email_sujet'] = 'nullable|string|max:255';
+        $rules['commande_statut_email_corps_html'] = 'nullable|string|max:65535';
+
         $data = $request->validate($rules);
         if ($request->hasFile('logo')) {
             $data['logo'] = $this->uploadImage($request->file('logo'), 'uploads/parametres', 'logo');

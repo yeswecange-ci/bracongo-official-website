@@ -25,6 +25,19 @@
 			<input type="text" class="form-control" name="lien_externe" value="{{ old('lien_externe', $news->lien_externe ?? '') }}" readonly>
 		</div>
 	</div>
+	<div class="col-md-6">
+		<label class="form-label fw-semibold">Lien WhatsApp <small class="text-muted">(page détail, optionnel)</small></label>
+		<input type="url" class="form-control @error('whatsapp_url') is-invalid @enderror" name="whatsapp_url" value="{{ old('whatsapp_url', isset($news) ? ($news->whatsapp_url ?? '') : '') }}" placeholder="https://wa.me/... ou https://api.whatsapp.com/...">
+		@error('whatsapp_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
+	</div>
+	<div class="col-md-6">
+		<label class="form-label fw-semibold">Texte du bouton WhatsApp <small class="text-muted">(optionnel)</small></label>
+		<input type="text" class="form-control @error('whatsapp_label') is-invalid @enderror" name="whatsapp_label" value="{{ old('whatsapp_label', isset($news) ? ($news->whatsapp_label ?? '') : '') }}" placeholder="Vivez l’événement avec nous sur WhatsApp" maxlength="200">
+		@error('whatsapp_label')<div class="invalid-feedback">{{ $message }}</div>@enderror
+	</div>
+	<div class="col-12">
+		<div class="form-text">Si un lien WhatsApp est renseigné, le bouton s’affiche sous le texte de l’article avec ce libellé (ou le texte par défaut si le champ est vide).</div>
+	</div>
 	<div class="col-12">
 		<label class="form-label fw-semibold">Extrait <small class="text-muted">(résumé court visible sur la liste)</small></label>
 		<textarea class="form-control" name="extrait" rows="2">{{ old('extrait', $news->extrait ?? '') }}</textarea>
@@ -45,6 +58,43 @@
 	<div class="col-md-6">
 		<label class="form-label fw-semibold">Lieu <small class="text-muted">(si événement)</small></label>
 		<input type="text" class="form-control" name="lieu" value="{{ old('lieu', $news->lieu ?? '') }}" placeholder="Kinshasa, RDC">
+	</div>
+
+	<div class="col-12">
+		<hr class="my-2">
+		<h6 class="fw-600 text-muted mb-3" style="font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Galerie &amp; vidéos (page détail)</h6>
+	</div>
+	<div class="col-12">
+		<label class="form-label fw-semibold">Images de galerie <small class="text-muted">(max 30, affichage 6 sur le site)</small></label>
+		<input type="file" class="form-control @error('gallery_images') is-invalid @enderror @error('gallery_images.*') is-invalid @enderror" name="gallery_images[]" multiple accept=".jpg,.jpeg,.png,.gif,.webp">
+		@error('gallery_images')<div class="invalid-feedback">{{ $message }}</div>@enderror
+		@error('gallery_images.*')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+		<div class="form-text">Tu peux sélectionner plusieurs fichiers en une fois.</div>
+	</div>
+
+	@if(isset($news) && !empty($news->gallery_images))
+	<div class="col-12">
+		<label class="form-label fw-semibold">Images existantes</label>
+		<div class="row g-2">
+			@foreach($news->gallery_images as $img)
+			<div class="col-6 col-md-4 col-lg-3">
+				<div class="border rounded p-2 h-100">
+					<img src="{{ asset($img) }}" alt="" class="img-fluid rounded mb-2" style="height:90px;width:100%;object-fit:cover;">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" name="remove_gallery_images[]" value="{{ $img }}" id="remove_{{ $loop->index }}">
+						<label class="form-check-label small" for="remove_{{ $loop->index }}">Retirer</label>
+					</div>
+				</div>
+			</div>
+			@endforeach
+		</div>
+	</div>
+	@endif
+
+	<div class="col-12">
+		<label class="form-label fw-semibold">Vidéos YouTube</label>
+		<textarea class="form-control @error('youtube_urls') is-invalid @enderror" name="youtube_urls" rows="5" style="font-family:monospace;font-size:.82rem;" placeholder="URL d’embed, lien watch, ou collage du code &lt;iframe&gt; YouTube (une entrée par ligne)">{{ old('youtube_urls', isset($news) && !empty($news->youtube_urls) ? implode("\n", $news->youtube_urls) : '') }}</textarea>
+		@error('youtube_urls')<div class="invalid-feedback">{{ $message }}</div>@enderror
 	</div>
 </div>
 

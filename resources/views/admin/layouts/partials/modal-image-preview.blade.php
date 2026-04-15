@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			var reader = new FileReader();
 			reader.onload = function(ev) {
 				if (!previewEl.querySelector('img')) {
-					previewEl.innerHTML = '<img src="" alt="Prévisualisation" style="height:60px;max-width:120px;object-fit:contain;border:1px solid #dee2e6;border-radius:8px;padding:4px;background:#f8f9fa;"><span class="badge badge-primary position-absolute top-0 end-0 translate-middle" style="font-size:10px;">Prévisualiser</span>';
+					previewEl.innerHTML = '<img src="" alt="Prévisualisation" class="admin-upload-thumb"><span class="admin-upload-thumb-zoom" title="Prévisualiser" aria-label="Prévisualiser"><i class="bi bi-eye-fill" aria-hidden="true"></i></span>';
 					previewEl.setAttribute('data-bs-toggle', 'modal');
 					previewEl.setAttribute('data-bs-target', '#modalPreviewImage');
 					previewEl.style.cursor = 'pointer';

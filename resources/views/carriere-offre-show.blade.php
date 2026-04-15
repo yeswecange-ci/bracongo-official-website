@@ -145,19 +145,36 @@
                             prose-strong:text-gray-900">
                             {!! \App\Support\CmsHtmlSanitizer::sanitize($offre->description) !!}
                         </div>
-                    </div>
+                        @php
+                            $offreLienExterne = trim((string) ($offre->lien ?? ''));
+                            $showLienVoirPlus = $offreLienExterne !== '' && $offreLienExterne !== '#' && str_starts_with($offreLienExterne, 'http');
+                        @endphp
+                        @if($showLienVoirPlus)
+                        <div class="not-prose mt-8">
+                            <p class="text-sm text-gray-500 mb-4">
+                                Pour plus d’informations sur cette opportunité :
+                            </p>
 
-                    @if($offre->lien && $offre->lien !== '#')
-                        <div class="pt-4 border-t border-gray-100">
-                            <a href="{{ $offre->lien }}" target="_blank" rel="noopener noreferrer"
-                               class="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-bracongo transition-colors">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                                </svg>
-                                Voir le lien complémentaire
+                            <a href="{{ $offreLienExterne }}"
+                            target="_blank" rel="noopener noreferrer"
+                            class="group inline-flex items-center gap-3 pl-6 pr-4 py-2.5 rounded-full
+                                    border border-bracongo text-bracongo text-sm font-bold
+                                    bg-white hover:bg-bracongo hover:text-white
+                                    transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-0.5">
+
+                                <span class="tracking-wide">Voir plus de détails</span>
+
+                                <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center
+                                            rounded-full bg-bracongo/10 text-bracongo
+                                            group-hover:bg-white/20 group-hover:text-white
+                                            transition-all duration-300"
+                                    aria-hidden="true">
+                                    @include('partials.icons.url-link')
+                                </span>
                             </a>
                         </div>
-                    @endif
+                        @endif
+                    </div>
 
                     {{-- CTA mobile (visible uniquement sur petit écran) --}}
                     <div class="lg:hidden pt-2">

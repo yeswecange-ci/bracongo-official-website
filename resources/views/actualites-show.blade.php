@@ -57,6 +57,10 @@
         ],
     };
 @endphp
+@php
+    $galleryImages = collect($news->gallery_images ?? [])->filter()->take(6)->values();
+    $youtubeUrls = \App\Support\YoutubeEmbed::collectEmbedUrls($news->youtube_urls ?? null);
+@endphp
 
     <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
         @if($news->image)
@@ -112,6 +116,70 @@
             <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-bracongo">
                 {!! \App\Support\CmsHtmlSanitizer::sanitize($news->contenu) !!}
             </div>
+
+            @php
+                $newsWhatsappUrl = trim((string) ($news->whatsapp_url ?? ''));
+                $showNewsWhatsapp = $newsWhatsappUrl !== '' && str_starts_with($newsWhatsappUrl, 'http');
+                $newsWhatsappLabel = filled(trim((string) ($news->whatsapp_label ?? '')))
+                    ? trim((string) $news->whatsapp_label)
+                    : 'Vivez l’événement avec nous sur WhatsApp';
+            @endphp
+            @if($showNewsWhatsapp)
+                <div class="mt-14 md:mt-16 not-prose">
+                    <a href="{{ $newsWhatsappUrl }}"
+                       target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center justify-center gap-3 px-8 py-4 max-w-full rounded-full font-bold text-white
+                              shadow-lg hover:scale-[1.02] transition-all duration-300"
+                       style="background: linear-gradient(90deg, #25D366 0%, #1ebe5d 100%); box-shadow: 0 12px 24px rgba(37, 211, 102, 0.35);">
+                        @if(file_exists(public_path('img/whatsapp-svgrepo-com.svg')))
+                            <img src="{{ asset('img/whatsapp-svgrepo-com.svg') }}" alt="" class="w-6 h-6 shrink-0" width="24" height="24" loading="lazy">
+                        @else
+                            <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                            </svg>
+                        @endif
+                        <span>{{ $newsWhatsappLabel }}</span>
+                    </a>
+                </div>
+            @endif
+
+            @if($galleryImages->isNotEmpty() || $youtubeUrls->isNotEmpty())
+                <section class="mt-12 pt-10 border-t border-gray-100">
+                    <div class="flex items-center gap-3 mb-6">
+                        <img src="{{ asset('img/Group.png') }}" alt="" class="h-6 w-auto" aria-hidden="true">
+                        <h2 class="text-2xl font-bold text-gray-900">Médiathèque</h2>
+                    </div>
+
+                    @if($galleryImages->isNotEmpty())
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        @foreach($galleryImages as $img)
+                            <a href="{{ asset($img) }}" target="_blank" rel="noopener noreferrer"
+                               class="block rounded-2xl overflow-hidden border border-gray-200 bg-gray-100 group">
+                                <img src="{{ asset($img) }}" alt="Galerie {{ $news->titre }}"
+                                     class="w-full h-36 md:h-40 object-cover group-hover:scale-105 transition-transform duration-500">
+                            </a>
+                        @endforeach
+                    </div>
+                    @endif
+
+                    @if($youtubeUrls->isNotEmpty())
+                    <div class="mt-8 md:mt-10 space-y-8">
+                        @foreach($youtubeUrls as $videoUrl)
+                            <div class="relative w-full max-w-4xl mx-auto h-0 pb-[56.25%] rounded-[2rem] overflow-hidden bg-black shadow-xl ring-1 ring-black/10">
+                                <iframe
+                                    src="{{ $videoUrl }}"
+                                    title="Vidéo {{ $loop->iteration }} — {{ $news->titre }}"
+                                    class="absolute top-0 left-0 w-full h-full border-0"
+                                    loading="lazy"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    allowfullscreen></iframe>
+                            </div>
+                        @endforeach
+                    </div>
+                    @endif
+                </section>
+            @endif
 
             @if($news->lien_externe)
                 <div class="mt-12 pt-10 border-t border-gray-100">

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('parent_id')->references('id')->on('navigation_items')->nullOnDelete();
+
+            $table->index(['is_active', 'parent_id'], 'nav_items_active_parent');
         });
     }
 

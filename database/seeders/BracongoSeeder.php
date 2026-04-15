@@ -149,7 +149,7 @@ class BracongoSeeder extends Seeder
                 'type_contrat' => 'CDI',
                 'date_limite_candidature' => now()->addMonths(2)->toDateString(),
                 'image' => 'img/secu.jpg',
-                'lien' => '#',
+                'lien' => 'https://www.linkedin.com/company/bracongo',
                 'is_active' => true,
                 'ordre' => 1,
             ],
@@ -379,6 +379,8 @@ class BracongoSeeder extends Seeder
                 'date_publication' => now(),
                 'date_evenement' => now(),
                 'lieu' => 'Stade des Martyrs',
+                'whatsapp_url' => 'https://wa.me/243815586874?text='.rawurlencode('Bonjour BRACONGO — Soirée festive'),
+                'whatsapp_label' => 'Vivez l’événement avec nous sur WhatsApp',
                 'ordre' => 3,
             ],
         ];
