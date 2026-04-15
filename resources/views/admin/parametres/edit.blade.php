@@ -29,7 +29,7 @@
 				<div class="card-body">
 					<div class="row g-4">
 						<div class="col-12">
-							<x-admin.image-upload name="logo" label="Logo" :value="$parametres->logo ?? null" help="PNG, JPG, GIF — max 10 Mo" />
+							<x-admin.image-upload name="logo" label="Logo" :value="$parametres->logo ?? null" help="PNG, JPG, GIF — max 10 Mo" compact-preview />
 						</div>
 						<div class="col-12">
 							<label class="form-label fw-semibold">Suggestions de recherche <span class="text-muted small">(séparées par des virgules)</span></label>
@@ -71,25 +71,56 @@
 				</div>
 			</div>
 
-			@if($canEditContactEmail)
 			<div class="card mt-3">
 				<div class="card-header">
-					<h5 class="mb-0"><i class="bi bi-envelope-paper me-2" style="color:#E30613"></i>Réponses aux messages de contact</h5>
+					<h5 class="mb-0"><i class="bi bi-bag-check me-2" style="color:#E30613"></i>E-mail — mise à jour du statut de commande</h5>
 				</div>
 				<div class="card-body">
-					<label class="form-label fw-semibold" for="contact_reply_closing">Formule de politesse (pied de l’e-mail)</label>
+					<p class="text-muted small mb-3">
+						Envoyé automatiquement au client lorsqu’un administrateur modifie le statut d’une commande (boutique). Le texte est le même pour tous les cas&nbsp;; seuls les libellés de statut changent (ex.&nbsp;En attente, Confirmée, Livrée…).
+					</p>
+					<p class="small fw-semibold mb-2">Variables (copier-coller dans le sujet ou le corps)&nbsp;:</p>
+					<ul class="small text-muted mb-4 ps-3">
+						<li><code>{nom_client}</code> — nom du client</li>
+						<li><code>{reference}</code> — référence de la commande</li>
+						<li><code>{ancien_statut}</code> / <code>{nouveau_statut}</code> — libellés affichés (ex.&nbsp;En attente → Livrée)</li>
+						<li><code>{nom_site}</code> — {{ config('app.name') }}</li>
+					</ul>
+					<label class="form-label fw-semibold" for="commande_statut_email_sujet">Objet de l’e-mail</label>
+					<input type="text" class="form-control @error('commande_statut_email_sujet') is-invalid @enderror" name="commande_statut_email_sujet" id="commande_statut_email_sujet" maxlength="255"
+						value="{{ old('commande_statut_email_sujet', $parametres->commande_statut_email_sujet) }}"
+						placeholder="{{ \App\Models\ParametresSite::defaultCommandeStatutEmailSubjectTemplate() }}">
+					@error('commande_statut_email_sujet')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+					<div class="form-text mb-3">Si vide, l’objet par défaut est utilisé (voir placeholder).</div>
+
+					<label class="form-label fw-semibold" for="commande_statut_email_corps_html">Corps du message (HTML)</label>
+					<textarea class="form-control font-monospace small @error('commande_statut_email_corps_html') is-invalid @enderror" name="commande_statut_email_corps_html" id="commande_statut_email_corps_html" rows="14" spellcheck="false">{{ old('commande_statut_email_corps_html', $parametres->commande_statut_email_corps_html) }}</textarea>
+					@error('commande_statut_email_corps_html')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+					<div class="form-text mb-3">Fragment HTML inséré dans la mise en page de l’e-mail (en-tête rouge / charte). Laisser vide pour le texte par défaut.</div>
+
 					@php
-						$closingPlaceholder = "Cordialement,\n\nL'équipe ".config('app.name');
+						$p = $parametres;
+						$previewSubject = $p->resolvedCommandeStatutEmailSubject(
+							'Jean Dupont',
+							'CMD-EXEMPLE00',
+							'En attente',
+							'Confirmée',
+						);
+						$previewBody = $p->resolvedCommandeStatutEmailCorpsHtml(
+							'Jean Dupont',
+							'CMD-EXEMPLE00',
+							'En attente',
+							'Confirmée',
+						);
 					@endphp
-					<textarea class="form-control @error('contact_reply_closing') is-invalid @enderror" name="contact_reply_closing" id="contact_reply_closing" rows="5" placeholder="{{ $closingPlaceholder }}">{{ old('contact_reply_closing', $parametres->contact_reply_closing) }}</textarea>
-					@error('contact_reply_closing')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
-					<div class="form-text mt-2">
-						Ce texte apparaît sous votre réponse, avant le rappel du message initial du contact. Il remplace l’ancienne signature automatique avec le nom du rédacteur.
-						Si vous laissez le champ vide, une formule professionnelle par défaut est utilisée (cordialement + « L’équipe {{ config('app.name') }} »).
+					<div class="p-3 rounded border bg-light">
+						<p class="small fw-semibold text-muted text-uppercase mb-2" style="font-size:0.7rem;">Aperçu (données fictives)</p>
+						<p class="small mb-1"><span class="text-muted">Objet :</span> {{ $previewSubject }}</p>
+						<hr class="my-2">
+						<div class="small" style="max-height:200px;overflow:auto;line-height:1.45;">{!! $previewBody !!}</div>
 					</div>
 				</div>
 			</div>
-			@endif
 
 			<div class="mt-3">
 				<button type="submit" class="btn btn-primary">
@@ -119,6 +150,25 @@
 				@endif
 			</div>
 		</div>
+
+		@if($canEditContactEmail)
+		<div class="card border-0 shadow-sm mb-3">
+			<div class="card-header py-2 bg-white border-bottom">
+				<h5 class="mb-0 small fw-bold text-muted text-uppercase"><i class="bi bi-envelope-paper me-1" style="color:#E30613"></i>Réponses contact</h5>
+			</div>
+			<div class="card-body">
+				<label class="form-label fw-semibold small" for="contact_reply_closing">Formule de politesse (pied de l’e-mail)</label>
+				@php
+					$closingPlaceholder = "Cordialement,\n\nL'équipe ".config('app.name');
+				@endphp
+				<textarea class="form-control form-control-sm @error('contact_reply_closing') is-invalid @enderror" name="contact_reply_closing" id="contact_reply_closing" rows="5" placeholder="{{ $closingPlaceholder }}">{{ old('contact_reply_closing', $parametres->contact_reply_closing) }}</textarea>
+				@error('contact_reply_closing')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+				<div class="form-text mt-2 small">
+					Sous votre réponse, avant le rappel du message du contact. Vide = formule par défaut (« L’équipe {{ config('app.name') }} »).
+				</div>
+			</div>
+		</div>
+		@endif
 
 		<div class="card border-0 shadow-sm">
 			<div class="card-header py-2 bg-white border-bottom">

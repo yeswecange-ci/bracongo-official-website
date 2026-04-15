@@ -1461,3 +1461,93 @@ a { text-decoration: none; }
     font-weight: 600;
     letter-spacing: 0.01em;
 }
+
+/* ============================================================
+   Admin — aperçu upload (composant image-upload)
+   ============================================================ */
+.image-upload-field .image-upload-preview img.admin-upload-thumb,
+.image-upload-field .image-upload-preview img {
+    display: block;
+    height: 72px;
+    max-width: 150px;
+    width: auto;
+    object-fit: contain;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 4px;
+    background: #f8f9fa;
+}
+.image-upload-field--compact .image-upload-preview img.admin-upload-thumb,
+.image-upload-field--compact .image-upload-preview img {
+    height: 60px;
+    max-width: 120px;
+}
+.image-upload-field .admin-upload-thumb-zoom {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #E30613;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    line-height: 1;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+}
+.image-upload-field .image-upload-placeholder {
+    width: 112px;
+    height: 72px;
+}
+.image-upload-field--compact .image-upload-placeholder {
+    width: 80px;
+    height: 60px;
+}
+
+/* Blocs hors composant (ex. footer certification) — même look */
+.admin-upload-thumb-wrap .admin-upload-thumb {
+    display: block;
+    height: 72px;
+    max-width: 150px;
+    width: auto;
+    object-fit: contain;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 4px;
+    background: #f8f9fa;
+}
+.admin-upload-thumb-wrap .admin-upload-thumb-zoom {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #E30613;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    line-height: 1;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+}
+.admin-cert-upload-placeholder {
+    width: 112px;
+    height: 72px;
+}
+
+/* ============================================================
+   Détail commande (admin) — tableau scrollable sur petits écrans
+   ============================================================ */
+.a-commande-detail__table-wrap {
+    -webkit-overflow-scrolling: touch;
+}
+.a-commande-detail .table {
+    min-width: 580px;
+}

@@ -11,7 +11,8 @@ class News extends Model
 
     protected $fillable = [
         'titre', 'slug', 'type', 'extrait', 'contenu', 'image',
-        'lien_externe', 'date_publication', 'date_evenement', 'lieu',
+        'gallery_images', 'youtube_urls',
+        'lien_externe', 'whatsapp_url', 'whatsapp_label', 'date_publication', 'date_evenement', 'lieu',
         'ordre', 'is_active',
     ];
 
@@ -19,6 +20,8 @@ class News extends Model
         'is_active' => 'boolean',
         'date_publication' => 'date',
         'date_evenement' => 'date',
+        'gallery_images' => 'array',
+        'youtube_urls' => 'array',
     ];
 
     protected static function booted(): void

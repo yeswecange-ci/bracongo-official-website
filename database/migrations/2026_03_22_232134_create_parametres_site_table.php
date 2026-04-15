@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('actualites_hero_titre')->default('Actualités & Événements');
             $table->string('actualites_filtre_tout_label')->default('Tout voir');
             $table->enum('invitation_expires_hours', ['12', '24', '48', '72'])->default('48');
+            $table->text('contact_reply_closing')->nullable();
+            $table->string('commande_statut_email_sujet', 255)->nullable();
+            $table->longText('commande_statut_email_corps_html')->nullable();
             $table->timestamps();
         });
     }

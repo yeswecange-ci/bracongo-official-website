@@ -20,6 +20,7 @@ use App\Models\PageCarriere;
 use App\Models\PageContact;
 use App\Models\PageEaux;
 use App\Models\PageHistoire;
+use App\Models\PageLacledeschateaux;
 use App\Models\PagePro;
 use App\Models\PageWelcome;
 use App\Models\Valeur;
@@ -105,6 +106,13 @@ class FrontController extends Controller
         $pro = PagePro::instance();
 
         return view('pro', compact('pro'));
+    }
+
+    public function lacledeschateaux()
+    {
+        $page = PageLacledeschateaux::instance();
+
+        return view('lacledeschateaux', compact('page'));
     }
 
     public function marques()
@@ -424,6 +432,7 @@ class FrontController extends Controller
             ['title' => 'Contact', 'url' => route('contact'), 'type' => 'Page', 'keywords' => 'adresse telephone email'],
             ['title' => 'Bracongo Pro', 'url' => route('pro'), 'type' => 'Page', 'keywords' => 'application pro'],
             ['title' => 'Boutique', 'url' => route('boutique'), 'type' => 'Page', 'keywords' => 'boutique panier produits accessoires commande'],
+            ['title' => 'Clé des Châteaux', 'url' => route('lacledeschateaux'), 'type' => 'Page', 'keywords' => 'cle chateaux vin wine castel caviste'],
         ];
 
         foreach ($staticPages as $page) {

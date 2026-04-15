@@ -11,7 +11,7 @@ class PageContact extends Model
     protected $fillable = [
         'hero_image', 'hero_titre', 'denomination', 'adresse', 'bp', 'email',
         'tel_consommateurs', 'tel_fetes', 'tel_fournisseurs', 'tel_cle_chateaux',
-        'devenir_client_lien', 'form_titre',
+        'devenir_client_lien', 'form_titre', 'submit_label', 'whatsapp_label', 'whatsapp_url',
     ];
 
     public static function instance(): self

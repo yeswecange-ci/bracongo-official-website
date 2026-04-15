@@ -21,12 +21,6 @@
 @section('content')
 @include('admin.layouts.partials.alerts')
 
-<div class="alert alert-info alert-dismissible fade show d-flex align-items-center gap-2" role="alert">
-    <i class="bi bi-info-circle-fill"></i>
-    <div>Cette section est <strong>réservée au back-office</strong>. Les produits (goodies, articles) ne sont pas visibles sur le site client pour l'instant.</div>
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-</div>
-
 <div class="card">
     <div class="card-body p-0">
         <div class="table-responsive">

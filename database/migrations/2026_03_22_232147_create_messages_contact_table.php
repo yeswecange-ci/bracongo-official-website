@@ -17,6 +17,8 @@ return new class extends Migration
             $table->text('message');
             $table->boolean('lu')->default(false);
             $table->timestamps();
+
+            $table->index('lu', 'messages_contact_lu');
         });
     }
 

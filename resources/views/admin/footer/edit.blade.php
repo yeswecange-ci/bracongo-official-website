@@ -53,13 +53,13 @@
 								</div>
 								<div class="d-flex align-items-center gap-2">
 									@if($footer->certification_image)
-									<div id="certificationPreview" class="position-relative" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#modalPreviewCertification">
-										<img src="{{ asset($footer->certification_image) }}" alt="Certification" style="height:60px;max-width:120px;object-fit:contain;border:1px solid #dee2e6;border-radius:8px;padding:4px;background:#f8f9fa;">
-										<span class="badge bg-primary position-absolute top-0 end-0 translate-middle" style="font-size:10px;">Prévisualiser</span>
+									<div id="certificationPreview" class="position-relative admin-upload-thumb-wrap" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#modalPreviewCertification">
+										<img src="{{ asset($footer->certification_image) }}" alt="Certification" class="admin-upload-thumb">
+										<span class="admin-upload-thumb-zoom" title="Prévisualiser" aria-label="Prévisualiser"><i class="bi bi-eye-fill" aria-hidden="true"></i></span>
 									</div>
 									@else
 									<div id="certificationPreview" class="d-none"></div>
-									<div id="certificationPlaceholder" class="bg-light border rounded d-flex align-items-center justify-content-center" style="width:80px;height:60px;">
+									<div id="certificationPlaceholder" class="admin-cert-upload-placeholder bg-light border rounded d-flex align-items-center justify-content-center">
 										<i class="bi bi-image" style="font-size:1.5rem;color:#adb5bd"></i>
 									</div>
 									@endif
@@ -173,7 +173,11 @@ document.addEventListener('DOMContentLoaded', function() {
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					if (!preview.querySelector('img')) {
-						preview.innerHTML = '<img src="" alt="Prévisualisation" style="height:60px;max-width:120px;object-fit:contain;border:1px solid #dee2e6;border-radius:8px;padding:4px;background:#f8f9fa;" data-bs-toggle="modal" data-bs-target="#modalPreviewCertification">';
+						preview.classList.add('position-relative', 'admin-upload-thumb-wrap');
+						preview.innerHTML = '<img src="" alt="Prévisualisation" class="admin-upload-thumb"><span class="admin-upload-thumb-zoom" title="Prévisualiser" aria-label="Prévisualiser"><i class="bi bi-eye-fill" aria-hidden="true"></i></span>';
+						preview.setAttribute('data-bs-toggle', 'modal');
+						preview.setAttribute('data-bs-target', '#modalPreviewCertification');
+						preview.style.cursor = 'pointer';
 					}
 					preview.querySelector('img').src = e.target.result;
 					preview.classList.remove('d-none');

@@ -32,6 +32,7 @@ class OffreEmploiController extends Controller
             'lieu' => 'nullable|string|max:255',
             'type_contrat' => 'nullable|string|max:120',
             'date_limite_candidature' => 'nullable|date',
+            'lien' => 'nullable|string|max:500',
             'image' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'is_active' => 'nullable|boolean',
             'require_lettre_motivation' => 'nullable|boolean',
@@ -39,6 +40,7 @@ class OffreEmploiController extends Controller
         ]);
         $data['is_active'] = $request->boolean('is_active');
         $data['require_lettre_motivation'] = $request->boolean('require_lettre_motivation');
+        $data['lien'] = $this->normalizeOffreLienExterne($request->input('lien'));
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadImage($request->file('image'), 'uploads/offres-emploi', 'offre');
         } else {
@@ -47,7 +49,6 @@ class OffreEmploiController extends Controller
         if (empty($data['slug'])) {
             unset($data['slug']);
         }
-        $data['lien'] = '#';
 
         OffreEmploi::create($data);
 
@@ -69,6 +70,7 @@ class OffreEmploiController extends Controller
             'lieu' => 'nullable|string|max:255',
             'type_contrat' => 'nullable|string|max:120',
             'date_limite_candidature' => 'nullable|date',
+            'lien' => 'nullable|string|max:500',
             'image' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'is_active' => 'nullable|boolean',
             'require_lettre_motivation' => 'nullable|boolean',
@@ -76,6 +78,7 @@ class OffreEmploiController extends Controller
         ]);
         $data['is_active'] = $request->boolean('is_active');
         $data['require_lettre_motivation'] = $request->boolean('require_lettre_motivation');
+        $data['lien'] = $this->normalizeOffreLienExterne($request->input('lien'));
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadImage($request->file('image'), 'uploads/offres-emploi', 'offre');
         } else {
@@ -98,5 +101,15 @@ class OffreEmploiController extends Controller
 
         return redirect()->route('admin.offres-emploi.index')
             ->with('success', "Offre d'emploi supprimée.");
+    }
+
+    private function normalizeOffreLienExterne(mixed $raw): string
+    {
+        $t = trim((string) $raw);
+        if ($t === '' || ! str_starts_with($t, 'http')) {
+            return '#';
+        }
+
+        return $t;
     }
 }

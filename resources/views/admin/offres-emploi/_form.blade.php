@@ -29,4 +29,12 @@
 		<textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="8" style="font-family:monospace;font-size:.82rem;">{{ old('description', $offres_emploi->description ?? '') }}</textarea>
 		@error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
 	</div>
+	<div class="col-12">
+		<label class="form-label fw-semibold">Lien externe <small class="text-muted">(LinkedIn, Educarrier, etc. — optionnel)</small></label>
+		<input type="url" class="form-control @error('lien') is-invalid @enderror" name="lien"
+			value="{{ old('lien', isset($offres_emploi) && filled($offres_emploi->lien) && $offres_emploi->lien !== '#' ? $offres_emploi->lien : '') }}"
+			placeholder="https://…">
+		@error('lien')<div class="invalid-feedback">{{ $message }}</div>@enderror
+		<div class="form-text">Si renseigné, un bouton « Voir Plus » s’affiche sous la description sur la page publique de l’offre.</div>
+	</div>
 </div>
