@@ -86,7 +86,7 @@ class BracongoSeeder extends Seeder
         }
 
         PageHistoire::updateOrCreate(['id' => 1], [
-            'hero_image' => 'img/bracongo.jpg',
+            'hero_image' => 'img/usine-bracongo.jpg',
             'titre' => 'Notre histoire',
             'paragraphe_1' => 'Lorem ipsum dolor sit amet consectetur. Sapien fusce scelerisque condimentum iaculis viverra aliquam varius. Senectus tristique dapibus aliquet faucibus semper euismod nibh mauris leo. Sed adipiscing faucibus cursus scelerisque non turpis pellentesque.',
             'paragraphe_2' => 'Lorem ipsum dolor sit amet consectetur. Sapien fusce scelerisque condimentum iaculis viverra aliquam varius. Senectus tristique dapibus aliquet faucibus semper euismod nibh mauris leo. Sed adipiscing faucibus cursus scelerisque non turpis pellentesque.',
@@ -116,7 +116,7 @@ class BracongoSeeder extends Seeder
         }
 
         PageContact::updateOrCreate(['id' => 1], [
-            'hero_image' => 'img/bracongo.jpg',
+            'hero_image' => 'img/usine-bracongo-2.jpg',
             'hero_titre' => 'Nos Contacts',
             'form_titre' => 'Nous contacter',
             'submit_label' => 'Envoyer',

@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('titre');
             $table->string('slug')->unique();
             $table->text('description');
+            $table->longText('descriptif_poste')->nullable();
             $table->string('lieu')->nullable();
             $table->string('type_contrat')->nullable();
             $table->date('date_limite_candidature')->nullable();

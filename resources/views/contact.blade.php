@@ -7,7 +7,7 @@
         $brandIcon = asset($parametres->logo ?? 'img/Group.png');
     @endphp
     <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
-        <img src="{{ asset($contact->hero_image ?? 'img/bracongo.jpg') }}" alt="Nos Contacts Banner" class="w-full h-full object-cover">
+        <img src="{{ asset($contact->hero_image ?? 'img/usine-bracongo-2.jpg') }}" alt="Nos Contacts Banner" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-black/50"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-center uppercase tracking-widest">
@@ -109,19 +109,19 @@
                     <form action="{{ route('contact.store') }}" method="POST" class="space-y-6">
                         @csrf
                         <div class="space-y-4">
-                            <input type="text" name="name" placeholder="Nom et prénoms" required value="{{ old('name') }}" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors @error('name') border-red-400 @enderror">
-                            <input type="email" name="email" placeholder="Email" required value="{{ old('email') }}" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors @error('email') border-red-400 @enderror">
-                            <input type="tel" name="phone" placeholder="Téléphone" value="{{ old('phone') }}" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors">
-                            <input type="text" name="subject" placeholder="Objet de la demande" value="{{ old('subject') }}" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors">
+                            <input type="text" id="contact-name" name="name" placeholder="Nom et prénoms" required value="{{ old('name') }}" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors @error('name') border-red-400 @enderror">
+                            <input type="email" id="contact-email" name="email" placeholder="Email" required value="{{ old('email') }}" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors @error('email') border-red-400 @enderror">
+                            <input type="tel" id="contact-phone" name="phone" placeholder="Téléphone" value="{{ old('phone') }}" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors">
+                            <input type="text" id="contact-subject" name="subject" placeholder="Objet de la demande" value="{{ old('subject') }}" class="w-full px-8 py-4 rounded-full border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors">
                             <div class="relative">
-                                <textarea name="message" placeholder="Message" rows="8" required class="w-full px-8 py-6 rounded-[2rem] border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors resize-none @error('message') border-red-400 @enderror">{{ old('message') }}</textarea>
+                                <textarea id="contact-message" name="message" placeholder="Message" rows="8" required class="w-full px-8 py-6 rounded-[2rem] border border-gray-200 focus:outline-none focus:border-bracongo text-gray-700 bg-white shadow-sm transition-colors resize-none @error('message') border-red-400 @enderror">{{ old('message') }}</textarea>
                             </div>
                         </div>
 
                         @php
                             $whatsAppUrl = filled($contact->whatsapp_url ?? null) && ($contact->whatsapp_url ?? '#') !== '#'
                                 ? $contact->whatsapp_url
-                                : 'https://wa.me/243815586874?text=Bonjour%20BRACONGO';
+                                : 'https://wa.me/243841622222?text=Bonjour%20BRACONGO';
                             $whatsAppLabel = filled($contact->whatsapp_label ?? null)
                                 ? $contact->whatsapp_label
                                 : 'Discutons sur WhatsApp';
@@ -139,15 +139,21 @@
                             </button>
 
                             <a href="{{ $whatsAppUrl }}"
+                               id="contact-whatsapp-link"
+                               data-whatsapp-url="{{ $whatsAppUrl }}"
                                target="_blank" rel="noopener noreferrer"
                                class="inline-flex items-center justify-center gap-3 px-10 py-4 min-w-[220px]
                                       rounded-full font-bold text-white
                                       shadow-lg hover:scale-[1.03]
                                       transition-all duration-300 group"
                                style="background: linear-gradient(90deg, #25D366 0%, #1ebe5d 100%); box-shadow: 0 12px 24px rgba(37, 211, 102, 0.35);">
-                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                    <path d="M12.03 2C6.49 2 2 6.4 2 11.83c0 1.89.56 3.73 1.62 5.31L2 22l5.03-1.56a10.14 10.14 0 0 0 5 1.31h.01c5.54 0 10.03-4.4 10.03-9.83S17.58 2 12.03 2zm0 17.96h-.01a8.4 8.4 0 0 1-4.29-1.17l-.31-.18-2.98.93.97-2.89-.2-.3a8.15 8.15 0 0 1-1.3-4.42c0-4.5 3.7-8.16 8.23-8.16a8.2 8.2 0 0 1 8.23 8.16 8.2 8.2 0 0 1-8.24 8.03z"/>
-                                </svg>
+                                @if(file_exists(public_path('img/whatsapp-svgrepo-com.svg')))
+                                    <img src="{{ asset('img/whatsapp-svgrepo-com.svg') }}" alt="" class="w-5 h-5 shrink-0" width="20" height="20" loading="lazy">
+                                @else
+                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path d="M12.03 2C6.49 2 2 6.4 2 11.83c0 1.89.56 3.73 1.62 5.31L2 22l5.03-1.56a10.14 10.14 0 0 0 5 1.31h.01c5.54 0 10.03-4.4 10.03-9.83S17.58 2 12.03 2zm0 17.96h-.01a8.4 8.4 0 0 1-4.29-1.17l-.31-.18-2.98.93.97-2.89-.2-.3a8.15 8.15 0 0 1-1.3-4.42c0-4.5 3.7-8.16 8.23-8.16a8.2 8.2 0 0 1 8.23 8.16 8.2 8.2 0 0 1-8.24 8.03z"/>
+                                    </svg>
+                                @endif
                                 <span>{{ $whatsAppLabel }}</span>
                             </a>
                         </div>
@@ -158,3 +164,39 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const waLink = document.getElementById('contact-whatsapp-link');
+    if (!waLink) return;
+
+    waLink.addEventListener('click', function () {
+        const name = (document.getElementById('contact-name')?.value || '').trim();
+        const email = (document.getElementById('contact-email')?.value || '').trim();
+        const phone = (document.getElementById('contact-phone')?.value || '').trim();
+        const subject = (document.getElementById('contact-subject')?.value || '').trim();
+        const message = (document.getElementById('contact-message')?.value || '').trim();
+
+        const lines = [
+            'Bonjour 👋',
+            '',
+            'Je vous écris depuis le site BRACONGO.',
+            'Je m\'appelle ' + (name || '[Nom non renseigné]') + ', mon e-mail est ' + (email || '[Email non renseigné]') + ' 📧 et mon numéro est ' + (phone || '[Téléphone non renseigné]') + ' 📱.',
+            'L\'objet de ma demande est : ' + (subject || '[Objet non renseigné]') + ' 📝',
+            '',
+            'Le message que j’aimerais vous transmettre est le suivant 💬 :',
+            message || '[Message non renseigné]',
+            '',
+            'Merci beaucoup pour votre aide 🙏',
+            'Excellente journée à vous ✨',
+        ].filter(Boolean);
+
+        const sourceUrl = waLink.dataset.whatsappUrl || waLink.href;
+        const parsedUrl = new URL(sourceUrl, window.location.origin);
+        parsedUrl.searchParams.set('text', lines.join('\n'));
+        waLink.href = parsedUrl.toString();
+    });
+});
+</script>
+@endpush

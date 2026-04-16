@@ -15,6 +15,7 @@ class OffreEmploi extends Model
         'titre',
         'slug',
         'description',
+        'descriptif_poste',
         'lieu',
         'type_contrat',
         'date_limite_candidature',
