@@ -47,9 +47,9 @@
                                     <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                                 </a>
                                 @if(filled($offre->lien) && $offre->lien !== '#' && str_starts_with(trim($offre->lien), 'http'))
-                                <a href="{{ $offre->lien }}" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-3 pl-5 pr-4 py-2 rounded-full border border-bracongo bg-white text-bracongo text-sm font-semibold shadow-sm hover:bg-bracongo hover:text-white hover:shadow transition-all duration-300">
-                                    <span>Voir Plus</span>
-                                    <span class="inline-flex h-7 w-7 shrink-0 items-center justify-center text-bracongo group-hover:text-white" aria-hidden="true">
+                                <a href="{{ $offre->lien }}" target="_blank" rel="noopener noreferrer" class="group inline-flex h-11 items-center justify-center gap-2.5 px-5 rounded-full border border-bracongo bg-white text-bracongo text-sm font-semibold leading-none shadow-sm hover:bg-bracongo hover:text-white hover:shadow transition-all duration-300">
+                                    <span class="inline-flex items-center justify-center h-full">Voir Plus</span>
+                                    <span class="inline-flex h-6 w-6 shrink-0 items-center justify-center text-bracongo group-hover:text-white" aria-hidden="true">
                                         @include('partials.icons.url-link')
                                     </span>
                                 </a>

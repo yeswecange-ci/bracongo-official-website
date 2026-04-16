@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('page_contact', function (Blueprint $table) {
             $table->id();
-            $table->string('hero_image')->default('img/bracongo.jpg');
+            $table->string('hero_image')->default('img/usine-bracongo-2.jpg');
             $table->string('hero_titre')->default('Nos Contacts');
             $table->string('denomination', 500)->default('Les Boissons Rafraîchissantes du Congo, BRACONGO SA');
             $table->string('adresse', 500)->default('Avenue des Brasseries, numéro 7666, Quartier Kingabwa, Commune de Limete, dans la province de Kinshasa, en République Démocratique du Congo.');

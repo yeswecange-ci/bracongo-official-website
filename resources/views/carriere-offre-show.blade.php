@@ -132,6 +132,11 @@
                     @endif
 
                     {{-- Description --}}
+                    @php
+                        $descriptifPosteHtml = filled(trim((string) ($offre->descriptif_poste ?? '')))
+                            ? (string) $offre->descriptif_poste
+                            : (string) $offre->description;
+                    @endphp
                     <div>
                         <div class="flex items-center gap-3 mb-6">
                             <img src="{{ asset('img/Group.png') }}" alt="" class="h-7 w-auto">
@@ -143,7 +148,7 @@
                             prose-li:text-gray-700
                             prose-a:text-bracongo prose-a:font-semibold hover:prose-a:underline
                             prose-strong:text-gray-900">
-                            {!! \App\Support\CmsHtmlSanitizer::sanitize($offre->description) !!}
+                            {!! \App\Support\CmsHtmlSanitizer::sanitize($descriptifPosteHtml) !!}
                         </div>
                         @php
                             $offreLienExterne = trim((string) ($offre->lien ?? ''));

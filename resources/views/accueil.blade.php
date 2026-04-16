@@ -116,10 +116,31 @@
             @endforelse
         </div>
 
-        <div class="flex justify-center mt-12">
-            <a href="{{ $accueil->actualites_voir_plus_lien ?? '#' }}" class="flex items-center gap-2 px-8 py-2 border border-bracongo rounded-full text-bracongo font-semibold hover:bg-bracongo hover:text-white transition-all duration-300">
+        @php
+            $homeWhatsAppUrl = filled($contact->whatsapp_url ?? null) && ($contact->whatsapp_url ?? '#') !== '#'
+                ? $contact->whatsapp_url
+                : 'https://wa.me/243841622222?text=Bonjour%20BRACONGO';
+            $homeWhatsAppLabel = filled($contact->whatsapp_label ?? null)
+                ? $contact->whatsapp_label
+                : 'Discutons sur WhatsApp';
+        @endphp
+        <div class="mt-12 flex flex-wrap items-center justify-center gap-4 text-center">
+            <a href="{{ $accueil->actualites_voir_plus_lien ?? '#' }}" class="inline-flex items-center gap-2 px-8 py-2 border border-bracongo rounded-full text-bracongo font-semibold hover:bg-bracongo hover:text-white transition-all duration-300">
                 Voir plus
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </a>
+            <a href="{{ $homeWhatsAppUrl }}"
+               target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center justify-center gap-3 px-8 py-2 rounded-full font-semibold text-white shadow-lg hover:scale-[1.02] transition-all duration-300"
+               style="background: linear-gradient(90deg, #25D366 0%, #1ebe5d 100%); box-shadow: 0 12px 24px rgba(37, 211, 102, 0.35);">
+                @if(file_exists(public_path('img/whatsapp-svgrepo-com.svg')))
+                    <img src="{{ asset('img/whatsapp-svgrepo-com.svg') }}" alt="" class="w-5 h-5 shrink-0" width="20" height="20" loading="lazy">
+                @else
+                    <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12.03 2C6.49 2 2 6.4 2 11.83c0 1.89.56 3.73 1.62 5.31L2 22l5.03-1.56a10.14 10.14 0 0 0 5 1.31h.01c5.54 0 10.03-4.4 10.03-9.83S17.58 2 12.03 2zm0 17.96h-.01a8.4 8.4 0 0 1-4.29-1.17l-.31-.18-2.98.93.97-2.89-.2-.3a8.15 8.15 0 0 1-1.3-4.42c0-4.5 3.7-8.16 8.23-8.16a8.2 8.2 0 0 1 8.23 8.16 8.2 8.2 0 0 1-8.24 8.03z"/>
+                    </svg>
+                @endif
+                <span>{{ $homeWhatsAppLabel }}</span>
             </a>
         </div>
     </div>

@@ -24,12 +24,13 @@ class MerchandisingProduitsSeeder extends Seeder
     {
         $imgDir = public_path(self::IMAGE_DIR);
         $dirs = is_dir($imgDir) ? [$imgDir] : [];
+        $definitions = $this->definitions();
 
         if ($dirs === []) {
             $this->command?->warn('Dossier public/img introuvable : les produits seront créés sans image.');
         }
 
-        foreach ($this->definitions() as $def) {
+        foreach ($definitions as $def) {
             $src = $this->findFirstFile($dirs, $def['fichiers']);
             $relative = null;
 
@@ -53,6 +54,7 @@ class MerchandisingProduitsSeeder extends Seeder
                 ]
             );
         }
+
     }
 
     /**
@@ -112,26 +114,6 @@ class MerchandisingProduitsSeeder extends Seeder
                 'ordre' => 3,
             ],
             [
-                'slug' => 'polo-bracongo-pro-bordeaux',
-                'nom' => 'Polo Bracongo Pro (bordeaux)',
-                'description' => 'Polo manches courtes bordeaux, logo Bracongo poitrine.',
-                'fichiers' => ['polo-bracongo-pro-bordeaux', 'polo-bordeaux', 'polo-bracongo-pro-1'],
-                'prix' => null,
-                'stock' => 25,
-                'reference' => 'MERCH-POL-BRD',
-                'ordre' => 4,
-            ],
-            [
-                'slug' => 'polo-bracongo-pro-rouge',
-                'nom' => 'Polo Bracongo Pro (rouge)',
-                'description' => 'Polo manches courtes rouge, logo Bracongo poitrine.',
-                'fichiers' => ['polo-bracongo-pro-rouge', 'polo-rouge', 'polo-bracongo-pro-2'],
-                'prix' => null,
-                'stock' => 25,
-                'reference' => 'MERCH-POL-RGE',
-                'ordre' => 5,
-            ],
-            [
                 'slug' => 't-shirt-bracongo',
                 'nom' => 'T-shirt Bracongo',
                 'description' => 'T-shirt noir avec grand logo Bracongo poitrine et manche.',
@@ -139,7 +121,7 @@ class MerchandisingProduitsSeeder extends Seeder
                 'prix' => null,
                 'stock' => 35,
                 'reference' => 'MERCH-TSH-BRC',
-                'ordre' => 6,
+                'ordre' => 4,
             ],
             [
                 'slug' => 'mug-primus',
@@ -149,7 +131,7 @@ class MerchandisingProduitsSeeder extends Seeder
                 'prix' => null,
                 'stock' => 50,
                 'reference' => 'MERCH-MUG-PRI',
-                'ordre' => 7,
+                'ordre' => 5,
             ],
         ];
     }

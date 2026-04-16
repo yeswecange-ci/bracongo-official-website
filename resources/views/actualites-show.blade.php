@@ -117,32 +117,6 @@
                 {!! \App\Support\CmsHtmlSanitizer::sanitize($news->contenu) !!}
             </div>
 
-            @php
-                $newsWhatsappUrl = trim((string) ($news->whatsapp_url ?? ''));
-                $showNewsWhatsapp = $newsWhatsappUrl !== '' && str_starts_with($newsWhatsappUrl, 'http');
-                $newsWhatsappLabel = filled(trim((string) ($news->whatsapp_label ?? '')))
-                    ? trim((string) $news->whatsapp_label)
-                    : 'Vivez l’événement avec nous sur WhatsApp';
-            @endphp
-            @if($showNewsWhatsapp)
-                <div class="mt-14 md:mt-16 not-prose">
-                    <a href="{{ $newsWhatsappUrl }}"
-                       target="_blank" rel="noopener noreferrer"
-                       class="inline-flex items-center justify-center gap-3 px-8 py-4 max-w-full rounded-full font-bold text-white
-                              shadow-lg hover:scale-[1.02] transition-all duration-300"
-                       style="background: linear-gradient(90deg, #25D366 0%, #1ebe5d 100%); box-shadow: 0 12px 24px rgba(37, 211, 102, 0.35);">
-                        @if(file_exists(public_path('img/whatsapp-svgrepo-com.svg')))
-                            <img src="{{ asset('img/whatsapp-svgrepo-com.svg') }}" alt="" class="w-6 h-6 shrink-0" width="24" height="24" loading="lazy">
-                        @else
-                            <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                            </svg>
-                        @endif
-                        <span>{{ $newsWhatsappLabel }}</span>
-                    </a>
-                </div>
-            @endif
-
             @if($galleryImages->isNotEmpty() || $youtubeUrls->isNotEmpty())
                 <section class="mt-12 pt-10 border-t border-gray-100">
                     <div class="flex items-center gap-3 mb-6">

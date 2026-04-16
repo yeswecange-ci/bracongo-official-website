@@ -41,22 +41,6 @@ MERCH_DEFINITIONS: list[dict[str, object]] = [
         "fichiers": ["casquette-bracongo", "casquette", "cap-bracongo"],
     },
     {
-        "nom": "Polo Bracongo Pro (bordeaux)",
-        "fichiers": [
-            "polo-bracongo-pro-bordeaux",
-            "polo-bordeaux",
-            "polo-bracongo-pro-1",
-        ],
-    },
-    {
-        "nom": "Polo Bracongo Pro (rouge)",
-        "fichiers": [
-            "polo-bracongo-pro-rouge",
-            "polo-rouge",
-            "polo-bracongo-pro-2",
-        ],
-    },
-    {
         "nom": "T-shirt Bracongo",
         "fichiers": ["t-shirt-bracongo", "tshirt-bracongo", "tee-bracongo"],
     },

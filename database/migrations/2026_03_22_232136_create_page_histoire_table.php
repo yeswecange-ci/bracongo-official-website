@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('page_histoire', function (Blueprint $table) {
             $table->id();
-            $table->string('hero_image')->default('img/bracongo.jpg');
+            $table->string('hero_image')->default('img/usine-bracongo.jpg');
             $table->string('titre')->default('Notre histoire');
             $table->text('paragraphe_1')->nullable();
             $table->text('paragraphe_2')->nullable();

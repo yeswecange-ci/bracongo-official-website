@@ -80,5 +80,6 @@
             document.body.classList.remove('loading');
         });
     </script>
+    @stack('scripts')
 </body>
 </html>

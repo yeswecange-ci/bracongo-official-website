@@ -43,10 +43,11 @@ class FrontController extends Controller
     public function accueil()
     {
         $accueil = PageAccueil::instance();
+        $contact = PageContact::instance();
         $slides = HeroSlide::where('is_active', true)->orderBy('ordre')->get();
         $dernieresNews = News::actives()->take(4)->get();
 
-        return view('accueil', compact('accueil', 'slides', 'dernieresNews'));
+        return view('accueil', compact('accueil', 'slides', 'dernieresNews', 'contact'));
     }
 
     public function histoire()
