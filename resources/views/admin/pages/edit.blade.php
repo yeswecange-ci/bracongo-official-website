@@ -66,7 +66,7 @@
 							</div>
 							<div class="mb-3">
 								<label class="form-label">Image hero (URL ou chemin)</label>
-								<input type="text" class="form-control" id="heroImage" name="hero_image" placeholder="img/banner.jpg">
+								<input type="text" class="form-control" id="heroImage" name="hero_image" placeholder="img/banner.webp">
 							</div>
 						</div>
 					</div>
@@ -162,7 +162,7 @@
 			metaTitle: "BRACONGO — Accueil",
 			metaDescription: "C'est Frais, C'est Bon, C'est TOP!",
 			heroTitle: "C'est Frais, C'est Bon, C'est TOP!",
-			heroImage: "img/coverhome.jpg",
+			heroImage: "img/coverhome.webp",
 			heroText: "Contenu hero à rendre dynamique (texte, image, CTA, sections…).",
 			ctaLabel: "Contactez-nous", ctaHref: "/contact", status: "published"
 		}

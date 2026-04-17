@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('page_bieres', function (Blueprint $table) {
             $table->id();
-            $table->string('hero_image')->default('img/marque.jpg');
+            $table->string('hero_image')->default('img/marque.webp');
             $table->string('hero_titre')->default('Nos Bières');
             $table->string('hero_image_alt')->nullable();
             $table->string('breadcrumb_libelle')->default('Bières');

@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('qui_titre')->default('Qui sommes-nous ?');
             $table->text('qui_texte')->nullable();
-            $table->string('qui_image_fond')->default('img/brasserie.jpg');
+            $table->string('qui_image_fond')->default('img/brasserie.webp');
             $table->string('qui_cta_texte')->default('Lire plus');
             $table->string('qui_cta_lien')->default('/histoire');
             $table->string('marques_titre')->default('Nos marques');
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('marques_cartes_cta_texte')->default('Voir plus');
             $table->string('rejoignez_titre')->default('Rejoignez nous');
             $table->text('rejoignez_texte')->nullable();
-            $table->string('rejoignez_image')->default('img/rejoignez.png');
+            $table->string('rejoignez_image')->default('img/rejoignez.webp');
             $table->string('rejoignez_cta_texte')->default('Voir nos offres d\'emploi');
             $table->string('rejoignez_cta_lien')->default('/Carriere');
             $table->string('actualites_titre')->default('Dernières actualités');

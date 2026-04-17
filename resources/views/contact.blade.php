@@ -4,10 +4,10 @@
 
 @section('content')
     @php
-        $brandIcon = asset($parametres->logo ?? 'img/Group.png');
+        $brandIcon = asset($parametres->logo ?? 'img/Group.webp');
     @endphp
     <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
-        <img src="{{ asset($contact->hero_image ?? 'img/usine-bracongo-2.jpg') }}" alt="Nos Contacts Banner" class="w-full h-full object-cover">
+        <img src="{{ asset($contact->hero_image ?? 'img/usine-bracongo-2.webp') }}" alt="Nos Contacts Banner" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-black/50"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-center uppercase tracking-widest">

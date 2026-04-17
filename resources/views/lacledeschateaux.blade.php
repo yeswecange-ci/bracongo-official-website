@@ -8,7 +8,7 @@
 
     {{-- Hero premium — image bannière fixe (dynamisation à valider plus tard) --}}
     <section class="relative min-h-[600px] md:min-h-[720px] w-full overflow-hidden">
-        <img src="{{ asset('img/clechateau3.jpg.jpeg') }}"
+        <img src="{{ asset('img/clechateau3.webp') }}"
              alt="{{ $page->hero_titre ?? 'Clé des Châteaux' }}"
              class="absolute inset-0 w-full h-full object-cover scale-110 motion-safe:transition-transform motion-safe:duration-[20s] hover:scale-100"
              loading="eager"

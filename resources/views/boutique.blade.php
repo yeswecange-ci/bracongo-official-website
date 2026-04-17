@@ -6,7 +6,7 @@
 
 @section('content')
     @php
-        $heroImage = $pageBoutique->hero_image ?? 'img/brasserie.jpg';
+        $heroImage = $pageBoutique->hero_image ?? 'img/brasserie.webp';
         $heroBadge = $pageBoutique->hero_badge ?? 'Bracongo officiel';
         $heroTitre = $pageBoutique->hero_titre ?? 'Boutique';
         $heroDescription = $pageBoutique->hero_description ?? 'Retrouvez ici nos produits et accessoires officiels.';
@@ -45,7 +45,7 @@
                 {{-- En-tête section --}}
                 <div class="flex items-center justify-between mb-12">
                     <div class="flex items-center gap-3">
-                        <img src="{{ asset('img/Group.png') }}" alt="" class="h-8 w-auto" loading="lazy" decoding="async" aria-hidden="true">
+                        <img src="{{ asset('img/Group.webp') }}" alt="" class="h-8 w-auto" loading="lazy" decoding="async" aria-hidden="true">
                         <h2 class="text-2xl md:text-3xl font-bold text-gray-900">
                             Nos produits
                             <span class="text-bracongo text-lg font-semibold">({{ $produits->total() }})</span>

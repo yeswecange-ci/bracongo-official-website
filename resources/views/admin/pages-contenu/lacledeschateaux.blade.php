@@ -36,7 +36,7 @@
                         <x-admin.image-upload
                             name="hero_image"
                             label="Image de bannière"
-                            :value="$page->hero_image ?? 'img/brasserie.jpg'"
+                            :value="$page->hero_image ?? 'img/brasserie.webp'"
                             help="PNG, JPG, GIF, WEBP — max 10 Mo"
                         />
                     </div>

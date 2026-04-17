@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('page_pro', function (Blueprint $table) {
             $table->id();
-            $table->string('hero_image')->default('img/brcpro.png');
+            $table->string('hero_image')->default('img/brcpro.webp');
             $table->string('hero_titre')->default('Bracongo Pro');
             $table->text('description')->nullable();
             $table->string('pourquoi_titre')->default('Pourquoi choisir Bracongo Pro?');
@@ -18,7 +18,7 @@ return new class extends Migration
             $table->longText('pourquoi_items')->nullable()->comment('HTML rich text');
             $table->string('fonctionnalites_titre')->default('Fonctionnalités clés');
             $table->longText('fonctionnalites_items')->nullable()->comment('HTML rich text');
-            $table->string('app_image')->default('img/tel.png');
+            $table->string('app_image')->default('img/tel.webp');
             $table->string('cta_texte')->default('Télécharger Bracongo pro');
             $table->string('cta_lien')->default('#');
             $table->string('pdf_lien')->nullable();

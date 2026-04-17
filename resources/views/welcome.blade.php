@@ -78,7 +78,7 @@
     </div>
 
     <div class="fixed inset-0 z-0">
-        <img src="{{ asset($welcome->fond_image ?? 'img/fete.png') }}" alt="Background" class="w-full h-full object-cover">
+        <img src="{{ asset($welcome->fond_image ?? 'img/fete.webp') }}" alt="Background" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-black/20"></div>
     </div>
 

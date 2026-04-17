@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('page_welcome', function (Blueprint $table) {
             $table->id();
-            $table->string('fond_image')->default('img/fete.png');
+            $table->string('fond_image')->default('img/fete.webp');
             $table->string('titre')->default('BIENVENUE SUR LE SITE BRACONGO SA');
             $table->string('texte_avertissement', 500)->default('Ce site web contient des informations sur nos boissons alcoolisées. En cliquant sur l\'un des boutons ci-dessous, vous confirmez être majeur dans votre pays de résidence.');
             $table->string('btn_majeur_texte')->default('J\'ai plus de 18 ans');

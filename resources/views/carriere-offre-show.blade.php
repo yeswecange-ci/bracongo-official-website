@@ -7,7 +7,7 @@
 
     {{-- ===== HERO ===== --}}
     <div class="relative w-full h-[420px] md:h-[540px] overflow-hidden">
-        <img src="{{ asset($offre->image ?? 'img/brasserie.jpg') }}" alt="{{ $offre->titre }}"
+        <img src="{{ asset($offre->image ?? 'img/brasserie.webp') }}" alt="{{ $offre->titre }}"
              class="absolute inset-0 w-full h-full object-cover scale-105">
         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/10"></div>
 
@@ -139,7 +139,7 @@
                     @endphp
                     <div>
                         <div class="flex items-center gap-3 mb-6">
-                            <img src="{{ asset('img/Group.png') }}" alt="" class="h-7 w-auto">
+                            <img src="{{ asset('img/Group.webp') }}" alt="" class="h-7 w-auto">
                             <h2 class="text-2xl font-bold text-gray-900">Description du poste</h2>
                         </div>
                         <div class="prose prose-lg max-w-none
@@ -372,7 +372,7 @@
             <div class="max-w-7xl mx-auto px-4 lg:px-8">
 
                 <div class="flex items-center gap-3 mb-12">
-                    <img src="{{ asset('img/Group.png') }}" alt="" class="h-8 w-auto">
+                    <img src="{{ asset('img/Group.webp') }}" alt="" class="h-8 w-auto">
                     <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Autres offres</h2>
                 </div>
 
@@ -382,7 +382,7 @@
                            class="group flex flex-col bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
 
                             <div class="relative h-44 overflow-hidden bg-gray-100">
-                                <img src="{{ asset($autre->image ?? 'img/brasserie.jpg') }}" alt="{{ $autre->titre }}"
+                                <img src="{{ asset($autre->image ?? 'img/brasserie.webp') }}" alt="{{ $autre->titre }}"
                                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                 {{-- Overlay au hover --}}
                                 <div class="absolute inset-0 bg-bracongo/0 group-hover:bg-bracongo/10 transition-all duration-300"></div>

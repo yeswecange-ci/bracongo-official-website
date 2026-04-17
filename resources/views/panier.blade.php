@@ -8,7 +8,7 @@
 
         {{-- En-tête --}}
         <div class="flex items-center gap-3 mb-10">
-            <img src="{{ asset('img/Group.png') }}" alt="" class="h-8 w-auto" loading="lazy" decoding="async" aria-hidden="true">
+            <img src="{{ asset('img/Group.webp') }}" alt="" class="h-8 w-auto" loading="lazy" decoding="async" aria-hidden="true">
             <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Mon panier</h1>
         </div>
 
