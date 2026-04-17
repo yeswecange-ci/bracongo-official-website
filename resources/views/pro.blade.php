@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="relative w-full h-[400px] md:h-[700px] overflow-hidden">
-        <img src="{{ asset($pro->hero_image ?? 'img/brcpro.png') }}" alt="{{ $pro->hero_titre ?? 'Bracongo Pro' }}" class="w-full h-full object-cover">
+        <img src="{{ asset($pro->hero_image ?? 'img/brcpro.webp') }}" alt="{{ $pro->hero_titre ?? 'Bracongo Pro' }}" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-black/50"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-center uppercase tracking-widest">
@@ -19,7 +19,7 @@
 
                 <div class="flex justify-center lg:justify-end lg:col-span-2">
                     <div class="w-full max-w-[900px] h-[500px] md:h-[700px]">
-                        <img src="{{ asset($pro->app_image ?? 'img/tel.png') }}" alt="Application Bracongo Pro" class="w-full h-auto object-contain scale-110 md:scale-125">
+                        <img src="{{ asset($pro->app_image ?? 'img/tel.webp') }}" alt="Application Bracongo Pro" class="w-full h-auto object-contain scale-110 md:scale-125">
                     </div>
                 </div>
 
@@ -33,7 +33,7 @@
                     @if($pro->pourquoi_titre || $pro->pourquoi_intro || $pro->pourquoi_items)
                     <div class="space-y-6">
                         <div class="flex items-center gap-3">
-                            <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-6 w-auto">
+                            <img src="{{ asset('img/Group.webp') }}" alt="Icon" class="h-6 w-auto">
                             <h2 class="text-2xl md:text-3xl font-bold text-gray-900">{{ $pro->pourquoi_titre ?? 'Pourquoi choisir Bracongo Pro?' }}</h2>
                         </div>
                         @if($pro->pourquoi_intro ?? null)
@@ -52,7 +52,7 @@
                     @if($pro->fonctionnalites_titre || $pro->fonctionnalites_items)
                     <div class="space-y-6">
                         <div class="flex items-center gap-3">
-                            <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-6 w-auto">
+                            <img src="{{ asset('img/Group.webp') }}" alt="Icon" class="h-6 w-auto">
                             <h2 class="text-2xl md:text-3xl font-bold text-gray-900">{{ $pro->fonctionnalites_titre ?? 'Fonctionnalités clés' }}</h2>
                         </div>
                         @if($pro->fonctionnalites_items ?? null)

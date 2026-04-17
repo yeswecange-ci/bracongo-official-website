@@ -7,13 +7,13 @@
 	$titreAutres = $catMarque === 'bieres' ? 'Autres bières' : 'Autres produits';
 @endphp
 <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
-	<img src="{{ asset($boisson->hero_image ?? $boisson->image ?? 'img/beauban.jpg') }}" alt="{{ $boisson->nom }}" class="w-full h-full object-cover">
+	<img src="{{ asset($boisson->hero_image ?? $boisson->image ?? 'img/beauban.webp') }}" alt="{{ $boisson->nom }}" class="w-full h-full object-cover">
 </div>
 
 <section class="flex flex-col md:flex-row min-h-screen">
 	<div class="w-full md:w-1/3 bg-[#00382B] flex items-center justify-center p-12">
 		<div class="h-[600px] md:h-[800px]">
-			<img src="{{ asset($boisson->image ?? 'img/beaufort.png') }}" alt="{{ $boisson->nom }} Bouteille"
+			<img src="{{ asset($boisson->image ?? 'img/beaufort.webp') }}" alt="{{ $boisson->nom }} Bouteille"
 				class="h-full object-contain drop-shadow-2xl">
 		</div>
 	</div>
@@ -117,7 +117,7 @@
 <section class="bg-[#002B21] py-20">
 	<div class="container mx-auto px-4 lg:px-12 max-w-7xl">
 		<div class="flex items-center gap-3 mb-12">
-			<img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-6 w-auto">
+			<img src="{{ asset('img/Group.webp') }}" alt="Icon" class="h-6 w-auto">
 			<h2 class="text-white text-2xl md:text-3xl font-bold">{{ $boisson->slogan ?? $boisson->nom }}</h2>
 		</div>
 		<div class="flex flex-col lg:flex-row gap-8">
@@ -149,7 +149,7 @@
 		<div class="flex flex-col lg:flex-row gap-16 items-start">
 			<div class="lg:w-1/3">
 				<div class="flex items-center gap-3 mb-6">
-					<img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-6 w-auto">
+					<img src="{{ asset('img/Group.webp') }}" alt="Icon" class="h-6 w-auto">
 					<h2 class="text-3xl font-bold text-gray-900">{{ $titreAutres }}</h2>
 				</div>
 			</div>
@@ -158,7 +158,7 @@
 					@foreach($autresBoissons->take(6) as $autre)
 					<div class="flex flex-col items-center">
 						<div class="h-[300px] mb-8 flex items-center justify-center">
-							<img src="{{ asset($autre->image ?? 'img/beaufort.png') }}" alt="{{ $autre->nom }}"
+							<img src="{{ asset($autre->image ?? 'img/beaufort.webp') }}" alt="{{ $autre->nom }}"
 								class="h-full object-contain hover:scale-105 transition-transform duration-300">
 						</div>
 						<a href="{{ route('boisson.show', $autre->slug) }}"

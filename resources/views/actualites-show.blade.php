@@ -120,7 +120,7 @@
             @if($galleryImages->isNotEmpty() || $youtubeUrls->isNotEmpty())
                 <section class="mt-12 pt-10 border-t border-gray-100">
                     <div class="flex items-center gap-3 mb-6">
-                        <img src="{{ asset('img/Group.png') }}" alt="" class="h-6 w-auto" aria-hidden="true">
+                        <img src="{{ asset('img/Group.webp') }}" alt="" class="h-6 w-auto" aria-hidden="true">
                         <h2 class="text-2xl font-bold text-gray-900">Médiathèque</h2>
                     </div>
 
@@ -179,7 +179,7 @@
         <section class="bg-[#F8F8F8] border-t border-gray-100 py-16 md:py-20">
             <div class="max-w-7xl mx-auto px-4 lg:px-12">
                 <div class="flex items-center gap-3 mb-10">
-                    <img src="{{ asset('img/Group.png') }}" alt="" class="h-8 w-auto">
+                    <img src="{{ asset('img/Group.webp') }}" alt="" class="h-8 w-auto">
                     <h2 class="text-2xl md:text-3xl font-bold text-gray-900">À lire aussi</h2>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

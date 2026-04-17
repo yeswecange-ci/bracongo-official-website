@@ -8,7 +8,7 @@
 
     {{-- Hero --}}
     <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
-        <img src="{{ asset('img/brasserie.jpg') }}" alt="FAQ Bracongo"
+        <img src="{{ asset('img/brasserie.webp') }}" alt="FAQ Bracongo"
              class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async">
         <div class="absolute inset-0 bg-black/65"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white px-4 text-center">
@@ -145,7 +145,7 @@
 
             {{-- En-tête --}}
             <div class="flex items-center gap-3 mb-14">
-                <img src="{{ asset('img/Group.png') }}" alt="" class="h-8 w-auto" loading="lazy" decoding="async" aria-hidden="true">
+                <img src="{{ asset('img/Group.webp') }}" alt="" class="h-8 w-auto" loading="lazy" decoding="async" aria-hidden="true">
                 <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Questions fréquentes</h2>
             </div>
 

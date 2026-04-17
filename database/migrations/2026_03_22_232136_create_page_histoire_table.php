@@ -10,12 +10,12 @@ return new class extends Migration
     {
         Schema::create('page_histoire', function (Blueprint $table) {
             $table->id();
-            $table->string('hero_image')->default('img/usine-bracongo.jpg');
+            $table->string('hero_image')->default('img/usine-bracongo.webp');
             $table->string('titre')->default('Notre histoire');
             $table->text('paragraphe_1')->nullable();
             $table->text('paragraphe_2')->nullable();
             $table->text('paragraphe_3')->nullable();
-            $table->string('image_brasserie')->default('img/Frame-115.png');
+            $table->string('image_brasserie')->default('img/Frame-115.webp');
             $table->string('valeurs_titre')->default('Nos valeurs');
             $table->string('rse_titre')->default('Nos engagements RSE');
             $table->text('rse_texte')->nullable();

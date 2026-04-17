@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
-        <img src="{{ asset('img/marque.jpg') }}" alt="Nos Marques Banner" class="w-full h-full object-cover">
+        <img src="{{ asset('img/marque.webp') }}" alt="Nos Marques Banner" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-black/50"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
             <nav class="flex items-center gap-2 text-sm md:text-base font-medium mb-4">
@@ -28,7 +28,7 @@
             @if(isset($marques[$cat]) && $marques[$cat]->isNotEmpty())
             <div class="mb-20">
                 <div class="flex items-center gap-3 mb-12">
-                    <img src="{{ asset('img/Group.png') }}" alt="Icon" class="h-8 w-auto">
+                    <img src="{{ asset('img/Group.webp') }}" alt="Icon" class="h-8 w-auto">
                     <h2 class="text-2xl md:text-3xl font-bold text-gray-900">{{ $categoriesLabels[$cat] }}</h2>
                 </div>
 
@@ -36,10 +36,10 @@
                     @foreach($marques[$cat] as $marque)
                     <div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-10">
                         <div class="absolute top-10 left-0 right-0 flex justify-center opacity-30 pointer-events-none">
-                            <img src="{{ asset('img/Group2.png') }}" alt="" class="w-4/5 h-auto object-contain">
+                            <img src="{{ asset('img/Group2.webp') }}" alt="" class="w-4/5 h-auto object-contain">
                         </div>
                         <div class="absolute -top-16 left-0 right-0 flex justify-center z-10 pointer-events-none">
-                            <img src="{{ asset($marque->image ?? 'img/marron.png') }}" alt="{{ $marque->nom }}"
+                            <img src="{{ asset($marque->image ?? 'img/marron.webp') }}" alt="{{ $marque->nom }}"
                                 class="h-72 w-auto object-contain transform group-hover:scale-110 transition-transform duration-500">
                         </div>
                         <div class="relative z-20 text-center px-4">

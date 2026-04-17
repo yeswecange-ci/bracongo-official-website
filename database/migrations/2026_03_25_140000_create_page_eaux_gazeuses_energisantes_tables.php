@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('page_eaux', function (Blueprint $table) {
             $table->id();
-            $table->string('hero_image')->default('img/marque.jpg');
+            $table->string('hero_image')->default('img/marque.webp');
             $table->string('hero_titre')->default('');
             $table->string('hero_image_alt')->nullable();
             $table->string('breadcrumb_libelle')->default('Eaux');
@@ -23,7 +23,7 @@ return new class extends Migration
 
         Schema::create('page_boissons_gazeuses', function (Blueprint $table) {
             $table->id();
-            $table->string('hero_image')->default('img/marque.jpg');
+            $table->string('hero_image')->default('img/marque.webp');
             $table->string('hero_titre')->default('');
             $table->string('hero_image_alt')->nullable();
             $table->string('breadcrumb_libelle')->default('Boissons gazeuses');
@@ -36,7 +36,7 @@ return new class extends Migration
 
         Schema::create('page_boissons_energisantes', function (Blueprint $table) {
             $table->id();
-            $table->string('hero_image')->default('img/marque.jpg');
+            $table->string('hero_image')->default('img/marque.webp');
             $table->string('hero_titre')->default('');
             $table->string('hero_image_alt')->nullable();
             $table->string('breadcrumb_libelle')->default('Boissons énergisantes');

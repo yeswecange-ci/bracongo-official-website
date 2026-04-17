@@ -35,7 +35,7 @@
         @forelse($toutesBoissons as $boisson)
         <div class="beer-card flex flex-col items-center" data-nom="{{ strtolower($boisson->nom) }}">
             <div class="h-[300px] mb-6 flex items-center justify-center">
-                <img src="{{ asset($boisson->image ?? 'img/beaufort.png') }}" alt="{{ $boisson->nom }}"
+                <img src="{{ asset($boisson->image ?? 'img/beaufort.webp') }}" alt="{{ $boisson->nom }}"
                     class="h-full w-auto object-contain scale-110 hover:scale-125 transition-transform duration-300">
             </div>
             <a href="{{ route('boisson.show', $boisson->slug) }}"
