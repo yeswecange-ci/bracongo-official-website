@@ -23,7 +23,7 @@ class ReseauSocialController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'platform'  => 'required|string|in:facebook,instagram,twitter,youtube,linkedin,tiktok',
+            'platform'  => 'required|string|in:facebook,instagram,twitter,youtube,linkedin,tiktok,whatsapp',
             'url'       => 'required|string|max:255',
             'is_active' => 'nullable|boolean',
             'ordre'     => 'nullable|integer|min:0',
@@ -44,7 +44,7 @@ class ReseauSocialController extends Controller
     public function update(Request $request, ReseauSocial $reseaux_sociaux)
     {
         $data = $request->validate([
-            'platform'  => 'required|string|in:facebook,instagram,twitter,youtube,linkedin,tiktok',
+            'platform'  => 'required|string|in:facebook,instagram,twitter,youtube,linkedin,tiktok,whatsapp',
             'url'       => 'required|string|max:255',
             'is_active' => 'nullable|boolean',
             'ordre'     => 'nullable|integer|min:0',

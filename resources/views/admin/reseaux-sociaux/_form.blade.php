@@ -3,7 +3,7 @@
 	<div class="col-md-5">
 		<label class="form-label fw-semibold">Plateforme <span class="text-danger">*</span></label>
 		<select class="form-control @error('platform') is-invalid @enderror" name="platform">
-			@foreach(['facebook','instagram','twitter','youtube','linkedin','tiktok'] as $p)
+			@foreach(['facebook','instagram','twitter','youtube','linkedin','tiktok','whatsapp'] as $p)
 			<option value="{{ $p }}" {{ old('platform', optional($rs)->platform ?? '') === $p ? 'selected' : '' }}>
 				{{ ucfirst($p) }}
 			</option>

@@ -172,7 +172,7 @@
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
                 <div class="flex items-center justify-center gap-3 mb-4">
-                    <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="" class="h-6 w-auto" loading="lazy" decoding="async" aria-hidden="true">
+                    <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.webp') }}" alt="" class="h-6 w-auto" loading="lazy" decoding="async" aria-hidden="true">
                     <h2 class="text-3xl font-bold text-gray-900">{{ $accueil->marques_titre ?? 'Nos marques' }}</h2>
                 </div>
                 <p class="text-gray-600 max-w-3xl mx-auto text-sm leading-relaxed">
@@ -232,7 +232,7 @@
             <div class="flex flex-col lg:flex-row items-center gap-12">
                 <div class="w-full lg:w-1/2">
                     <div class="flex items-center gap-3 mb-6">
-                        <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="" class="h-6 w-auto" loading="lazy" decoding="async" aria-hidden="true">
+                        <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.webp') }}" alt="" class="h-6 w-auto" loading="lazy" decoding="async" aria-hidden="true">
                         <h2 class="text-3xl md:text-4xl font-bold text-gray-900">{{ $accueil->rejoignez_titre ?? 'Rejoignez nous' }}</h2>
                     </div>
 

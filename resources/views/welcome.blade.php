@@ -6,7 +6,7 @@
     @php
         $faviconHrefWelcome = isset($parametres) && filled($parametres->favicon ?? null)
             ? asset($parametres->favicon)
-            : asset('img/LOGO BRACONGO copie 1.png');
+            : asset('img/LOGO BRACONGO copie 1.webp');
     @endphp
     <link rel="icon" href="{{ $faviconHrefWelcome }}?v=2">
     <link rel="shortcut icon" href="{{ $faviconHrefWelcome }}?v=2">
@@ -74,7 +74,7 @@
 <body class="antialiased font-sans loading">
     <!-- Preloader -->
     <div id="loader" class="loader-wrapper">
-        <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Loading" class="loader-logo">
+        <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.webp') }}" alt="Bracongo Loading" class="loader-logo">
     </div>
 
     <div class="fixed inset-0 z-0">
@@ -86,7 +86,7 @@
         <div class="w-full max-w-4xl bg-white/80 backdrop-blur-sm rounded-lg py-12 px-6 md:px-12 text-center shadow-2xl">
             
             <div class="flex justify-center mb-8">
-                <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Logo" class="h-24 md:h-32 object-contain">
+                <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.webp') }}" alt="Bracongo Logo" class="h-24 md:h-32 object-contain">
             </div>
 
             <h1 class="text-2xl md:text-4xl font-extrabold text-bracongo mb-4 tracking-tight">

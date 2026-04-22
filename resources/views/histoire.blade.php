@@ -10,7 +10,7 @@
 
         <div class="container mx-auto px-4 py-16 max-w-5xl">
             <div class="flex items-center justify-center gap-3 mb-12">
-                <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="" class="h-8 w-auto" loading="lazy" decoding="async" aria-hidden="true">
+                <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.webp') }}" alt="" class="h-8 w-auto" loading="lazy" decoding="async" aria-hidden="true">
                 <h1 class="text-3xl md:text-4xl font-bold text-gray-900">{{ $histoire->titre ?? 'Notre histoire' }}</h1>
             </div>
 

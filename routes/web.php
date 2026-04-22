@@ -52,7 +52,19 @@ Route::get('/Boisson/{slug}', [FrontController::class, 'boisson'])->name('boisso
 Route::get('/Nos-marques-bieres-beaufort', [FrontController::class, 'boissonBeaufort'])->name('bieres.beaufort');
 Route::get('/Actualites-et-evenements', [FrontController::class, 'actualites'])->name('actualites');
 Route::get('/Actualites-et-evenements/{slug}', [FrontController::class, 'actualiteShow'])->name('actualites.show');
-Route::get('/boutique', [FrontController::class, 'boutique'])->name('boutique');
+
+/*
+|--------------------------------------------------------------------------
+| Boutique en ligne — DÉSACTIVÉE côté client (debrief client 2.0)
+|--------------------------------------------------------------------------
+| Toutes les routes publiques de la boutique et du panier sont désactivées.
+| Les anciens liens sont redirigés vers la page d'accueil afin de préserver
+| le SEO et l'expérience utilisateur. L'administration et les données en
+| base restent intactes pour une éventuelle réactivation.
+*/
+// Route::get('/boutique', [FrontController::class, 'boutique'])->name('boutique');
+Route::redirect('/boutique', '/Accueil', 302)->name('boutique');
+
 Route::redirect('/Actualités-et-evenements', '/Actualites-et-evenements', 301);
 Route::get('/Carriere', [FrontController::class, 'carriere'])->name('carriere');
 Route::get('/Carriere/offre/{offre}', [FrontController::class, 'offreShow'])->name('carriere.offre.show');
@@ -66,17 +78,21 @@ Route::post('/Contact', [FrontController::class, 'contactStore'])
 Route::get('Bracongo-pro', [FrontController::class, 'pro'])->name('pro');
 Route::get('/faq', [FrontController::class, 'faq'])->name('faq');
 
-// Panier
-Route::get('/panier', [PanierController::class, 'index'])->name('panier');
-Route::post('/panier/{produit}/ajouter', [PanierController::class, 'ajouter'])->name('panier.ajouter');
-Route::patch('/panier/{produitId}/mettre-a-jour', [PanierController::class, 'mettreAJour'])->name('panier.update');
-Route::delete('/panier/{produitId}/supprimer', [PanierController::class, 'supprimer'])->name('panier.supprimer');
-Route::delete('/panier/vider', [PanierController::class, 'vider'])->name('panier.vider');
+// Panier — DÉSACTIVÉ côté client (debrief client 2.0)
+// Route::get('/panier', [PanierController::class, 'index'])->name('panier');
+// Route::post('/panier/{produit}/ajouter', [PanierController::class, 'ajouter'])->name('panier.ajouter');
+// Route::patch('/panier/{produitId}/mettre-a-jour', [PanierController::class, 'mettreAJour'])->name('panier.update');
+// Route::delete('/panier/{produitId}/supprimer', [PanierController::class, 'supprimer'])->name('panier.supprimer');
+// Route::delete('/panier/vider', [PanierController::class, 'vider'])->name('panier.vider');
+Route::redirect('/panier', '/Accueil', 302)->name('panier');
 
-// Commande
-Route::get('/boutique/commander', [CommandeFrontController::class, 'checkout'])->name('commande.checkout');
-Route::post('/boutique/commander', [CommandeFrontController::class, 'store'])->name('commande.store')->middleware('throttle:commande');
-Route::get('/boutique/confirmation/{reference}', [CommandeFrontController::class, 'confirmation'])->name('commande.confirmation');
+// Commande — DÉSACTIVÉ côté client (debrief client 2.0)
+// Route::get('/boutique/commander', [CommandeFrontController::class, 'checkout'])->name('commande.checkout');
+// Route::post('/boutique/commander', [CommandeFrontController::class, 'store'])->name('commande.store')->middleware('throttle:commande');
+// Route::get('/boutique/confirmation/{reference}', [CommandeFrontController::class, 'confirmation'])->name('commande.confirmation');
+Route::redirect('/boutique/commander', '/Accueil', 302)->name('commande.checkout');
+Route::get('/boutique/confirmation/{reference}', fn () => redirect()->route('Accueil'))
+    ->name('commande.confirmation');
 
 Route::get('/api/recherche', [FrontController::class, 'searchAutocomplete'])->name('recherche.autocomplete');
 

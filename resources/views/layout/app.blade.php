@@ -6,7 +6,7 @@
     @php
         $faviconHref = isset($parametres) && filled($parametres->favicon ?? null)
             ? asset($parametres->favicon)
-            : asset('img/LOGO BRACONGO copie 1.png');
+            : asset('img/LOGO BRACONGO copie 1.webp');
     @endphp
     <link rel="icon" href="{{ $faviconHref }}?v=2">
     <link rel="shortcut icon" href="{{ $faviconHref }}?v=2">
@@ -53,7 +53,7 @@
 </head>
 <body class="font-sans antialiased overflow-x-hidden loading">
     <div id="loader" class="loader-wrapper">
-        <img src="{{ asset(isset($parametres) && filled($parametres->logo ?? null) ? $parametres->logo : 'img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Loading" class="loader-logo" loading="eager" fetchpriority="high" decoding="sync">
+        <img src="{{ asset(isset($parametres) && filled($parametres->logo ?? null) ? $parametres->logo : 'img/LOGO BRACONGO copie 1.webp') }}" alt="Bracongo Loading" class="loader-logo" loading="eager" fetchpriority="high" decoding="sync">
     </div>
 
     <div class="min-h-screen bg-white overflow-x-hidden">

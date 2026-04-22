@@ -3,7 +3,7 @@
 
 @section('guest-content')
 <div class="a-auth-card__head">
-    <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo" class="a-auth-logo">
+    <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.webp') }}" alt="Bracongo" class="a-auth-logo">
     <h1 class="a-auth-title">Créer votre accès</h1>
     <p class="a-auth-sub">Invitation pour <strong>{{ $invitation->email }}</strong></p>
     <p class="small text-muted mb-0">Lien valide jusqu’au {{ $invitation->expires_at->format('d/m/Y à H:i') }}.</p>
