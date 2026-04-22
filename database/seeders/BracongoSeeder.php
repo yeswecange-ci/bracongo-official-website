@@ -500,6 +500,31 @@ class BracongoSeeder extends Seeder
             $this->command->line('  '.$superEmail);
         }
 
+        $adminEmail = env('BRACONGO_ADMIN_EMAIL', 'admin@bracongo.local');
+        $adminPassword = env('BRACONGO_ADMIN_PASSWORD', 'Admin@123456');
+        $adminName = env('BRACONGO_ADMIN_NAME', 'Administrateur');
+
+        User::updateOrCreate(
+            ['email' => $adminEmail],
+            [
+                'name' => $adminName,
+                'password' => Hash::make($adminPassword),
+                'role' => UserRole::Admin->value,
+                'status' => UserStatus::Active,
+                'email_verified_at' => now(),
+                'two_factor_exempt' => true,
+                'two_factor_secret' => null,
+                'two_factor_recovery_codes' => null,
+                'two_factor_confirmed_at' => null,
+            ]
+        );
+
+        if ($this->command !== null) {
+            $this->command->newLine();
+            $this->command->warn('[Administrateur] Compte par défaut (2FA requise, listé dans Utilisateurs). Identifiants :');
+            $this->command->line('  '.$adminEmail);
+        }
+
         // DatabaseSeeder utilise WithoutModelEvents : les hooks NavigationItem::saved ne tournent pas,
         // donc le cache front n’est pas invalidé automatiquement après le seed.
         foreach ([
