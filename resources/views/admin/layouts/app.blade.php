@@ -10,8 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="icon" type="image/png" href="{{ asset('img/LOGO BRACONGO copie 1.png') }}?v=2">
-    <link rel="shortcut icon" type="image/png" href="{{ asset('img/LOGO BRACONGO copie 1.png') }}?v=2">
+    @php
+        $adminFaviconHref = asset(($parametres->favicon ?? null) ?: ($parametres->logo ?? 'img/LOGO BRACONGO copie 1.webp'));
+    @endphp
+    <link rel="icon" href="{{ $adminFaviconHref }}?v=2">
+    <link rel="shortcut icon" href="{{ $adminFaviconHref }}?v=2">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,7 +35,7 @@
 
     <div id="a-preloader">
         <div class="a-preloader-inner">
-            <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo">
+            <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.webp') }}" alt="Bracongo">
             <div class="a-preloader-bar"></div>
         </div>
     </div>
@@ -44,7 +47,7 @@
         <aside class="a-sidebar" id="aSidebar">
 
             <a href="{{ route('admin.dashboard') }}" class="a-sidebar-brand">
-                <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo">
+                <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.webp') }}" alt="Bracongo">
                 <span class="a-brand-name">BRA<em>CONGO</em></span>
             </a>
 

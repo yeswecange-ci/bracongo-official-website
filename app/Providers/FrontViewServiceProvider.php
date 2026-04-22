@@ -19,7 +19,21 @@ class FrontViewServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        View::composer(['layout.app', 'layout.navbar', 'layout.footer', 'accueil', 'histoire', 'contact', 'carriere', 'pro', 'marques.*', 'actualites', 'welcome', 'lacledeschateaux'], function ($view) {
+        // $parametres (logo, favicon, etc.) est partagé globalement avec TOUTES
+        // les vues (public + admin + auth) pour que le logo reste modifiable
+        // depuis le back-office quel que soit le contexte d'affichage.
+        try {
+            $parametres = Cache::remember('front.parametres', self::CACHE_TTL, function () {
+                return ParametresSite::instance();
+            });
+            View::share('parametres', $parametres);
+        } catch (\Throwable $e) {
+            Log::error('FrontViewServiceProvider: échec chargement parametres.', [
+                'message' => $e->getMessage(),
+            ]);
+        }
+
+        View::composer(['layout.app', 'layout.navbar', 'layout.footer', 'accueil', 'histoire', 'contact', 'carriere', 'pro', 'marques.*', 'actualites', 'welcome', 'lacledeschateaux', 'faq', 'invitation.*'], function ($view) {
             try {
                 $navItems = Cache::remember('front.nav_items', self::CACHE_TTL, function () {
                     return NavigationItem::with('enfants')->parents()->actifs()->get();
@@ -37,11 +51,7 @@ class FrontViewServiceProvider extends ServiceProvider
                     return ReseauSocial::actifs()->get();
                 });
 
-                $parametres = Cache::remember('front.parametres', self::CACHE_TTL, function () {
-                    return ParametresSite::instance();
-                });
-
-                $view->with(compact('navItems', 'footerConfig', 'footerGallery', 'reseaux', 'parametres'));
+                $view->with(compact('navItems', 'footerConfig', 'footerGallery', 'reseaux'));
             } catch (\Throwable $e) {
                 Log::error('FrontViewServiceProvider: échec chargement nav/footer (base ou schéma).', [
                     'message' => $e->getMessage(),

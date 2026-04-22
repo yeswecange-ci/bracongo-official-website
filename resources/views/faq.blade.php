@@ -224,7 +224,7 @@
 
             {{-- CTA bas de page --}}
             <div class="mt-20 rounded-[2rem] bg-gray-50 border border-gray-100 p-10 text-center">
-                <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="" class="h-10 w-auto mx-auto mb-4" loading="lazy" decoding="async" aria-hidden="true">
+                <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.webp') }}" alt="" class="h-10 w-auto mx-auto mb-4" loading="lazy" decoding="async" aria-hidden="true">
                 <h3 class="text-xl font-bold text-gray-900 mb-2">Vous n'avez pas trouvé votre réponse ?</h3>
                 <p class="text-gray-500 text-sm mb-6 max-w-sm mx-auto">
                     Notre équipe est disponible pour répondre à toutes vos questions.

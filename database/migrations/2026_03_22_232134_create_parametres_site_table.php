@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('parametres_site', function (Blueprint $table) {
             $table->id();
-            $table->string('logo')->default('img/LOGO BRACONGO copie 1.png');
+            $table->string('logo')->default('img/LOGO BRACONGO copie 1.webp');
             $table->string('favicon')->nullable();
             $table->string('couleur_principale')->default('#E30613');
             $table->text('search_suggestions')->nullable()->comment('Suggestions séparées par des virgules');

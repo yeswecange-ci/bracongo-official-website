@@ -134,7 +134,7 @@
 			<div class="card-header py-2 bg-white border-bottom"><h5 class="mb-0 small fw-bold text-muted text-uppercase">Aperçu</h5></div>
 			<div class="card-body py-3 text-center">
 				<div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
-					<img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.png') }}" alt="Logo" class="object-contain" style="max-height:52px;width:auto;">
+					<img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.webp') }}" alt="Logo" class="object-contain" style="max-height:52px;width:auto;">
 					<span class="badge px-2 py-1 rounded-pill text-white small" style="background-color:{{ $parametres->couleur_principale }};">
 						{{ $parametres->couleur_principale }}
 					</span>

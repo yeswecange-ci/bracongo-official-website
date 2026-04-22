@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" type="image/png" href="{{ asset('img/LOGO BRACONGO copie 1.png') }}?v=2">
+    <link rel="icon" href="{{ asset(($parametres->favicon ?? null) ?: ($parametres->logo ?? 'img/LOGO BRACONGO copie 1.webp')) }}?v=2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -31,7 +31,7 @@
 <body class="a-onboarding-shell">
     <header class="a-onboarding-top">
         <a href="{{ url('/') }}" class="a-onboarding-brand" target="_blank" rel="noopener">
-            <img src="{{ asset('img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo">
+            <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.webp') }}" alt="Bracongo">
             <span class="fw-bold" style="font-size:.95rem;color:var(--text-primary)">BRACONGO</span>
         </a>
         @auth

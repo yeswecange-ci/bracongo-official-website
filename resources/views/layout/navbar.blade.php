@@ -1,12 +1,39 @@
+@php
+    // Boutique désactivée côté client : on exclut toute entrée de navigation pointant
+    // vers /boutique (parent ou enfant) sans toucher aux données en base.
+    $isBoutiqueItem = function ($item) {
+        $url = (string) ($item->url ?? '');
+        return $url === '/boutique' || str_starts_with($url, '/boutique/');
+    };
+
+    $visibleNavItems = collect($navItems ?? [])->reject($isBoutiqueItem)->values();
+
+    // Repérage de l'entrée "Engagements RSE" (sous-menu de Bracongo SA).
+    // En responsive uniquement, elle sera extraite du sous-menu pour devenir
+    // une entrée de premier niveau.
+    $rseItem = null;
+    $rseParentId = null;
+    foreach ($visibleNavItems as $parent) {
+        foreach ($parent->enfants as $child) {
+            $childUrl = strtolower((string) $child->url);
+            $childLabel = strtolower((string) $child->label);
+            if (str_contains($childUrl, '#rse') || str_contains($childLabel, 'rse')) {
+                $rseItem = $child;
+                $rseParentId = $parent->id;
+                break 2;
+            }
+        }
+    }
+@endphp
 <nav class="bg-white py-4 px-6 md:px-12 flex items-center justify-between shadow-sm font-sans relative z-50" data-search-endpoint="{{ route('recherche.autocomplete') }}">
     <div class="flex-shrink-0">
         <a href="{{ route('Accueil') }}">
-            <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.png') }}" alt="Bracongo Logo" class="h-16 w-auto object-contain" loading="eager" fetchpriority="high" decoding="async">
+            <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.webp') }}" alt="Bracongo Logo" class="h-16 w-auto object-contain" loading="eager" fetchpriority="high" decoding="async">
         </a>
     </div>
 
     <div class="hidden lg:flex items-center space-x-8">
-        @foreach($navItems ?? [] as $item)
+        @foreach($visibleNavItems as $item)
         <div class="relative group">
             @if($item->enfants->isEmpty())
             <a href="{{ $item->url }}"
@@ -34,7 +61,7 @@
         </div>
         @endforeach
 
-        {{-- Panier --}}
+        {{-- Panier désactivé côté client (debrief 2.0)
         <a href="{{ route('panier') }}" class="relative text-gray-800 hover:text-bracongo transition-colors py-2" title="Panier">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
@@ -46,6 +73,7 @@
             </span>
             @endif
         </a>
+        --}}
 
         <button id="desktop-search-button" class="text-gray-800 hover:text-bracongo transition-colors py-2">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -102,8 +130,20 @@
 
     <div id="mobile-menu" class="hidden fixed inset-x-0 top-[88px] bottom-0 bg-white z-[60] overflow-y-auto lg:hidden">
         <div class="p-6 space-y-4">
-            @foreach($navItems ?? [] as $item)
-            @if($item->enfants->isEmpty())
+            @foreach($visibleNavItems as $item)
+            @php
+                // En mobile, on exclut "Engagements RSE" des enfants pour le promouvoir
+                // en entrée de premier niveau juste après son parent d'origine.
+                $mobileEnfants = $rseItem
+                    ? $item->enfants->reject(fn ($c) => $rseItem && $c->id === $rseItem->id)
+                    : $item->enfants;
+            @endphp
+            @if($mobileEnfants->isEmpty() && $item->enfants->isEmpty())
+            <div class="border-b border-gray-100 pb-4">
+                <a href="{{ $item->url }}" class="block text-gray-800 font-bold py-2">{{ $item->label }}</a>
+            </div>
+            @elseif($mobileEnfants->isEmpty())
+            {{-- Tous les enfants ont été retirés (cas improbable), on rend le parent comme lien simple --}}
             <div class="border-b border-gray-100 pb-4">
                 <a href="{{ $item->url }}" class="block text-gray-800 font-bold py-2">{{ $item->label }}</a>
             </div>
@@ -116,10 +156,17 @@
                     </svg>
                 </button>
                 <div class="hidden mt-2 space-y-2 pl-4">
-                    @foreach($item->enfants as $enfant)
+                    @foreach($mobileEnfants as $enfant)
                     <a href="{{ $enfant->url }}" class="block py-2 text-sm text-gray-600 hover:text-bracongo">{{ $enfant->label }}</a>
                     @endforeach
                 </div>
+            </div>
+            @endif
+
+            {{-- Promotion de "Engagements RSE" en entrée top-level (mobile uniquement) --}}
+            @if($rseItem && $rseParentId === $item->id)
+            <div class="border-b border-gray-100 pb-4">
+                <a href="{{ $rseItem->url }}" class="block text-gray-800 font-bold py-2">{{ $rseItem->label }}</a>
             </div>
             @endif
             @endforeach

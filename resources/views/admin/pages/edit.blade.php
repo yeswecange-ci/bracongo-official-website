@@ -101,7 +101,7 @@
 							<div class="avatar-upload d-flex align-items-center">
 								<div class="position-relative w-100">
 									<div class="avatar-preview">
-										<div id="imagePreview" style="background-image: url('{{ asset('img/LOGO BRACONGO copie 1.png') }}'); background-size: contain; background-repeat: no-repeat; background-position: center; background-color: #f0f0f0; min-height: 120px;"></div>
+										<div id="imagePreview" style="background-image: url('{{ asset('img/LOGO BRACONGO copie 1.webp') }}'); background-size: contain; background-repeat: no-repeat; background-position: center; background-color: #f0f0f0; min-height: 120px;"></div>
 									</div>
 									<small class="text-muted d-block mt-2">L'aperçu se met à jour depuis le champ Image hero.</small>
 								</div>
@@ -205,7 +205,7 @@
 			preview.style.backgroundImage = "url('" + fullUrl + "')";
 			preview.style.backgroundSize = "cover";
 		} else {
-			preview.style.backgroundImage = "url('{{ asset('img/LOGO BRACONGO copie 1.png') }}')";
+			preview.style.backgroundImage = "url('{{ asset('img/LOGO BRACONGO copie 1.webp') }}')";
 			preview.style.backgroundSize = "contain";
 		}
 	}
