@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Marque;
+use App\Support\YoutubeEmbed;
 use App\Traits\HandlesImageUpload;
 use App\Models\Boisson;
 use Illuminate\Http\Request;
@@ -49,10 +50,12 @@ class MarqueController extends Controller
             'description'  => 'nullable|string',
             'image'        => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'lien'         => 'nullable|string|max:255',
+            'video_urls'   => 'nullable|string',
             'ordre'        => 'nullable|integer|min:0',
             'is_active'    => 'nullable|boolean',
         ]);
         $data['is_active'] = $request->boolean('is_active');
+        $data['video_urls'] = $this->parseVideoUrls($request->input('video_urls'));
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadImage($request->file('image'), 'uploads/marques', 'marque');
         } else {
@@ -76,10 +79,12 @@ class MarqueController extends Controller
             'description'  => 'nullable|string',
             'image'        => 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:10240',
             'lien'         => 'nullable|string|max:255',
+            'video_urls'   => 'nullable|string',
             'ordre'        => 'nullable|integer|min:0',
             'is_active'    => 'nullable|boolean',
         ]);
         $data['is_active'] = $request->boolean('is_active');
+        $data['video_urls'] = $this->parseVideoUrls($request->input('video_urls'));
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadImage($request->file('image'), 'uploads/marques', 'marque');
         } else {
@@ -95,5 +100,12 @@ class MarqueController extends Controller
         $this->deleteImageFile($marque->image);
         $marque->delete();
         return redirect()->route('admin.marques.index')->with('success', 'Marque supprimée.');
+    }
+
+    private function parseVideoUrls(?string $raw): ?array
+    {
+        $urls = array_slice(YoutubeEmbed::parseRaw($raw), 0, 3);
+
+        return empty($urls) ? null : $urls;
     }
 }

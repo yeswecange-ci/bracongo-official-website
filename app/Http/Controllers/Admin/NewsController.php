@@ -163,34 +163,6 @@ class NewsController extends Controller
 
     private function parseYoutubeUrls(?string $raw): array
     {
-        if (! filled($raw)) {
-            return [];
-        }
-
-        $found = [];
-
-        // Coller un bloc <iframe> (éventuellement sur plusieurs lignes) : extraire src="..."
-        if (preg_match_all('/<iframe[\s\S]*?\bsrc=["\']([^"\']+)["\']/i', $raw, $m)) {
-            foreach ($m[1] as $src) {
-                $n = YoutubeEmbed::normalizeUrl(trim($src));
-                if ($n !== null) {
-                    $found[] = $n;
-                }
-            }
-        }
-
-        // Une URL par ligne (sans ré-analyser les lignes qui sont déjà du HTML iframe)
-        foreach (preg_split('/\r\n|\r|\n/', $raw) ?: [] as $line) {
-            $line = trim($line);
-            if ($line === '' || stripos($line, '<iframe') !== false) {
-                continue;
-            }
-            $n = YoutubeEmbed::normalizeUrl($line);
-            if ($n !== null) {
-                $found[] = $n;
-            }
-        }
-
-        return collect($found)->unique()->values()->all();
+        return YoutubeEmbed::parseRaw($raw);
     }
 }

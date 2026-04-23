@@ -118,7 +118,7 @@
                         <div class="w-16 h-[3px] bg-bracongo mb-6" aria-hidden="true"></div>
                         @if(filled($page->services_html ?? null))
                         <div class="prose prose-invert prose-p:text-white/85 prose-headings:text-white prose-li:marker:text-bracongo max-w-none text-base leading-relaxed">
-                            {!! $page->services_html !!}
+                            {!! \App\Support\CmsHtmlSanitizer::sanitize($page->services_html) !!}
                         </div>
                         @endif
                     </div>

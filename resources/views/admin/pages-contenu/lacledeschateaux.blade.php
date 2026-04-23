@@ -127,7 +127,7 @@
                         <textarea class="form-control" name="selection_texte" rows="3">{{ old('selection_texte', $page->selection_texte) }}</textarea>
                     </div>
                     <div class="col-12">
-                        <label class="form-label fw-semibold">Contenu HTML — Nos services</label>
+                        <label class="form-label fw-semibold">Contenu HTML — Nos services <x-admin.html-info /></label>
                         <textarea class="form-control font-monospace small" name="services_html" rows="10">{{ old('services_html', $page->services_html) }}</textarea>
                         <small class="text-muted">HTML autorisé (listes, titres). Prévisualisez sur la page publique.</small>
                     </div>

@@ -32,6 +32,47 @@ final class YoutubeEmbed
     }
 
     /**
+     * Parse un texte libre (textarea admin) contenant une ou plusieurs entrées YouTube.
+     * Accepte :
+     *  - une URL par ligne (embed, watch?v=, youtu.be)
+     *  - le code HTML <iframe ... src="..."> entier (multi-lignes ok)
+     *
+     * Retourne un tableau d'URLs embed canoniques, dédoublonnées.
+     */
+    public static function parseRaw(?string $raw): array
+    {
+        if (! filled($raw)) {
+            return [];
+        }
+
+        $found = [];
+
+        // Coller un bloc <iframe> (éventuellement sur plusieurs lignes) : extraire src="..."
+        if (preg_match_all('/<iframe[\s\S]*?\bsrc=["\']([^"\']+)["\']/i', $raw, $m)) {
+            foreach ($m[1] as $src) {
+                $n = self::normalizeUrl(trim($src));
+                if ($n !== null) {
+                    $found[] = $n;
+                }
+            }
+        }
+
+        // Une URL par ligne (sans ré-analyser les lignes qui sont déjà du HTML iframe)
+        foreach (preg_split('/\r\n|\r|\n/', $raw) ?: [] as $line) {
+            $line = trim($line);
+            if ($line === '' || stripos($line, '<iframe') !== false) {
+                continue;
+            }
+            $n = self::normalizeUrl($line);
+            if ($n !== null) {
+                $found[] = $n;
+            }
+        }
+
+        return collect($found)->unique()->values()->all();
+    }
+
+    /**
      * @param  mixed  $raw  Attribut casté array, JSON string, ou null
      * @return Collection<int, string> URLs embed prêtes pour src d'iframe
      */

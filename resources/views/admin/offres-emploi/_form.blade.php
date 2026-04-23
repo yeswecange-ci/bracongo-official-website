@@ -25,13 +25,13 @@
 		@error('date_limite_candidature')<div class="invalid-feedback">{{ $message }}</div>@enderror
 	</div>
 	<div class="col-12">
-		<label class="form-label fw-semibold">Description courte (index) <small class="text-muted">(HTML autorisé — &lt;p&gt;&lt;strong&gt;)</small> <span class="text-danger">*</span></label>
+		<label class="form-label fw-semibold">Description courte (index) <x-admin.html-info /> <small class="text-muted">(HTML autorisé — &lt;p&gt;&lt;strong&gt;)</small> <span class="text-danger">*</span></label>
 		<textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="8" style="font-family:monospace;font-size:.82rem;">{{ old('description', $offres_emploi->description ?? '') }}</textarea>
 		@error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
 		<div class="form-text">Ce texte est affiché dans la carte de l’offre sur la page Carrière (liste).</div>
 	</div>
 	<div class="col-12">
-		<label class="form-label fw-semibold">Descriptif du poste (détail / show) <small class="text-muted">(HTML autorisé — &lt;h3&gt;&lt;ul&gt;&lt;li&gt;)</small></label>
+		<label class="form-label fw-semibold">Descriptif du poste (détail / show) <x-admin.html-info /> <small class="text-muted">(HTML autorisé — &lt;h3&gt;&lt;ul&gt;&lt;li&gt;)</small></label>
 		<textarea class="form-control @error('descriptif_poste') is-invalid @enderror" name="descriptif_poste" rows="14" style="font-family:monospace;font-size:.82rem;">{{ old('descriptif_poste', $offres_emploi->descriptif_poste ?? '') }}</textarea>
 		@error('descriptif_poste')<div class="invalid-feedback">{{ $message }}</div>@enderror
 		<div class="form-text">Si vide, la page détail réutilise la description courte.</div>

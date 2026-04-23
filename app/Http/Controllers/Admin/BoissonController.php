@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Boisson;
 use App\Models\Marque;
+use App\Support\YoutubeEmbed;
 use App\Traits\HandlesImageUpload;
 use Illuminate\Http\Request;
 
@@ -120,8 +121,8 @@ class BoissonController extends Controller
 
     private function parseVideoUrls(?string $raw): ?array
     {
-        if (!$raw) return null;
-        $lines = array_values(array_filter(array_map('trim', explode("\n", $raw))));
-        return empty($lines) ? null : $lines;
+        $urls = array_slice(YoutubeEmbed::parseRaw($raw), 0, 3);
+
+        return empty($urls) ? null : $urls;
     }
 }

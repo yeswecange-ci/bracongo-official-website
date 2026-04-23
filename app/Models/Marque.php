@@ -11,10 +11,13 @@ class Marque extends Model
 
     protected $fillable = [
         'nom', 'slug', 'description', 'image',
-        'lien', 'ordre', 'is_active',
+        'lien', 'video_urls', 'ordre', 'is_active',
     ];
 
-    protected $casts = ['is_active' => 'boolean'];
+    protected $casts = [
+        'is_active'  => 'boolean',
+        'video_urls' => 'array',
+    ];
 
     public function boissons(): HasMany
     {

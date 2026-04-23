@@ -65,7 +65,7 @@
 						<input type="text" class="form-control" name="pourquoi_intro" value="{{ old('pourquoi_intro', $page->pourquoi_intro) }}">
 					</div>
 					<div class="col-12">
-						<label class="form-label fw-semibold">Liste des raisons <small class="text-muted">(HTML autorisé — liste &lt;ul&gt;&lt;li&gt;)</small></label>
+						<label class="form-label fw-semibold">Liste des raisons <x-admin.html-info /> <small class="text-muted">(HTML autorisé — liste &lt;ul&gt;&lt;li&gt;)</small></label>
 						<textarea class="form-control" name="pourquoi_items" rows="8" style="font-family:monospace;font-size:.8rem;">{{ old('pourquoi_items', $page->pourquoi_items) }}</textarea>
 					</div>
 				</div>
@@ -84,7 +84,7 @@
 						<input type="text" class="form-control" name="fonctionnalites_titre" value="{{ old('fonctionnalites_titre', $page->fonctionnalites_titre) }}">
 					</div>
 					<div class="col-12">
-						<label class="form-label fw-semibold">Liste <small class="text-muted">(HTML autorisé)</small></label>
+						<label class="form-label fw-semibold">Liste <x-admin.html-info /> <small class="text-muted">(HTML autorisé)</small></label>
 						<textarea class="form-control" name="fonctionnalites_items" rows="8" style="font-family:monospace;font-size:.8rem;">{{ old('fonctionnalites_items', $page->fonctionnalites_items) }}</textarea>
 					</div>
 				</div>
