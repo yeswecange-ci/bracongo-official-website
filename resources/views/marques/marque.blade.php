@@ -10,9 +10,9 @@
             <nav class="flex items-center gap-2 text-sm md:text-base font-medium mb-4">
                 <a href="{{ route('Accueil') }}" class="hover:text-bracongo transition-colors">Accueil</a>
                 <span class="text-bracongo font-bold text-lg">></span>
-                <span class="opacity-90">Nos marques</span>
+                <span class="opacity-90">Nos Produits</span>
             </nav>
-            <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-center">Nos marques</h1>
+            <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-center">Nos Produits</h1>
         </div>
     </div>
 

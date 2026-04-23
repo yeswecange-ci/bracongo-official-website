@@ -43,7 +43,7 @@
 		<textarea class="form-control" name="extrait" rows="2">{{ old('extrait', $news->extrait ?? '') }}</textarea>
 	</div>
 	<div class="col-12">
-		<label class="form-label fw-semibold">Contenu complet <small class="text-muted">(HTML autorisé)</small></label>
+		<label class="form-label fw-semibold">Contenu complet <x-admin.html-info /> <small class="text-muted">(HTML autorisé)</small></label>
 		<textarea class="form-control" name="contenu" rows="8" style="font-family:monospace;font-size:.82rem;">{{ old('contenu', $news->contenu ?? '') }}</textarea>
 	</div>
 
