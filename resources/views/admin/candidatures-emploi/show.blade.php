@@ -65,7 +65,10 @@
 				@if($candidature->lettre_motivation)
 				<hr class="my-4">
 				<h6 class="fw-semibold mb-2">Lettre de motivation</h6>
-				<div class="small" style="white-space:pre-wrap;">{{ $candidature->lettre_motivation }}</div>
+				<a href="{{ route('admin.candidatures-emploi.lettre-motivation', $candidature) }}" class="btn btn-outline-secondary btn-sm">
+					<i class="bi bi-file-earmark-arrow-down me-1"></i>Télécharger la lettre de motivation
+				</a>
+				<p class="small text-muted mt-2 mb-0 text-break">{{ basename($candidature->lettre_motivation) }}</p>
 				@endif
 			</div>
 		</div>

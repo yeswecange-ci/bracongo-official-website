@@ -265,6 +265,13 @@ class FrontController extends Controller
                 ->withInput($request->except(['cv']));
         }
 
+        $lm = $request->file('lettre_motivation');
+        if ($lm instanceof UploadedFile && ! $lm->isValid()) {
+            return back()
+                ->withErrors(['lettre_motivation' => $this->candidatureCvUploadErrorMessage($lm)])
+                ->withInput($request->except(['lettre_motivation']));
+        }
+
         $rules = [
             'prenom' => 'required|string|max:120',
             'nom' => 'required|string|max:120',
@@ -274,21 +281,30 @@ class FrontController extends Controller
             'cv' => 'required|file|mimes:pdf,doc,docx|max:10240',
         ];
         if ($offre->require_lettre_motivation) {
-            $rules['lettre_motivation'] = 'required|string|max:15000';
+            $rules['lettre_motivation'] = 'required|file|mimes:pdf,doc,docx|max:10240';
         } else {
             $rules['lettre_motivation'] = 'prohibited';
         }
 
         $messages = [
-            'cv.required' => 'Veuillez joindre votre CV.',
-            'cv.file' => 'Le CV doit être un fichier valide.',
-            'cv.mimes' => 'Le CV doit être au format PDF ou Word (.pdf, .doc, .docx).',
-            'cv.max' => 'Le CV ne doit pas dépasser 10 Mo.',
+            'cv.required'              => 'Veuillez joindre votre CV.',
+            'cv.file'                  => 'Le CV doit être un fichier valide.',
+            'cv.mimes'                 => 'Le CV doit être au format PDF ou Word (.pdf, .doc, .docx).',
+            'cv.max'                   => 'Le CV ne doit pas dépasser 10 Mo.',
+            'lettre_motivation.required' => 'Veuillez joindre votre lettre de motivation.',
+            'lettre_motivation.file'     => 'La lettre de motivation doit être un fichier valide.',
+            'lettre_motivation.mimes'    => 'La lettre de motivation doit être au format PDF ou Word (.pdf, .doc, .docx).',
+            'lettre_motivation.max'      => 'La lettre de motivation ne doit pas dépasser 10 Mo.',
         ];
 
         $validated = $request->validate($rules, $messages);
 
-        $path = $this->storeCandidatureCvFile($request->file('cv'), $validated['nom'], $validated['prenom'], $offre);
+        $cvPath = $this->storeCandidatureFile($request->file('cv'), 'CV', $validated['nom'], $validated['prenom'], $offre);
+
+        $lmPath = null;
+        if ($offre->require_lettre_motivation && $request->hasFile('lettre_motivation')) {
+            $lmPath = $this->storeCandidatureFile($request->file('lettre_motivation'), 'LM', $validated['nom'], $validated['prenom'], $offre);
+        }
 
         CandidatureEmploi::create([
             'offre_emploi_id' => $offre->id,
@@ -297,8 +313,8 @@ class FrontController extends Controller
             'email' => $validated['email'],
             'telephone' => $validated['telephone'] ?? null,
             'message' => $validated['message'] ?? null,
-            'lettre_motivation' => $validated['lettre_motivation'] ?? null,
-            'cv_path' => $path,
+            'lettre_motivation' => $lmPath,
+            'cv_path' => $cvPath,
         ]);
 
         return redirect()
@@ -306,9 +322,8 @@ class FrontController extends Controller
             ->with('success', 'Votre candidature a bien été envoyée. Notre équipe RH pourra la consulter et vous recontacter si votre profil correspond à nos besoins.');
     }
 
-    private function storeCandidatureCvFile(UploadedFile $file, string $nom, string $prenom, OffreEmploi $offre): string
+    private function storeCandidatureFile(UploadedFile $file, string $prefix, string $nom, string $prenom, OffreEmploi $offre): string
     {
-        // Déterminer l'extension via le vrai type MIME, pas le nom fourni par le client
         $allowedMimes = [
             'application/pdf'  => 'pdf',
             'application/msword' => 'doc',
@@ -317,13 +332,11 @@ class FrontController extends Controller
         $mime = $file->getMimeType() ?? '';
         $ext = $allowedMimes[$mime] ?? null;
 
-        // Fallback sur l'extension cliente uniquement si le MIME est reconnu
         if ($ext === null) {
             $clientExt = strtolower($file->getClientOriginalExtension());
             $ext = in_array($clientExt, ['pdf', 'doc', 'docx'], true) ? $clientExt : null;
         }
 
-        // Refus si aucun type valide détecté
         if ($ext === null) {
             abort(422, 'Format de fichier non autorisé.');
         }
@@ -331,7 +344,7 @@ class FrontController extends Controller
         $nomSeg = $this->sanitizeCandidatureFilenameSegment($nom);
         $prenomSeg = $this->sanitizeCandidatureFilenameSegment($prenom);
         $offreIni = $this->offreEmploiInitialsFromOffre($offre);
-        $base = 'CV_'.$nomSeg.$prenomSeg.'-'.$offreIni;
+        $base = $prefix.'_'.$nomSeg.$prenomSeg.'-'.$offreIni;
         $base = Str::limit($base, 180, '');
 
         $dir = 'candidatures';

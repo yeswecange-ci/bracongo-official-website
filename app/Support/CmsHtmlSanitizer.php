@@ -6,8 +6,15 @@ final class CmsHtmlSanitizer
 {
     /**
      * Balises HTML autorisées dans les champs CMS.
+     * Syntaxe tableau (PHP 7.4+) pour éviter le bug de préfixe de strip_tags()
+     * en syntaxe chaîne (ex : <u> élimine incorrectement <ul>).
      */
-    private const ALLOWED_TAGS = '<p><br><strong><em><b><i><u><ul><ol><li><h1><h2><h3><h4><h5><h6><blockquote><a>';
+    private const ALLOWED_TAGS = [
+        'p', 'br', 'strong', 'em', 'b', 'i', 'u',
+        'ul', 'ol', 'li',
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+        'blockquote', 'a',
+    ];
 
     public static function sanitize(?string $html): string
     {

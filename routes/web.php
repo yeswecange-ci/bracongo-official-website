@@ -197,6 +197,7 @@ Route::prefix('back-office')->name('admin.')->group(function () {
 
             Route::get('/candidatures-emploi', [CandidatureEmploiController::class, 'index'])->name('candidatures-emploi.index');
             Route::get('/candidatures-emploi/{candidature_emploi}/cv', [CandidatureEmploiController::class, 'downloadCv'])->name('candidatures-emploi.cv');
+            Route::get('/candidatures-emploi/{candidature_emploi}/lettre-motivation', [CandidatureEmploiController::class, 'downloadLettreMotivation'])->name('candidatures-emploi.lettre-motivation');
             Route::get('/candidatures-emploi/{candidature_emploi}', [CandidatureEmploiController::class, 'show'])->name('candidatures-emploi.show');
 
             Route::get('/messages', [MessageContactController::class, 'index'])->name('messages.index');

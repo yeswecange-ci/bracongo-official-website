@@ -305,10 +305,21 @@
                                         <label for="lettre_motivation" class="block text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-1.5">
                                             Lettre de motivation <span class="text-bracongo">*</span>
                                         </label>
-                                        <textarea name="lettre_motivation" id="lettre_motivation" rows="5" required
-                                                  placeholder="Présentez votre parcours et votre motivation pour ce poste…"
-                                                  class="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400
-                                                         focus:border-bracongo focus:ring-2 focus:ring-bracongo/20 focus:bg-white outline-none transition resize-none">{{ old('lettre_motivation') }}</textarea>
+                                        <label for="lettre_motivation"
+                                               class="flex flex-col items-center justify-center gap-2 w-full rounded-xl border-2 border-dashed border-gray-200 bg-gray-50
+                                                      hover:border-bracongo hover:bg-bracongo/5 transition cursor-pointer px-4 py-5 text-center group">
+                                            <svg class="w-8 h-8 text-gray-300 group-hover:text-bracongo transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                            </svg>
+                                            <span id="lm-label" class="text-sm text-gray-500 group-hover:text-bracongo transition font-medium">
+                                                Cliquez pour déposer votre lettre de motivation
+                                            </span>
+                                            <span class="text-xs text-gray-400">PDF, DOC ou DOCX · 10 Mo max</span>
+                                        </label>
+                                        <input type="file" name="lettre_motivation" id="lettre_motivation" required
+                                               accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                               class="sr-only"
+                                               onchange="document.getElementById('lm-label').textContent = this.files[0]?.name ?? 'Cliquez pour déposer votre lettre de motivation'">
                                         @error('lettre_motivation')
                                             <p class="text-red-600 text-[11px] mt-1">{{ $message }}</p>
                                         @enderror

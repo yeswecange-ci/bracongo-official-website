@@ -46,8 +46,18 @@ class CandidatureEmploiController extends Controller
             abort(404, 'Fichier CV introuvable.');
         }
 
-        $filename = basename($path);
+        return response()->download($disk->path($path), basename($path));
+    }
 
-        return response()->download($disk->path($path), $filename);
+    public function downloadLettreMotivation(CandidatureEmploi $candidature_emploi): BinaryFileResponse
+    {
+        $path = $candidature_emploi->lettre_motivation;
+        $disk = Storage::disk('local');
+
+        if (! filled($path) || ! $disk->exists($path)) {
+            abort(404, 'Fichier lettre de motivation introuvable.');
+        }
+
+        return response()->download($disk->path($path), basename($path));
     }
 }
