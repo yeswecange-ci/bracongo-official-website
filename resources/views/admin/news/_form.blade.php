@@ -52,6 +52,11 @@
 		<h6 class="fw-600 text-muted mb-3" style="font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Dates &amp; Localisation</h6>
 	</div>
 	<div class="col-md-6">
+		<label class="form-label fw-semibold">Date de publication</label>
+		<input type="date" class="form-control @error('date_publication') is-invalid @enderror" name="date_publication" value="{{ old('date_publication', isset($news) && $news->date_publication ? $news->date_publication->format('Y-m-d') : '') }}">
+		@error('date_publication')<div class="invalid-feedback">{{ $message }}</div>@enderror
+	</div>
+	<div class="col-md-6" id="date-evenement-field">
 		<label class="form-label fw-semibold">Date de l'événement <small class="text-muted">(si événement)</small></label>
 		<input type="date" class="form-control" name="date_evenement" value="{{ old('date_evenement', isset($news) && $news->date_evenement ? $news->date_evenement->format('Y-m-d') : '') }}">
 	</div>
@@ -102,12 +107,31 @@
 document.addEventListener('DOMContentLoaded', function () {
 	var titreInput = document.querySelector('[name="titre"]');
 	var slugInput = document.querySelector('[name="slug"]');
+	var typeSelect = document.querySelector('[name="type"]');
+	var dateEvenementField = document.getElementById('date-evenement-field');
+	var dateEvenementInput = document.querySelector('[name="date_evenement"]');
 	if (titreInput && slugInput && !slugInput.value) {
 		titreInput.addEventListener('input', function () {
 			slugInput.value = titreInput.value.toLowerCase()
 				.normalize('NFD').replace(/[\u0300-\u036f]/g,'')
 				.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 		});
+	}
+
+	function toggleDateEvenementField() {
+		if (!typeSelect || !dateEvenementField || !dateEvenementInput) {
+			return;
+		}
+		var isEvenement = typeSelect.value === 'evenements';
+		dateEvenementField.style.display = isEvenement ? '' : 'none';
+		if (!isEvenement) {
+			dateEvenementInput.value = '';
+		}
+	}
+
+	if (typeSelect) {
+		typeSelect.addEventListener('change', toggleDateEvenementField);
+		toggleDateEvenementField();
 	}
 });
 </script>

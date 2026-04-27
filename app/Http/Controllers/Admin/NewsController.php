@@ -49,6 +49,7 @@ class NewsController extends Controller
             'lien_externe'     => 'nullable|string|max:255',
             'whatsapp_url'     => 'nullable|string|max:500',
             'whatsapp_label'   => 'nullable|string|max:200',
+            'date_publication' => 'nullable|date',
             'date_evenement'   => 'nullable|date',
             'lieu'             => 'nullable|string|max:255',
             'ordre'            => 'nullable|integer|min:0',
@@ -59,8 +60,13 @@ class NewsController extends Controller
         if ($data['whatsapp_url'] === null) {
             $data['whatsapp_label'] = null;
         }
+        if (($data['type'] ?? null) !== 'evenements') {
+            $data['date_evenement'] = null;
+        }
         $data['is_active'] = $request->boolean('is_active');
-        $data['date_publication'] = now()->toDateString();
+        if (! filled($data['date_publication'] ?? null)) {
+            $data['date_publication'] = now()->toDateString();
+        }
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadImage($request->file('image'), 'uploads/news', 'news');
         } else {
@@ -97,6 +103,7 @@ class NewsController extends Controller
             'lien_externe'     => 'nullable|string|max:255',
             'whatsapp_url'     => 'nullable|string|max:500',
             'whatsapp_label'   => 'nullable|string|max:200',
+            'date_publication' => 'nullable|date',
             'date_evenement'   => 'nullable|date',
             'lieu'             => 'nullable|string|max:255',
             'ordre'            => 'nullable|integer|min:0',
@@ -106,6 +113,9 @@ class NewsController extends Controller
         $data['whatsapp_label'] = filled(trim((string) ($data['whatsapp_label'] ?? ''))) ? trim($data['whatsapp_label']) : null;
         if ($data['whatsapp_url'] === null) {
             $data['whatsapp_label'] = null;
+        }
+        if (($data['type'] ?? null) !== 'evenements') {
+            $data['date_evenement'] = null;
         }
         $data['is_active'] = $request->boolean('is_active');
         if ($request->hasFile('image')) {
