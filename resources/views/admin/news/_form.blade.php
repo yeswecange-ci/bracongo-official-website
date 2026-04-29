@@ -19,11 +19,9 @@
 		@error('slug')<div class="invalid-feedback">{{ $message }}</div>@enderror
 	</div>
 	<div class="col-md-6">
-		<label class="form-label fw-semibold">Lien externe <x-admin.readonly-info /> <small class="text-muted">(optionnel)</small></label>
-		<div class="a-readonly-wrap">
-			<i class="bi bi-lock a-lock-icon"></i>
-			<input type="text" class="form-control" name="lien_externe" value="{{ old('lien_externe', $news->lien_externe ?? '') }}" readonly>
-		</div>
+		<label class="form-label fw-semibold">Lien externe <small class="text-muted">(optionnel)</small></label>
+		<input type="url" class="form-control @error('lien_externe') is-invalid @enderror" name="lien_externe" value="{{ old('lien_externe', $news->lien_externe ?? '') }}" placeholder="https://...">
+		@error('lien_externe')<div class="invalid-feedback">{{ $message }}</div>@enderror
 	</div>
 	<div class="col-md-6">
 		<label class="form-label fw-semibold">Lien WhatsApp <small class="text-muted">(page détail, optionnel)</small></label>
@@ -34,6 +32,16 @@
 		<label class="form-label fw-semibold">Texte du bouton WhatsApp <small class="text-muted">(optionnel)</small></label>
 		<input type="text" class="form-control @error('whatsapp_label') is-invalid @enderror" name="whatsapp_label" value="{{ old('whatsapp_label', isset($news) ? ($news->whatsapp_label ?? '') : '') }}" placeholder="Vivez l’événement avec nous sur WhatsApp" maxlength="200">
 		@error('whatsapp_label')<div class="invalid-feedback">{{ $message }}</div>@enderror
+	</div>
+	<div class="col-12">
+		@php
+			$adminWhatsappPreviewUrl = trim((string) old('whatsapp_url', isset($news) ? ($news->whatsapp_url ?? '') : ''));
+		@endphp
+		<div id="whatsapp-preview-wrap" style="{{ $adminWhatsappPreviewUrl !== '' ? '' : 'display:none;' }}">
+			<a id="whatsapp-preview-link" href="{{ $adminWhatsappPreviewUrl !== '' ? $adminWhatsappPreviewUrl : '#' }}" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-sm">
+				<i class="bi bi-whatsapp me-1"></i>Ouvrir le lien WhatsApp
+			</a>
+		</div>
 	</div>
 	<div class="col-12">
 		<div class="form-text">Si un lien WhatsApp est renseigné, le bouton s’affiche sous le texte de l’article avec ce libellé (ou le texte par défaut si le champ est vide).</div>
@@ -110,6 +118,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	var typeSelect = document.querySelector('[name="type"]');
 	var dateEvenementField = document.getElementById('date-evenement-field');
 	var dateEvenementInput = document.querySelector('[name="date_evenement"]');
+	var whatsappInput = document.querySelector('[name="whatsapp_url"]');
+	var whatsappPreviewWrap = document.getElementById('whatsapp-preview-wrap');
+	var whatsappPreviewLink = document.getElementById('whatsapp-preview-link');
 	if (titreInput && slugInput && !slugInput.value) {
 		titreInput.addEventListener('input', function () {
 			slugInput.value = titreInput.value.toLowerCase()
@@ -132,6 +143,25 @@ document.addEventListener('DOMContentLoaded', function () {
 	if (typeSelect) {
 		typeSelect.addEventListener('change', toggleDateEvenementField);
 		toggleDateEvenementField();
+	}
+
+	function toggleWhatsappPreview() {
+		if (!whatsappInput || !whatsappPreviewWrap || !whatsappPreviewLink) {
+			return;
+		}
+		var url = (whatsappInput.value || '').trim();
+		if (url === '') {
+			whatsappPreviewWrap.style.display = 'none';
+			whatsappPreviewLink.setAttribute('href', '#');
+			return;
+		}
+		whatsappPreviewWrap.style.display = '';
+		whatsappPreviewLink.setAttribute('href', url);
+	}
+
+	if (whatsappInput) {
+		whatsappInput.addEventListener('input', toggleWhatsappPreview);
+		toggleWhatsappPreview();
 	}
 });
 </script>
