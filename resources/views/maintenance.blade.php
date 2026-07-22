@@ -55,9 +55,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background:
-                radial-gradient(120% 90% at 80% 0%, color-mix(in srgb, var(--brand) 45%, transparent) 0%, transparent 55%),
-                linear-gradient(180deg, rgba(14,17,22,.72) 0%, rgba(14,17,22,.86) 55%, rgba(14,17,22,.95) 100%);
+            background: linear-gradient(180deg, rgba(14,17,22,.74) 0%, rgba(14,17,22,.86) 55%, rgba(14,17,22,.95) 100%);
         }
 
         /* Carte verre dépoli */
@@ -105,9 +103,9 @@
             animation: ping 2.4s cubic-bezier(0, 0, .2, 1) infinite;
         }
         @keyframes ping { 0% { transform: scale(.9); opacity: .9; } 70%, 100% { transform: scale(1.5); opacity: 0; } }
-        .gear { width: 44px; height: 44px; stroke: #fff; fill: none; stroke-width: 1.6; }
-        .gear .cog { transform-origin: 50% 50%; animation: spin 8s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .tools { width: 46px; height: 46px; stroke: #fff; fill: none; stroke-width: 1.7; }
+        .tools g { transform-origin: 50% 50%; animation: wiggle 3.2s ease-in-out infinite; }
+        @keyframes wiggle { 0%, 100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
 
         .eyebrow {
             font-size: .74rem;
@@ -174,7 +172,7 @@
             .logo { height: 48px; margin-bottom: 24px; }
         }
         @media (prefers-reduced-motion: reduce) {
-            .bg, .card, .badge::before, .gear .cog, .bar span { animation: none !important; }
+            .bg, .card, .badge::before, .tools g, .bar span { animation: none !important; }
         }
     </style>
 </head>
@@ -185,10 +183,13 @@
         <img src="{{ $logoHref }}" alt="Bracongo" class="logo">
 
         <div class="badge" aria-hidden="true">
-            <svg class="gear" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                <g class="cog">
-                    <circle cx="12" cy="12" r="3.2"/>
-                    <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/>
+            <svg class="tools" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <g>
+                    <!-- Clé à molette -->
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                    <!-- Tournevis -->
+                    <path d="M17.5 22 22 17.5"/>
+                    <path d="m2 2 4.5 4.5"/>
                 </g>
             </svg>
         </div>
