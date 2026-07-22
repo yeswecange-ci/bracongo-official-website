@@ -73,6 +73,33 @@
 
 			<div class="card mt-3">
 				<div class="card-header">
+					<h5 class="mb-0"><i class="bi bi-cone-striped me-2" style="color:#E30613"></i>Mode maintenance</h5>
+				</div>
+				<div class="card-body">
+					<p class="text-muted small mb-3">
+						Lorsqu'il est activé, le site public affiche une page de maintenance à tous les visiteurs. Le back-office reste accessible et les administrateurs connectés continuent de voir le site normalement.
+					</p>
+					<div class="form-check form-switch mb-4">
+						<input type="hidden" name="maintenance_active" value="0">
+						<input class="form-check-input" type="checkbox" role="switch" id="maintenance_active" name="maintenance_active" value="1" @checked(old('maintenance_active', $parametres->maintenance_active)) style="width:2.75em;height:1.4em;cursor:pointer;">
+						<label class="form-check-label fw-semibold ms-2" for="maintenance_active">Activer le mode maintenance</label>
+					</div>
+					<div class="row g-4">
+						<div class="col-12">
+							<label class="form-label fw-semibold">Titre affiché</label>
+							<input type="text" class="form-control" name="maintenance_titre" value="{{ old('maintenance_titre', $parametres->maintenance_titre) }}" placeholder="Site en maintenance" maxlength="255">
+						</div>
+						<div class="col-12">
+							<label class="form-label fw-semibold">Message affiché</label>
+							<textarea class="form-control" name="maintenance_message" rows="3" maxlength="2000" placeholder="Notre site est momentanément indisponible…">{{ old('maintenance_message', $parametres->maintenance_message) }}</textarea>
+							<div class="form-text">Laissez vide pour utiliser le texte par défaut.</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card mt-3">
+				<div class="card-header">
 					<h5 class="mb-0"><i class="bi bi-bag-check me-2" style="color:#E30613"></i>E-mail — mise à jour du statut de commande</h5>
 				</div>
 				<div class="card-body">

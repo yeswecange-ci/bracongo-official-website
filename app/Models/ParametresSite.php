@@ -13,6 +13,7 @@ class ParametresSite extends Model
     protected $fillable = [
         'logo', 'favicon', 'couleur_principale', 'search_suggestions',
         'seo_meta_description', 'telephone_public',
+        'maintenance_active', 'maintenance_titre', 'maintenance_message',
         'actualites_hero_titre', 'actualites_filtre_tout_label',
         'invitation_expires_hours',
         'contact_reply_closing',
@@ -24,6 +25,7 @@ class ParametresSite extends Model
     {
         return [
             'invitation_expires_hours' => InvitationExpiresHours::class,
+            'maintenance_active' => 'boolean',
         ];
     }
 

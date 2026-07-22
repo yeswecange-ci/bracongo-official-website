@@ -30,6 +30,9 @@ class ParametresSiteController extends Controller
             'search_suggestions' => 'nullable|string|max:2000',
             'seo_meta_description' => 'nullable|string|max:500',
             'telephone_public' => 'nullable|string|max:80',
+            'maintenance_active' => 'nullable|boolean',
+            'maintenance_titre' => 'nullable|string|max:255',
+            'maintenance_message' => 'nullable|string|max:2000',
             'actualites_hero_titre' => 'nullable|string|max:255',
             'actualites_filtre_tout_label' => 'nullable|string|max:100',
             'invitation_expires_hours' => ['required', Rule::enum(InvitationExpiresHours::class)],
@@ -44,6 +47,10 @@ class ParametresSiteController extends Controller
         $rules['commande_statut_email_corps_html'] = 'nullable|string|max:65535';
 
         $data = $request->validate($rules);
+
+        // La case à cocher n'est pas envoyée lorsqu'elle est décochée.
+        $data['maintenance_active'] = $request->boolean('maintenance_active');
+
         if ($request->hasFile('logo')) {
             $data['logo'] = $this->uploadImage($request->file('logo'), 'uploads/parametres', 'logo');
         } else {

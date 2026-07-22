@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\EnsureAdminRole;
 use App\Http\Middleware\EnsureBackOfficeAuthenticated;
+use App\Http\Middleware\EnsureSiteNotInMaintenance;
 use App\Http\Middleware\EnsureSuperAdmin;
 use App\Http\Middleware\EnsureTwoFactorSetupComplete;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
@@ -17,6 +18,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
+
+        // Mode maintenance pilotable depuis le back-office (Paramètres du site).
+        $middleware->web(append: [
+            EnsureSiteNotInMaintenance::class,
+        ]);
 
         $middleware->redirectGuestsTo(fn () => route('admin.login'));
         $middleware->redirectUsersTo(fn () => route('admin.dashboard'));
