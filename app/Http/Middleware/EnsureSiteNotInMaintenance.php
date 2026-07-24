@@ -19,13 +19,20 @@ class EnsureSiteNotInMaintenance
     public function handle(Request $request, Closure $next): Response
     {
         // Le back-office reste toujours accessible (sinon impossible de couper
-        // la maintenance), ainsi que le health-check de Laravel.
-        if ($request->is('back-office', 'back-office/*', 'up')) {
+        // la maintenance), ainsi que le health-check de Laravel. La route
+        // /dev-access/* doit rester joignable pour activer/désactiver le bypass.
+        if ($request->is('back-office', 'back-office/*', 'up', 'dev-access/*')) {
             return $next($request);
         }
 
         // Un administrateur connecté peut naviguer sur le site public en maintenance.
         if ($request->user() !== null) {
+            return $next($request);
+        }
+
+        // Un développeur ayant activé le bypass via /dev-access/{secret} peut
+        // prévisualiser le site public le temps de sa session.
+        if ($request->session()->get('maintenance_bypass') === true) {
             return $next($request);
         }
 

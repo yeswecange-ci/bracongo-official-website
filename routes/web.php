@@ -101,6 +101,30 @@ Route::post('/invitation/{token}', [AcceptInvitationController::class, 'accept']
     ->middleware('throttle:invitation-accept')
     ->name('invitation.accept');
 
+/*
+|--------------------------------------------------------------------------
+| Accès développeur en mode maintenance
+|--------------------------------------------------------------------------
+| Visiter /dev-access/{secret} avec le secret configuré (MAINTENANCE_BYPASS_SECRET)
+| débloque le site public pour la session courante afin de prévisualiser les
+| travaux en cours. Se termine avec /dev-access/exit.
+*/
+Route::get('/dev-access/exit', function () {
+    session()->forget('maintenance_bypass');
+
+    return redirect('/');
+})->name('maintenance.bypass.exit');
+
+Route::get('/dev-access/{secret}', function (string $secret) {
+    $expected = config('app.maintenance.bypass_secret');
+
+    abort_unless(is_string($expected) && $expected !== '' && hash_equals($expected, $secret), 404);
+
+    session(['maintenance_bypass' => true]);
+
+    return redirect('/')->with('status', 'Accès développeur activé : maintenance contournée pour cette session.');
+})->name('maintenance.bypass');
+
 Route::prefix('back-office')->name('admin.')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');

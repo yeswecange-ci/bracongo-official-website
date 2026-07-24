@@ -121,6 +121,14 @@ return [
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
+
+        /*
+        | Secret de contournement réservé aux développeurs. Lorsqu'il est
+        | défini, visiter /dev-access/{secret} débloque le site public en
+        | mode maintenance pour la session courante (prévisualisation des
+        | modifications). Laisser vide pour désactiver totalement le bypass.
+        */
+        'bypass_secret' => env('MAINTENANCE_BYPASS_SECRET'),
     ],
 
 ];
