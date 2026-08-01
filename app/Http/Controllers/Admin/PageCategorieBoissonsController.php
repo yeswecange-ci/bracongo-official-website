@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PageBoissonsEnergisantes;
 use App\Models\PageBoissonsGazeuses;
 use App\Models\PageEaux;
+use App\Models\PageEauxGazeuses;
 use App\Traits\HandlesImageUpload;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -14,12 +15,13 @@ class PageCategorieBoissonsController extends Controller
 {
     use HandlesImageUpload;
 
-    private const CLES = ['eaux', 'gazeuses', 'energisantes'];
+    private const CLES = ['eaux', 'eaux-gazeuses', 'gazeuses', 'energisantes'];
 
     private function pageModel(string $categorie): string
     {
         return match ($categorie) {
             'eaux' => PageEaux::class,
+            'eaux-gazeuses' => PageEauxGazeuses::class,
             'gazeuses' => PageBoissonsGazeuses::class,
             'energisantes' => PageBoissonsEnergisantes::class,
         };
@@ -40,6 +42,7 @@ class PageCategorieBoissonsController extends Controller
         $page = $this->pageInstance($categorie);
         $labels = [
             'eaux' => 'Page Eaux',
+            'eaux-gazeuses' => 'Page Eaux gazeuses',
             'gazeuses' => 'Page Boissons gazeuses',
             'energisantes' => 'Page Boissons énergisantes',
         ];
@@ -83,6 +86,7 @@ class PageCategorieBoissonsController extends Controller
     {
         return match ($categorie) {
             'eaux' => 'Eaux',
+            'eaux-gazeuses' => 'Eaux gazeuses',
             'gazeuses' => 'Boissons gazeuses',
             'energisantes' => 'Boissons énergisantes',
             default => $categorie,

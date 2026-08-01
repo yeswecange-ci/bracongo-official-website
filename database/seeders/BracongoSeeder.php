@@ -21,6 +21,7 @@ use App\Models\PageBoutique;
 use App\Models\PageCarriere;
 use App\Models\PageContact;
 use App\Models\PageEaux;
+use App\Models\PageEauxGazeuses;
 use App\Models\PageHistoire;
 use App\Models\PageLacledeschateaux;
 use App\Models\PagePro;
@@ -241,6 +242,16 @@ class BracongoSeeder extends Seeder
             'message_liste_vide' => 'Aucune eau disponible pour le moment.',
             'message_recherche_vide' => 'Aucune eau ne correspond à votre recherche.',
         ]);
+        PageEauxGazeuses::updateOrCreate(['id' => 1], [
+            'hero_image' => 'img/marque.webp',
+            'hero_titre' => '',
+            'hero_image_alt' => null,
+            'breadcrumb_libelle' => 'Eaux gazeuses',
+            'meta_title' => null,
+            'search_placeholder' => 'Taper le nom d\'une eau gazeuse',
+            'message_liste_vide' => 'Aucune eau gazeuse disponible pour le moment.',
+            'message_recherche_vide' => 'Aucune boisson ne correspond à votre recherche.',
+        ]);
         PageBoissonsGazeuses::updateOrCreate(['id' => 1], [
             'hero_image' => 'img/marque.webp',
             'hero_titre' => '',
@@ -317,12 +328,21 @@ class BracongoSeeder extends Seeder
                 'video_urls' => ['https://www.youtube.com/embed/3IS5fjkBA3g', 'https://www.youtube.com/embed/Tiv6UIey21M'],
                 'ordre' => 1,
             ],
-            ['marque_id' => $castel->id, 'categorie' => 'bieres', 'nom' => 'Castel Beer', 'slug' => 'castel-beer', 'image' => 'img/marron.webp', 'ordre' => 1],
-            ['marque_id' => $doppel->id, 'categorie' => 'bieres', 'nom' => 'Doppel Munich', 'slug' => 'doppel-munich', 'image' => 'img/dopel.webp', 'ordre' => 1],
+            ['marque_id' => $castel->id, 'categorie' => 'bieres', 'nom' => 'Castel Beer', 'slug' => 'castel-beer', 'image' => 'img/castel.webp', 'ordre' => 1],
+            [
+                'marque_id' => $doppel->id,
+                'categorie' => 'bieres',
+                'nom' => 'Doppel Munich',
+                'slug' => 'doppel-munich',
+                'description' => "est la bière brune du portefeuille Bracongo. Inspirée de la tradition brassicole munichoise, elle se distingue par sa robe sombre, ses arômes maltés intenses et son caractère généreux. Une bière de dégustation appréciée des amateurs de brunes.",
+                'image' => 'img/dopel.webp',
+                'type' => 'Bière brune',
+                'ordre' => 1,
+            ],
             ['marque_id' => $nkoyi->id, 'categorie' => 'bieres', 'nom' => 'Nkoyi Blonde', 'slug' => 'nkoyi-blonde', 'image' => 'img/blonde.webp', 'ordre' => 1],
             ['marque_id' => $nkoyi->id, 'categorie' => 'bieres', 'nom' => 'Nkoyi Black', 'slug' => 'nkoyi-black', 'image' => 'img/black.webp', 'ordre' => 2],
             ['marque_id' => $export33->id, 'categorie' => 'bieres', 'nom' => '33 Export', 'slug' => '33-export', 'image' => 'img/33b.webp', 'ordre' => 1],
-            ['marque_id' => $tembo->id, 'categorie' => 'bieres', 'nom' => 'TEMBO', 'slug' => 'tembo', 'image' => 'img/tembo.webp', 'ordre' => 1],
+            ['marque_id' => $tembo->id, 'categorie' => 'bieres', 'nom' => 'TEMBO', 'slug' => 'tembo', 'image' => 'img/tembo.webp', 'conditionnement' => '50 cl', 'ordre' => 1],
         ];
         foreach ($boissons as $b) {
             Boisson::create(array_merge($b, ['is_active' => true]));
@@ -335,6 +355,15 @@ class BracongoSeeder extends Seeder
         $boissonsAutres = [
             ['marque_id' => $youzou->id, 'categorie' => 'gazeuses', 'nom' => 'Youzou', 'slug' => 'youzou', 'image' => 'img/gazeux.webp', 'ordre' => 1],
             ['marque_id' => $worldcola->id, 'categorie' => 'gazeuses', 'nom' => 'World Cola', 'slug' => 'world-cola', 'image' => 'img/gazeux.webp', 'ordre' => 1],
+            [
+                'marque_id' => $worldcola->id,
+                'categorie' => 'gazeuses',
+                'nom' => 'World Cola – Édition Limitée « Cola Na Biso »',
+                'slug' => 'world-cola-cola-na-biso',
+                'description' => "est l'édition limitée de World Cola qui célèbre la fierté congolaise. « Cola Na Biso » — notre cola — met à l'honneur les couleurs et l'identité de la RDC.",
+                'image' => 'img/gazeux.webp',
+                'ordre' => 2,
+            ],
             ['marque_id' => $xxlEnergy->id, 'categorie' => 'energisantes', 'nom' => 'XXL Energy', 'slug' => 'xxl-energy', 'image' => 'img/energie.webp', 'ordre' => 1],
             ['marque_id' => $eauVive->id, 'categorie' => 'eaux', 'nom' => 'Eau Vive', 'slug' => 'eau-vive', 'image' => 'img/eau.webp', 'ordre' => 1],
         ];
@@ -414,6 +443,7 @@ class BracongoSeeder extends Seeder
                 ['label' => 'Bières', 'url' => '/Nos-marques-bieres'],
                 ['label' => 'Boissons gazeuses', 'url' => '/Nos-marques/gazeuses'],
                 ['label' => 'Eaux', 'url' => '/Nos-marques/eaux'],
+                ['label' => 'Eaux gazeuses', 'url' => '/Nos-marques/eaux-gazeuses'],
                 ['label' => 'Boissons énergisantes', 'url' => '/Nos-marques/energisantes'],
                 ['label' => 'Clé des Châteaux', 'url' => '/lacledeschateaux'],
             ],

@@ -196,10 +196,10 @@ Route::prefix('back-office')->name('admin.')->group(function () {
 
             Route::get('/categorie-boissons/{categorie}', [PageCategorieBoissonsController::class, 'edit'])
                 ->name('categorie-boissons.edit')
-                ->where('categorie', 'eaux|gazeuses|energisantes');
+                ->where('categorie', 'eaux-gazeuses|eaux|gazeuses|energisantes');
             Route::put('/categorie-boissons/{categorie}', [PageCategorieBoissonsController::class, 'update'])
                 ->name('categorie-boissons.update')
-                ->where('categorie', 'eaux|gazeuses|energisantes');
+                ->where('categorie', 'eaux-gazeuses|eaux|gazeuses|energisantes');
         });
 
         // Réservé admin/super_admin uniquement

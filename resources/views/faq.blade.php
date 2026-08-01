@@ -34,7 +34,7 @@
                     'questions' => [
                         [
                             'q' => 'Qu\'est-ce que Bracongo ?',
-                            'r' => 'Bracongo S.A. (Brasseries, Limonaderies et Malteries du Congo) est la principale brasserie de la République Démocratique du Congo. Fondée en 1923, elle produit et distribue une large gamme de bières, boissons gazeuses, eaux et boissons énergisantes à travers tout le pays.',
+                            'r' => 'Bracongo S.A. (Les Boissons Rafraîchissantes du Congo) est l\'une des principales brasseries de la République Démocratique du Congo. Elle produit et distribue une large gamme de bières, boissons gazeuses, eaux et boissons énergisantes à travers tout le pays.',
                         ],
                         [
                             'q' => 'Où se trouvent vos installations ?',
@@ -52,7 +52,7 @@
                     'questions' => [
                         [
                             'q' => 'Quelles sont les marques produites par Bracongo ?',
-                            'r' => 'Bracongo produit une gamme complète de boissons : dans les bières (Primus, Skol, Turbo King, Beaufort, Doppel…), les boissons gazeuses (Coca-Cola, Fanta, Sprite…), les eaux (Tembo) et les boissons énergisantes. Consultez notre page "Nos marques" pour découvrir l\'ensemble du catalogue.',
+                            'r' => 'Bracongo produit une gamme complète de boissons : des bières (Beaufort, Tembo — disponible en 50 cl —, Nkoyi, Castel Beer, 33 Export, Doppel Munich), des boissons gazeuses (World Cola — dont l\'édition limitée « Cola Na Biso » —, Youzou, Top Tropical), des eaux (Eau Vive) et des boissons énergisantes (XXL Energy). Consultez notre page "Nos marques" pour découvrir l\'ensemble du catalogue.',
                         ],
                         [
                             'q' => 'Vos produits respectent-ils des normes de qualité ?',
@@ -128,7 +128,7 @@
                     'questions' => [
                         [
                             'q' => 'Comment contacter Bracongo ?',
-                            'r' => 'Vous pouvez nous joindre via le formulaire de contact sur notre site, par téléphone au {{ isset($parametres) ? ($parametres->telephone_public ?? "+243 815 586 874") : "+243 815 586 874" }}, ou par e-mail. Retrouvez toutes nos coordonnées sur la page Contact.',
+                            'r' => 'Vous pouvez nous joindre via le formulaire de contact sur notre site, par téléphone au '.((isset($parametres) && filled($parametres->telephone_public ?? null)) ? $parametres->telephone_public : '+243 815 586 874').', ou par e-mail. Retrouvez toutes nos coordonnées sur la page Contact.',
                         ],
                         [
                             'q' => 'Bracongo est-elle présente sur les réseaux sociaux ?',

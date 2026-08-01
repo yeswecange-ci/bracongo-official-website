@@ -28,7 +28,7 @@ class BoissonController extends Controller
     {
         $data = $request->validate([
             'marque_id'      => 'required|exists:marques,id',
-            'categorie'      => 'required|in:bieres,gazeuses,eaux,energisantes',
+            'categorie'      => 'required|in:bieres,gazeuses,eaux,eaux-gazeuses,energisantes',
             'nom'            => 'required|string|max:255',
             'slug'           => 'required|string|max:255|unique:boissons',
             'description'    => 'nullable|string',
@@ -74,7 +74,7 @@ class BoissonController extends Controller
     {
         $data = $request->validate([
             'marque_id'      => 'required|exists:marques,id',
-            'categorie'      => 'required|in:bieres,gazeuses,eaux,energisantes',
+            'categorie'      => 'required|in:bieres,gazeuses,eaux,eaux-gazeuses,energisantes',
             'nom'            => 'required|string|max:255',
             'slug'           => 'required|string|max:255|unique:boissons,slug,' . $boisson->id,
             'description'    => 'nullable|string',

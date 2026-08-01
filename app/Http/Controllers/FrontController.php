@@ -19,6 +19,7 @@ use App\Models\PageBoutique;
 use App\Models\PageCarriere;
 use App\Models\PageContact;
 use App\Models\PageEaux;
+use App\Models\PageEauxGazeuses;
 use App\Models\PageHistoire;
 use App\Models\PageLacledeschateaux;
 use App\Models\PagePro;
@@ -119,7 +120,7 @@ class FrontController extends Controller
     public function marques()
     {
         $categories = Marque::categories();
-        $ordre = ['bieres', 'gazeuses', 'eaux', 'energisantes'];
+        $ordre = ['bieres', 'gazeuses', 'eaux', 'eaux-gazeuses', 'energisantes'];
 
         // Une seule requête : toutes les marques actives avec leurs boissons actives
         $toutesMarques = Marque::actives()
@@ -153,6 +154,7 @@ class FrontController extends Controller
 
         $page = match ($categorie) {
             'eaux' => PageEaux::instance(),
+            'eaux-gazeuses' => PageEauxGazeuses::instance(),
             'gazeuses' => PageBoissonsGazeuses::instance(),
             'energisantes' => PageBoissonsEnergisantes::instance(),
             default => abort(404),

@@ -202,6 +202,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('admin.pages.categorie-boissons.edit', 'eaux-gazeuses') }}"
+                   class="a-nav-link {{ request()->routeIs('admin.pages.categorie-boissons.edit') && request()->route('categorie') === 'eaux-gazeuses' ? 'is-active' : '' }}">
+                    <span class="a-nav-text">Page Eaux gazeuses</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('admin.pages.categorie-boissons.edit', 'gazeuses') }}"
                    class="a-nav-link {{ request()->routeIs('admin.pages.categorie-boissons.edit') && request()->route('categorie') === 'gazeuses' ? 'is-active' : '' }}">
                     <span class="a-nav-text">Page Boissons gazeuses</span>

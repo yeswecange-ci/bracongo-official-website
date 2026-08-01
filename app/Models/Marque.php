@@ -35,6 +35,7 @@ class Marque extends Model
             'bieres' => 'Bières',
             'gazeuses' => 'Boissons gazeuses',
             'eaux' => 'Eaux',
+            'eaux-gazeuses' => 'Eaux gazeuses',
             'energisantes' => 'Boissons énergisantes',
         ];
     }
