@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AccountTwoFactorController;
 use App\Http\Controllers\Admin\BoissonController;
 use App\Http\Controllers\Admin\CandidatureEmploiController;
+use App\Http\Controllers\Admin\CategorieController;
 use App\Http\Controllers\Admin\CommandeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FooterController;
@@ -19,7 +20,6 @@ use App\Http\Controllers\Admin\PageAccueilController;
 use App\Http\Controllers\Admin\PageBieresController;
 use App\Http\Controllers\Admin\PageBoutiqueController;
 use App\Http\Controllers\Admin\PageCarriereController;
-use App\Http\Controllers\Admin\PageCategorieBoissonsController;
 use App\Http\Controllers\Admin\PageContactController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PageHistoireController;
@@ -194,12 +194,6 @@ Route::prefix('back-office')->name('admin.')->group(function () {
             Route::get('/bieres', [PageBieresController::class, 'edit'])->name('bieres.edit');
             Route::put('/bieres', [PageBieresController::class, 'update'])->name('bieres.update');
 
-            Route::get('/categorie-boissons/{categorie}', [PageCategorieBoissonsController::class, 'edit'])
-                ->name('categorie-boissons.edit')
-                ->where('categorie', 'eaux-gazeuses|eaux|gazeuses|energisantes');
-            Route::put('/categorie-boissons/{categorie}', [PageCategorieBoissonsController::class, 'update'])
-                ->name('categorie-boissons.update')
-                ->where('categorie', 'eaux-gazeuses|eaux|gazeuses|energisantes');
         });
 
         // Réservé admin/super_admin uniquement
@@ -209,6 +203,7 @@ Route::prefix('back-office')->name('admin.')->group(function () {
             Route::resource('offres-emploi', OffreEmploiController::class)->names('offres-emploi');
             Route::resource('footer-gallery', FooterGalleryController::class)->names('footer-gallery');
             Route::resource('reseaux-sociaux', ReseauSocialController::class)->names('reseaux-sociaux');
+            Route::resource('categories', CategorieController::class)->except(['show'])->names('categories');
             Route::resource('marques', MarqueController::class)->names('marques');
             Route::resource('boissons', BoissonController::class)->names('boissons');
             Route::resource('produits', ProduitController::class)->names('produits');

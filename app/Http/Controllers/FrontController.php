@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Boisson;
+use App\Models\Categorie;
 use App\Models\Produit;
 use App\Models\CandidatureEmploi;
 use App\Models\HeroSlide;
@@ -13,13 +14,9 @@ use App\Models\News;
 use App\Models\OffreEmploi;
 use App\Models\PageAccueil;
 use App\Models\PageBieres;
-use App\Models\PageBoissonsEnergisantes;
-use App\Models\PageBoissonsGazeuses;
 use App\Models\PageBoutique;
 use App\Models\PageCarriere;
 use App\Models\PageContact;
-use App\Models\PageEaux;
-use App\Models\PageEauxGazeuses;
 use App\Models\PageHistoire;
 use App\Models\PageLacledeschateaux;
 use App\Models\PagePro;
@@ -120,7 +117,7 @@ class FrontController extends Controller
     public function marques()
     {
         $categories = Marque::categories();
-        $ordre = ['bieres', 'gazeuses', 'eaux', 'eaux-gazeuses', 'energisantes'];
+        $ordre = array_keys($categories);
 
         // Une seule requête : toutes les marques actives avec leurs boissons actives
         $toutesMarques = Marque::actives()
@@ -144,21 +141,13 @@ class FrontController extends Controller
 
     public function marqueCategorie(string $categorie)
     {
-        $categories = Marque::categories();
-        if (! array_key_exists($categorie, $categories)) {
+        $page = Categorie::where('slug', $categorie)->where('is_active', true)->first();
+        if ($page === null) {
             abort(404);
         }
-        if ($categorie === 'bieres') {
+        if ($page->estBieres()) {
             return redirect()->route('bieres');
         }
-
-        $page = match ($categorie) {
-            'eaux' => PageEaux::instance(),
-            'eaux-gazeuses' => PageEauxGazeuses::instance(),
-            'gazeuses' => PageBoissonsGazeuses::instance(),
-            'energisantes' => PageBoissonsEnergisantes::instance(),
-            default => abort(404),
-        };
 
         $toutesBoissons = Boisson::actives()
             ->where('categorie', $categorie)

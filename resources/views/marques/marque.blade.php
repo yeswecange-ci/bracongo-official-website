@@ -21,7 +21,7 @@
 
             @php
                 $categoriesLabels = \App\Models\Marque::categories();
-                $ordre = ['bieres', 'gazeuses', 'eaux', 'eaux-gazeuses', 'energisantes'];
+                $ordre = array_keys($categoriesLabels);
             @endphp
 
             @foreach($ordre as $cat)

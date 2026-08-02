@@ -29,14 +29,13 @@ class Marque extends Model
         return $query->where('is_active', true)->orderBy('ordre');
     }
 
+    /**
+     * Libellés des catégories actives indexés par slug (gérées au back-office).
+     *
+     * @return array<string, string>
+     */
     public static function categories(): array
     {
-        return [
-            'bieres' => 'Bières',
-            'gazeuses' => 'Boissons gazeuses',
-            'eaux' => 'Eaux',
-            'eaux-gazeuses' => 'Eaux gazeuses',
-            'energisantes' => 'Boissons énergisantes',
-        ];
+        return Categorie::options();
     }
 }

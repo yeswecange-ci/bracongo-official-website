@@ -33,7 +33,7 @@
 				<div class="card-header"><h5>Images</h5></div>
 				<div class="card-body">
 					<x-admin.image-upload name="image" label="Image produit" :value="null" help="PNG, JPG, GIF — max 10 Mo" />
-					<p class="small text-muted mb-0 mt-2">La bannière des pages par catégorie se gère dans le menu des pages catalogue (ex. Page Eaux).</p>
+					<p class="small text-muted mb-0 mt-2">La bannière des pages par catégorie se gère dans <strong>Catalogue → Catégories</strong>.</p>
 				</div>
 			</div>
 

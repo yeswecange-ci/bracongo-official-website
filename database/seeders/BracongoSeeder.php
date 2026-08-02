@@ -6,6 +6,7 @@ use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Models\Boisson;
 use App\Models\CandidatureEmploi;
+use App\Models\Categorie;
 use App\Models\FooterGallery;
 use App\Models\FooterSettings;
 use App\Models\HeroSlide;
@@ -15,13 +16,9 @@ use App\Models\News;
 use App\Models\OffreEmploi;
 use App\Models\PageAccueil;
 use App\Models\PageBieres;
-use App\Models\PageBoissonsEnergisantes;
-use App\Models\PageBoissonsGazeuses;
 use App\Models\PageBoutique;
 use App\Models\PageCarriere;
 use App\Models\PageContact;
-use App\Models\PageEaux;
-use App\Models\PageEauxGazeuses;
 use App\Models\PageHistoire;
 use App\Models\PageLacledeschateaux;
 use App\Models\PagePro;
@@ -232,46 +229,28 @@ class BracongoSeeder extends Seeder
             'message_recherche_vide' => 'Aucune bière ne correspond à votre recherche.',
         ]);
 
-        PageEaux::updateOrCreate(['id' => 1], [
-            'hero_image' => 'img/marque.webp',
-            'hero_titre' => '',
-            'hero_image_alt' => null,
-            'breadcrumb_libelle' => 'Eaux',
-            'meta_title' => null,
-            'search_placeholder' => 'Taper le nom d\'une eau',
-            'message_liste_vide' => 'Aucune eau disponible pour le moment.',
-            'message_recherche_vide' => 'Aucune eau ne correspond à votre recherche.',
-        ]);
-        PageEauxGazeuses::updateOrCreate(['id' => 1], [
-            'hero_image' => 'img/marque.webp',
-            'hero_titre' => '',
-            'hero_image_alt' => null,
-            'breadcrumb_libelle' => 'Eaux gazeuses',
-            'meta_title' => null,
-            'search_placeholder' => 'Taper le nom d\'une eau gazeuse',
-            'message_liste_vide' => 'Aucune eau gazeuse disponible pour le moment.',
-            'message_recherche_vide' => 'Aucune boisson ne correspond à votre recherche.',
-        ]);
-        PageBoissonsGazeuses::updateOrCreate(['id' => 1], [
-            'hero_image' => 'img/marque.webp',
-            'hero_titre' => '',
-            'hero_image_alt' => null,
-            'breadcrumb_libelle' => 'Boissons gazeuses',
-            'meta_title' => null,
-            'search_placeholder' => 'Taper le nom d\'une boisson',
-            'message_liste_vide' => 'Aucune boisson gazeuse disponible pour le moment.',
-            'message_recherche_vide' => 'Aucune boisson ne correspond à votre recherche.',
-        ]);
-        PageBoissonsEnergisantes::updateOrCreate(['id' => 1], [
-            'hero_image' => 'img/marque.webp',
-            'hero_titre' => '',
-            'hero_image_alt' => null,
-            'breadcrumb_libelle' => 'Boissons énergisantes',
-            'meta_title' => null,
-            'search_placeholder' => 'Taper le nom d\'une boisson',
-            'message_liste_vide' => 'Aucune boisson énergisante disponible pour le moment.',
-            'message_recherche_vide' => 'Aucune boisson ne correspond à votre recherche.',
-        ]);
+        $categories = [
+            ['slug' => 'bieres', 'nom' => 'Bières', 'ordre' => 1, 'search_placeholder' => 'Taper un nom de bière', 'message_liste_vide' => 'Aucune bière disponible pour le moment.'],
+            ['slug' => 'gazeuses', 'nom' => 'Boissons gazeuses', 'ordre' => 2, 'search_placeholder' => 'Taper le nom d\'une boisson', 'message_liste_vide' => 'Aucune boisson gazeuse disponible pour le moment.'],
+            ['slug' => 'eaux', 'nom' => 'Eaux', 'ordre' => 3, 'search_placeholder' => 'Taper le nom d\'une eau', 'message_liste_vide' => 'Aucune eau disponible pour le moment.'],
+            ['slug' => 'eaux-gazeuses', 'nom' => 'Eaux gazeuses', 'ordre' => 4, 'search_placeholder' => 'Taper le nom d\'une eau gazeuse', 'message_liste_vide' => 'Aucune eau gazeuse disponible pour le moment.'],
+            ['slug' => 'energisantes', 'nom' => 'Boissons énergisantes', 'ordre' => 5, 'search_placeholder' => 'Taper le nom d\'une boisson', 'message_liste_vide' => 'Aucune boisson énergisante disponible pour le moment.'],
+        ];
+        foreach ($categories as $cat) {
+            Categorie::updateOrCreate(['slug' => $cat['slug']], [
+                'nom' => $cat['nom'],
+                'ordre' => $cat['ordre'],
+                'is_active' => true,
+                'hero_image' => 'img/marque.webp',
+                'hero_titre' => '',
+                'hero_image_alt' => null,
+                'breadcrumb_libelle' => $cat['nom'],
+                'meta_title' => null,
+                'search_placeholder' => $cat['search_placeholder'],
+                'message_liste_vide' => $cat['message_liste_vide'],
+                'message_recherche_vide' => 'Aucune boisson ne correspond à votre recherche.',
+            ]);
+        }
 
         Boisson::query()->delete();
         Marque::query()->delete();
@@ -564,6 +543,7 @@ class BracongoSeeder extends Seeder
             'front.reseaux',
             'front.parametres',
             'front.search_data',
+            'front.categories',
         ] as $key) {
             Cache::forget($key);
         }
