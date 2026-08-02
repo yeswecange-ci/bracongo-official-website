@@ -130,6 +130,10 @@ class CategorieCrudTest extends TestCase
             ->assertSessionHas('success');
 
         $this->assertDatabaseMissing('categories', ['slug' => 'cocktails']);
+
+        // L'image par défaut (img/marque.webp) est partagée et versionnée avec
+        // le code : la suppression d'une catégorie ne doit jamais l'effacer.
+        $this->assertFileExists(public_path('img/marque.webp'));
     }
 
     public function test_categorie_bieres_protegee(): void

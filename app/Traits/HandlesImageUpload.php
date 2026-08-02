@@ -42,6 +42,12 @@ trait HandlesImageUpload
         if ($relativePath === null || $relativePath === '') {
             return;
         }
+        // Seuls les fichiers uploadés via le back-office sont supprimables :
+        // les images embarquées (img/…) sont versionnées avec le code et
+        // partagées entre plusieurs enregistrements (valeurs par défaut du seeder).
+        if (! str_starts_with(ltrim(str_replace('\\', '/', $relativePath), '/'), 'uploads/')) {
+            return;
+        }
         $fullPath = public_path($relativePath);
         if (is_file($fullPath)) {
             @unlink($fullPath);
