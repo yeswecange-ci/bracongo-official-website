@@ -6,6 +6,7 @@ use App\Models\Boisson;
 use App\Models\Categorie;
 use App\Models\Produit;
 use App\Models\CandidatureEmploi;
+use App\Models\FaqSection;
 use App\Models\HeroSlide;
 use App\Models\Marque;
 use App\Models\MessageContact;
@@ -89,7 +90,12 @@ class FrontController extends Controller
 
     public function faq()
     {
-        return view('faq');
+        $sections = FaqSection::actives()
+            ->with(['questionsActives'])
+            ->get()
+            ->filter(fn (FaqSection $section) => $section->questionsActives->isNotEmpty());
+
+        return view('faq', compact('sections'));
     }
 
     public function boutique()

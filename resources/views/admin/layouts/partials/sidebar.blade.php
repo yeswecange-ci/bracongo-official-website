@@ -157,6 +157,14 @@
     </li>
 
     <li>
+        <a href="{{ route('admin.faq.index') }}"
+           class="a-nav-link {{ request()->routeIs('admin.faq.*') ? 'is-active' : '' }}">
+            <i class="a-nav-icon bi bi-patch-question"></i>
+            <span class="a-nav-text">FAQ</span>
+        </a>
+    </li>
+
+    <li>
         <a href="{{ route('admin.pages.boutique.edit') }}"
            class="a-nav-link {{ request()->routeIs('admin.pages.boutique.*') ? 'is-active' : '' }}">
             <i class="a-nav-icon bi bi-bag"></i>

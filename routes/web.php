@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\CandidatureEmploiController;
 use App\Http\Controllers\Admin\CategorieController;
 use App\Http\Controllers\Admin\CommandeController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FaqQuestionController;
+use App\Http\Controllers\Admin\FaqSectionController;
 use App\Http\Controllers\Admin\FooterController;
 use App\Http\Controllers\Admin\FooterGalleryController;
 use App\Http\Controllers\Admin\HeroSlideController;
@@ -208,6 +210,23 @@ Route::prefix('back-office')->name('admin.')->group(function () {
             Route::resource('boissons', BoissonController::class)->names('boissons');
             Route::resource('produits', ProduitController::class)->names('produits');
             Route::resource('news', NewsController::class)->names('news');
+
+            // FAQ : rubriques (sections dépliables) et questions/réponses.
+            Route::prefix('faq')->name('faq.')->group(function () {
+                Route::get('/', [FaqSectionController::class, 'index'])->name('index');
+
+                Route::get('/rubriques/nouvelle', [FaqSectionController::class, 'create'])->name('sections.create');
+                Route::post('/rubriques', [FaqSectionController::class, 'store'])->name('sections.store');
+                Route::get('/rubriques/{faq_section}/modifier', [FaqSectionController::class, 'edit'])->name('sections.edit');
+                Route::put('/rubriques/{faq_section}', [FaqSectionController::class, 'update'])->name('sections.update');
+                Route::delete('/rubriques/{faq_section}', [FaqSectionController::class, 'destroy'])->name('sections.destroy');
+
+                Route::get('/questions/nouvelle', [FaqQuestionController::class, 'create'])->name('questions.create');
+                Route::post('/questions', [FaqQuestionController::class, 'store'])->name('questions.store');
+                Route::get('/questions/{faq_question}/modifier', [FaqQuestionController::class, 'edit'])->name('questions.edit');
+                Route::put('/questions/{faq_question}', [FaqQuestionController::class, 'update'])->name('questions.update');
+                Route::delete('/questions/{faq_question}', [FaqQuestionController::class, 'destroy'])->name('questions.destroy');
+            });
 
             Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
             Route::get('/commandes/{commande}', [CommandeController::class, 'show'])->name('commandes.show');
