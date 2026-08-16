@@ -29,7 +29,7 @@
 				<div class="card-body">
 					<div class="row g-4">
 						<div class="col-12">
-							<x-admin.image-upload name="logo" label="Logo" :value="$parametres->logo ?? null" help="PNG, JPG, GIF — max 10 Mo" compact-preview />
+							<x-admin.image-upload name="logo" label="Logo" :value="$parametres->logo ?? null" help="PNG, JPG, GIF, WebP — max 10 Mo" compact-preview />
 						</div>
 						<div class="col-12">
 							<label class="form-label fw-semibold">Suggestions de recherche <span class="text-muted small">(séparées par des virgules)</span></label>

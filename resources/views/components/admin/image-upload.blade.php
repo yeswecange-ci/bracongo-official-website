@@ -3,7 +3,7 @@
 	'label' => 'Image',
 	'value' => null,
 	'required' => false,
-	'help' => 'PNG, JPG, GIF — max 10 Mo',
+	'help' => 'PNG, JPG, GIF, WebP — max 10 Mo',
 	'compactPreview' => false,
 ])
 

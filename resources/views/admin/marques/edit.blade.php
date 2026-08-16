@@ -33,7 +33,7 @@
 			<div class="card">
 				<div class="card-header"><h5>Images</h5></div>
 				<div class="card-body">
-					<x-admin.image-upload name="image" label="Image produit" :value="$marque->image" help="PNG, JPG, GIF — max 10 Mo" />
+					<x-admin.image-upload name="image" label="Image produit" :value="$marque->image" help="PNG, JPG, GIF, WebP — max 10 Mo" />
 					<p class="small text-muted mb-0 mt-2">La bannière des pages par catégorie (eaux, gazeuses, etc.) se gère dans <strong>Catalogue → Catégories</strong> (et <strong>Page Nos bières</strong> pour les bières).</p>
 				</div>
 			</div>
