@@ -51,8 +51,9 @@
 		<textarea class="form-control" name="extrait" rows="2">{{ old('extrait', $news->extrait ?? '') }}</textarea>
 	</div>
 	<div class="col-12">
-		<label class="form-label fw-semibold">Contenu complet <x-admin.html-info /> <small class="text-muted">(HTML autorisé)</small></label>
-		<textarea class="form-control" name="contenu" rows="8" style="font-family:monospace;font-size:.82rem;">{{ old('contenu', $news->contenu ?? '') }}</textarea>
+		<label class="form-label fw-semibold">Contenu complet</label>
+		<textarea class="form-control" name="contenu" rows="8" data-rich-text>{{ old('contenu', $news->contenu ?? '') }}</textarea>
+		<div class="form-text">Mettez en forme directement : <strong>gras</strong>, italique, liens, listes et titres. Pour aller à la ligne dans le même paragraphe, utilisez <kbd>Maj</kbd> + <kbd>Entrée</kbd>.</div>
 	</div>
 
 	<div class="col-12">
@@ -165,3 +166,16 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 });
 </script>
+
+{{-- Éditeur enrichi du champ « Contenu complet » : CKEditor 5, servi en local
+     (aucun CDN). La barre d'outils est définie dans bracongo-editor.js. --}}
+@push('styles')
+<style>
+	.ck-editor__editable_inline { min-height: 340px; }
+	.ck.ck-editor { --ck-border-radius: .375rem; }
+</style>
+@endpush
+
+<script src="{{ asset('admin/vendor/ckeditor/ckeditor.js') }}"></script>
+<script src="{{ asset('admin/vendor/ckeditor/translations/fr.js') }}"></script>
+<script src="{{ asset('admin/js/bracongo-editor.js') }}"></script>
