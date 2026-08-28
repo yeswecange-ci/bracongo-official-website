@@ -9,49 +9,42 @@
         'actualites' => [
             'bar' => 'bg-bracongo',
             'pill' => 'bg-bracongo/10 text-bracongo border border-bracongo/20',
-            'heroTint' => 'from-black/75 via-black/50 to-bracongo/40',
             'quote' => 'border-bracongo',
             'label' => 'Actualité',
         ],
         'evenements' => [
             'bar' => 'bg-sky-600',
             'pill' => 'bg-sky-50 text-sky-900 border border-sky-200',
-            'heroTint' => 'from-black/75 via-sky-900/40 to-sky-600/30',
             'quote' => 'border-sky-500',
             'label' => 'Événement',
         ],
         'activations' => [
             'bar' => 'bg-amber-500',
             'pill' => 'bg-amber-50 text-amber-900 border border-amber-200',
-            'heroTint' => 'from-black/70 via-amber-900/30 to-amber-500/25',
             'quote' => 'border-amber-500',
             'label' => 'Activation',
         ],
         'sponsoring' => [
             'bar' => 'bg-amber-700',
             'pill' => 'bg-amber-100/90 text-amber-950 border border-amber-300',
-            'heroTint' => 'from-black/80 via-amber-950/35 to-amber-700/25',
             'quote' => 'border-amber-600',
             'label' => 'Sponsoring',
         ],
         'communiques' => [
             'bar' => 'bg-slate-700',
             'pill' => 'bg-slate-100 text-slate-800 border border-slate-300',
-            'heroTint' => 'from-black/80 via-slate-900/50 to-slate-700/30',
             'quote' => 'border-slate-500',
             'label' => 'Communiqué',
         ],
         'mediatheque' => [
             'bar' => 'bg-violet-600',
             'pill' => 'bg-violet-50 text-violet-900 border border-violet-200',
-            'heroTint' => 'from-black/75 via-violet-900/40 to-violet-600/30',
             'quote' => 'border-violet-500',
             'label' => 'Médiathèque',
         ],
         default => [
             'bar' => 'bg-bracongo',
             'pill' => 'bg-gray-100 text-gray-800 border border-gray-200',
-            'heroTint' => 'from-black/70 to-black/40',
             'quote' => 'border-gray-400',
             'label' => $types[$typeKey] ?? 'Publication',
         ],
@@ -70,8 +63,8 @@
         @else
             <div class="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900"></div>
         @endif
-        <div class="absolute inset-0 bg-gradient-to-t {{ $accent['heroTint'] }}"></div>
-        <div class="absolute inset-0 flex flex-col justify-end pb-10 md:pb-14 px-4 md:px-12 max-w-6xl mx-auto w-full text-white">
+        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/65 via-black/25 to-transparent" aria-hidden="true"></div>
+        <div class="absolute inset-0 flex flex-col justify-end pb-10 md:pb-14 px-4 md:px-12 max-w-6xl mx-auto w-full text-white drop-shadow-md">
             <div class="flex flex-wrap items-center gap-3 mb-4">
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest {{ $accent['pill'] }}">
                     {{ $types[$news->type] ?? $accent['label'] }}
@@ -115,7 +108,7 @@
                 </p>
             @endif
 
-            <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-bracongo">
+            <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-p:text-justify prose-a:text-bracongo">
                 {!! \App\Support\CmsHtmlSanitizer::sanitize($news->contenu) !!}
             </div>
 
