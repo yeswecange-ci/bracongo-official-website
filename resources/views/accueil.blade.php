@@ -183,44 +183,41 @@
             @php
                 $categoriesMarques = \App\Models\Marque::categories();
                 $ordreCategoriesAccueil = ['bieres', 'gazeuses', 'eaux', 'energisantes'];
+
+                // Une seule requête pour les 4 cartes : la bouteille affichée et la
+                // liste des boissons viennent du même jeu de données.
+                $boissonsParCategorie = \App\Models\Boisson::actives()
+                    ->whereIn('categorie', $ordreCategoriesAccueil)
+                    ->with('marque:id,nom,image')
+                    ->get()
+                    ->groupBy('categorie');
             @endphp
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-32 pt-32 max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-14 max-w-7xl mx-auto px-4">
                 @foreach($ordreCategoriesAccueil as $cat)
                 @php
-                    $marquesCat = \App\Models\Marque::actives()
-                        ->whereHas('boissons', fn ($q) => $q->where('categorie', $cat))
-                        ->orderBy('ordre')
-                        ->take(3)
-                        ->get();
-                    $m1 = $marquesCat->get(0);
-                    $m2 = $marquesCat->get(1);
-                    $m3 = $marquesCat->get(2);
+                    $boissonsCat = $boissonsParCategorie[$cat] ?? collect();
+                    $vedette = $boissonsCat->first(fn ($b) => filled($b->image));
+                    $imageCarte = $vedette?->image
+                        ?? $boissonsCat->first(fn ($b) => filled($b->marque?->image))?->marque?->image
+                        ?? 'img/marron.webp';
+                    $libelleCat = $categoriesMarques[$cat] ?? $cat;
+                    $listeBoissons = $boissonsCat->pluck('nom')->filter()->implode(', ');
                     $lienCat = $cat === 'bieres' ? route('bieres') : route('marque.categorie', $cat);
                 @endphp
-                @continue(!$m1)
-                <div class="relative bg-black rounded-[2rem] group h-[400px] flex flex-col items-center justify-end pb-12 transition-all duration-500 hover:shadow-2xl">
-                    <div class="absolute top-10 left-0 right-0 flex justify-center opacity-60 pointer-events-none group-hover:opacity-100 transition-opacity duration-500">
-                        <img src="{{ asset('img/Group2.webp') }}" alt="" class="w-4/5 h-auto object-contain brightness-100 hue-rotate-[340deg] saturate-[500%] contrast-[150%]" loading="lazy" decoding="async" aria-hidden="true">
-                    </div>
-                    @if($m2)
-                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
-                        <img src="{{ asset($m2->image ?? 'img/marron.webp') }}" alt="" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:-translate-x-20 group-hover:-rotate-12 transition-all duration-500 ease-out" loading="lazy" decoding="async">
-                    </div>
+                @continue($boissonsCat->isEmpty())
+                <div class="group">
+                    <a href="{{ $lienCat }}" tabindex="-1" aria-hidden="true" class="flex bg-[#F5F5F5] rounded-2xl h-[300px] items-center justify-center p-8 overflow-hidden transition-shadow duration-500 hover:shadow-xl">
+                        <img src="{{ asset($imageCarte) }}" alt="" class="max-h-full w-auto object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async">
+                    </a>
+                    <h3 class="mt-6 text-2xl font-bold text-gray-900">{{ $libelleCat }}</h3>
+                    @if($listeBoissons !== '')
+                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">{{ $listeBoissons }}</p>
                     @endif
-                    @if($m3)
-                    <div class="absolute -top-16 left-0 right-0 flex justify-center z-0 pointer-events-none">
-                        <img src="{{ asset($m3->image ?? 'img/marron.webp') }}" alt="" class="h-64 w-auto object-contain opacity-0 group-hover:opacity-100 group-hover:translate-x-20 group-hover:rotate-12 transition-all duration-500 ease-out" loading="lazy" decoding="async">
-                    </div>
-                    @endif
-                    <div class="absolute -top-20 left-0 right-0 flex justify-center z-10 pointer-events-none transition-transform duration-500 group-hover:-translate-y-4 group-hover:scale-105">
-                        <img src="{{ asset($m1->image ?? 'img/marron.webp') }}" alt="{{ $m1->nom }}" class="h-80 w-auto object-contain drop-shadow-2xl" loading="lazy" decoding="async">
-                    </div>
-                    <div class="relative z-20 text-center px-4">
-                        <h3 class="text-white text-2xl font-bold mb-8">{{ $categoriesMarques[$cat] ?? $cat }}</h3>
-                        <a href="{{ $lienCat }}" class="inline-flex items-center gap-3 px-10 py-3 border border-white rounded-full text-white text-sm font-bold hover:bg-white hover:text-black transition-all duration-300">
-                            {{ $accueil->marques_cartes_cta_texte ?? 'Voir plus' }} <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </a>
-                    </div>
+                    <a href="{{ $lienCat }}" class="mt-6 inline-flex items-center gap-3 px-6 py-2.5 border border-bracongo rounded-full text-bracongo text-sm font-bold hover:bg-bracongo hover:text-white transition-all duration-300 group/btn">
+                        <span>{{ $accueil->marques_cartes_cta_texte ?? 'Voir plus' }}</span>
+                        <svg class="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        <span class="sr-only">{{ $libelleCat }}</span>
+                    </a>
                 </div>
                 @endforeach
             </div>
