@@ -111,6 +111,9 @@
 
             <div class="pt-8 border-t border-gray-200 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4 text-gray-600 text-xs font-medium">
                 <p>&copy; Copyright {{ $footerConfig->copyright_debut_annee ?? 1996 }} - {{ date('Y') }} | BRACONGO S.A. | All Rights Reserved | Designed by <span class="text-bracongo font-bold">YESWECANGE</span></p>
+                @if(filled(config('services.ga4.id')))
+                    <button type="button" data-consent-reouvrir class="underline underline-offset-2 hover:text-bracongo transition-colors">Gérer les cookies</button>
+                @endif
             </div>
         </div>
     </footer>

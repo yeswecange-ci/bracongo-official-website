@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    @include('partials.gtm-head')
+    @include('partials.analytics-head')
 
     @php
         $faviconHref = isset($parametres) && filled($parametres->favicon ?? null)
@@ -55,7 +55,6 @@
     </style>
 </head>
 <body class="font-sans antialiased overflow-x-hidden loading">
-    @include('partials.gtm-body')
     <div id="loader" class="loader-wrapper">
         <img src="{{ asset(isset($parametres) && filled($parametres->logo ?? null) ? $parametres->logo : 'img/LOGO BRACONGO copie 1.webp') }}" alt="Bracongo Loading" class="loader-logo" loading="eager" fetchpriority="high" decoding="sync">
     </div>
@@ -84,6 +83,8 @@
             document.body.classList.remove('loading');
         });
     </script>
+    @include('partials.cookie-consent')
+
     @stack('scripts')
 </body>
 </html>

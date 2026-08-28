@@ -3,9 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    @include('partials.gtm-head')
-
     <meta name="robots" content="noindex, nofollow">
     @php
         $couleur = filled($parametres->couleur_principale ?? null) ? $parametres->couleur_principale : '#E30613';
@@ -180,7 +177,6 @@
     </style>
 </head>
 <body>
-    @include('partials.gtm-body')
     <div class="bg" aria-hidden="true"></div>
 
     <main class="card">
