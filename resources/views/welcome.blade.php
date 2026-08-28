@@ -3,6 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    @include('partials.gtm-head')
+
     @php
         $faviconHrefWelcome = isset($parametres) && filled($parametres->favicon ?? null)
             ? asset($parametres->favicon)
@@ -72,6 +75,7 @@
     </style>
 </head>
 <body class="antialiased font-sans loading">
+    @include('partials.gtm-body')
     <!-- Preloader -->
     <div id="loader" class="loader-wrapper">
         <img src="{{ asset($parametres->logo ?? 'img/LOGO BRACONGO copie 1.webp') }}" alt="Bracongo Loading" class="loader-logo">
