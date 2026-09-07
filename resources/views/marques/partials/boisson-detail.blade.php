@@ -11,7 +11,7 @@
 </div>
 
 <section class="flex flex-col md:flex-row min-h-screen">
-	<div class="w-full md:w-1/3 bg-[#00382B] flex items-center justify-center p-12">
+	<div class="w-full md:w-1/3 bg-white flex items-center justify-center p-12">
 		<div class="h-[600px] md:h-[800px]">
 			<img src="{{ asset($boisson->image ?? 'img/beaufort.webp') }}" alt="{{ $boisson->nom }} Bouteille"
 				class="h-full object-contain drop-shadow-2xl">
